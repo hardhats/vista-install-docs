@@ -116,7 +116,7 @@ At this point we are ready to stand up the VistA instance. Right click on the
 Caché cube and select Management Portal of Caché.
 
 .. figure::
-   http://code.osehra.org/content/named/SHA1/1f2af02f-Cache2011MenuSysMgt.png
+   images/InstallCache/MenuSysMgt.png
    :align: center
    :alt:  Management Portal link in Caché
 
@@ -197,7 +197,7 @@ back to the System Configuration menu, click on the Namespaces option.
 Then, click on the \"Create New Namespace\" button to open a wizard.
 
 .. figure::
-   images/InstallCache/2011CreateNewNamespace.png
+   images/InstallCache/CreateNewNamespace.png
    :align: center
    :alt:  Namespace listing and button to create a new namespace.
 
