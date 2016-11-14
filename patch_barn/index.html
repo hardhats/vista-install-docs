@@ -1,0 +1,198 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<title>Patch Barn Specifications</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+<div align="center"><center>
+
+<table border="0" cellpadding="6" cellspacing="6" width="100%">
+  <tr>
+    <td align="center" width="20%"><img src="../../images/logo.gif" alt="hat &amp; gloves" WIDTH="120" HEIGHT="79"><br>
+    <font size="5" face="Arial"><strong>Patch Barn</strong></font></td>
+    <td width="80%"><!--webbot bot="Include" u-include="../../navicon_plain.html" tag="BODY" startspan -->
+
+<p align="center"><a href="../../index.html"><img src="../../images/shopSHomeOff.gif" alt="Home Page" align="top" border="0" width="54" height="76"></a><a href="../../m/Mmain.html"><img src="../../images/shopSMOff.gif" alt="M |" align="top" border="0" width="54" height="76"></a> <a href="../../fileman/FMmain.html"><img src="../../images/shopSFmOff.gif" alt=" FileMan |" align="top" border="0" width="54" height="76"></a><a href="../../kernel/KRNmain.html"><img src="../../images/shopSKrnOff.gif" alt=" Kernel |" align="top" border="0" width="54" height="76"></a><a href="../../cs/CSmain.html"><img src="../../images/shopSCsOff.gif" alt=" CS/MM/Web |" align="top" border="0" width="62" height="86"></a><a href="../../tools/TOOLSmain.html"><img src="../../images/shopSPgmOff.gif" alt=" Programmer Tools |" align="top" border="0" width="54" height="86"></a> <a href="../../apps/APPSmain.html"><img src="../../images/shopSAppOff.gif" alt="Applications" align="top" border="0" width="54" height="76"></a></p>
+<!--webbot bot="Include" endspan i-checksum="44960" -->
+</td>
+  </tr>
+</table>
+</center></div>
+
+<p>The Hardhats are going to have a good old-fashioned barn raising!&nbsp; We plan to
+develop a software application that can be given to the Department of Veterans Affairs to
+make it painless for them to post software patches in archives for folks both inside and
+outside the VA.&nbsp; A win-win for everyone.</p>
+
+<table border="0" width="100%" cellspacing="3" cellpadding="3">
+  <tr>
+    <td width="100%" bgcolor="#8080C0"><font face="Arial"><strong>Preparations:</strong></font></td>
+  </tr>
+</table>
+
+<table border="0" width="100%">
+  <tr>
+    <td width="35%" valign="top" align="left">Volunteers:<br>
+      <small>(contact <a href="mailto:gkreis@PioneerDataSys.com">Greg Kreis</a> 
+      to volunteer.)</small></td>
+    <td width="65%" valign="top" align="left">Required Skill Sets:<ul>
+      <li>Generation of HTML pages from M code (or willing to give it a try)</li>
+      <li>Knowledge of KIDS builds and Packman formatting</li>
+      <li>Opening, writing and closing Host Files (using the Kernel's device manager)</li>
+      <li>Knowledge of VA programming standards (or an interest in learning them)</li>
+      <li>Building Kernel menus and options (or in interest in learning how)</li>
+      <li>Documentation writer</li>
+      <li>An experienced VISTA/DHCP developer willing to lead the virtual team</li>
+      <li>Designers to take the specifications and turn them into software plans</li>
+      <li>Creation of Mailman Servers</li>
+    </ul>
+    </td>
+  </tr>
+</table>
+
+<p>&nbsp;</p>
+
+<table border="0" width="100%" cellspacing="3" cellpadding="3">
+  <tr>
+    <td width="100%" bgcolor="#8080C0"><font face="Arial"><strong>Design Notes:</strong></font></td>
+  </tr>
+</table>
+
+<p>The following collection of notes will guide the Patch Barn designers in their
+prepartions for the raising.</p>
+
+<p><strong>&nbsp;&nbsp; Background Information:</strong> 
+
+<ol>
+  <li>Patches are distributed as KIDS builds in <a href="ex_packman_formatted_patch.html">Packman
+    formatted Mailman messages</a>.</li>
+  <li>Most messages have descriptive text and the actual KIDS build in the body of the
+    message.&nbsp; In cases where the size it too large, the KIDS build may be offered in a
+    Host sequential file.</li>
+  <li>Patches pass through several stages in the VA before they are finally released by
+    customer service as mailman messages.</li>
+  <li>Patches are number and also have a sequence number to indicate the sequence in which
+    they must be installed.&nbsp; Sequence is essential, since patches may overwrite routines
+    and DD entries.</li>
+</ol>
+
+<p>&nbsp;&nbsp;&nbsp; <strong>Use Cases:</strong> 
+
+<ol>
+  <li>Patches will be received as mailman messages by the Data Base Administrator.</li>
+  <li>The DBA periodically applies these patches to a FOIA Platinum account.</li>
+  <li>DBA wishes to automate the collection and posting of patches to a web pages that links
+    to patches in host sequential files that are archived.</li>
+</ol>
+
+<p><strong>&nbsp;&nbsp;&nbsp; Software Design ideas:</strong> 
+
+<ol>
+  <li>Consider creation of a Mailman server that can receive all patches, saving them in
+    various baskets to be processed periodically.</li>
+  <li>Patches should be converted from Mailman message format to HFS (host sequential files)
+    format and placed in specified directories.</li>
+  <li>HTML pages should be automatically generated for posting to a web server with ftp
+    download links connected to the stored patches. Consider putting descriptive text of each
+    patch </li>
+  <li>Software should allow configuration options to define destination directories for
+    patches and HTML pages.</li>
+  <li>The sequence numbers for patches must be preserved when archiving the patches and
+    building the linking web pages.</li>
+  <li>Web pages need to provide at least two views.&nbsp; One by application, within by
+    version and within by sequence number.&nbsp; The other view is a chronological listing of
+    all patches, perhaps as a hierarchy of pages to avoid one giant page.</li>
+  <li>Web pages will be being updated as patches are processed. Consider using existing VA
+    files and adding files to create a non-visual model of patch history.&nbsp; This model can
+    then drive the creation and recreationg of web pages.</li>
+</ol>
+
+<p>Here are some <a href="Auto_Patching_Requirements.html">objectives for an automated 
+  patching system</a>. For more information about the requirements, you may want 
+  to contact the VA's DBA (<a href="mailto:schlehuber.cameron@forum.va.gov">Cameron 
+  Schlehuber</a>).</p>
+
+<table border="0" width="100%" cellspacing="3" cellpadding="3">
+  <tr>
+    <td width="100%" bgcolor="#8080C0"><font face="Arial"><strong>Specifications of the
+    message formats:</strong></font></td>
+  </tr>
+</table>
+<p>
+
+<font FACE="Courier New" SIZE="2"></font>According to Cameron Schlehuber, here's the patch and HFS structure in a
+nutshell:</p>
+
+<p><font FACE="Courier New" SIZE="2"><b>patch message structure:</b></font></p><font FACE="Courier New" SIZE="2">
+
+<p>$TXT creation title etc. } These lines are optional but</p>
+
+<p>... } if present must be bracketed</p>
+
+<p>$END TXT } with $TXT $END TXT</p>
+
+<p>$KID nmsp*vn*pn } E.g., PSJ*4.5*42</p>
+
+<p>**INSTALL NAME** } Always the same</p>
+
+<p>nmsp*vn*pn } E.g., PSJ*4.5*42</p>
+
+<p>... } part of the load global root</p>
+
+<p>... } and its data</p>
+
+<p>$END KID nmsp*vn*pn</p>
+
+<p>&nbsp;</p>
+<b>
+
+<p>HFS file structure:</p></b>
+
+<p>creation title etc. } free text</p>
+
+<p>comment line } may be blank, but must exist</p>
+
+<p>**KIDS**:nmsp*vn*pn^ } note colon and circumflex!</p>
+
+<p>} blank line</p>
+
+<p>**INSTALL NAME** } This is the</p>
+
+<p>nmsp*vn*pn } same as</p>
+
+<p>... } the text in</p>
+
+<p>... } the patch.</p>
+
+<p>**END** } Always the same</p>
+
+<p>**END** } Always the same (yup, twice!)</p>
+
+<p>} linefeed after 2nd **END**</p>
+
+</font><p><font FACE="Courier New" SIZE="2"></font>The name of the HFS file should closely match the patch name structure, but
+needs to be compatible with NT and UNIX standards. I suggest nmsp-vn_dp-pn.kid ... where
+vn is the whole number part of the version number and dp is the decimal part, and instead
+of &quot;*&quot;, &quot;-&quot; would be used.</p>
+
+<p>To be convenient to use, one should be able to have an option to select one or more
+message numbers, as well as those in a range, and be able to enter the destination path.
+Note that sometimes patches have no code (i.e., $KID etc., doesn't exist). These should
+default to not creating any file entry and skip gracefully. Perhaps even more convenient
+would be to have a Server that could &quot;receive&quot; all such messages, with a
+parameter entry to define the default destination path, and automatically process all such
+received messages. </p>
+
+<hr>
+<!--webbot bot="Include" u-include="../../navtext.html" tag="BODY" startspan -->
+
+<p align="center"><font size="2">Search | </font><a href="/index.html"><font size="2">Home</font></a><font size="2">
+| </font><a href="../../m/Mmain.html"><font size="2">MUMPS</font></a><font size="2"> | </font><a href="../../fileman/FMmain.html"><font size="2">Fileman</font></a><font size="2"> | </font><a href="../../kernel/KRNmain.html"><font size="2">Kernel</font></a><font size="2"> | </font><a href="../../cs/CSmain.html"><font size="2">C/S,
+Mailman, Web</font></a><font size="2"> | </font><a href="../../tools/TOOLSmain.html"><font size="2">Programmer Tools</font></a><font size="2"> | </font><a href="../../apps/APPSmain.html"><font size="2">Applications</font></a></p>
+<!--webbot bot="Include" endspan i-checksum="1170" -->
+
+</body>
+</html>

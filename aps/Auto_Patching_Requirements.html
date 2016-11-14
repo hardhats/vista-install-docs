@@ -1,0 +1,34 @@
+<HTML>
+<HEAD>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=windows-1252">
+<META NAME="Generator" CONTENT="Microsoft Word 97">
+<TITLE>1</TITLE>
+</HEAD>
+<BODY>
+
+<OL>
+
+<B><FONT FACE="Arial" SIZE=4><LI>Overview</LI></OL>
+
+</B></FONT><FONT SIZE=2>
+<P>The Automatic Patching System (APS) is a program, to be developed and used by VistA system administrators for the purpose of updating the VistA system in a quick and efficient manner.  APS emulates the manual process of entering patches into the system is a way such that human intervention is not necessary.</P>
+
+<P><IMG SRC="Image3.gif" WIDTH=564 HEIGHT=311></FONT><FONT SIZE=1>Figure 1</P>
+
+</FONT><FONT SIZE=2><P>Patching, at its basic level, consists of gathering the patch, checking dependencies, installing the patch, and logging the status.  APS will be designed to handle the manual part of this process on a per patch basis.  As shown in figure 1, each patch will offer input into the business rules.  The patch itself and the business rules will feed into the kids module to provide direction on how things should be done.  The person installing the patch, hereafter called &quot;user&quot;, also has input on how the direction of the Kids install should go.  Kids will then use all this information and update the VistA system.  The VistA system will provide a log of how the install went which can be read directly by the user or used as input into a third class system to update the site’s specific log.</P>
+<P>&nbsp;</P>
+</FONT><B><FONT FACE="Arial"><P>1.1&#9;Expectations</P>
+</B></FONT><FONT SIZE=2>
+<P>The current method of installing patches is tedious and long.  Many sites are behind and the thought of &quot;catching up&quot; is a daunting one.  APS is not a total patching solution, but rather a method of installing some of the less complex patches in an automated way.  Below are the principle reasons for writing the APS program.</P>
+
+
+<UL>
+<LI>Each month, there are many patches (usually more than 40), that need to be installed and even though Kids makes installation easy, it is still very time consuming.  APS can schedule and handle some of these patches automatically.</LI>
+<LI>If patching was done automatically, more sites would keep up with their patches.</LI>
+<LI>Those sites that are currently behind would find it easier to catch up.</LI>
+<LI>Human intervention can cause mistakes.  APS would help eliminate mistakes (e.g. spelling, wrong options being turned off, forgetting to stop taskman, etc).</LI>
+<LI>APS would automatically do a backup of the routines it was replacing and send them to a central location.</LI>
+<LI>APS, as part of its dependency checking, will look for specific words and phrases in each routine and mark those as it finds them.  This will give the programmer a &quot;heads up&quot; for local modifications.  </LI>
+<LI>APS will check the checksum count for each routine and proceed or not proceed depending on what the site wants to do (defined in the configuration).</LI></UL>
+</FONT></BODY>
+</HTML>

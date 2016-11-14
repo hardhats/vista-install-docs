@@ -1,0 +1,846 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 3.0">
+<title>Example Packman Formatted Patch</title>
+</head>
+
+<body>
+
+<p><strong>Example of Packman formatting of a patch:</strong></p>
+
+<table border="1" width="100%">
+  <tr>
+    <td width="100%" bgcolor="#B5F8FD"><small>$TXT Created by FORT,WALLY at
+    NXT.KERNEL.ISC-SF.VA.GOV (KIDS) on THURSDAY, 11/20/97 at 15:32<br>
+    =============================================================================<br>
+    Run Date: NOV 28, 1997 Designation: XU*8*70<br>
+    Package : XU - KERNEL Priority: Mandatory<br>
+    Version : 8 SEQ #52 Status: Released<br>
+    =============================================================================<br>
+    <br>
+    Subject: Auto Sign-on and PCMM fix<br>
+    <br>
+    Category: <br>
+    - Routine<br>
+    <br>
+    Description: <br>
+    ============<br>
+    <br>
+    *** Patch XU*8*59 MUST be installed before this patch ***<br>
+    <br>
+    A problem was found when using a Broker v1.0 application on Windows 95<br>
+    and server side has Broker v1.1 with Auto sign-on. The 16bit app will<br>
+    prevent the server from contacting the ClientAgent, this will cause the<br>
+    16 bit PCMM to time-out and close the sign-on.<br>
+    The fix is to disable the auto sign-on if the client is Broker v1.0<br>
+    <br>
+    It was found that the Broker sign-on were allowed even when Logon were<br>
+    inhibited.<br>
+    <br>
+    Both problems fixed by patching XUSRB<br>
+    <br>
+    SFC-1197-61181 XUSRA The SQLI interface was making use of a call in<br>
+    XUSRA that called an entry point in XUS that had <br>
+    chaged with patch 59. This is now fixed.<br>
+    <br>
+    Checksum<br>
+    Routine Old New 2nd Line<br>
+    XUSRA 1213791 1890066 **70**<br>
+    XUSRB 4666750 5125201 **11,16,28,32,59,70**<br>
+    <br>
+    ========================================================================= <br>
+    Installation:<br>
+    <br>
+    1. DSM sites - One of these routines may by mapped,<br>
+    so you will need to disable mapping for the effected routine. <br>
+    <br>
+    2. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This<br>
+    option will load the KIDS package onto your system.<br>
+    <br>
+    3. The patch has now been loaded into a Transport global on your<br>
+    system. You now need to use KIDS to install the Transport global.<br>
+    On the KIDS menu, under the 'Installation' menu, use the following<br>
+    options:<br>
+    <br>
+    Verify Checksum's in Transport Global<br>
+    Print Transport Global<br>
+    Compare Transport Global to Current System<br>
+    Backup a Transport Global<br>
+    <br>
+    4. Users can remain on the system.<br>
+    Stop the Broker listener to prevent the possibility of some CLOBER<br>
+    errors.<br>
+    <br>
+    5. On the KIDS menu, under the 'Installation' menu, use the following<br>
+    option:<br>
+    Install Package(s) 'XU*8.0*70'<br>
+    =========<br>
+    <br>
+    6. DSM Sites, after patch has installed, rebuild your map set.<br>
+    <br>
+    7. All sites, Restart the Broker listener.<br>
+    =========================================================================<br>
+    <br>
+    Routine Information:<br>
+    ====================<br>
+    <br>
+    Routine Name:<br>
+    - XUSRB<br>
+    <br>
+    <br>
+    Routine Checksum:<br>
+    <br>
+    Routine Name:<br>
+    - XUSRA<br>
+    <br>
+    <br>
+    Routine Checksum:<br>
+    <br>
+    =============================================================================<br>
+    User Information: <br>
+    Entered By : FORT,WALLY Date Entered : NOV 07, 1997<br>
+    Completed By: MARSHALL,RICK Date Completed: NOV 24, 1997<br>
+    Released By : SICARD,JERRY Date Released : NOV 28, 1997<br>
+    =============================================================================<br>
+    <br>
+    <br>
+    Packman Mail Message:<br>
+    =====================<br>
+    <br>
+    $END TXT<br>
+    $KID XU*8.0*70<br>
+    **INSTALL NAME**<br>
+    XU*8.0*70<br>
+    &quot;BLD&quot;,21,0)<br>
+    XU*8.0*70^KERNEL^0^2971119^y<br>
+    &quot;BLD&quot;,21,1,0)<br>
+    ^^58^58^2971120^<br>
+    &quot;BLD&quot;,21,1,1,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,2,0)<br>
+    *** Patch XU*8*59 MUST be installed before this patch ***<br>
+    &quot;BLD&quot;,21,1,3,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,4,0)<br>
+    A problem was found when using a Broker v1.0 application on Windows 95<br>
+    &quot;BLD&quot;,21,1,5,0)<br>
+    and server side has Broker v1.1 with Auto sign-on. The 16bit app will<br>
+    &quot;BLD&quot;,21,1,6,0)<br>
+    prevent the server from contacting the ClientAgent, this will cause the<br>
+    &quot;BLD&quot;,21,1,7,0)<br>
+    16 bit PCMM to time-out and close the sign-on.<br>
+    &quot;BLD&quot;,21,1,8,0)<br>
+    The fix is to disable the auto sign-on if the client is Broker v1.0<br>
+    &quot;BLD&quot;,21,1,9,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,10,0)<br>
+    It was found that the Broker sign-on were allowed even when Logon were<br>
+    &quot;BLD&quot;,21,1,11,0)<br>
+    inhibited.<br>
+    &quot;BLD&quot;,21,1,12,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,13,0)<br>
+    Both problems fixed by patching XUSRB<br>
+    &quot;BLD&quot;,21,1,14,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,15,0)<br>
+    SFC-1197-61181 XUSRA The SQLI interface was making use of a call in<br>
+    &quot;BLD&quot;,21,1,16,0)<br>
+    XUSRA that called an entry point in XUS that had <br>
+    &quot;BLD&quot;,21,1,17,0)<br>
+    chaged with patch 59. This is now fixed.<br>
+    &quot;BLD&quot;,21,1,18,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,19,0)<br>
+    Checksum<br>
+    &quot;BLD&quot;,21,1,20,0)<br>
+    Routine Old New 2nd Line<br>
+    &quot;BLD&quot;,21,1,21,0)<br>
+    XUSRA 1213791 1890066 **70**<br>
+    &quot;BLD&quot;,21,1,22,0)<br>
+    XUSRB 4666750 5125201 **11,16,28,32,59,70**<br>
+    &quot;BLD&quot;,21,1,23,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,24,0)<br>
+    ========================================================================= <br>
+    &quot;BLD&quot;,21,1,25,0)<br>
+    Installation:<br>
+    &quot;BLD&quot;,21,1,26,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,27,0)<br>
+    1. DSM sites - One of these routines may by mapped,<br>
+    &quot;BLD&quot;,21,1,28,0)<br>
+    so you will need to disable mapping for the effected routine. <br>
+    &quot;BLD&quot;,21,1,29,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,30,0)<br>
+    2. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This<br>
+    &quot;BLD&quot;,21,1,31,0)<br>
+    option will load the KIDS package onto your system.<br>
+    &quot;BLD&quot;,21,1,32,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,33,0)<br>
+    3. The patch has now been loaded into a Transport global on your<br>
+    &quot;BLD&quot;,21,1,34,0)<br>
+    system. You now need to use KIDS to install the Transport global.<br>
+    &quot;BLD&quot;,21,1,35,0)<br>
+    On the KIDS menu, under the 'Installation' menu, use the following<br>
+    &quot;BLD&quot;,21,1,36,0)<br>
+    options:<br>
+    &quot;BLD&quot;,21,1,37,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,38,0)<br>
+    Verify Checksum's in Transport Global<br>
+    &quot;BLD&quot;,21,1,39,0)<br>
+    Print Transport Global<br>
+    &quot;BLD&quot;,21,1,40,0)<br>
+    Compare Transport Global to Current System<br>
+    &quot;BLD&quot;,21,1,41,0)<br>
+    Backup a Transport Global<br>
+    &quot;BLD&quot;,21,1,42,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,43,0)<br>
+    4. Users can remain on the system.<br>
+    &quot;BLD&quot;,21,1,44,0)<br>
+    Stop the Broker listener to prevent the possibility of some CLOBER<br>
+    &quot;BLD&quot;,21,1,45,0)<br>
+    errors.<br>
+    &quot;BLD&quot;,21,1,46,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,47,0)<br>
+    5. On the KIDS menu, under the 'Installation' menu, use the following<br>
+    &quot;BLD&quot;,21,1,48,0)<br>
+    option:<br>
+    &quot;BLD&quot;,21,1,49,0)<br>
+    Install Package(s) 'XU*8.0*70'<br>
+    &quot;BLD&quot;,21,1,50,0)<br>
+    =========<br>
+    &quot;BLD&quot;,21,1,51,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,52,0)<br>
+    6. MSM Sites - Answer YES to the question 'Want to MOVE routines to<br>
+    &quot;BLD&quot;,21,1,53,0)<br>
+    other CPUs?'. Enter the names of your Compute and Print server(s).<br>
+    &quot;BLD&quot;,21,1,54,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,55,0)<br>
+    7. DSM Sites, after patch has installed, rebuild your map set.<br>
+    &quot;BLD&quot;,21,1,56,0)<br>
+    <br>
+    &quot;BLD&quot;,21,1,57,0)<br>
+    8. All sites, Restart the Broker listener.<br>
+    &quot;BLD&quot;,21,1,58,0)<br>
+    =========================================================================<br>
+    &quot;BLD&quot;,21,4,0)<br>
+    ^9.64PA^^<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,0)<br>
+    ^9.67PA^19^14<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,.4,0)<br>
+    .4<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,.401,0)<br>
+    .401<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,.402,0)<br>
+    .402<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,.403,0)<br>
+    .403<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,.5,0)<br>
+    .5<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,.84,0)<br>
+    .84<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,3.6,0)<br>
+    3.6<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,3.8,0)<br>
+    3.8<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,9.2,0)<br>
+    9.2<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,9.8,0)<br>
+    9.8<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,9.8,&quot;NM&quot;,0)<br>
+    ^9.68A^2^2<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,9.8,&quot;NM&quot;,1,0)<br>
+    XUSRB^^0^B14798029<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,9.8,&quot;NM&quot;,2,0)<br>
+    XUSRA^^0^B4688754<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,9.8,&quot;NM&quot;,&quot;B&quot;,&quot;XUSRA&quot;,2)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,9.8,&quot;NM&quot;,&quot;B&quot;,&quot;XUSRB&quot;,1)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,19,0)<br>
+    19<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,19.1,0)<br>
+    19.1<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,101,0)<br>
+    101<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,8994,0)<br>
+    8994<br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,.4,.4)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,.401,.401)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,.402,.402)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,.403,.403)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,.5,.5)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,.84,.84)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,3.6,3.6)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,3.8,3.8)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,9.2,9.2)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,9.8,9.8)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,19,19)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,19.1,19.1)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,101,101)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;KRN&quot;,&quot;B&quot;,8994,8994)<br>
+    <br>
+    &quot;BLD&quot;,21,&quot;QUES&quot;,0)<br>
+    ^9.62^^<br>
+    &quot;BLD&quot;,21,&quot;REQB&quot;,0)<br>
+    ^9.611^1^1<br>
+    &quot;BLD&quot;,21,&quot;REQB&quot;,1,0)<br>
+    XU*8.0*59^2<br>
+    &quot;BLD&quot;,21,&quot;REQB&quot;,&quot;B&quot;,&quot;XU*8.0*59&quot;,1)<br>
+    <br>
+    &quot;PKG&quot;,3,-1)<br>
+    1^1<br>
+    &quot;PKG&quot;,3,0)<br>
+    KERNEL^XU^SIGN-ON, SECURITY, MENU DRIVER, DEVICES, TASKMAN^<br>
+    &quot;PKG&quot;,3,22,0)<br>
+    ^9.49I^1^1<br>
+    &quot;PKG&quot;,3,22,1,0)<br>
+    8.0^2950703^2970507^.5<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,0)<br>
+    70^2971119<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,0)<br>
+    ^^58^58^2971120<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,1,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,2,0)<br>
+    *** Patch XU*8*59 MUST be installed before this patch ***<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,3,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,4,0)<br>
+    A problem was found when using a Broker v1.0 application on Windows 95<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,5,0)<br>
+    and server side has Broker v1.1 with Auto sign-on. The 16bit app will<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,6,0)<br>
+    prevent the server from contacting the ClientAgent, this will cause the<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,7,0)<br>
+    16 bit PCMM to time-out and close the sign-on.<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,8,0)<br>
+    The fix is to disable the auto sign-on if the client is Broker v1.0<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,9,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,10,0)<br>
+    It was found that the Broker sign-on were allowed even when Logon were<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,11,0)<br>
+    inhibited.<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,12,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,13,0)<br>
+    Both problems fixed by patching XUSRB<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,14,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,15,0)<br>
+    SFC-1197-61181 XUSRA The SQLI interface was making use of a call in<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,16,0)<br>
+    XUSRA that called an entry point in XUS that had <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,17,0)<br>
+    chaged with patch 59. This is now fixed.<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,18,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,19,0)<br>
+    Checksum<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,20,0)<br>
+    Routine Old New 2nd Line<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,21,0)<br>
+    XUSRA 1213791 1890066 **70**<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,22,0)<br>
+    XUSRB 4666750 5125201 **11,16,28,32,59,70**<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,23,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,24,0)<br>
+    ========================================================================= <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,25,0)<br>
+    Installation:<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,26,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,27,0)<br>
+    1. DSM sites - One of these routines may by mapped,<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,28,0)<br>
+    so you will need to disable mapping for the effected routine. <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,29,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,30,0)<br>
+    2. Use the 'INSTALL/CHECK MESSAGE' option on the PackMan menu. This<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,31,0)<br>
+    option will load the KIDS package onto your system.<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,32,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,33,0)<br>
+    3. The patch has now been loaded into a Transport global on your<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,34,0)<br>
+    system. You now need to use KIDS to install the Transport global.<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,35,0)<br>
+    On the KIDS menu, under the 'Installation' menu, use the following<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,36,0)<br>
+    options:<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,37,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,38,0)<br>
+    Verify Checksum's in Transport Global<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,39,0)<br>
+    Print Transport Global<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,40,0)<br>
+    Compare Transport Global to Current System<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,41,0)<br>
+    Backup a Transport Global<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,42,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,43,0)<br>
+    4. Users can remain on the system.<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,44,0)<br>
+    Stop the Broker listener to prevent the possibility of some CLOBER<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,45,0)<br>
+    errors.<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,46,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,47,0)<br>
+    5. On the KIDS menu, under the 'Installation' menu, use the following<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,48,0)<br>
+    option:<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,49,0)<br>
+    Install Package(s) 'XU*8.0*70'<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,50,0)<br>
+    =========<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,51,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,52,0)<br>
+    6. MSM Sites - Answer YES to the question 'Want to MOVE routines to<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,53,0)<br>
+    other CPUs?'. Enter the names of your Compute and Print server(s).<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,54,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,55,0)<br>
+    7. DSM Sites, after patch has installed, rebuild your map set.<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,56,0)<br>
+    <br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,57,0)<br>
+    8. All sites, Restart the Broker listener.<br>
+    &quot;PKG&quot;,3,22,1,&quot;PAH&quot;,1,1,58,0)<br>
+    =========================================================================<br>
+    &quot;QUES&quot;,&quot;XPF1&quot;,0)<br>
+    Y<br>
+    &quot;QUES&quot;,&quot;XPF1&quot;,&quot;??&quot;)<br>
+    ^D REP^XPDH<br>
+    &quot;QUES&quot;,&quot;XPF1&quot;,&quot;A&quot;)<br>
+    Shall I write over your |FLAG| File<br>
+    &quot;QUES&quot;,&quot;XPF1&quot;,&quot;B&quot;)<br>
+    YES<br>
+    &quot;QUES&quot;,&quot;XPF1&quot;,&quot;M&quot;)<br>
+    D XPF1^XPDIQ<br>
+    &quot;QUES&quot;,&quot;XPF2&quot;,0)<br>
+    Y<br>
+    &quot;QUES&quot;,&quot;XPF2&quot;,&quot;??&quot;)<br>
+    ^D DTA^XPDH<br>
+    &quot;QUES&quot;,&quot;XPF2&quot;,&quot;A&quot;)<br>
+    Want my data |FLAG| yours<br>
+    &quot;QUES&quot;,&quot;XPF2&quot;,&quot;B&quot;)<br>
+    YES<br>
+    &quot;QUES&quot;,&quot;XPF2&quot;,&quot;M&quot;)<br>
+    D XPF2^XPDIQ<br>
+    &quot;QUES&quot;,&quot;XPM1&quot;,0)<br>
+    PO^VA(200,:EM<br>
+    &quot;QUES&quot;,&quot;XPM1&quot;,&quot;??&quot;)<br>
+    ^D MG^XPDH<br>
+    &quot;QUES&quot;,&quot;XPM1&quot;,&quot;A&quot;)<br>
+    Enter the Coordinator for Mail Group '|FLAG|'<br>
+    &quot;QUES&quot;,&quot;XPM1&quot;,&quot;B&quot;)<br>
+    <br>
+    &quot;QUES&quot;,&quot;XPM1&quot;,&quot;M&quot;)<br>
+    D XPM1^XPDIQ<br>
+    &quot;QUES&quot;,&quot;XPZ1&quot;,0)<br>
+    Y<br>
+    &quot;QUES&quot;,&quot;XPZ1&quot;,&quot;??&quot;)<br>
+    ^D OPT^XPDH<br>
+    &quot;QUES&quot;,&quot;XPZ1&quot;,&quot;A&quot;)<br>
+    Want to DISABLE Scheduled Options, Menu Options, and Protocols<br>
+    &quot;QUES&quot;,&quot;XPZ1&quot;,&quot;B&quot;)<br>
+    YES<br>
+    &quot;QUES&quot;,&quot;XPZ1&quot;,&quot;M&quot;)<br>
+    D XPZ1^XPDIQ<br>
+    &quot;QUES&quot;,&quot;XPZ2&quot;,0)<br>
+    Y<br>
+    &quot;QUES&quot;,&quot;XPZ2&quot;,&quot;??&quot;)<br>
+    ^D RTN^XPDH<br>
+    &quot;QUES&quot;,&quot;XPZ2&quot;,&quot;A&quot;)<br>
+    Want to MOVE routines to other CPUs<br>
+    &quot;QUES&quot;,&quot;XPZ2&quot;,&quot;B&quot;)<br>
+    NO<br>
+    &quot;QUES&quot;,&quot;XPZ2&quot;,&quot;M&quot;)<br>
+    D XPZ2^XPDIQ<br>
+    &quot;RTN&quot;)<br>
+    2<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;)<br>
+    0^2^B4688754<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,1,0)<br>
+    XUSRA ;ISCSF/RWF - Remote access control ;11/19/97 13:43<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,2,0)<br>
+    ;;8.0;KERNEL;**70**;Jul 10, 1995<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,3,0)<br>
+    Q ;No entry from top<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,4,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,5,0)<br>
+    ;OUTSIDE app user cheking, The supported entry-points are:<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,6,0)<br>
+    ;VALIDAV, INTRO<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,7,0)<br>
+    ;First parameter is always call-by-reference<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,8,0)<br>
+    VALIDAV(RESULT,AVCODE) ;Check a users access<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,9,0)<br>
+    ;Return DUZ^problem message^verify needs changing<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,10,0)<br>
+    ;This entry point is subscription only.<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,11,0)<br>
+    N X,XUSER,XUF,XRA1,XRA2,XUMSG<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,12,0)<br>
+    K ^UTILITY($J),^TMP($J),^XUTL(&quot;XQ&quot;,$J)<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,13,0)<br>
+    D SET1^XUS(0) S XRA1=$$INHIBIT^XUSRB,XRA2=0,XUF=0,DUZ=0,XUMSG=0<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,14,0)<br>
+    I 'XRA1 S DUZ=$$CHECKAV^XUS(AVCODE) S:DUZ XRA2=$$VCVALID S:XRA2 DUZ=0,XRA1=12<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,15,0)<br>
+    S
+    XUMSG=$S(XRA1:XRA1,'DUZ:4,1:0),XUMSG=$S(XUMSG:$P($T(@XUMSG^XUS3),&quot;;&quot;,4),1:&quot;&quot;)<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,16,0)<br>
+    S RESULT=DUZ_U_XUMSG_U_XRA2<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,17,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,18,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,19,0)<br>
+    INTRO(RESULT) ;Return INTRO TEXT.<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,20,0)<br>
+    D INTRO^XUS1A(&quot;RESULT&quot;)<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,21,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,22,0)<br>
+    VCVALID() ;Check if the Verify code needs changing.<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,23,0)<br>
+    Q:'$G(DUZ) 1<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,24,0)<br>
+    Q $G(^VA(200,DUZ,.1))+$P(^XTV(8989.3,1,&quot;XUS&quot;),&quot;^&quot;,15)'&gt;(+$H)<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,25,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,26,0)<br>
+    CVC(RESULT,XU1) ;change VC<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,27,0)<br>
+    S RESULT=0 Q:$G(DUZ)'&gt;0 N XU2 S U=&quot;^&quot;,XU2=$P(XU1,U,2),XU1=$P(XU1,U)<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,28,0)<br>
+    Q $$XXCVC^XUS2(XU1,XU2)<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,29,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,30,0)<br>
+    ZSETUP(RESULT) ;Finish setup partition<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,31,0)<br>
+    S RESULT=0 Q:$G(DUZ)'&gt;0 D DUZ^XUS1A,USER^XUS1A<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,32,0)<br>
+    S RESULT=1 M RESULT(1)=XUTXT<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,33,0)<br>
+    K ^UTILITY($J),^TMP($J),^XUTL(&quot;XQ&quot;,$J)<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,34,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,35,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,36,0)<br>
+    SETUP(RESULT) ;sets up environment for GUI signon<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,37,0)<br>
+    D SET1^XUS(0)<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,38,0)<br>
+    S RESULT(0)=$P(XUENV,U,3) ;server name<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,39,0)<br>
+    S RESULT(1)=$P(XUVOL,U) ;volume<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,40,0)<br>
+    S RESULT(2)=XUCI ;uci<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,41,0)<br>
+    S RESULT(3)=$I ;device<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,42,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,43,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,44,0)<br>
+    A1 ;Set some basics.<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,45,0)<br>
+    S U=&quot;^&quot;,DT=$$DT^XLFDT()<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,46,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,47,0)<br>
+    JOB(DUZ,KEY,ACTION) ;To start a new process from GUI.<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,48,0)<br>
+    Q:(DUZ'&gt;0)!'$L(KEY)<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,49,0)<br>
+    S %=$O(^VA(200,&quot;ARA&quot;,KEY,0)) K KEY Q:%'=DUZ<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,50,0)<br>
+    D SETUP X ACTION D H2^XUSCLEAN<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,51,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,52,0)<br>
+    NETV(KEY) ;Net access check<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,53,0)<br>
+    Q:'$L(KEY) -1<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,54,0)<br>
+    S DUZ=$O(^VA(200,&quot;ARA&quot;,KEY,0))<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,55,0)<br>
+    Q DUZ<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,56,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,57,0)<br>
+    GIVE(DUZ) ;<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,58,0)<br>
+    N %<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,59,0)<br>
+    F S %=$E(^VA(200,DUZ,0),1,2)_$R(($H*86400+$P($H,&quot;,&quot;,2)))
+    Q:'$D(^VA(200,&quot;ARA&quot;,%))<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,60,0)<br>
+    S XU(200,DUZ_&quot;,&quot;,11.7)=% D FILE^DIE(&quot;&quot;,&quot;XU&quot;)<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,61,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,62,0)<br>
+    LAUNCH(ACTION) ;Job out a new process<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,63,0)<br>
+    N % S %=$P(^VA(200,DUZ,.1),&quot;^&quot;,7)<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,64,0)<br>
+    Q:%=&quot;&quot; 0 X &quot;JOB JOB^XUSRA(DUZ,%,ACTION)&quot; Q $T<br>
+    &quot;RTN&quot;,&quot;XUSRA&quot;,65,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;)<br>
+    0^1^B14798029<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,1,0)<br>
+    XUSRB ;ISCSF/RWF - Request Broker ;11/20/97 15:19<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,2,0)<br>
+    ;;8.0;KERNEL;**11,16,28,32,59,70**;Jul 05, 1995<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,3,0)<br>
+    Q ;No entry from top<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,4,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,5,0)<br>
+    ;DATA BROKER calls, First parameter is always call-by-reference<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,6,0)<br>
+    VALIDAV(RET,AVCODE) ;Check a users access<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,7,0)<br>
+    ;Return R(0)=DUZ, R(1)=(0=OK, 1,2...=Can't sign-on for some reason)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,8,0)<br>
+    ; R(2)=verify needs changing, R(3)=Message, R(4)=0, R(5)=msg cnt, R(5+n)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,9,0)<br>
+    I $$NEWERR^%ZTER N $ETRAP S $ETRAP=&quot;&quot;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,10,0)<br>
+    N X,XUSER,XUF,XUNOW,XUDEV,XUM,XUMSG,%1,VCOK K DUZ<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,11,0)<br>
+    S RET(0)=0,RET(5)=0,XUF=0,XUM=0,XUMSG=0<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,12,0)<br>
+    S DUZ=0,DUZ(0)=&quot;&quot;,VCOK=0 D NOW<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,13,0)<br>
+    S XOPT=$$STATE^XWBSEC(&quot;XUS XOPT&quot;),XUT=$$STATE^XWBSEC(&quot;XUS CNT&quot;)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,14,0)<br>
+    S XUMSG=$$INHIBIT() I XUMSG S XUM=1 G VAX ;Logon inhibited<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,15,0)<br>
+    S DUZ=$$CHECKAV^XUS($$DECRYP^XUSRB1(AVCODE))<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,16,0)<br>
+    S XUT=$G(XUT)+1 D SET^XWBSEC(&quot;XUS CNT&quot;,XUT)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,17,0)<br>
+    I XUT&gt;$P(XOPT,U,2) S XUM=1,XUMSG=7 H 5 G VAX<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,18,0)<br>
+    S XUMSG=$$UVALID^XUS() G:XUMSG VAX<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,19,0)<br>
+    S VCOK=$$VCVALID()<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,20,0)<br>
+    I DUZ&gt;0 S XUMSG=$$POST(1)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,21,0)<br>
+    I 'XUMSG,VCOK S XUMSG=12 D SET^XWBSEC(&quot;XUS DUZ&quot;,DUZ) ;Need to change VC<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,22,0)<br>
+    VAX S:XUMSG&gt;0 DUZ=0 D:DUZ&gt;0 POST2<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,23,0)<br>
+    S
+    RET(0)=DUZ,RET(1)=XUM,RET(2)=VCOK,RET(3)=$S(XUMSG:$P($T(@XUMSG^XUS3),&quot;;&quot;,4),1:&quot;&quot;),RET(4)=0<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,24,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,25,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,26,0)<br>
+    NOW S U=&quot;^&quot;,XUNOW=$$NOW^XLFDT(),DT=$P(XUNOW,&quot;.&quot;),XUDEV=0<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,27,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,28,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,29,0)<br>
+    INTRO(RET) ;Return INTRO TEXT.<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,30,0)<br>
+    D INTRO^XUS1A(&quot;RET&quot;)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,31,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,32,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,33,0)<br>
+    VCVALID() ;Return 1 if the Verify code needs changing.<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,34,0)<br>
+    Q:'$G(DUZ) 1<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,35,0)<br>
+    Q:$P($G(^VA(200,DUZ,.1)),U,2)=&quot;&quot; 1<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,36,0)<br>
+    Q $G(^VA(200,DUZ,.1))+$P(^XTV(8989.3,1,&quot;XUS&quot;),&quot;^&quot;,15)'&gt;(+$H)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,37,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,38,0)<br>
+    CVC(RET,XU1) ;change VC, Return 0 = success<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,39,0)<br>
+    N XU2,XU3,XU4 S RET(0)=99,XU4=$$STATE^XWBSEC(&quot;XUS DUZ&quot;) S:(DUZ=0)&amp;(XU4&gt;0)
+    DUZ=XU4 Q:$G(DUZ)'&gt;0<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,40,0)<br>
+    S U=&quot;^&quot;,XU2=$P(XU1,U,2),XU3=$P(XU1,U,3),XU1=$P(XU1,U)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,41,0)<br>
+    S XU1=$$DECRYP^XUSRB1(XU1),XU2=$$DECRYP^XUSRB1(XU2),XU3=$$DECRYP^XUSRB1(XU3)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,42,0)<br>
+    S XU3=$$BRCVC^XUS2(XU1,XU2),RET(0)=+XU3,RET(1)=$P(XU3,U,2,9)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,43,0)<br>
+    I 'XU3,XU4 D KILL^XWBSEC(&quot;XUS DUZ&quot;),POST2<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,44,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,45,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,46,0)<br>
+    POST(CVC) ;Finish setup partition, I CVC don't log get<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,47,0)<br>
+    N X,XUM S:$D(IO)[0 IO=$I S IO(0)=IO<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,48,0)<br>
+    K ^UTILITY($J),^TMP($J),^XUTL(&quot;XQ&quot;,$J)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,49,0)<br>
+    I '$D(USER(0)),DUZ D USER^XUS(DUZ)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,50,0)<br>
+    S XUM=$$USER^XUS1A Q:XUM&gt;0 XUM ;User can't sign on for some reason.<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,51,0)<br>
+    S RET(5)=0 ;The next line sends the post sign-on msg<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,52,0)<br>
+    F %=1:1 Q:'$D(XUTEXT(%)) S RET(5+%)=$E(XUTEXT(%),2,256),RET(5)=%<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,53,0)<br>
+    S RET(5)=0 ;This line stops the display of the msg. Remove this line to allow.<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,54,0)<br>
+    D:'$G(CVC) POST2<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,55,0)<br>
+    Q 0<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,56,0)<br>
+    POST2 D:'$D(XUNOW) NOW<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,57,0)<br>
+    D DUZ^XUS1A,LOG^XUS1,SAVE^XUS1,ABT^XQ12<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,58,0)<br>
+    D KILL^XWBSEC(&quot;XUS CNT&quot;),KILL^XWBSEC(&quot;XUS XOPT&quot;)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,59,0)<br>
+    K XUTEXT,XOPT,XUEON,XUEOFF,XUTT,XUDEV,XUSER<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,60,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,61,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,62,0)<br>
+    INHIBIT() ;Is Logon to this system Inhibited?<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,63,0)<br>
+    I $G(^%ZIS(14.5,&quot;LOGON&quot;,XQVOL)) Q 1<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,64,0)<br>
+    I $D(^%ZOSF(&quot;ACTJ&quot;)) X ^(&quot;ACTJ&quot;) I $P(XUVOL,U,3),($P(XUVOL,U,3)'&gt;Y)
+    Q 2<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,65,0)<br>
+    Q 0<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,66,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,67,0)<br>
+    LOGOUT ;Finish logout of user.<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,68,0)<br>
+    D BYE^XUSCLEAN<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,69,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,70,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,71,0)<br>
+    SETUP(RET) ;sets up environment for GUI signon<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,72,0)<br>
+    K DUZ U XWBTDEV<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,73,0)<br>
+    S IO(&quot;IP&quot;)=XWBTIP,IO(&quot;CLNM&quot;)=$$LOW^XLFSTR($G(XWBCLMAN)) D ZIO^%ZIS4<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,74,0)<br>
+    D SET1^XUS(0),SET^XWBSEC(&quot;XUS XOPT&quot;,XOPT),SET^XWBSEC(&quot;XUS CNT&quot;,0)<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,75,0)<br>
+    ;0=server name, 1=volume, 2=uci, 3=device, 4=# attempts, 5=skip signon-screen<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,76,0)<br>
+    S RET(0)=$P(XUENV,U,3),RET(1)=$P(XUVOL,U),RET(2)=XUCI<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,77,0)<br>
+    S RET(3)=$I,RET(4)=$P(XOPT,U,2),RET(5)=0<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,78,0)<br>
+    I $$INHIBIT() Q<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,79,0)<br>
+    ;Single sign-on check only for Broker v1.1<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,80,0)<br>
+    I $G(XWBVER)&lt;1.1 S XQXFLG(&quot;ZEBRA&quot;)=-1 ;Disable for v1.0<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,81,0)<br>
+    I IO(&quot;CLNM&quot;)]&quot;&quot; S DUZ=$$AUTOXWB^XUS1B() ;Only check when 1.1 CL.<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,82,0)<br>
+    I DUZ&gt;0 D NOW S XUMSG=$$POST(0) I XUMSG&gt;0 S DUZ=0<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,83,0)<br>
+    S:DUZ&gt;0 RET(5)=1<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,84,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,85,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,86,0)<br>
+    OWNSKEY(RET,LIST) ;Does user have Key<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,87,0)<br>
+    N I,K S I=&quot;&quot;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,88,0)<br>
+    I $G(DUZ)'&gt;0 S RET(0)=0 Q<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,89,0)<br>
+    I $O(LIST(&quot;&quot;))=&quot;&quot; S RET(0)=$$KCHK(LIST) Q<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,90,0)<br>
+    F S I=$O(LIST(I)) Q:I=&quot;&quot; S RET(I)=$$KCHK(LIST(I))<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,91,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,92,0)<br>
+    KCHK(%) Q $S($G(DUZ)&gt;0:$D(^XUSEC(%,DUZ)),1:0) ;Key Check<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,93,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,94,0)<br>
+    AVHELP(RET) ; send access/verify code instructions.<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,95,0)<br>
+    S RET(0)=$$AVHLPTXT^XUS2()<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,96,0)<br>
+    Q<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,97,0)<br>
+    ;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,98,0)<br>
+    OPTACCES(RET,USER,OPTIONS,MODE) ;Checks or sets user's access for passed in options<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,99,0)<br>
+    S MODE=&quot;CHECK&quot; ;only CHECK mode supported for now<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,100,0)<br>
+    N I S I=&quot;&quot;<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,101,0)<br>
+    I $G(USER)'&gt;0 S RET(0)=0 Q<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,102,0)<br>
+    F S I=$O(OPTIONS(I)) Q:I=&quot;&quot; S RET(I)=$$CHK^XQCS(USER,OPTIONS(I))=1<br>
+    &quot;RTN&quot;,&quot;XUSRB&quot;,103,0)<br>
+    Q<br>
+    &quot;VER&quot;)<br>
+    8.0^21.0<br>
+    $END KID XU*8.0*70<br>
+    </small></td>
+  </tr>
+</table>
+</body>
+</html>

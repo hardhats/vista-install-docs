@@ -1,0 +1,233 @@
+<html>
+
+<head>
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>Diamond Mining</title>
+</head>
+
+<body>
+<div align="center"><center>
+
+<table BORDER="0" CELLPADDING="6" CELLSPACING="6" WIDTH="100%">
+  <tr>
+    <td ALIGN="center"><img src="images/large_diamond.gif" alt="large_diamond.gif (4180 bytes)" WIDTH="74" HEIGHT="66"><p><strong><font size="5" face="Arial">Diamond<br>
+    Mining<br>
+      </font><font face="Arial" size="3">(for Cache 3.x)</font></strong></td>
+    <td WIDTH="80%"><!--webbot bot="Include" u-include="../../navicon_plain.html" tag="BODY" startspan -->
+
+<p align="center"><a href="../../index.html"><img
+src="../../images/shopSHomeOff.gif" alt="Home Page" align="top"
+border="0" width="54" height="76"></a><a href="../../m/Mmain.html"><img
+src="../../images/shopSMOff.gif" alt="M |" align="top" border="0"
+width="54" height="76"></a> <a href="../../fileman/FMmain.html"><img
+src="../../images/shopSFmOff.gif" alt=" FileMan |" align="top"
+border="0" width="54" height="76"></a><a
+href="../../kernel/KRNmain.html"><img src="../../images/shopSKrnOff.gif"
+alt=" Kernel |" align="top" border="0" width="54" height="76"></a><a
+href="../../cs/CSmain.html"><img src="../../images/shopSCsOff.gif"
+alt=" CS/MM/Web |" align="top" border="0" width="62" height="86"></a><a
+href="../../tools/TOOLSmain.html"><img src="../../images/shopSPgmOff.gif"
+alt=" Programmer Tools |" align="top" border="0" width="54"
+height="86"></a> <a href="../../apps/APPSmain.html"><img
+src="../../images/shopSAppOff.gif" alt="Applications" align="top"
+border="0" width="54" height="76"></a></p>
+<!--webbot bot="Include" endspan i-checksum="44960" -->
+
+</td>
+  </tr>
+</table>
+</center></div>
+
+<table border="0" width="100%" cellspacing="8" cellpadding="8" bgcolor="#800040">
+  <tr>
+    <td width="100%" bgcolor="#FFFFFF">The first jewel to be added to the Hardhats Gem series
+    is the Diamond.&nbsp; It is a clean, initialized Infrastructure-only installation of VistA
+    that works under Intersystems Cache.&nbsp; As such, it is distributed as a Cache.dat file.
+    The following instructions provide guidance on how to setup and integrate the Cache.dat
+    file into an existing configuration.<p>NOTE: The instructions on this page were developed
+    with Cache v3.1, which dramatically changed the user interface from earlier
+      versions of Cache. (Read the <a href="diamond_install.html">earlier
+      instructions for pre-Cache 3.0 installations</a>). For those who are eternally curious, read <a href="diamond_cut.html">how the Diamond is cut.</a></p>
+    <p>It is presumed that: <ul>
+      <li>The reader is moderately familiar with the Cache configuration tools</li>
+      <li>Cache is installed and operational</li>
+      <li>The Diamond Cache.dat file has been acquired (if the zipped version, it must be unzipped
+        prior to installation).</li>
+    </ul>
+    <p>To increase the value to all Hardhats, please report errors, ask questions, etc. on the
+    Hardhats mailing list. (Join the <a href="../../mailing_list.html">Hardhats mailing list</a>
+    if you are not already a subscriber - its free.)</p>
+    <p><font color="#800040"><strong>Cache Linux shortcut:</strong></font> &nbsp;&nbsp;&nbsp;
+    For those who want to evaluate the Cache red Hat Linux download from Intersystems, you can
+    download a preconfigured .cpf file. The file is named <a href="kernel.txt">kernel.txt</a>.&nbsp;
+    Rename it to kernel.cpf, once it is downloaded, and place it in the Cache directory where
+    the cache.cpf file is located. You will then need to specify this new kernel.cpf file as
+    the startup configuration for Cache.&nbsp; If you have any doubts about this shortcut, use
+    the steps below, instead, to update your configuration settings.</td>
+  </tr>
+  <tr>
+    <td width="100%" bgcolor="#FDEFCE"><big><strong>Let the Setup and Configuration begin...</strong></big><p><img src="images/small_diamond.gif" alt="small_diamond.gif (1445 bytes)" align="center" WIDTH="31" HEIGHT="30"><big><strong>&nbsp;
+    BACKUP!</strong></big></p>
+    <p>As a precaution, be sure to have backed up your Cache installation before proceeding
+    with the following procedure.</p>
+    <p><img src="images/small_diamond.gif" alt="small_diamond.gif (1445 bytes)" align="center" WIDTH="31" HEIGHT="30"><big><strong>&nbsp;
+    Place the Cache.dat</strong></big></p>
+      <p><b>IMPORTANT:</b><p><b>Make sure Cache is running during the following
+      steps and that the steps are performed on the server's console instead of
+      remotely with a Cache client.</b> <ol>
+      <li>Create a KERNEL directory in the MGR folder, where you have Cache installed.</li>
+      <li>Copy the Diamond Cache.dat file into the KERNEL directory.</li>
+      <li><font color="#FF0000"><strong>IMPORTANT information for CD owners:</strong></font> <font color="#0000FF">Under
+        some versions of Windows, a file copied from a CD has its Read Only attribute checked. To
+        change this, right click on the Cache.dat file that was just copied into the KERNEL
+        directory.&nbsp; Select the properties option and then uncheck the Read-only checkbox.
+        Failure to do so, will cause Cache to report write errors.</font></li>
+    </ol>
+    <p><img src="images/small_diamond.gif" alt="small_diamond.gif (1445 bytes)" align="center" WIDTH="31" HEIGHT="30"><strong><big>&nbsp;
+    Cache Account Creation</big></strong></p>
+      <p>To prepare for a baseline VistA install on Cache, create a database for use by the new
+    namespace KERNEL.&nbsp; (You may opt to use a name other than KERNEL.&nbsp;
+      If you do, see the final instructions for details on how to adjust the
+      Diamond to see the namespace you used.)</p>
+      <p>The following screen shows the outcome of using
+      aWizard that walks you through the creation of a database. (View the <a href="install_wizard.html">Wizard
+      screen show</a> for more details.)&nbsp; After running through <a href="install_wizard.html">the Wizard</a>, the
+      following image shows that we have what we want - a new database.</p>
+    <p align="center"><img border="0" src="images/8.gif" width="465" height="408"></p>
+      <p>The next step is to define a Cache Namespace that will be tied to the
+      above Database.&nbsp; <a href="install_wizard1.html">Another Wizard </a>can
+      be invoked to create a corresponding Namespace, as shown on the Namespace
+      tab below.</p>
+    <p align="center"><img border="0" src="images/13.5.gif" width="463" height="405"></p>
+    <p>&nbsp;</p>
+    <p><img src="images/small_diamond.gif" alt="small_diamond.gif (1445 bytes)" align="center" WIDTH="31" HEIGHT="30"><big><strong>&nbsp;
+    Cache Routine and Global Mappings</strong></big></p>
+      <p>Using the new
+    namespace, create the following routine and global mappings (see images below).
+      Mappings tell Cache where to look for globals and routines that have a
+      specific name or have a specific name prefix.&nbsp; The VistA strategy for
+      Cache, is to map all of the % globals and routines back into the same
+      namespace (UCI) as the production routines. This avoids hassles when
+      installing new versions of Cache that could alter the manager's UCI where
+      % globals and routines typically reside.</p>
+      <p>If you want to have several namespaces (test, production, etc.) think
+      carefully about the idea of sharing % globals and routines by mapping to a
+      common location.&nbsp; After all, should a test account share anything
+      with a live account?</p>
+    <p>[NOTE: The database and the namespace are not required to have the same name.]</p>
+      <p>Defining a global or routine map is same steps, just performed on a
+      different location in the Namespace tree.&nbsp; Right click on Global
+      Mapping or Routine Mapping and select Add.&nbsp; The following dialog
+      window will appear.</p>
+    <p align="center"><img border="0" src="images/13.gif" width="454" height="501"></p>
+    <p>By default, Cache chooses the current namespace for the location of the
+    mapped global or routine, as shown below.&nbsp; This is exactly what we
+    want, so there is no need to edit the location.</p>
+    <p align="center"><img border="0" src="images/14.gif" width="456" height="501"></p>
+    <p>Using the above steps, create the following mappings.</p>
+      <table border="0" width="100%" cellspacing="3" cellpadding="2">
+        <tr>
+          <td bgcolor="#800040" valign="top"><font color="#FFFFFF"><b>Globals</b></font></td>
+          <td bgcolor="#800040" valign="top"><font color="#FFFFFF"><b>Location</b></font></td>
+        </tr>
+        <tr>
+          <td valign="top">%Z*</td>
+          <td valign="top">KERNEL &lt;or whatever you called your namespace&gt;</td>
+        </tr>
+        <tr>
+          <td bgcolor="#800040" valign="top"><font color="#FFFFFF"><b>Routines</b></font></td>
+          <td bgcolor="#800040" valign="top"><font color="#FFFFFF"><b>Location</b></font></td>
+        </tr>
+        <tr>
+          <td valign="top">%DT*</td>
+          <td valign="top">KERNEL &lt;or whatever you called your namespace&gt;</td>
+        </tr>
+        <tr>
+          <td valign="top">%RCR</td>
+          <td valign="top">KERNEL &lt;or whatever you called your namespace&gt;</td>
+        </tr>
+        <tr>
+          <td valign="top">%XU*</td>
+          <td valign="top">KERNEL &lt;or whatever you called your namespace&gt;</td>
+        </tr>
+        <tr>
+          <td valign="top">%ZIS*</td>
+          <td valign="top">KERNEL &lt;or whatever you called your namespace&gt;</td>
+        </tr>
+        <tr>
+          <td valign="top">%ZO*</td>
+          <td valign="top">KERNEL &lt;or whatever you called your namespace&gt;</td>
+        </tr>
+        <tr>
+          <td valign="top">%ZT*</td>
+          <td valign="top">KERNEL &lt;or whatever you called your namespace&gt;</td>
+        </tr>
+        <tr>
+          <td valign="top">%ZV*</td>
+          <td valign="top">KERNEL &lt;or whatever you called your namespace&gt;<br>
+            This is the VA namespace of the VPE software (not officially part of
+            VistA).&nbsp; You may want to have a single location for it, rather
+            than having multiple instances, one for each Cache namespace (UCI).</td>
+        </tr>
+      </table>
+      <p>Here is a partial view of the final mappings that show routines and
+      globals are mapped.</p>
+    <p align="center"><img border="0" src="images/15.gif" width="456" height="501"></p>
+    <p><img src="images/small_diamond.gif" alt="small_diamond.gif (1445 bytes)" align="center" WIDTH="31" HEIGHT="30"><big><strong>&nbsp;
+    Confirm Installation Success</strong></big><ol>
+      <li>Shut down Cache and restart it.</li>
+      <li>Open up Cache Explorer (select the Explorer option from the Cache Cube
+        menu).</li>
+      <li>In the tree of databases and namespaces, you should see KERNEL (or
+        whatever you called your namespace).</li>
+      <li>Open up KERNEL and click on Globals to see global names, etc. in the
+        Diamond database.</li>
+      <li>Select Terminal from the Cache Cube menu.</li>
+      <li>By default, it will probably take you to %sys (unless you altered
+        Cache's default namespace).</li>
+      <li>At the programmer prompt,. enter <font face="Courier New"> D ^%CD</font>.</li>
+      <li>Enter KERNEL (this will take you to the new cache.dat).</li>
+      <li>If you used a namespace other than KERNEL, perform <a href="gems.html#customization">this
+        dialog</a> to synchronize the Diamond installation with your namespace.</li>
+      <li>You can confirm you are there by doing the following at the programmer
+        prompt:<br>
+        &nbsp;&nbsp;&nbsp; <font face="Courier New">D ^%RD</font> (use * to list all
+        routine names)<br>
+        &nbsp;&nbsp;&nbsp; <font face="Courier New">D ^%GD</font>&nbsp;</li>
+    </ol>
+    <p><img src="images/small_diamond.gif" alt="small_diamond.gif (1445 bytes)" align="center" WIDTH="31" HEIGHT="30"><big><strong>&nbsp;
+    Logging on</strong></big><ol>
+      <li>At the &gt; programmer prompt, enter <font face="Courier New"> D ^ZU</font>
+        to logon.</li>
+      <li>At the Access Code: prompt enter &quot;HH1234&quot;.</li>
+      <li>When asked Verify Code:, simply press return.</li>
+      <li>At the prompt for a new Verify Code, enter a code of your own choosing.<br>
+        (It must be a mixture of at least six alpha and numeric characters.)</li>
+      <li>The System Manager's menu will appear.</li>
+      <li>Explore the various menus to see the Printers that have been defined, etc.</li>
+      <li>HAVE FUN!</li>
+    </ol>
+    <p>&nbsp;</td>
+  </tr>
+</table>
+<!--webbot bot="Include" u-include="../../navtext.html" tag="BODY" startspan -->
+
+<p align="center"><font size="2">Search | </font><a
+href="/index.html"><font size="2">Home</font></a><font size="2">
+| </font><a href="../../m/Mmain.html"><font size="2">MUMPS</font></a><font
+size="2"> | </font><a href="../../fileman/FMmain.html"><font size="2">Fileman</font></a><font
+size="2"> | </font><a href="../../kernel/KRNmain.html"><font size="2">Kernel</font></a><font
+size="2"> | </font><a href="../../cs/CSmain.html"><font size="2">C/S,
+Mailman, Web</font></a><font size="2"> | </font><a
+href="../../tools/TOOLSmain.html"><font size="2">Programmer Tools</font></a><font
+size="2"> | </font><a href="../../apps/APPSmain.html"><font size="2">Applications</font></a></p>
+<!--webbot bot="Include" endspan i-checksum="1170" -->
+
+
+<p align="center"><script language="JavaScript"><!--
+
+document.write("</center><font face=\"arial,helv\" size=1> This page last updated on " + document.lastModified+".</font>")
+
+//--></script><!-- Thanks to Metropolitan Community College of Nebraska for thefollowing javascript function //--></p>
+</body>
+</html>

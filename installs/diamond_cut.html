@@ -1,0 +1,137 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>How the Diamond is cut..</title>
+</head>
+
+<body>
+
+<h1><img src="images/large_diamond.gif" alt="large_diamond.gif (4180 bytes)" align="center" WIDTH="74" HEIGHT="66"> Cutting the Diamond</h1>
+
+<p>This is a brief summary of the steps used to create the initial Diamond installation.
+Keep in mind that some of the information may not be exactly what you will find
+or use in your
+configuration (i.e. directory paths, etc.). Lest you feel that it isn't so bad
+to do this since it is but once, it turns out maintenance of Diamond is just has
+hard.&nbsp; Over the course of our 4-6 month release cycle, a large number of
+patches must be applied along with the occasional release of new software (Fileman
+22, for instance).</p>
+
+<p>After you have read through these steps, you will have a greater appreciation of the
+Cache.dat gift that was donated to by one of your fellow Hardhat volunteers!</p>
+
+<table BORDER="0" CELLSPACING="1" CELLPADDING="7">
+  <tr>
+    <td VALIGN="top" bgcolor="#D2AE6A">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+    <td VALIGN="top" bgcolor="#FDEFCE">
+      <ol>
+        <li>Make folder ../cachesys/kernel<br>
+        </li>
+        <li>Create database - Cache Utilities &gt;&gt; System Utilities &gt;&gt;
+          Databases<br>
+        </li>
+        <li>Add to datasets - Cache Configurations &gt;&gt; Network
+    configuration &gt;&gt; Datasets<br>
+        </li>
+        <li>Add namespace - Cache Configurations &gt;&gt; Network
+    configuration &gt;&gt; Namespace<br>
+    Routine mappings<br>
+    Global mappings<br>
+        </li>
+        <li>Define user account - Cache Utilities &gt;&gt; System
+    Utilities &gt;&gt; User Accts<br>
+        </li>
+        <li>Restore KRN8.MGR and run ^ZTMGRSET<br>
+        </li>
+        <li>Restore and initialize FM21.RTN (HARDHATS, 9999)<br>
+        </li>
+        <li>Restore standalone KIDS and run ^XPDINIT<br>
+        </li>
+        <li>Load and Install KERNEL_8_FOIA.KID<br>
+        </li>
+        <li>Save ^ZUONT as ^ZU<br>
+        </li>
+        <li>Reinitialize Fileman for PACKAGE file<br>
+        </li>
+        <li>Restore DEVICES.GBL<br>
+        </li>
+        <li>Edit CONSOLE device to correct values<br>
+        </li>
+        <li>Load and install Mailman MAIL_7_1.KID<br>
+        </li>
+        <li>Add an entry to SERVICE/SECTION file (Information
+    Services)<br>
+        </li>
+        <li>Add NEW PERSON entry: MANAGER,SYSTEM as #1,<br>
+          Fileman access &quot;@&quot;,Primary menu EVE<br>
+    Access code: HH1234, KEYS (various)<br>
+        </li>
+        <li>Add DOMAIN HARDHATS.ORG as #1<br>
+        </li>
+        <li>Enter/Edit KERNEL SITE PARAMETERS (reindex)<br>
+        </li>
+        <li>Add an INSTITUTION (HARDHATS 9999)<br>
+        </li>
+        <li>Enter/Edit KERNEL SYSTEM PARAMETERS (reindex)<br>
+        </li>
+        <li>Enter/Edit VOLUME SET (CACHE)<br>
+        </li>
+        <li>Enter/Edit TASKMAN SITE PARAMETERS<br>
+    Test TASKMAN<br>
+        </li>
+        <li>Load and install Kernel Toolkit KTK7_3.KID<br>
+        </li>
+        <li>Add DIUSER to EVE and XMUSER to XUCOMMAND<br>
+        </li>
+        <li>Add PRINT MANAGER (|PRN|) and HFS devices<br>
+        </li>
+        <li>Restore/install/test VPE version 9.3<br>
+        </li>
+        <li>Install the CAIRO Run Time Library and GUIMail KIDs.<br>
+        </li>
+        <li>Test GUIMail.<br>
+        </li>
+        <li>Install the FixIT and the FixIT demo KIDs distributions.<br>
+        </li>
+        <li>Test FixIT and the FixIT demo executable.<br>
+        </li>
+        <li>If updating Diamond, you must apply the various patches to Fileman,<br>
+          Kernel, etc.&nbsp; The challenge is to determine the sequencing so
+          that<br>
+          patches can be applied after a required patch from another package<br>
+          has been applied. Also, patches must be carefully reviewed in case the<br>
+          steps for installation are out of the norm.<br>
+        </li>
+        <li>Test mail delivery.<br>
+        </li>
+        <li>Test the RPC Broker listener.<br>
+        </li>
+        <li>Copy CACHE.DAT file and zip to KERNEL.ZIP</li>
+      </ol>
+    </td>
+  </tr>
+</table>
+<hr>
+<!--webbot bot="Include" u-include="../../navtext.html" tag="BODY" startspan -->
+
+<p align="center"><font size="2">Search | </font><a
+href="/index.html"><font size="2">Home</font></a><font size="2">
+| </font><a href="../../m/Mmain.html"><font size="2">MUMPS</font></a><font
+size="2"> | </font><a href="../../fileman/FMmain.html"><font size="2">Fileman</font></a><font
+size="2"> | </font><a href="../../kernel/KRNmain.html"><font size="2">Kernel</font></a><font
+size="2"> | </font><a href="../../cs/CSmain.html"><font size="2">C/S,
+Mailman, Web</font></a><font size="2"> | </font><a
+href="../../tools/TOOLSmain.html"><font size="2">Programmer Tools</font></a><font
+size="2"> | </font><a href="../../apps/APPSmain.html"><font size="2">Applications</font></a></p>
+<!--webbot bot="Include" endspan i-checksum="1170" -->
+
+
+<p align="center"><script language="JavaScript"><!--
+
+document.write("</center><font face=\"arial,helv\" size=1> This page last updated on " + document.lastModified+".</font>")
+
+//--></script><!-- Thanks to Metropolitan Community College of Nebraska for thefollowing javascript function //--></p>
+</body>
+</html>

@@ -1,0 +1,143 @@
+<html>
+
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta name="GENERATOR" content="Microsoft FrontPage 4.0">
+<title>GUI Mail</title>
+</head>
+
+<body bgcolor="#FFFFFF">
+<div align="center"><center>
+
+<table border="0" cellpadding="6" cellspacing="6" width="100%">
+  <tr>
+    <td align="center" width="20%"><img src="../../images/logo.gif" alt="hat &amp; gloves" width="120" height="79"><br>
+      <font size="5" face="Arial"><strong>GUIMail</strong></font></td>
+    <td width="80%"><!--webbot bot="Include" u-include="../../navicon_plain.html" tag="BODY" startspan -->
+
+<p align="center"><a href="../../index.html"><img
+src="../../images/shopSHomeOff.gif" alt="Home Page" align="top"
+border="0" width="54" height="76"></a><a href="../../m/Mmain.html"><img
+src="../../images/shopSMOff.gif" alt="M |" align="top" border="0"
+width="54" height="76"></a> <a href="../../fileman/FMmain.html"><img
+src="../../images/shopSFmOff.gif" alt=" FileMan |" align="top"
+border="0" width="54" height="76"></a><a
+href="../../kernel/KRNmain.html"><img src="../../images/shopSKrnOff.gif"
+alt=" Kernel |" align="top" border="0" width="54" height="76"></a><a
+href="../../cs/CSmain.html"><img src="../../images/shopSCsOff.gif"
+alt=" CS/MM/Web |" align="top" border="0" width="62" height="86"></a><a
+href="../../tools/TOOLSmain.html"><img src="../../images/shopSPgmOff.gif"
+alt=" Programmer Tools |" align="top" border="0" width="54"
+height="86"></a> <a href="../../apps/APPSmain.html"><img
+src="../../images/shopSAppOff.gif" alt="Applications" align="top"
+border="0" width="54" height="76"></a></p>
+<!--webbot bot="Include" endspan i-checksum="44960" -->
+
+</td>
+  </tr>
+</table>
+</center></div>
+
+<hr>
+
+<table border="0" width="100%" cellspacing="3" cellpadding="3">
+  <tr>
+    <td width="100%" bgcolor="#FFCC99"><font face="Arial"><strong>GUIMail (a <a href="#CAIRO">CAIRO</a>
+      team product)</strong></font></td>
+  </tr>
+</table>
+
+<p>This version of GUIMail represents the next generation of VistA GUIMail. Among 
+  many enhancements suggested by VA users from across the country, this version 
+  also supports file attachments -- A rather significant feature addition for 
+  VistA GUIMail users, even though it is a common feature in traditional mail 
+  clients..
+<p>Here is a sample screen from GUIMail
+running via the <a href="../installs/gems.html">Hardhats Diamond installation.</a>
+
+<p align="center"><img border="0" src="../../images/GUIMail.gif" width="597" height="415">
+
+<p>Some of the other enhancements are:
+<TABLE>
+<TR><TD><UL>
+<LI>ANSWER functionality 
+<LI>Send to Sender attribute
+<LI>Parameter line now supports the commonly used S[erver], P[ort] specifiers.
+<LI>Message Search Dialog
+<LI>Lookup by Message Number
+<LI>New ListView column for Responses Read/Total REsponses
+<LI>Embedded tabs in message text are converted to spaces
+<LI>Personal preferences are stored in the Kernel Generic Parameter file structure
+<LI>The last 10 messages that were opened are tracked and retrievable.
+<LI>Updated but not completed Help file.
+</UL></tr></table>
+
+<br>
+Refer to the GUIMail_Changes.Txt document included in the ZIP file
+for a more complete list of changes.
+
+
+<P>
+<FONT COLOR=RED>
+Requires the following software:
+</FONT>
+<TABLE>
+<TR><TD><UL>
+<FONT COLOR=RED> 
+<LI>RPC Broker V1.1 
+<LI>Fileman FMDC V1.0 (DI*21*34)
+<LI>Kernel Patch XU*8.0*71
+<LI>Kernel Toolkit Generic Parameters Patch XT*7.3*26
+<LI>Mailman Patch XM*7.1*50
+<LI>Mailman Patch XM*7.1*73
+</FONT></UL></TD></TABLE>
+<FONT COLOR=RED>Note: On CACHE systems, the environment variable to allow unsubscripted
+    kills must be enabled.</FONT>
+
+<p><b>This software is provided as is with no warranty.</b>&nbsp;</p>
+<p>The official home for the <a href="http://sourceforge.net/project/showfiles.php?group_id=60087">GUIMail download</a>, outside the VA firewall, is at the WorldVista site.</p>
+<hr>
+<table border="0" width="100%">
+  <tr>
+    <td width="100%" bgcolor="#E1E3C6"><b><a name="CAIRO"></a>CAIRO - Center for Applied Informatics Research and Operations</b>
+        <p><span style="COLOR: rgb(0,0,0)">CAIRO is based at the Richard L. Roudebush VA Medical Center in Indianapolis, Indiana.&nbsp; Established in 1996, the center's mission is to develop and promote quality clinical software targeting providers of healthcare within the Veterans Health Administration to the ultimate benefit of the patients it serves.&nbsp; The center combines the talents of developers, informaticians, researchers, and clinicians in its quest to expand the boundaries of clinical computing within VHA.</span></td>
+  </tr>
+</table>
+<hr>
+<p>NOTE: The following information was applicable to version 2.1. It is not known is this is still relevant to later versions, so do not attempt it until you are sure the problem still exists.<br>
+  <br>
+  (The v2.1.1 client is just an exe that is to be saved over the GUImail v2.1 
+exe on PCs running Windows 2000/XP. Version 2.1 must have been previously installed.)</p>
+<p>The Hardhats have identified a problem in using GUIMail with RPC Broker on 
+  Cache (perhaps other M implementations as well, but it has not been tested by 
+  Hardhats.)&nbsp; The CWMAIL3 program closes a file twice, which interacts with 
+  the Kernel to accidentally close the Null device which is needed by the RPC 
+  Broker.</p>
+
+<p>Here is an unofficial work around, until the developer can provide an
+official fix. <b>DO THIS AT YOUR OWN RISK.</b>&nbsp; In the CWMAIL3 program,
+comment out the following lines, as shown below.</p>
+<table border="0" width="100%" bgcolor="#E1E3C6">
+  <tr>
+    <td width="100%">
+      <pre>GRPINFOE ;D CLOSE^%ZISH(&quot;CWDATFIL&quot;)</pre>
+      <pre>USRINFOE ;D CLOSE^%ZISH(&quot;CWDATFIL&quot;)</pre>
+    </td>
+  </tr>
+</table>
+<hr>
+<!--webbot bot="Include" u-include="../../navtext.html" tag="BODY" startspan -->
+
+<p align="center"><font size="2">Search | </font><a
+href="/index.html"><font size="2">Home</font></a><font size="2">
+| </font><a href="../../m/Mmain.html"><font size="2">MUMPS</font></a><font
+size="2"> | </font><a href="../../fileman/FMmain.html"><font size="2">Fileman</font></a><font
+size="2"> | </font><a href="../../kernel/KRNmain.html"><font size="2">Kernel</font></a><font
+size="2"> | </font><a href="../../cs/CSmain.html"><font size="2">C/S,
+Mailman, Web</font></a><font size="2"> | </font><a
+href="../../tools/TOOLSmain.html"><font size="2">Programmer Tools</font></a><font
+size="2"> | </font><a href="../../apps/APPSmain.html"><font size="2">Applications</font></a></p>
+<!--webbot bot="Include" endspan i-checksum="1170" -->
+
+</body>
+</html>

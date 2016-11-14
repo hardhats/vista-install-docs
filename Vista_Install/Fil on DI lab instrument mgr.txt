@@ -1,0 +1,103 @@
+
+
+From: Beza, Fil <Fil@me...>
+* RE: Question converting DI Lab Instrument Manager from serial to
+tcp/ip* </mailarchive/message.php?msg_id=9882134>  
+2004-10-25 14:05
+
+ I"d like to put together a good description on how to do this but I"ll
+ need how to set up the DEVICE File under GT.M.
+ 
+ Here are the TWO field and their values for DSM and CACHE.  What would
+ be the equivalent value for GT.M? 
+ 
+ DSM      $I: 6010
+ CACHE    $I: |TCP|6010
+ 
+ DSM      OPEN PARAMETERS: (TCPCHAN:ADDRESS="10.179.25.170")
+ CACHE    OPEN PARAMETERS: ("10.179.25.170":6010:"s"::512:512)
+ 
+ 
+ In the meantime try these changes
+ 
+ 1. Each instrument has its interface routine usually LATPORTnn
+ 
+ After the USE command add these
+ 
+ X ^%ZOSF("TYPE-AHEAD"),^%ZOSF("LABOFF")
+ 
+ Add these to the DEVICE FILE entry for the instrument. You can
+ experiment with the OPEN TIMEOUT VALUE.
+ 
+ Select DEVICE NAME: LAB STA 1 DIRCONN      41/BA-115     LTA41037
+ USE TIMEOUT ON OPENS: YES//
+ OPEN TIMEOUT: 5//
+ 
+ -----Original Message-----
+ From: hardhats-members-admin@li...
+ [mailto:hardhats-members-admin@li...] On Behalf Of
+ Charles G Lambrecht/HOSPOPS/VET/UTIA
+ Sent: Monday, October 25, 2004 12:21 PM
+ To: hardhats-members@li...
+ Subject: [Hardhats-members] Question converting DI Lab Instrument
+ Manager from serial to tcp/ip
+ 
+ Hello,
+  
+  We have a Data Innovations Instrument Manager interfaced to VISTA via a
+ serial line (uses routine HLLP).  This setup has worked great for years
+ until recently. It appears some noise has been introduced into the
+ serial line between the Instrument Manager PC and the Terminal Server;
+ the messages for a particular instrument are rejected "sometimes" due to
+ checksum errors at the VISTA end.  Troubleshooting serial lines is a
+ PITA, so...
+ 
+ I"m interested in taking the serial line out of the loop.   Does anyone 
+ out there
+ have the complete instructions for converting the DI Instrument Manager
+ to 
+ 
+ tcp/ip?  A technician at Data Innovations mentioned routine HLZTCP, ???
+ 
+ 
+ Thanks in advance,
+ Charles
+ ----------------------------------------------------------------------
+ Charles Lambrecht
+ Manager - Computer Operations
+ cgl@ut...                                       (865) 974-5742
+ University of TN College of Veterinary Medicine
+ ----------------------------------------------------------------------
+ 
+ 
+ -------------------------------------------------------
+ This SF.net email is sponsored by: IT Product Guide on ITManagersJournal
+ Use IT products in your business? Tell us what you think of them. Give
+ us
+ Your Opinions, Get Free ThinkGeek Gift Certificates! Click to find out
+ more
+ http://productguide.itmanagersjournal.com/guidepromo.tmpl
+ _______________________________________________
+ Hardhats-members mailing list
+ Hardhats-members@li...
+ https://lists.sourceforge.net/lists/listinfo/hardhats-members
+ 
+
+
+ 	 	 
+
+ 
+
+	
+
+Powered by SourceForge® collaborative software development tools from VA
+Software <http://www.vasoftware.com>
+© Copyright 2004 - OSTG <http://www.ostg.com/> Open Source Technology
+Group, All Rights Reserved
+About SourceForge.net </docman/display_doc.php?docid=6025&group_id=1>
+ ?  About OSTG <http://www.ostg.com/about/>  ?  Privacy Statement
+</docman/display_doc.php?docid=6049&group_id=1>  ?  Terms of Use
+</docman/display_doc.php?docid=6048&group_id=1>  ?  Advertise
+<http://www.osdn.com/advertising/index.htm>  ?  Get Support
+</support/getsupport.php?group_id=2386>
+

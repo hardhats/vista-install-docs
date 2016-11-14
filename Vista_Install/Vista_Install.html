@@ -1,0 +1,2808 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=iso-8859-1">
+	<TITLE>Installing FOIA Vista on Cach&eacute; for Windows</TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice.org 2.4  (Linux)">
+	<META NAME="CREATED" CONTENT="20060316;23224900">
+	<META NAME="CHANGED" CONTENT="20080914;12024100">
+	<STYLE TYPE="text/css">
+	<!--
+		TD P { color: #000000 }
+		P { color: #000000 }
+		H2 { color: #000000; font-family: "arial", "helv", "helvetica", sans-serif; font-size: 16pt }
+		H4 { color: #000000; font-family: "arial", "helv", "helvetica", sans-serif }
+		H5 { color: #000000; font-family: "arial", "helv", "helvetica", sans-serif }
+		A:link { color: #0000ff }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" TEXT="#000000" LINK="#0000ff" BGCOLOR="#ffffff" DIR="LTR">
+<H2 ALIGN=CENTER>VistA Install with Cach&eacute; 5 in Windows</H2>
+<H4 ALIGN=CENTER>Chapter 1 - Starting Cach&eacute;, FileMan, TaskMan,
+Mailman and Broker</H4>
+<H4>Introduction</H4>
+<P>What follows are instructions for installing VistA using Cach&eacute;
+v5 in a Microsoft Windows operating system. The Vista software is
+available from the Department of Veterans Affairs' <A HREF="ftp://ftp.va.gov/Vista/Software/">ftp
+site</A> as a zipped CACHE.DAT file. (Note: The VA's ftp site is not
+compatible with Netscape's ftp. Either use Windows Explorer or FTP
+software). These instructions are the result of contributions from
+many. Information came from web sites such as <A HREF="http://www.hardhats.org/">www.hardhats.org</A>
+and <A HREF="http://www.seaislandsystems.com/">www.seaislandsystems.com</A>,
+from the <A HREF="http://www.hardhats.org/mailing_list.html">Hardhats
+mailing list</A>, from responses to questions addressed to or
+provided by specific individuals working outside the list, from
+technical support from <A HREF="http://www.intersystems.com/">www.intersystems.com</A>,
+from the lessons learned by those who assembled this list and from
+the documentation provided with VistA and Cach&eacute;. Others also
+helped to format and set up this document for release and post it on
+the HardHats site. There were many testers and reviewers of the
+instructions as well. Thank you all and congratulations for finally
+getting these instructions done! 
+</P>
+<P>Most of Vista is written in Standard MUMPS. If you are new to the
+M language, check out the <A HREF="http://www.hardhats.org/">www.hardhats.org</A>
+web site for more information. You might consider looking at the
+paperback M Programming, A Comprehensive Guide by Richard F. Walters
+(1997) and the CD M[UMPS] by Example by Ed de Moel (2000) or the
+online version at <A HREF="http://207.224.6.57/">http://207.224.6.57</A>
+which has a language reference which is hyperlinked. The hardhats.org
+web site has a brief listing of some of the useful routines at
+<A HREF="http://www.hardhats.org/tools/MUtil_VA.html">http://www.hardhats.org/tools/MUtil_VA.html</A>
+and <A HREF="http://www.hardhats.org/tools/MUtilframe.html">http://www.hardhats.org/tools/MUtilframe.html</A>.
+It may be helpful to look at the list as you continue to help give
+yourself a better idea of what you are doing with each step.
+<A HREF="http://www.freem.net/language.txt">http://www.freem.net/language.txt</A>
+also has a nice short and to the point M language reference as is
+<A HREF="http://www.geocities.com/SiliconValley/7041/mwm001/mw001tyt.html#Top">http://www.geocities.com/SiliconValley/7041/mwm001/mw001tyt.html#Top</A>.
+The VA provides extensive on-line documentation on Vista at
+<A HREF="http://www.va.gov/vdl/">http://www.va.gov/vdl/</A>.
+Intersystems provides documentation on Cach&eacute; at
+<A HREF="http://www.intersystems.com/downloads/documentation/index.html">http://www.intersystems.com/downloads/documentation/index.html</A>
+and the downloaded version. 
+</P>
+<P>Some quick advice for getting yourself out of trouble once you
+start working in FileMan. Hitting enter repeatedly will generally get
+you back to a prompt you can understand and typing in &quot;^&quot;
+will exit the routine. There is very often help available by typing
+?, ?? or ???. There are various levels of help at times. A good
+default to try is ??. Hitting enter selects defaults. For example, if
+you hit enter after this prompt, INPUT TO WHAT FILE: NEW PERSON//, it
+will select the NEW PERSON file. Typing ?? would give you a list of
+files you could choose instead. 
+</P>
+<P>&nbsp;</P>
+<H4>Install Cach&eacute; and Set Up the Vista Platinum Namespace in
+Cach&eacute;</H4>
+<H5>This phase of the installation creates an area (a namespace) for
+you to work in and point that namespace to the distributed VistA
+database.</H5>
+<TABLE BORDER=0 CELLPADDING=2 CELLSPACING=2>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>1.</P>
+		</TD>
+		<TD>
+			<P>Install Cach&eacute; (The free single user version of Cach&eacute;
+			5.0 from<A HREF="http://www.intersystems.com/">
+			</A><A HREF="ftp://ftp.intersystems.com/pub/cache/cache5SU/">ftp.intersystems.com/pub/cache/cache5SU/</A><A HREF="http://www.intersystems.com/"><SPAN STYLE="text-decoration: none">
+			</SPAN><FONT COLOR="#000000"><SPAN STYLE="text-decoration: none">as
+			an anonymous user.</SPAN></FONT></A>). These are the instructions
+			for the Windows version. Accept all of the defaults. Cache 5.0 is
+			quite dated now, although it will work.</P>
+			<P>The instructions for the installation and mapping of the VistA
+			Routines and Globals for using Cache 5.2 may be downloaded from
+			http://OpenSourceVistA.net:8888/NancysVistAServer . They are
+			available in Open Document Format and in Word format and are
+			titled InstallingVistAWithSingleUserVersionOfCache5.2 you can
+			follow these instructions instead of what follows up until step
+			32. &nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>2.</P>
+		</TD>
+		<TD>
+			<P>Create the directory c:\CacheSys\Mgr\Vista and unzip CACHE.zip
+			into it. The Cache.zip file we used was dated 4/5/2003 and was 137
+			Mb (141,243,089 bytes). The unzipped CACHE.DAT was also dated
+			4/5/2003 and was 430 Mb (451,379,200 bytes).</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>4.</P>
+		</TD>
+		<TD>
+			<P>Right Click on the Cach&eacute; Cube and choose Documentation.
+			Make sure it opens up and you can search it. If it doesn't, it is
+			likely a firewall is blocking your access to CacheWeb. As of 5/03,
+			McAfee firewall will need to be uninstalled entirely and other
+			firewalls may need to be disabled. <A HREF="mailto:support@intersys.com">support@instersys.com</A>
+			can help you if you need it. If all goes well opening the
+			documentation, then continue.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>5.</P>
+		</TD>
+		<TD>
+			<P>Right Click on the Cach&eacute; Cube again and choose
+			Configuration Manager.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>6.</P>
+		</TD>
+		<TD>
+			<P>Choose Databases tab then click Add. A database is a physical
+			disk location where M programs and data are located.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic1.gif" NAME="graphics1" ALT="pic 1 - Config Mgr" ALIGN=BOTTOM WIDTH=433 HEIGHT=437 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>7.</P>
+		</TD>
+		<TD>
+			<P>Type &quot;VISTA&quot; in the Database window then click Next&gt;.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic2.gif" NAME="graphics2" ALT="pic 2 - Database Vista" ALIGN=BOTTOM WIDTH=476 HEIGHT=357 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>8.</P>
+		</TD>
+		<TD>
+			<P>Pick location C:\Cachesys\Mgr\Vista then click Next.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic3.gif" NAME="graphics3" ALT="pic 3 - Select Vista Directory" ALIGN=BOTTOM WIDTH=476 HEIGHT=357 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>9.</P>
+		</TD>
+		<TD>
+			<P>Answer Yes to the question do you wish to use CACHE.DAT and
+			then click Finish.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic4.gif" NAME="graphics4" ALT="pic 4 - Use CACHE.DAT" ALIGN=BOTTOM WIDTH=317 HEIGHT=116 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic5.gif" NAME="graphics5" ALT="pic 5 - Finish Database Create" ALIGN=BOTTOM WIDTH=476 HEIGHT=357 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>10.</P>
+		</TD>
+		<TD>
+			<P>Choose the Namespaces tab then click Add. (Cache documentation
+			defines a Namespace as &quot;<EM>A logical entity or workspace
+			that is associated with a directory, and that provides the link
+			between a set of globals and their actual locations.&quot;)</EM></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic6.gif" NAME="graphics6" ALT="pic 6 - Add Namespace" ALIGN=BOTTOM WIDTH=433 HEIGHT=437 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>11.</P>
+		</TD>
+		<TD>
+			<P>Type in &quot;VISTA&quot; in the Namespace window then click
+			Next.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic7.gif" NAME="graphics7" ALT="pic 7 - Namespace Vista" ALIGN=BOTTOM WIDTH=478 HEIGHT=359 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>12.</P>
+		</TD>
+		<TD>
+			<P>From the list of Currently defined databases - Choose VISTA.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>13.</P>
+		</TD>
+		<TD>
+			<P>Click Next then Finish.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic8.gif" NAME="graphics8" ALT="pic 8 - Point to Vista database" ALIGN=BOTTOM WIDTH=478 HEIGHT=359 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic9.gif" NAME="graphics9" ALT="pic 9 - Finish Namespace" ALIGN=BOTTOM WIDTH=478 HEIGHT=359 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+</TABLE>
+<H4>Mapping Globals and Routines to Datasets</H4>
+<H5>Globals are persistent M data structures where files and data are
+stored and routines are M programs. Mapping is a way to tell Cach&eacute;
+where to look for globals and routines. By default, Cach&eacute; maps
+routines and globals that start with the &quot;%&quot; character to a
+namespace separate from the routines and globals that do not start
+with the &quot;%&quot; character. With VistA, it is recommended that
+all VistA routines and globals that start with the character &quot;%&quot;
+be mapped to the same namespace as non-% routines and globals
+overriding the Cach&eacute; default. The primary reason for this is
+to preserve these VistA globals and routines when Cach&eacute; is
+upgraded to a new version.</H5>
+<TABLE BORDER=0 CELLPADDING=2 CELLSPACING=2>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>14.</P>
+		</TD>
+		<TD>
+			<P>With the Namespaces tab still selected expand Vista.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic10.gif" NAME="graphics10" ALT="pic 10 - Namespace Mapping" ALIGN=BOTTOM WIDTH=433 HEIGHT=437 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>15.</P>
+		</TD>
+		<TD>
+			<P>Click on Global Mapping then click Add. (Globals are the
+			&quot;persistent&quot; M variables used by VistA, in which the
+			files used by FileMan are stored.)</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic11.gif" NAME="graphics11" ALT="pic 11 - Global Mapping" ALIGN=BOTTOM WIDTH=433 HEIGHT=437 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>16.</P>
+		</TD>
+		<TD>
+			<P>Type in &quot;%Z*&quot; in the Enter Global window. (This
+			indicates all variables beginning with %Z as * is a &quot;wild
+			card&quot; or &quot;place holder&quot; for any number of
+			digits/characters, etc., that might follow Z.)</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>17.</P>
+		</TD>
+		<TD>
+			<P>Click OK.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic12.gif" NAME="graphics12" ALT="pic 12 - %Z* global" ALIGN=BOTTOM WIDTH=332 HEIGHT=116 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>18.</P>
+		</TD>
+		<TD>
+			<P>Click Routine Mapping then click Add. (Routines are programs
+			written in M)</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic13.gif" NAME="graphics13" ALT="pic 13 - Routine Mapping" ALIGN=BOTTOM WIDTH=433 HEIGHT=437 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>19.</P>
+		</TD>
+		<TD>
+			<P>Enter &quot;%DT*&quot; in the Enter Routine window then click
+			OK.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic14.gif" NAME="graphics14" ALT="pic 14 - %DT* routines" ALIGN=BOTTOM WIDTH=332 HEIGHT=116 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>20.</P>
+		</TD>
+		<TD>
+			<P>Repeat the same thing for Routine Mapping for: %RCR, %XU*,
+			%ZIS*, %ZO*, %ZT*, %ZV*.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic15.gif" NAME="graphics15" ALT="pic 15 - The rest of routines" ALIGN=BOTTOM WIDTH=433 HEIGHT=437 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>21.</P>
+		</TD>
+		<TD>
+			<P>When you are finished, click OK.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>22.</P>
+		</TD>
+		<TD>
+			<P>Click Activate.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic16.gif" NAME="graphics16" ALT="pic 16 - Activate" ALIGN=BOTTOM WIDTH=334 HEIGHT=111 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>23.</P>
+		</TD>
+		<TD>
+			<P>Right click the Cach&eacute; Cube and choose Explorer.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>24.</P>
+		</TD>
+		<TD>
+			<P>On the left panel, expand the VISTA Folder.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>25.</P>
+		</TD>
+		<TD>
+			<P>Click on Globals and be sure lots of globals are listed (about
+			300) in alphabetical order. ABS was the first global and YTX was
+			the last.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic17.gif" NAME="graphics17" ALT="pic 17 - Explorer, Globals" ALIGN=BOTTOM WIDTH=488 HEIGHT=389 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>26.</P>
+		</TD>
+		<TD>
+			<P>Click Routines and be sure the same thing happens. (Our
+			experience has been Explorer times out and is automatically
+			closed.) Wait until the disk is done moving (about 2 minutes) and
+			then re-open explorer and it should work fine. There should be
+			20484 routines found. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>27.</P>
+		</TD>
+		<TD>
+			<P>After all the routines are loaded, close Explorer.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic18.gif" NAME="graphics18" ALT="pic 18 - Explorer - Routines" ALIGN=BOTTOM WIDTH=488 HEIGHT=389 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+</TABLE>
+<H4>Convert the Database from Use in Cach&eacute; 4 to Cach&eacute; 5</H4>
+<H5>The distributed FOIA CACHE.DAT was generated with Cach&eacute;
+v4. It needs to be converted to be compatible with Cach&eacute; v5.
+You will not need to perform this step if you version is compatible
+with the version used by the VA.</H5>
+<TABLE BORDER=0 CELLPADDING=2 CELLSPACING=2>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>28.</P>
+		</TD>
+		<TD>
+			<P>Right click on the Cach&eacute; Cube and choose Terminal.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>29.</P>
+		</TD>
+		<TD>
+			<P>At User prompt Type <FONT FACE="verdana">D ^%CD</FONT> (or ZN
+			&quot;%SYS&quot;).</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>30.</P>
+		</TD>
+		<TD>
+			<P>At Namespace type &quot;%SYS&quot;. The remainder of this step
+			converts the database that is run on Cach&eacute; 4 by the VA to
+			the latest version of Cach&eacute;, which is 5 at the time of this
+			writing. Once the VA source of the Platinum install switches over
+			to Cach&eacute; 5, it will not be necessary, but it should not
+			hurt anything to run it. Enter &quot;DO ALL^%SYSCONV&quot;. You
+			must allow this to finish. You should have the following output:</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic19.gif" NAME="graphics19" ALT="pic 19 - SYSCONV" ALIGN=BOTTOM WIDTH=527 HEIGHT=345 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>31.</P>
+		</TD>
+		<TD>
+			<P>Next you check the success of the conversion. Type &quot;DO
+			STATUS^%SYSCONV&quot; to see the status of the conversion. You
+			should see something like that shown below. If you see RECOMPILE
+			In Progress anywhere, wait and let it complete. You can check if
+			it is completed by running &quot;D STATUS^%SYSCONV&quot; again
+			until the recompile is done. Use the up arrow on your keyboard to
+			go back one step to make it easy to rerun D STATUS^%SYSCONV. (Note
+			in M, D is short for DO.) If there is an &quot;Error: &lt;FUNCTION&gt;&quot;
+			under C:\Cachesys\mgr\samples\, this is a problem with Cach&eacute;'s
+			samples, not with VistA, so do not be concerned about it for the
+			purpose of installing VistA. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic20.gif" NAME="graphics20" ALT="pic 20 - STATUS of SYSCONV" ALIGN=BOTTOM WIDTH=527 HEIGHT=345 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+</TABLE>
+<H4><A NAME="Vista_Setup"></A>Begin to set up the VistA System</H4>
+<H5>The routine ZTMGRSET defines VistA global variables and saves
+system wide M routines that are Cach&eacute; specific. FileMan is the
+database system used by all VistA applications.</H5>
+<TABLE BORDER=0 CELLPADDING=2 CELLSPACING=2>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>32.</P>
+		</TD>
+		<TD>
+			<P>At User prompt Type &quot;D ^%CD&quot;.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>33.</P>
+		</TD>
+		<TD>
+			<P>At Namespace Type &quot;VISTA&quot; (or use ZN &quot;VISTA&quot;).</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P><A NAME="#ZTMGRSET"></A>34.</P>
+		</TD>
+		<TD>
+			<P>Type in &quot;D ^ZTMGRSET&quot;. It will respond with a few
+			lines ending with either I think it is VISTA,CACHEWEB. Should I
+			continue anyway? N// or I think it is VISTA,VISTA. Should I
+			continue anyway? N// and you should type &quot;Y&quot;. It will
+			respond I think you are using OpenM-NT. Which MUMPS system should
+			I install? Choose 3.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic21.gif" NAME="graphics21" ALT="pic 21 - ZTMGRSET" ALIGN=BOTTOM WIDTH=557 HEIGHT=390 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>35.</P>
+		</TD>
+		<TD>
+			<P>Several lines later you will be presented with: (Note: VistA
+			presents a default response followed by &quot;//&quot; as in
+			VISTA// below. Pressing Enter accepts the default.)</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>NAME OF MANAGER'S
+			NAMESPACE: VISTA// Hit enter.<BR>PRODUCTION (SIGN-ON) NAMESPACE:
+			VISTA// Hit enter.<BR>NAME OF THIS CONFIGURATION: VISTA// Hit
+			enter. </FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P>You will have several lines of routines loading finishing with:
+						</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>Installing ^%Z
+			editor<BR>Setting ^%ZIS('C')<BR>Now, I will check your %
+			globals....<BR>ALL DONE.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>36.</P>
+		</TD>
+		<TD>
+			<P>Initialize FileMan to set your site name and number by running
+			&quot;D ^DINIT&quot; from the VISTA&gt; prompt. Say yes to
+			Intilialize VA Fileman if it isn't already initialized. Give your
+			site a site name and a 4 digit site number that is preferably not
+			a round number like 1000 or 5000 so you have less chance of file
+			number collisions when you make your own files in the future. You
+			can run D ^DINIT again to see if you changes were successful and
+			choose Cache/OpenM when offered a choice of MUMPS system you are
+			using. Also run D ^ZUSET to choose the correct version of ZU for
+			your users key login routine for the roll and scroll portions of
+			VistA .</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>37.</P>
+		</TD>
+		<TD>
+			<P>If you have the latest version of Cach&eacute; with CacheWeb,
+			you will need to edit the routine ^%ZOSV. To do this, right click
+			the Cach&eacute; Cube and choose Studio, File, Change Namespace,
+			select VISTA then click OK.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic22.gif" NAME="graphics22" ALT="pic 22 - Studio" ALIGN=BOTTOM WIDTH=623 HEIGHT=420 BORDER=0></P>
+			<P ALIGN=CENTER>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>38.</P>
+		</TD>
+		<TD>
+			<P>This step may not be needed in newer versions of VistA, but
+			check anyway. Highlight LOCALTCP-VISTA, then File, Open and enter
+			&quot;%ZOSV.INT&quot;. Open it and see if the first several lines
+			are as follows:</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>%ZOSV&nbsp;&nbsp;
+			;SFISC/AC - $View commands for Open M for NT. ;12/04/2001 15:30<BR>&nbsp;&nbsp;
+			;;8.0;KERNEL;**34,94,107,118,136,215**;Jul 10, 1995<BR>ACTJ()&nbsp;&nbsp;
+			;# Active jobs<BR>&nbsp;&nbsp; N Y,% S %=0 F Y=0:1 S %=$ZJ(%)
+			Q:%=&quot;&quot;<BR>&nbsp;&nbsp; Q Y<BR>AVJ() &nbsp;&nbsp;;#
+			available jobs<BR>&nbsp;&nbsp; ;Return fixed value if version &lt;
+			2.1.6 (e.i. not Cach&eacute;)</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P>If the lines are as above, after the line</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P>&nbsp;&nbsp; <FONT FACE="Courier New"><FONT SIZE=2>;Return
+			fixed value if version &lt; 2.1.6 (e.i. not Cache)</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P>Insert</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P>&nbsp;&nbsp; <FONT FACE="Courier New"><FONT SIZE=2>Q 99 ;Dummy
+			return for Cache 5</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P><BR>
+			</P>
+		</TD>
+		<TD>
+			<P>Now if you made changes, click File, Save and then Build,
+			Compile. At the bottom of the window you should soon see the
+			message &quot;Compilation finished successfully.&quot; &nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>39.</P>
+		</TD>
+		<TD>
+			<P>In a similar fashion, check to see if you need to edit the
+			XWBTCPC.INT routine by inserting
+			'W:XWBOS=&quot;OpenM&quot;&amp;(+$$VERSION^%ZOSV()'&lt;5) ! '
+			after 'I $L(STR)&lt;511 W:($X+$L(STR))&gt;511 ! W STR ', as shown
+			below. &nbsp;This step may also not be necessary in newer versions
+			of VistA.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P>Original line looks like:</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P>&nbsp;&nbsp;<FONT FACE="Courier New"><FONT SIZE=1 STYLE="font-size: 8pt">I
+			$L(STR)&lt;511 W:($X+$L(STR))&gt;511 ! W STR Q</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P>New line looks like:</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P>&nbsp;&nbsp;<FONT FACE="Courier New"><FONT SIZE=1 STYLE="font-size: 8pt">I
+			$L(STR)&lt;511 W:($X+$L(STR))&gt;511 ! W STR
+			</FONT></FONT><FONT FACE="Courier New"><FONT SIZE=1 STYLE="font-size: 8pt"><B>W:XWBOS=&quot;OpenM&quot;&amp;(+$$VERSION^%ZOSV()'&lt;5)
+			!</B></FONT></FONT><FONT FACE="Courier New"><FONT SIZE=1 STYLE="font-size: 8pt">
+			Q </FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P>***N.B. For those interested, this is an excerpt from the
+			hardhats mailing list describing the reason for this step:</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="verdana, arial, helv, helvetica, sans-serif"><FONT SIZE=2>If
+			you run an RPCBroker application, server opens a new session
+			with<BR>XWBTCPC routine for the client but it does not return what
+			it should for<BR>the XUS SIGNON SETUP (volume set, namespace,
+			device, ...)<BR><BR>Server is hanging in READ command in XWBTCPC
+			and waiting for a new message<BR>from the client. And client is
+			still waiting for the return message for<BR>XUS SIGNON SETUP
+			remote procedure.<BR><BR>The reason was that server doesn't always
+			flush the buffer without an '!'<BR>after WRITE command. This makes
+			problems when returning data for remote<BR>procedures which type
+			is ARRAY or GLOBAL ARRAY.<BR><BR>I made it work by adding an '!'
+			after WRITE in WRITE+4 label in XWBTCPC routine:<BR><BR>;I
+			$L(STR)&lt;511 W:($X+$L(STR))&gt;511 ! W STR Q ; the original
+			line<BR>I $L(STR)&lt;511 W:($X+$L(STR))&gt;511 ! W STR
+			W:XWBOS=&quot;OpenM&quot;&amp;(+$$VERSION^%ZOSV()'&lt;5) ! Q </FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD>
+			<P><BR>
+			</P>
+		</TD>
+		<TD>
+			<P>This step may be necessary to avoid getting a message telling
+			you the maximum number of users are now logged in. You can wait to
+			see if it happens before changing this code. &nbsp;If necessary,
+			edit XUS.INT after the SET2 &quot;tag&quot;, commenting out the
+			line I $D(^%ZOSF(&quot;ACTJ&quot;)) X ^(&quot;ACTJ&quot;) I
+			$P(XUVOL,U,3),($P(XUVOL,U,3)'&gt;Y) Q 2 with a semicolon as shown
+			below. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="verdana, arial, helv, helvetica, sans-serif"><FONT SIZE=2>SET2()
+			;EF. Return error code <BR>S
+			XUNOW=$$HTFM^XLFDT($H),DT=$E(XUNOW,1,7)<BR>S X=$P(XOPT,U,14) I
+			&quot;N&quot;'[X S XUF=(X[&quot;R&quot;)+1,XUF(.1)=&quot;&quot;,XUF(.2)=0,XUF(.3)=0
+			I X[&quot;D&quot; S:$D(^XTV(8989.3,1,4.33,&quot;B&quot;,XUDEV))[0
+			XUF=0 <BR>K DUZ,XUSER S
+			(DUZ,DUZ(2))=0,(DUZ(0),DUZ(&quot;AG&quot;),XUSER(0),XUSER(1),XUTT,%UCI)=&quot;&quot;<BR>I
+			$G(^%ZIS(14.5,&quot;LOGON&quot;,XQVOL)) Q 1<BR>; I
+			$D(^%ZOSF(&quot;ACTJ&quot;)) X ^(&quot;ACTJ&quot;) I
+			$P(XUVOL,U,3),($P(XUVOL,U,3)'&gt;Y) Q 2 <BR>S
+			X=$G(^%ZIS(1,XUDEV,&quot;XUS&quot;)),XU1=$G(^(1)) F I=1:1:15 I
+			$P(X,U,I)]&quot;&quot; S $P(XOPT,U,I)=$P(X,U,I) <BR>S DTIME=600<BR>I
+			'$P(XOPT,U,11),$D(^%ZIS(1,XUDEV,90)),^(90)&gt;2800000,^(90)'&gt;DT
+			Q 8<BR>I $D(XRT0) S XRTN=&quot;XUS&quot; D T1^%ZOSV Q </FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P><BR>
+			</P>
+		</TD>
+		<TD>
+			<P>Don't forget to save and compile any routines you change.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P>40.</P>
+		</TD>
+		<TD>
+			<P>CLOSE Studio and go back to Terminal and run &quot;D ^%CD&quot;
+			and enter &quot;VISTA&quot; for the namespace again.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P><BR>
+			</P>
+		</TD>
+		<TD>
+			<P>Now determine the what is called the &quot;BOX:VOLUME pair&quot;,
+			which is really a VOLUME:BOX pair, for your machine. This is done
+			as follows:</P>
+		</TD>
+	</TR>
+	<TR VALIGN=TOP>
+		<TD>
+			<P><BR>
+			</P>
+		</TD>
+		<TD></TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P><BR>
+			</P>
+		</TD>
+		<TD>
+			<P>VISTA&gt;D GETENV^%ZOSV W Y 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P><BR>
+			</P>
+		</TD>
+		<TD>
+			<P>Here is a sample return: 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P><BR>
+			</P>
+		</TD>
+		<TD>
+			<P>VISTA^CACHE^ANTHRAX^CACHE:CACHEWEB 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P><BR>
+			</P>
+		</TD>
+		<TD>
+			<P>In this instance, the 4th &quot;piece&quot;, assuming ^ is the
+			divider, is CACHE:CACHEWEB, which is the BOX:VOLUME pair.&nbsp;
+			ANTHRAX is the name of the computer this was done on, also known
+			as the NODE. &nbsp;The first CACHE (second &quot;piece&quot;)
+			listed is the VOLUME.&nbsp; VISTA is the UCI (also the directory
+			name where CACHE.DAT is located).&nbsp; UCI is an old terminology
+			you do not need to understand, but it helps to know what the UCI
+			should be. &nbsp;The so called BOX:VOLUME pair is actually the
+			VOLUME:BOX pair, but it is always referred to as the &quot;BOX
+			VOLUME pair&quot;. &nbsp;In short, this is what the above line
+			corresponds to: 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P><BR>
+			</P>
+		</TD>
+		<TD>
+			<P>UCI^VOL^NODE^BOX:VOLUME 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD VALIGN=TOP>
+			<P><BR>
+			</P>
+		</TD>
+		<TD>
+			<P>Jot down your BOX:VOLUME pair for comparison with what you find
+			as the installation continues to be sure it has been set
+			correctly.&nbsp; It is very important that it be correct in some
+			of the parameter files.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>41.</P>
+		</TD>
+		<TD>
+			<P>Now to create your own domain. From the VISTA prompt, start VA
+			FileMan by typing &quot;D Q^DI&quot;. At the Select OPTION:
+			prompt. Type &quot;1&quot;. (You can see why you typed 1 if you
+			type &quot;??&quot; at the option prompt. That will give you the
+			list of options you can choose from and 1 is ENTER OR EDIT FILE
+			ENTRIES.) At INPUT TO WHAT FILE: type &quot;DOMAIN&quot; and
+			accept the ALL// default to EDIT WHICH FIELD. At Select DOMAIN
+			NAME: enter a local domain name. Substitute an appropriate value
+			for VISTA.MYDOMAIN.COM in the example below.<BR><BR>NB:&nbsp; If
+			you are prompted for an ACCESS CODE, press&nbsp; ENTER until you
+			get back to a simple prompt and enter&nbsp; &quot;S DUZ=1&quot;
+			before running <BR>&nbsp;&quot;D Q^DI&quot;.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>Select OPTION: <B>1</B> &nbsp;
+			ENTER OR EDIT FILE ENTRIES <BR><BR><BR>INPUT TO WHAT FILE: NEW
+			PERSON// <B>DOMAIN</B><BR>EDIT WHICH FIELD: ALL//<BR><BR><BR>Select
+			DOMAIN NAME: <B>VISTA.MYDOMAIN.COM</B><BR>&nbsp;&nbsp; Are you
+			adding 'VISTA.MYDOMAIN.COM' as<BR>&nbsp;&nbsp;&nbsp; a new DOMAIN
+			(the 2ND)? No// <B>Y</B> (Yes)<BR>FLAGS: ^<BR><BR><BR>Select
+			DOMAIN NAME:</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>42.</P>
+		</TD>
+		<TD>
+			<P>Now to complete the DOMAIN set up by Christening the new
+			domain. Go back to the VISTA&gt; prompt and type &quot;D
+			CHRISTEN^XMUDCHR&quot;.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>VISTA&gt;<B>DO
+			CHRISTEN^XMUDCHR</B><BR><BR><BR><BR>* * * * WARNING * * * *<BR><BR>You
+			are about to change the domain name of this facility<BR>in the
+			MailMan Site Parameters file.<BR><BR>Currently, this facility is
+			named: PLATINUM.VISTA.MED.VA.GOV<BR><BR>You must be extremely sure
+			before you proceed!<BR><BR>Are you sure you want to change the
+			name of this facility? NO// <B>YES</B><BR>Select DOMAIN NAME:
+			PLATINUM.VISTA.MED.VA.GOV//&nbsp; <B>VISTA.MYDOMAIN.COM</B><BR><BR>The
+			domain name for this facility is now: VISTA.MYDOMAIN.COM<BR>PARENT:
+			4// <B>PLATINUM.VISTA.MED.VA.GOV</B><BR>TIME ZONE: MDT// <B>PDT</B>
+			&nbsp; &nbsp; PACIFIC DAYLIGHT<BR><BR>PLATINUM.VISTA.MED.VA.GOV
+			has been initialized as your 'parent'<BR>domain.<BR>(Forum is
+			usually the parent domain, unless this is a subordinate
+			domain.)<BR><BR>You may edit the MailMan Site Parameter file to
+			change your parent domain.<BR><BR>We will not initialize your
+			transmission scripts.<BR><BR>Use the 'Subroutine editor' option
+			under network management menu to add your<BR>site passwords to the
+			MINIENGINE script, and the 'Edit a script' option<BR>to edit any
+			domain scripts that you choose to.</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>43.</P>
+		</TD>
+		<TD>
+			<P>Determine the internal entry of the new domain. Remember this
+			number as it will be used in subsequent steps. Get back to the
+			Select OPTION: prompt and enter &quot;INQUIRE&quot; or &quot;5&quot;
+			(once again, you can type ?? to see the available options and 5 is
+			INQUIRE TO FILE ENTRIES) then at the Select DOMAIN NAME: prompt,
+			enter the new domain name you just created. Answer &quot;N&quot;
+			to STANDARD CAPTIONED OUTPUT and at PRINT FIELD: answer &quot;NUMBER&quot;.
+			The domain number is &quot;printed&quot; to the screen. 
+			</P>
+			<P>If you get the warning here that you do not have a home device,
+			go to step 97, do what it says there and then come back to this
+			step. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>Select OPTION: <B>5</B>
+			INQUIRE TO FILE ENTRIES<BR><BR><BR><BR>OUTPUT FROM WHAT FILE:
+			DOMAIN//<BR>Select DOMAIN NAME: <B>VISTA.MYDOMAIN.COM</B><BR>ANOTHER
+			ONE:<BR>STANDARD CAPTIONED OUTPUT? Yes// <B>N</B> (No)<BR>FIRST
+			PRINT FIELD: <B>NUMBER</B><BR>THEN PRINT FIELD:<BR>Heading (S/C):
+			DOMAIN LIST//<BR>DEVICE: CONSOLE Right Margin: 80//<BR>DOMAIN LIST
+			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; APR 11,2003 10:51
+			PAGE
+			1<BR>NUMBER<BR>------------------------------------------------------------------------<BR><BR>3
+			</FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>44.</P>
+		</TD>
+		<TD>
+			<P>From the VISTA prompt repoint the KERNEL SYSTEM PARAMETERS and
+			RPC BROKER PARAMETERS files to the new domain, go back to the
+			VISTA&gt; prompt and enter 'S $P(^XTV(8989.3,1,0),&quot;^&quot;)=3'
+			and 'S $P(^XWB(8994.1,1,0),&quot;^&quot;)=3' where 3 is the
+			internal number of the new domain we just created in the previous
+			step.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P>&nbsp;&nbsp;&nbsp;<FONT FACE="Courier New"><FONT SIZE=2>VISTA&gt;</FONT></FONT><FONT FACE="Courier New"><FONT SIZE=2><B>S
+			$P(^XTV(8989.3,1,0),&quot;^&quot;)=3</B></FONT></FONT><FONT FACE="Courier New"><FONT SIZE=2><BR>&nbsp;&nbsp;&nbsp;VISTA&gt;</FONT></FONT><FONT FACE="Courier New"><FONT SIZE=2><B>S
+			$P(^XWB(8994.1,1,0),&quot;^&quot;)=3</B></FONT></FONT><FONT FACE="Courier New"><FONT SIZE=2>
+			</FONT></FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>45.</P>
+		</TD>
+		<TD>
+			<P>Then from the VISTA&gt; prompt again start FileMan with &quot;D
+			Q^DI&quot;. At Select OPTION: enter &quot;6&quot; (UTILITY
+			FUNCTIONS) then select RE-INDEX FILE. At MODIFY WHAT FILE, enter
+			&quot;KERNEL SYSTEM PARAMETERS&quot;. Then do the same for the RPC
+			BROKER PARAMETERS file. See example below for the rest of the
+			dialogue. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>VISTA&gt;<B>D Q^DI</B><BR><BR><BR>VA
+			FileMan 22.0<BR><BR><BR>Select OPTION: <B>UT</B>ILITY
+			FUNCTIONS<BR>Select UTILITY OPTION: <B>RE</B>-INDEX FILE<BR><BR>MODIFY
+			WHAT FILE: DOMAIN// <B>8989.3</B> &nbsp; KERNEL SYSTEM PARAMETERS
+			(1 entry)<BR><BR>THERE ARE 13 INDICES WITHIN THIS FILE<BR>DO YOU
+			WISH TO RE-CROSS-REFERENCE ONE PARTICULAR INDEX? No// (No)<BR>OK,
+			ARE YOU SURE YOU WANT TO KILL OFF THE EXISTING 13 INDICES? No// <B>Y</B>
+			(Yes)<BR>DO YOU THEN WANT TO 'RE-CROSS-REFERENCE'? Yes//
+			(Yes)<BR>...EXCUSE ME, LET ME THINK ABOUT THAT A MOMENT...<BR>FILE
+			WILL NOW BE 'RE-CROSS-REFERENCED'................<BR><BR><BR>Select
+			UTILITY OPTION: <B>RE</B>-INDEX FILE<BR><BR>MODIFY WHAT FILE:
+			KERNEL SYSTEM PARAMETERS// <B>8994.1</B> &nbsp; RPC BROKER SITE
+			PARAMETERS&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (1
+			entry)<BR><BR>THERE ARE 5 INDICES WITHIN THIS FILE<BR>DO YOU WISH
+			TO RE-CROSS-REFERENCE ONE PARTICULAR INDEX? No// &nbsp; (No)<BR>OK,
+			ARE YOU SURE YOU WANT TO KILL OFF THE EXISTING 5 INDICES? No// <B>Y</B>
+			&nbsp; (Yes)<BR>DO YOU THEN WANT TO 'RE-CROSS-REFERENCE'? Yes// &nbsp;
+			(Yes)<BR>...HMMM, HOLD ON...<BR>FILE WILL NOW BE
+			'RE-CROSS-REFERENCED'......</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>46.</P>
+		</TD>
+		<TD>
+			<P>Check the VOLUME SET File (#14.5). If you accepted the default
+			VISTA when you ran ZTMGRSET (<A HREF="#ZTMGRSET">see previous
+			steps</A>), the VOLUME SET File should not need any changes. At
+			Select OPTION: enter &quot;1&quot; for EDIT OR ENTER FILE ENTRIES.
+			The choice should be INPUT TO WHAT FILE: VOLUME SET//. Accept the
+			default if it is VOLUME SET else type &quot;14.5&quot;, and at
+			EDIT WHICH FIELD: ALL// hit enter. At Select VOLUME SET prompt
+			type &quot;??&quot; to see a list of entries. When asked which
+			volume set again, type in VISTA or whatever it is exactly as it is
+			(all caps). Leave TASKMAN FILES UCI: VISTA// as VISTA. The values
+			should match what is shown below. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>Select OPTION: <B>1</B> &nbsp;
+			ENTER OR EDIT FILE ENTRIES<BR><BR>INPUT TO WHAT FILE: VOLUME SET//
+			<B>14.5</B> &nbsp; VOLUME SET (1 entry)<BR>EDIT WHICH FIELD:
+			ALL//<BR><BR>Select VOLUME SET: <B>??</B><BR>&nbsp;&nbsp;
+			VISTA<BR><BR>&nbsp;&nbsp; You may enter a new VOLUME SET, if you
+			wish<BR>&nbsp;&nbsp; Answer should be the name of a volume
+			set.<BR>&nbsp;&nbsp;&nbsp;&nbsp; When each cpu can have only one
+			volume set, this is also the cpu name.<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+			Answer will be used in extended global references to reach this
+			volume.<BR><BR>Select VOLUME SET: <B>VISTA</B><BR>VOLUME SET:
+			VISTA//<BR>TYPE: GENERAL PURPOSE VOLUME SET//<BR>INHIBIT LOGONS?:
+			NO//<BR>LINK ACCESS?: YES//<BR>OUT OF SERVICE?: NO//<BR>REQUIRED
+			VOLUME SET?: NO//<BR>TASKMAN FILES UCI: VISTA//<BR>TASKMAN FILES
+			VOLUME SET: VISTA//<BR>REPLACEMENT VOLUME SET:<BR>DAYS TO KEEP OLD
+			TASKS: 4//<BR>SIGNON/PRODUCTION VOLUME SET: Yes//<BR><BR><BR>Select
+			VOLUME SET:</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>47.</P>
+		</TD>
+		<TD>
+			<P>This step is to get the proper value for the BOX-VOLUME PAIR in
+			the TASKMAN SITE PARAMETERS File. Edit the TASKMAN SITE PARAMETER
+			File (# 14.7) to update the BOX-VOLUME PAIR. Note that when you
+			enter a &quot;?&quot; at the BOX-VOLUME PAIR prompt, it tells you
+			what the correct value should be. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>Select OPTION: <B>1</B> &nbsp;
+			ENTER OR EDIT FILE ENTRIES <BR><BR><BR>INPUT TO WHAT FILE: VOLUME
+			SET// <B>14.7</B> &nbsp; TASKMAN SITE PARAMETERS<BR>&nbsp; &nbsp;
+			&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; (1 entry)<BR>EDIT WHICH
+			FIELD: ALL//<BR><BR>Select TASKMAN SITE PARAMETERS BOX-VOLUME
+			PAIR: <B>?</B><BR>&nbsp;&nbsp;&nbsp; Answer with TASKMAN SITE
+			PARAMETERS BOX-VOLUME PAIR:<BR>&nbsp;&nbsp; VISTA:CACHE<BR><BR>&nbsp;&nbsp;&nbsp;&nbsp;
+			You may enter a new TASKMAN SITE PARAMETERS, if you wish<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+			Answer must be 3-30 characters in length.<BR><BR>The value for the
+			current account is VISTA:CACHEWEB<BR>Select TASKMAN SITE
+			PARAMETERS BOX-VOLUME PAIR: <B>VISTA:CACHE</B><BR>BOX-VOLUME PAIR:
+			VISTA:CACHE// <B>VISTA:CACHEWEB</B><BR>RESERVED: <B>^</B><BR><BR><BR>Select
+			TASKMAN SITE PARAMETERS BOX-VOLUME PAIR:</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>48.</P>
+		</TD>
+		<TD>
+			<P>Now update the RPC BROKER SITE PARAMETER File.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>Select OPTION: <B>1</B> &nbsp;
+			ENTER OR EDIT FILE ENTRIES<BR><BR>INPUT TO WHAT FILE: TASKMAN SITE
+			PARAMETERS// <B>8994.1</B> &nbsp; RPC BROKER SITE PARAMETERS<BR>EDIT
+			WHICH FIELD: ALL//<BR><BR><BR>Select RPC BROKER SITE PARAMETERS
+			DOMAIN NAME: <B>VISTA</B>.MYDOMAIN.COM<BR>&nbsp;&nbsp;&nbsp;&nbsp;
+			...OK? Yes// (Yes)<BR><BR>DOMAIN NAME: VISTA.MYDOMAIN.COM//<BR>Select
+			BOX-VOLUME PAIR: VISTA:CACHEWEB//<BR>&nbsp;&nbsp; BOX-VOLUME PAIR:
+			VISTA:CACHEWEB//<BR>&nbsp;&nbsp; Select PORT: 9210//<BR>&nbsp;&nbsp;&nbsp;
+			PORT: 9210//<BR>&nbsp;&nbsp;&nbsp; *UCI:<BR>&nbsp;&nbsp;&nbsp;
+			STATUS: STOPPED//<BR>&nbsp;&nbsp;&nbsp; CONTROLLED BY LISTENER
+			STARTER: YES// <B>N</B> &nbsp; NO</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+</TABLE>
+<H4>Set Yourself Up as the System Manager</H4>
+<H5>This is a super user who will have elevated privileges. You can
+add other users such as Physicians, Pharmacists, etc. later.</H5>
+<TABLE BORDER=0 CELLPADDING=2 CELLSPACING=2>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>49.</P>
+		</TD>
+		<TD>
+			<P>Now to set up the System Manager user with minimal information.
+			We will add more information later. At Select OPTION: Type &quot;1&quot;
+			(Type &quot;??&quot; to see Option 1 if you wish)</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>50.</P>
+		</TD>
+		<TD>
+			<P>At INPUT TO WHAT FILE: Type &quot;200&quot;, the number of the
+			NEW PERSON file. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>51.</P>
+		</TD>
+		<TD>
+			<P>At EDIT WHICH FIELD: ALL// Type &quot;.01&quot; and hit enter.
+			It will echo back NAME.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>52.</P>
+		</TD>
+		<TD>
+			<P>It may respond with finish with NEW PERSON, 2 ENTRIES and then
+			prompt you.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>53.</P>
+		</TD>
+		<TD>
+			<P>At THEN EDIT FIELD: Type &quot;ACCESS CODE&quot; and the
+			computer will finish it with Want to edit access code (Y/N)? Hit
+			Enter and hit enter until you are prompted with Select NEW PERSON
+			NAME. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>54.</P>
+		</TD>
+		<TD>
+			<P>At Select NEW PERSON NAME, Type &quot;MANAGER,SYSTEM&quot; or
+			whatever you choose.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>55.</P>
+		</TD>
+		<TD>
+			<P>At Are you adding &quot;MANAGER,SYSTEM&quot; as a NEW PERSON
+			(the 2nd [or whatever it offers you])? No// type &quot;Y&quot;. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>56.</P>
+		</TD>
+		<TD>
+			<P>It will respond Checking SOUNDEX for matches. No matches found.
+			NEW PERSON INITIAL: 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>57.</P>
+		</TD>
+		<TD>
+			<P>Type &quot;SM&quot; or whatever you choose. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>58.</P>
+		</TD>
+		<TD>
+			<P>At Want to Edit ACCESS Code (Y/N): Type &quot;Y&quot;. For NEW
+			PERSON MAIL CODE: hit ENTER. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>59.</P>
+		</TD>
+		<TD>
+			<P>Then enter an access code. (Type &quot;??&quot; and hit enter
+			to see what the options are for access codes if you wish.) At
+			least 6 mixed alphanumeric characters. If not, just type the code
+			and hit enter. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>60.</P>
+		</TD>
+		<TD>
+			<P>Retype the code as directed. FileMan will respond OK, Access
+			code has been changed! The VERIFY CODE has been deleted as a
+			security measure. The user will have to enter a new one the next
+			time they sign-on. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>61.</P>
+		</TD>
+		<TD>
+			<P>At Select NEW PERSON NAME: Hit enter. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>Select OPTION: <B>1</B> &nbsp;
+			ENTER OR EDIT FILE ENTRIES<BR><BR><BR><BR>INPUT TO WHAT FILE: RPC
+			BROKER PARAMETERS// <B>200</B> &nbsp; NEW PERSON<BR>&nbsp; &nbsp;
+			&nbsp; &nbsp; &nbsp; (2 entries)<BR>EDIT WHICH FIELD: ALL// <B>.01</B>
+			&nbsp; NAME<BR>THEN EDIT FIELD: <B>ACCESS CODE</B> &nbsp; Want to
+			edit ACCESS CODE (Y/N)<BR>THEN EDIT FIELD:<BR><BR><BR>Select NEW
+			PERSON NAME: <B>MANAGER,SYSTEM</B><BR>&nbsp; Are you adding
+			'MANAGER,SYSTEM' as a new NEW PERSON (the 3RD)? No// <B>Y</B> &nbsp;
+			(Yes)<BR>Checking SOUNDEX for matches.<BR>No matches found.<BR>&nbsp;
+			NEW PERSON INITIAL: <B>SM</B><BR>&nbsp; NEW PERSON MAIL CODE:<BR>Want
+			to edit ACCESS CODE (Y/N): <B>Y</B><BR>Enter a new ACCESS CODE
+			&lt;Hidden&gt;: <B>******</B><BR>Please re-type the new code to
+			show that I have it right: <B>******</B><BR>OK, Access code has
+			been changed!<BR>The VERIFY CODE has been deleted as a security
+			measure.<BR>The user will have to enter a new one the next time
+			they sign-on.<BR><BR><BR><BR>Select NEW PERSON NAME:</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>62.</P>
+		</TD>
+		<TD>
+			<P>At the Select OPTION: prompt Type &quot;5&quot;. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>63.</P>
+		</TD>
+		<TD>
+			<P>At OUTPUT FROM WHAT FILE: NEW PERSON// Hit Enter. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>64.</P>
+		</TD>
+		<TD>
+			<P>At Select NEW PERSON NAME: Type &quot;MANAGER,SYSTEM&quot;, or
+			whatever you chose for the system manager name and hit enter. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>65.</P>
+		</TD>
+		<TD>
+			<P>At ANOTHER ONE: Hit enter. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>66.</P>
+		</TD>
+		<TD>
+			<P>At STANDARD CAPTIONED OUTPUT? YES// Hit enter or &quot;Y&quot;.
+						</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>67.</P>
+		</TD>
+		<TD>
+			<P>At Include COMPUTED fields: (N/Y/R/B): NO// type &quot;B&quot;.
+						</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>68.</P>
+		</TD>
+		<TD>
+			<P>The response will be a screen full of data. At the upper left
+			hand corner will be NUMBER: followed by a number. This number will
+			be the DUZ number that will be used in what follows below. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>69.</P>
+		</TD>
+		<TD>
+			<P>Hit Enter until you back out to VISTA&gt;. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>70.</P>
+		</TD>
+		<TD>
+			<P>At VISTA&gt; Type &quot;SET DUZ= &quot; and after the = sign,
+			type in that number you found above for your DUZ number, and hit
+			Enter. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>71.</P>
+		</TD>
+		<TD>
+			<P>At the next VISTA&gt; prompt, type S
+			$P(^VA(200,DUZ,0),&quot;^&quot;,4)=&quot;@&quot;. This will
+			identify this user as a programmer to VA FileMan. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>72.</P>
+		</TD>
+		<TD>
+			<P>At the next VISTA&gt; prompt, type &quot;D ^XUP&quot;. This is
+			the VA Kernel's Programmer entry point. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>73.</P>
+		</TD>
+		<TD>
+			<P>The first time, you will be asked to select a TERMINAL TYPE
+			NAME:. Enter &quot;C-VT100&quot; and select 1. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>74.</P>
+		</TD>
+		<TD>
+			<P>At Select OPTION NAME: Type &quot;XUMAINT&quot;, it will echo
+			back Menu Management. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>75.</P>
+		</TD>
+		<TD>
+			<P>At Select Menu Management Option: type &quot;KEY&quot;
+			Management; then at Select Key Management Option: &quot;ALLO&quot;cation
+			of Security Keys. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>76.</P>
+		</TD>
+		<TD>
+			<P>Proceed to allocate the following keys - XUMGR, XMMGR, XUPROG,
+			XUPROGMODE, and ZTMQ. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>77.</P>
+		</TD>
+		<TD>
+			<P>When it asks Holder of the key, enter &quot;MANAGER,SYSTEM&quot;
+			or whatever name you selected. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>VISTA&gt;<B>S
+			DUZ=1</B><BR>VISTA&gt;<B>S $P(^VA(200,DUZ,0),&quot;^&quot;,4)=&quot;@&quot;</B><BR>VISTA&gt;<B>D
+			^XUP</B><BR><BR>Setting up programmer environment<BR>Select
+			TERMINAL TYPE NAME: <B>C-VT100</B><BR>&nbsp;&nbsp; 1 C-VT100
+			Digital Equipment Corporation VT-100 video<BR>&nbsp;&nbsp; 2
+			C-VT100HIGH Normal display of characters in BOLD !<BR>CHOOSE 1-2:
+			1 C-VT100 Digital Equipment Corporation VT-100 video<BR>Terminal
+			Type set to: C-VT100<BR><BR>Select OPTION NAME: <B>XUMAINT</B>
+			Menu Management<BR><BR>Select Menu Management Option: <B>KEY</B>
+			Management<BR><BR>Select Key Management Option: <B>ALLO</B>cation
+			of Security Keys<BR><BR>Allocate key: <B>XUMGR</B><BR><BR>Another
+			key: <B>XUPROG</B><BR>&nbsp;&nbsp; 1 &nbsp; XUPROG<BR>&nbsp;&nbsp;
+			2 &nbsp; XUPROGMODE<BR>CHOOSE 1-2: <B>1</B> &nbsp; XUPROG<BR><BR>Another
+			key: <B>XUPROGMODE</B><BR><BR>Another key: <B>XMMGR</B><BR><BR>Another
+			key:<BR><BR>Holder of key: <B>MANAGER</B>,SYSTEM &nbsp; &nbsp; &nbsp;
+			SM<BR><BR>Another holder:<BR><BR>You've selected the following
+			keys:<BR>XUPROG&nbsp;&nbsp;&nbsp;&nbsp; XUMGR&nbsp;&nbsp;&nbsp;&nbsp;
+			XUPROGMODE&nbsp;&nbsp;&nbsp;&nbsp; XMMGR<BR><BR>You've selected
+			the following holders:<BR><BR>MANAGER,SYSTEM<BR><BR>You are
+			allocating keys. Do you wish to proceed? YES//<BR><BR>XUPROG being
+			assigned to:<BR>&nbsp;&nbsp; MANAGER,SYSTEM<BR><BR>XUMGR being
+			assigned to:<BR>&nbsp;&nbsp; MANAGER,SYSTEM<BR><BR>XUPROGMODE
+			being assigned to:<BR>&nbsp;&nbsp; MANAGER,SYSTEM<BR><BR>XMMGR
+			being assigned to:<BR>&nbsp;&nbsp; MANAGER,SYSTEM<BR><BR><BR>Select
+			Key Management Option:</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+</TABLE>
+<H4>Set Up More Parameters</H4>
+<H5>These are parameters that are more applicable to the VistA
+application software.</H5>
+<TABLE BORDER=0 CELLPADDING=2 CELLSPACING=2>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>78.</P>
+		</TD>
+		<TD>
+			<P>If you are planning to use the VistA applications such as
+			Registration, Scheduling etc. you need to add new Institution to
+			the INSTITUTION File. Go back to the VISTA&gt; prompt and &quot;SET
+			XUMF=1&quot; then &quot;D Q^DI&quot;. Select Option #1 and edit
+			File #4. Edit the field STATION NUMBER. For Station Number, you
+			must enter the same number as the Site Number when you initialized
+			FileMan. (See Start FileMan and <A HREF="#Vista_Setup">Begin
+			Setting Up Vista section</A>.) 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>VISTA&gt;<B>S XUMF=1 D
+			Q^DI</B><BR><BR><BR>VA FileMan 22.0<BR><BR><BR>Select OPTION: <B>1</B>
+			&nbsp; ENTER OR EDIT FILE ENTRIES<BR><BR><BR><BR>INPUT TO WHAT
+			FILE: NEW PERSON// <B>4</B> &nbsp; INSTITUTION (27 entries)<BR>EDIT
+			WHICH FIELD: ALL// <B>STATION NUMBER</B><BR>THEN EDIT
+			FIELD:<BR><BR><BR>Select INSTITUTION NAME: <B>VISTA HEALTH CARE</B><BR>&nbsp;
+			Are you adding 'VISTA HEALTH CARE' as a new INSTITUTION (the
+			28TH)? No// <B>Y</B> &nbsp; (Yes)<BR>STATION NUMBER: <B>6100</B><BR><BR><BR>Select
+			INSTITUTION NAME:</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>79.</P>
+		</TD>
+		<TD>
+			<P>Then you need to add a Medical Center Division. Select File
+			#40.8 and edit fields FACILITY NUMBER and INSTITUTION FILE
+			POINTER. Enter the Institution STATION NUMBER for FACILITY NUMBER
+			and the name of the Institution in INSTITUTION FILE POINTER. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>Select OPTION: <B>1</B> &nbsp;
+			ENTER OR EDIT FILE ENTRIES<BR><BR><BR><BR>INPUT TO WHAT FILE:
+			INSTITUTION// <B>40.8</B> &nbsp; MEDICAL CENTER DIVISION (1
+			entry)<BR>EDIT WHICH FIELD: ALL// <B>FACILITY NUMBER</B><BR>THEN
+			EDIT FIELD: <B>INSTITUTION FILE POINTER</B><BR>THEN EDIT
+			FIELD:<BR><BR><BR>Select MEDICAL CENTER DIVISION NAME: <B>VISTA
+			MEDICAL CENTER</B><BR>&nbsp;&nbsp; Are you adding 'VISTA MEDICAL
+			CENTER' as<BR>&nbsp;&nbsp; a new MEDICAL CENTER DIVISION (the
+			2ND)? No// <B>Y</B> &nbsp; (Yes)<BR>&nbsp;&nbsp; MEDICAL CENTER
+			DIVISION NUM: 2//<BR>&nbsp;&nbsp; MEDICAL CENTER DIVISION FACILITY
+			NUMBER: <B>6100A</B><BR>FACILITY NUMBER: 6100A//<BR>INSTITUTION
+			FILE POINTER: <B>VISTA</B> HEALTH CARE&nbsp; &nbsp; 6100<BR><BR><BR>Select
+			MEDICAL CENTER DIVISION NAME:</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>80.</P>
+		</TD>
+		<TD>
+			<P>You are now ready to enter additional information for the
+			system manager user like PRIMARY MENU, VERIFY CODE etc. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>81.</P>
+		</TD>
+		<TD>
+			<P>Go back to the VISTA prompt and type &quot;D ^XUP&quot;. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>82.</P>
+		</TD>
+		<TD>
+			<P>At Select OPTION NAME: Type &quot;XUSEREDIT&quot;, it will give
+			you two choices, select 1. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>83.</P>
+		</TD>
+		<TD>
+			<P>At Select NEW PERSON NAME: Type the name you chose for Manager,
+			System. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>VISTA&gt;<B>D
+			^XUP</B><BR><BR>Setting up programmer environment<BR>Terminal Type
+			set to: C-VT100<BR><BR>Select OPTION NAME: <B>XUSERED</B><BR>&nbsp;
+			&nbsp; 1 &nbsp; XUSEREDIT &nbsp; Edit an Existing User<BR>&nbsp; &nbsp;
+			2 &nbsp; XUSEREDITSELF &nbsp; Edit User Characteristics<BR>CHOOSE
+			1-2: <B>1</B> XUSEREDIT&nbsp; Edit an Existing User<BR>Edit an
+			Existing User<BR>Select NEW PERSON NAME: <B>MANAGER</B>,SYSTEM&nbsp;
+			&nbsp; SM</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>84.</P>
+		</TD>
+		<TD>
+			<P>Now you will be presented with a screen with multiple options.
+			You can navigate the screen with the TAB key. For navigation help,
+			use your keyboard arrows to move down to the command line and hold
+			down either the Num Lock key (which is mapped as PF1 of a VT-320
+			terminal by Cach&eacute;) or F1 for other terminal emulations and
+			hit &quot;H&quot; and then Enter for help. You can exit by typing
+			&quot;^&quot; on the command line and the change you made will be
+			saved. As a minimum, assign EVE as the PRIMARY MENU and enter IRM
+			(it's the only choice) as SERVICE/SECTION. If you plan to use
+			CPRS, enter OR CPRS GUI CHART as a SECONDARY MENU OPTION. Enter
+			other data as you deem appropriate. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic25.gif" NAME="graphics23" ALT="pic 25 - System Manager Edit1" ALIGN=BOTTOM WIDTH=640 HEIGHT=411 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>85.</P>
+		</TD>
+		<TD>
+			<P>Type &quot;N&quot;EXT PAGE at COMMAND: to go to page 2 to
+			update the TIMED READ field and other fields you wish to update.
+			For DEFAULT TIMED-READ (SECONDS): if you change it to 3600 you
+			will be allow an hour before being automatically signed off. It
+			makes it easier to work when you are learning and setting things
+			up. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="verdana, arial, helv, helvetica, sans-serif">Press
+			&lt;PF1&gt; refers to notations for use of Vista on Terminals. For
+			example, the original VT-320 keyboard had additional character
+			sets and keys which include Find, Select, Insert, Remove, Previous
+			Screen, Next Screen, an arrow cluster and F1 to F20. With Cach&eacute;,
+			the Keys are &quot;mapped&quot;, which means when you push a given
+			key it acts as the key would in a terminal. For instance, F1, F2,
+			F3 and F4 are equivalent to the PF1, PF2, PF3 and PF4 keys on the
+			terminal keyboard and Page Up and Page Down on the computer
+			keyboard correspond to Previous Screen and Next Screen. A listing
+			of other mappings can be found at the Cach&eacute; Cube Terminal
+			window under Help and search Keyboard Mappings. Also there is lots
+			of information about terminal if you are interested at
+			<A HREF="http://www.VT100.net/">www.VT100.net</A>. </FONT>
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic26.gif" NAME="graphics24" ALT="pic 26 - System Manager Edit2" ALIGN=BOTTOM WIDTH=640 HEIGHT=411 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+</TABLE>
+<H4>Set Up Menus for the System Manager</H4>
+<H5>EVE is the System Manager menu and XUCOMMAND is a common menu
+available to all users.</H5>
+<TABLE BORDER=0 CELLPADDING=2 CELLSPACING=2>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>86.</P>
+		</TD>
+		<TD>
+			<P>The next step is to make FileMan, MailMan, and Manage MailMan
+			menus accessible to the System Manager user from the menu system.
+			From the VISTA prompt, type &quot;D ^XUP&quot;. At Select OPTION
+			NAME: enter &quot;XUMAINT&quot;. Then at Select Menu Management,
+			type &quot;EDIT OPTIONS&quot;, then pick EVE. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>87.</P>
+		</TD>
+		<TD>
+			<P>Select 1 from the list then at NAME: EVE// type &quot;^10&quot;.
+						</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>88.</P>
+		</TD>
+		<TD>
+			<P>At Select ITEM: enter &quot;DIUSER&quot;. Hit enter until you
+			get to Select ITEM again (you may enter data for the other fields
+			like SYNONYM if you wish). 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>89.</P>
+		</TD>
+		<TD>
+			<P>At the next Select ITEM: enter &quot;XMMGR&quot;. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>VISTA&gt;<B>D
+			^XUP</B><BR><BR>Setting up programmer environment<BR>Terminal Type
+			set to: C-VT10<BR><BR>Select OPTION NAME: <B>XUMAINT</B> &nbsp; &nbsp;
+			Menu Management<BR><BR>Select Menu Management Option: <B>ED</B>it
+			options<BR><BR>Select OPTION to edit: <B>EVE</B><BR>&nbsp; &nbsp;
+			1 EVE Systems Manager Menu<BR>&nbsp; &nbsp; 2 EVENT CAPTURE (ECS)
+			EXTRACT AU ECX ECS SOURCE AUDIT Event Capture (ECS) Extract
+			Audit<BR>&nbsp; &nbsp; 3 EVENT CAPTURE DATA ENTRY ECENTER Event
+			Capture Data Entry<BR>&nbsp; &nbsp; 4 EVENT CAPTURE EXTRACT ECXEC
+			Event Capture Extract<BR>&nbsp; &nbsp; 5 EVENT CAPTURE MANAGEMENT
+			MENU ECMGR Event Capture Management Menu<BR>Press &lt;RETURN&gt;
+			to see more, '^' to exit this list, OR<BR>CHOOSE 1-5: <B>1</B> &nbsp;
+			EVE Systems Manager Menu<BR>NAME: EVE// <B>^10</B> &nbsp;
+			MENU<BR>Select ITEM: HL MAIN MENU// <B>DIUSER</B> VA FileMan<BR>&nbsp;
+			Are you adding 'DIUSER' as a new MENU (the 13TH for this OPTION)?
+			No// <B>Y</B> (Yes)<BR>&nbsp;&nbsp; MENU SYNONYM: <B>FM</B><BR>&nbsp;&nbsp;
+			SYNONYM: FM//<BR>&nbsp; DISPLAY ORDER:<BR>Select ITEM: <B>XMMGR</B><BR>&nbsp;
+			&nbsp; 1 &nbsp; XMMGR &nbsp; &nbsp; Manage Mailman<BR>&nbsp; &nbsp;
+			2 &nbsp; XMMGR-BACKGROUND-FILER &nbsp; &nbsp; Background Filer
+			(XMAD)<BR>&nbsp; &nbsp; 3 &nbsp; XMMGR-BKFILER-ACT &nbsp; &nbsp;
+			Active Users/Deliveries Report<BR>&nbsp; &nbsp; 4 &nbsp;
+			XMMGR-BKFILER-EDIT-NORMALIZED &nbsp; &nbsp; Edit numbers to
+			Normalize<BR>Reports<BR>&nbsp; &nbsp; 5 &nbsp; XMMGR-BKFILER-GROUP
+			&nbsp; &nbsp; Deliveries by Group<BR>Press &lt;RETURN&gt; to see
+			more, '^' to exit this list, OR<BR>CHOOSE 1-5: <B>1</B> &nbsp;
+			XMMGR &nbsp; &nbsp; Manage Mailman<BR>&nbsp; Are you adding
+			'XMMGR' as a new MENU (the 14TH for this OPTION)? No// <B>Y</B>
+			(Yes)<BR>&nbsp; MENU SYNONYM:<BR>&nbsp; SYNONYM:<BR>&nbsp; DISPLAY
+			ORDER:<BR>Select ITEM:<BR>CREATOR: MANAGER,SYSTEM// <B>^</B></FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>90.</P>
+		</TD>
+		<TD>
+			<P>Exit by entering &quot;^&quot; at any prompt. At the next
+			Select OPTION to edit: enter &quot;XUCOMMAND&quot;. Then at NAME:
+			XUCOMMAND// type &quot;^10&quot;. At Select ITEM: enter &quot;XMUSER&quot;.
+						</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>Select OPTION to edit:
+			<B>XUCOMMAND</B> &nbsp; &nbsp; SYSTEM COMMAND OPTIONS<BR>NAME:
+			XUCOMMAND// <B>^10</B> &nbsp; MENU<BR>Select ITEM: XQALERT//
+			<B>XMUSER</B> &nbsp; MailMan Menu<BR>&nbsp; Are you adding
+			'XMUSER' as a new MENU (the 8TH for this OPTION)? No// <B>Y</B> &nbsp;
+			(Yes)<BR>&nbsp; MENU SYNONYM: <B>MM</B><BR>&nbsp; SYNONYM: MM//<BR>&nbsp;
+			DISPLAY ORDER:<BR>Select ITEM:<BR>CREATOR: MANAGER,SYSTEM//
+			<B>^</B><BR><BR>Select OPTION to edit:</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>91.</P>
+		</TD>
+		<TD>
+			<P>To change the default time it takes before users are
+			automatically signed off the system from the default of 300
+			seconds. This, again, is to give you more time to work as you are
+			learning. Back out to the VISTA prompt. At the VISTA prompt, Type
+			&quot;D ^ZU&quot;. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>92.</P>
+		</TD>
+		<TD>
+			<P>At ACCESS CODE, type in the code you chose when setting up
+			MANAGER, SYSTEM as a NEW PERSON. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>93.</P>
+		</TD>
+		<TD>
+			<P>At VERIFY CODE, hit ENTER. When asked for a new verify code,
+			type the code you choose and remember it. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>94.</P>
+		</TD>
+		<TD>
+			<P>At Select Systems Manager Menu Option: Type &quot;OPER&quot;,
+			(short for operations management) and hit enter. You can see all
+			of the choices available to you if you type &quot;??&quot;.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>95.</P>
+		</TD>
+		<TD>
+			<P>At Select Operations Management Option: Type &quot;KER&quot;
+			short for Kernel Management Menu and hit enter. At Select Kernel
+			Management Menu Option: Type &quot;ENT&quot;, short for Enter/Edit
+			Kernel Site Parameters. Hit enter. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>96.</P>
+		</TD>
+		<TD>
+			<P>You will be presented with a similar screen as in editing the
+			SYSTEM MANAGER characteristics. You can navigate the screen with
+			the TAB key. For DEFAULT TIMED-READ (SECONDS): change it to 3600
+			to allow an hour before being automatically signed off, or
+			whatever you choose. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic27.gif" NAME="graphics25" ALT="pic 27 - Kernel Parameters" ALIGN=BOTTOM WIDTH=640 HEIGHT=411 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+</TABLE>
+<H4>Update the Devices, Start Taskman and Mail a Message</H4>
+<H5>These are basic devices to complete the setup. You can setup
+other devices, such as printers, later.</H5>
+<TABLE BORDER=0 CELLPADDING=2 CELLSPACING=2>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>97.</P>
+		</TD>
+		<TD>
+			<P>Now to update devices. The Platinum CACHE.DAT already comes
+			with preconfigured devices. It is best to leave the VOLUME
+			SET(CPU) field blank. The help text for the field states: <EM>&quot;If
+			no name has been entered for this field, this device is assumed to
+			be accessible from all CPUs in the network. In other words, when
+			this device is referenced, the device handler will operate as if
+			this device is resident on the local CPU</EM>&quot;. The
+			SIGN-ON/SYSTEM DEVICE: field should be set to NO or left blank for
+			output devices and YES if the device is used to log on to the
+			system. Use FileMan to edit the CONSOLE, NULL, HFS, and TELNET
+			devices. CONSOLE is the primary logon device. The NULL device is
+			used by the Vista RPC Broker and HFS is used by the Kernel
+			Installation and Distribution System (KIDS) to install application
+			patches and new applications when they are released. On the single
+			user Cach&eacute; PC you will not need the TELNET device since it
+			does not allow remote access. At the VISTA&gt; prompt, type &quot;D
+			Q^DI&quot; to invoke VA Fileman. At Select OPTION: type &quot;1&quot;
+			(ENTER OR EDIT FILE ENTRIES) and at INPUT TO WHAT FILE:, enter
+			&quot;3.5&quot;. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>VA FileMan 22.0<BR><BR><BR>Select
+			OPTION: </FONT><FONT SIZE=2><B>1</B></FONT><FONT SIZE=2> &nbsp;
+			ENTER OR EDIT FILE ENTRIES<BR><BR><BR><BR>INPUT TO WHAT FILE:
+			PACKAGE// </FONT><FONT SIZE=2><B>3.5</B></FONT><FONT SIZE=2> &nbsp;
+			DEVICE (35 entries)<BR>EDIT WHICH FIELD: ALL//<BR><BR><BR>Select
+			DEVICE NAME: </FONT><FONT SIZE=2><B>CONSOLE</B></FONT><FONT SIZE=2>
+			&nbsp; &nbsp; CONSOLE |TRM|<BR>NAME: CONSOLE//<BR>LOCATION OF
+			TERMINAL: CONSOLE//<BR>Select MNEMONIC:<BR>LOCAL SYNONYM:<BR>$I:
+			|TRM|//<BR>VOLUME SET(CPU):<BR>SIGN-ON/SYSTEM DEVICE: </FONT><FONT SIZE=2><B>Y</B></FONT><FONT SIZE=2>
+			&nbsp; YES<BR>TYPE: VIRTUAL TERMINAL//<BR>SUBTYPE: C-VT100//
+			</FONT><FONT SIZE=2><B>^</B></FONT><FONT SIZE=2><BR><BR><BR>Select
+			DEVICE NAME: </FONT><FONT SIZE=2><B>TELNET</B></FONT><FONT SIZE=2>
+			&nbsp; &nbsp; TELNET |TNT| VISTA<BR>NAME: TELNET//<BR>LOCATION OF
+			TERMINAL: TELNET//<BR>Select MNEMONIC:<BR>LOCAL SYNONYM:<BR>$I:
+			|TNT|//<BR>VOLUME SET(CPU): VISTA// </FONT><FONT SIZE=2><B>@</B></FONT><FONT SIZE=2><BR>&nbsp;
+			SURE YOU WANT TO DELETE? </FONT><FONT SIZE=2><B>Y</B></FONT><FONT SIZE=2>
+			&nbsp; (Yes)<BR>SIGN-ON/SYSTEM DEVICE: </FONT><FONT SIZE=2><B>Y</B></FONT><FONT SIZE=2>
+			&nbsp; YES<BR>TYPE: VIRTUAL TERMINAL//<BR>SUBTYPE: C-VT320//
+			</FONT><FONT SIZE=2><B>^</B></FONT><FONT SIZE=2><BR><BR><BR>Select
+			DEVICE NAME: </FONT><FONT SIZE=2><B>HFS</B></FONT><FONT SIZE=2> &nbsp;
+			&nbsp; Host File Server C:\PLATINUM\TMP.DAT<BR>NAME:
+			HFS//<BR>LOCATION OF TERMINAL: Host File Server//<BR>Select
+			MNEMONIC:<BR>LOCAL SYNONYM:<BR>$I: C:\PLATINUM\TMP.DAT//
+			</FONT><FONT SIZE=2><B>C:\TEMP\TMP.TXT</B></FONT><FONT SIZE=2><BR>VOLUME
+			SET(CPU): <BR>SIGN-ON/SYSTEM DEVICE: </FONT><FONT SIZE=2><B>^</B></FONT><FONT SIZE=2><BR><BR><BR>Select
+			DEVICE NAME: </FONT><FONT SIZE=2><B>NULL</B></FONT><FONT SIZE=2><BR>&nbsp;
+			&nbsp; 1 &nbsp; NULL &nbsp; &nbsp; NT SYSTEM NALO:<BR>&nbsp; &nbsp;
+			2 &nbsp; NULL-DSM &nbsp; &nbsp; Bit Bucket _NLA0:<BR>CHOOSE 1-2: </FONT><FONT SIZE=2><B>1</B></FONT><FONT SIZE=2>
+			&nbsp; NULL &nbsp; &nbsp; NT SYSTEM &nbsp; &nbsp; NALO: <BR>NAME:
+			NULL//<BR>LOCATION OF TERMINAL: NT SYSTEM//<BR>Select
+			MNEMONIC:<BR>LOCAL SYNONYM:<BR>$I: NALO:// </FONT><FONT SIZE=2><B>//./nul</B></FONT><FONT SIZE=2><BR>VOLUME
+			SET(CPU):<BR>SIGN-ON/SYSTEM DEVICE: YES// </FONT><FONT SIZE=2><B>N</B></FONT><FONT SIZE=2>
+			&nbsp; NO<BR>TYPE: TERMINAL//<BR>SUBTYPE: C-VT100// ^<BR><BR><BR>Select
+			DEVICE NAME:</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>98.</P>
+		</TD>
+		<TD>
+			<P>Again from the VISTA promt, enter &quot;D ^ZTMCHK&quot; to
+			check if TaskMan's environment is OK. This will present you with
+			two screens with information on TaskMan's environment. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic28.gif" NAME="graphics26" ALT="pic 28 - Check TaskMan Environment1" ALIGN=BOTTOM WIDTH=501 HEIGHT=359 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><FONT FACE="verdana, arial, helv, helvetica, sans-serif">Screen
+			#1</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic29.gif" NAME="graphics27" ALT="pic 29 - Check TaskMan Environment2" ALIGN=BOTTOM WIDTH=501 HEIGHT=359 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><FONT FACE="verdana, arial, helv, helvetica, sans-serif">Screen
+			#2</FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>99.</P>
+		</TD>
+		<TD>
+			<P>If TaskMan's environment is OK, you are ready to start TaskMan.
+			Go back to the VISTA prompt and type &quot;D ^ZTMB&quot; to start
+			TASKMAN. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>100.</P>
+		</TD>
+		<TD>
+			<P>To monitor TaskMan, enter &quot;D ^ZTMON&quot; from the VISTA
+			prompt. Enter &quot;^&quot; at the UPDATE// prompt to exit the
+			monitor or enter a &quot;?&quot; to see what the other options
+			are. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic30.gif" NAME="graphics28" ALT="pic 30 - Monitor TaskMan" ALIGN=BOTTOM WIDTH=574 HEIGHT=402 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>101.</P>
+		</TD>
+		<TD>
+			<P>From the VISTA&gt; programmer prompt you can check the system
+			status with &quot;D ^%SS&quot;. You should see at least two
+			Taskman processes - %ZTM and %ZTMS. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic31.gif" NAME="graphics29" ALT="pic 31 - System Status with TM" ALIGN=BOTTOM WIDTH=661 HEIGHT=424 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>102.</P>
+		</TD>
+		<TD>
+			<P>Now send a message using Postmaster to your DUZ number. Use D
+			^%CD to get into the namespace, VISTA, and then type &quot;S
+			DUZ=.5 D ^XUP&quot;. You will get the response SETTING UP
+			PROGRAMMER ENVIROMENT then TERMINAL TYPE SET TO: (your default)
+			and Select OPTION NAME:. You will need to respond: &quot;XMUSER&quot;.
+			At Select Mailman Menu Option: type &quot;S&quot; (for send). At
+			Subject: enter your subject, such as Test, and then hit enter. You
+			will then be prompted You may enter the text of the message and
+			you will be offered the line number 1&gt; where you can type your
+			message, such as the infamous Hello world. Next will be line 2&gt;
+			and if you are done, just hit enter and at EDIT Option: you can do
+			the same. At Send mail to: POSTMASTER// enter the initials you
+			used for your DUZ which were probably SM for System Manager. You
+			will then be told when MailMan was last used, which is probably
+			NEVER. Hit enter at And Send to: and you should receive the
+			message Select Message option: Transmit now// at which you hit
+			enter and will hopefully receive the message Sending [1] Sent.
+			Type &quot;^&quot; to exit. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>103.</P>
+		</TD>
+		<TD>
+			<P>Now see if you received it. Log on using &quot;D ^ZU&quot;. At
+			the Systems Manager prompt, type &quot;MAIL&quot;. Then at the
+			Select MailMan Menu Option: type &quot;NEW&quot; Messages and
+			Responses. Read the mail. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic32.gif" NAME="graphics30" ALT="pic 32 - Read Mail" ALIGN=BOTTOM WIDTH=571 HEIGHT=422 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+</TABLE>
+<H4>Start and test the RPC Broker.</H4>
+<H5>The RPC Broker is VistA's Client/Server software and is needed by
+VistA's GUI client.</H5>
+<TABLE BORDER=0 CELLPADDING=2 CELLSPACING=2>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>104.</P>
+		</TD>
+		<TD>
+			<P>Now to see of the RPC BROKER will start. To start the broker,
+			type &quot;D STRT^XWBTCP(port)&quot; at the VISTA prompt. The
+			system status should now show the broker listener (XWBTCPL)
+			running. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P><FONT FACE="Courier New"><FONT SIZE=2>VISTA&gt;<B>D
+			STRT^XWBTCP(9210)</B><BR>Start TCP Listener...<BR>Checking if TCP
+			Listener has started...<BR>TCP Listener started
+			successfully.<BR>VISTA&gt;</FONT></FONT></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>&nbsp;</P>
+		</TD>
+		<TD>
+			<P>Now run &quot;D ^%SS&quot; again. You should see something like
+			the following with XWBPTCL running.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic33.gif" NAME="graphics31" ALT="pic 33 - Broker" ALIGN=BOTTOM WIDTH=554 HEIGHT=358 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>105.</P>
+		</TD>
+		<TD>
+			<P>If you have the RPCTEST.EXT on your workstation, you test your
+			connection to the localhost. Download the file XWB1_1WS.EXE from
+			<A HREF="ftp://ftp.va.gov/vista/Software/Packages/RPC%20Broker%20-%20XWB/PROGRAMS/">ftp://ftp.va.gov/vista/Software/Packages/RPC
+			Broker - XWB/PROGRAMS/</A>. (Note: The VA's ftp site is not
+			compatible with Netscape's ftp. Either use Windows Explorer or FTP
+			software). Double click on this file once you have downloaded it.
+			Accept the defaults. It will install RPC Broker's Client software
+			including RPCTEST.EXE. Then go to C:\program
+			files\vista\broker\rcptest.exe and double click on it or create a
+			shortcut on your desktop. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic34.gif" NAME="graphics32" ALT="pic 34 - RPC Test" ALIGN=BOTTOM WIDTH=529 HEIGHT=336 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>106.</P>
+		</TD>
+		<TD>
+			<P>You should see a Vista logon screen. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic35.gif" NAME="graphics33" ALT="pic 35 - Vista Logon" ALIGN=BOTTOM WIDTH=500 HEIGHT=300 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>108.</P>
+		</TD>
+		<TD>
+			<P>If you connect successfully, the link state will turn green. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P ALIGN=CENTER><IMG SRC="Images/pic36.gif" NAME="graphics34" ALT="pic 36 - Broker Connect" ALIGN=BOTTOM WIDTH=530 HEIGHT=342 BORDER=0></P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>109.</P>
+		</TD>
+		<TD>
+			<P>To stop TaskMan, use &quot;D STOP^ZTMKU&quot; and answer &quot;YES&quot;
+			to stopping the submanagers. 
+			</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD WIDTH=25 VALIGN=TOP>
+			<P>110.</P>
+		</TD>
+		<TD>
+			<P>To stop Broker, use &quot;D STOP^XWBTCP(9210)&quot;. This is
+			the last time you should be using these direct access to the
+			routines to manage VistA.  You should  be using the menu system
+			from now on to manage starting and stopping Taskman, the
+			background filers and the RPC Broker.  That way any code changes,
+			etc., will be accounted for.  Programmers will usually enter from
+			the programmer prompt beginning with D ^XUP.  The system managers
+			menu option is EVE.</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>&nbsp;</P>
+		</TD>
+	</TR>
+	<TR>
+		<TD COLSPAN=2>
+			<P>Last edited 5/27/06 7:40 AM EST 
+			</P>
+		</TD>
+	</TR>
+</TABLE>
+<H5>End of Chapter 1 ---&gt; <A HREF="CPRSStart12.html">Chapter 2</A></H5>
+</BODY>
+</HTML>

@@ -1,0 +1,199 @@
+[ConfigFile]
+Version=3.12
+
+[Com]
+Com=OFF
+
+[config]
+overview=Intel Linux~UNIX~3.12~0
+cpus=0
+globals=512
+reserveper=50
+routines=64,5
+memlock=0
+rbufsiz=32
+locksiz=32768
+ttysiz=2048
+ijcbuff=512
+ijcnum=16
+implheap=16384,65536
+netcliconmax=64,64
+netdirtabsiz=2048
+netsiz=512
+gmheap=512
+netjob=1
+uicsiz=128
+vtabsiz=1024
+zfheap=32767,67584
+gnetfrac=75
+gmaxcache=63
+bbsiz=1024
+history=32,1024
+processes=50,16
+vectors=32
+niceval=-3,-2,-4,2,0
+wijdir=
+nlstab=10
+udevtabsiz=24576
+errlog=50
+console=,
+
+[Startup]
+stu=1
+zstu=1
+RunViewPointServer=NO
+start_0=System~1~1
+start_1=Process~1~1
+start_2=Job~1~1
+start_3=Callin~1~1
+RunLicenseServer=NO
+LicenseServer=
+JobServers=0
+nethard=1
+journalmode=1
+JournalSetsKills=1
+JouAction=0
+ManagerAccount=,
+JournalPurge=7
+maxconsolelogsize=100000
+DefaultPort=1972
+DomainspaceMaster=0,
+DaysBeforePurge=40
+gprotdef=RWD/N/N/RWD
+
+[Shadowing]
+SRVpip=0
+
+[IO]
+Mnemonic_MT=^%XMAG
+Mnemonic_OTH=^%X364
+Mnemonic_SEQ=^%X364
+Mnemonic_TTY=^%X364
+OpenMode=0
+FileMode=0
+JobDevice=0
+
+[Language]
+Undefined=0
+NullSubscripts=0
+GlobalKillEnabled=1
+BreakMode=1
+PhysicalCursor=0
+RefInKind=0
+ZaModeISM=0
+ZaModeDSM=0
+LineRecall=1
+LocaleName=
+
+[Device Sub-Types]
+SubType_1=C-VT100~80~#,$C(27,91,72,27,91,74)~24~$C(8)~W $C(27,91)_(DY+1)_";"_(DX+1)_"H" S $X=DX,$Y=DY~$C(27,91,74)~$C(27,91,75)~~
+SubType_2=C-VT101W~132~#,$C(27,91,72,27,91,74)~14~$C(8)~W $C(27,91)_(DY+1)_";"_(DX+1)_"H" S $X=DX,$Y=DY~$C(27,91,74)~$C(27,91,75)~~
+SubType_3=C-VT132~132~#,$C(27,91,72,27,91,74)~24~$C(8)~W $C(27,91)_(DY+1)_";"_(DX+1)_"H" S $X=DX,$Y=DY~$C(27,91,74)~$C(27,91,75)~~
+SubType_4=C-VT240~80~#,$C(27,91,72,27,91,74)~24~$C(8)~W $C(27,91)_(DY+1)_";"_(DX+1)_"H" S $X=DX,$Y=DY~$C(27,91,74)~$C(27,91,75)~$C(27,91,72,27,91,74)~$C(8,32,8)
+SubType_5=C-VT220~80~#,$C(27,91,72,27,91,74)~24~$C(8)~W $C(27,91)_(DY+1)_";"_(DX+1)_"H" S $X=DX,$Y=DY~$C(27,91,74)~$C(27,91,75)~$C(27,91,72,27,91,74)~$C(8,32,8)
+SubType_6=C-TV925~80~#,$C(27,44)~24~$C(8)~W $C(27,61,DY+32,DX+32) S $X=DX,$Y=DY~~~$C(27,44)~$C(8,32,8)
+SubType_7=C-VT52~80~#,$C(27,72)_$C(27,74)~24~$C(8)~W $C(27,89,DY+32,DX+32) S $X=DX,$Y=DY~~~~
+SubType_8=M/UX~255~#~66~$C(8)~~~~~
+SubType_9=MAIL~132~#~11~$C(8)~~~~~
+SubType_10=P-DEC~132~#~66~$C(8)~~~~~
+SubType_11=PK-DEC~150~#~66~$C(8)~~~~~
+SubType_12=PK-QUME~150~#~66~$C(8)~~~~~
+SubType_13=C-ANSI~80~#,$C(27,91,72,27,91,74)~25~$C(8)~W $C(27,91)_(DY+1)_";"_(DX+1)_"H" S $X=DX,$Y=DY~$C(27,91,74)~$C(27,91,75)~$C(27,91,72,27,91,74)~$C(8,32,8)
+SubType_14=C-Cache Terminal~80~#,$C(27,91,72,27,91,74)~25~$C(8)~W $C(27,91)_(DY+1)_";"_(DX+1)_"H" S $X=DX,$Y=DY~$C(27,91,74)~$C(27,91,75)~$C(27,91,72,27,91,74)~$C(8,32,8)
+
+[Devices]
+Device_1=0~0~TRM~C-VT220~~~~Principal device~
+Device_2=2~2~SPL~PK-DEC~~~~Spool LA120~
+Device_3=47~47~MT~M/UX~~("auv":0:2048)~~Magnetic tape~
+Device_4=48~48~MT~M/UX~~("avl":0:2048)~~Magnetic tape~
+Device_5=57~57~BT~M/UX~~("auv":0:2048)~~Magnetic tape~
+Device_6=58~58~BT~M/UX~~("avl":0:2048)~~Magnetic tape~
+Device_7=SPOOL~2~SPL~PK-DEC~~~~Spool LA120~
+Device_8=TERM~0~TRM~C-VT220~~~~Console~
+
+[MagTape]
+
+[Cluster]
+NetworkType=U
+JoinCluster=N
+
+[DTMnetBIOS]
+name=
+nsmapfile=
+adapter=
+serverjobs=
+DTMnetBIOS=OFF
+
+[DSM-DDP]
+DdpHost=
+
+[Net]
+Timeout=30
+CliSysName=
+maxnode=
+maxdsmport=
+maxdsmhostperport=
+maxdsmjobsperconn=
+renotify=0
+mnetjob=0
+numdcpdmn=0
+maxnpdmn=8
+udprcvbufsiz=65535
+udpsndbufsiz=32767
+requestbuf=500
+dmnrcvbuf=16
+clixmitbuf=16
+srvxmitbuf=16
+nodereqb=127
+
+[Data Servers]
+
+[Datasets]
+DataSet_1=CACHESYS,,,0,P
+DataSet_2=CACHELIB,cachelib,,0,P
+DataSet_3=USER,user,,0,P
+DataSet_4=CACHETEMP,cachetemp,,0,P
+DataSet_5=KERNEL,kernel,,0,P
+
+[Namespaces]
+Nsp_1=%SYS,CACHESYS,CACHESYS,CACHESYS,CACHESYS,CACHELIB,CACHETEMP
+Nsp_2=USER,USER,CACHESYS,USER,CACHESYS,CACHELIB,CACHETEMP
+Nsp_3=KERNEL,KERNEL,CACHESYS,KERNEL,CACHESYS,CACHELIB,CACHETEMP
+
+[NspMap.KERNEL]
+GloMap_1=%Z*,KERNEL,KERNEL,0,5,
+RouMap_1=%DT*,ALL,KERNEL
+RouMap_2=%RCR,ALL,KERNEL
+RouMap_3=%XU*,ALL,KERNEL
+RouMap_4=%ZIS*,ALL,KERNEL
+RouMap_5=%ZO*,ALL,KERNEL
+RouMap_6=%ZT*,ALL,KERNEL
+RouMap_7=%ZV*,ALL,KERNEL
+
+[Miscellaneous]
+MNetSets=0
+JournalHalt=0
+NetErrToLog=0
+NetErrToOpr=0
+DisconnectErr=0
+ReliableJob=1
+DdpSec=0
+NetNullSubs=0
+RelCommit=0
+ViewPastData=0
+NamespacePrompt=1
+NetHardening=1
+BroadcastHard=0
+PopError=0
+DropRemLocks=0
+ZDateNull=0
+JournalZGlob=1
+AsynchError=1
+NWDSRetry=0
+NoNspNotify=0
+JrnlNewGlo=0
+EnableCaching=1
+SetZEOF=0
+NodeNameInPid=0
+OldZU5=0
+DefLoginNSP=USER
