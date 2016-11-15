@@ -49,62 +49,80 @@ the sudo.
 Traditional Technique
 ---------------------
 
-First download GT.M for 64-bit GNU/Linux on the x86_64 platform from Source Forge. This Acculturation Workshop is based on V6.2-000; you can use it or any more recent GT.M release. Download it to a temporary directory, e.g., /tmp, with the wget program: wget -P /tmp http://sourceforge.net/projects/fis-gtm/files/GT.M-amd64-Linux/V6.2-000/gtm_V62000_linux_x8664_pro.tar.gz
+First download GT.M for 64-bit GNU/Linux on the x86_64 platform from Source 
+Forge. These instructions are based on V6.2-000; you can use it or any more 
+recent GT.M release. Download it to a temporary directory, e.g., /tmp, with the 
+wget program:
 
-Then create a temporary directory and unpack the contents of the tarball into it. If you installed GT.M using the gtminstall technique, you should already have a /tmp/tmp directory.
+::
 
-gtmuser@gtmworkshop:~$ mkdir /tmp/tmp
-gtmuser@gtmworkshop:~$ cd /tmp/tmp
-gtmuser@gtmworkshop:/tmp/tmp$ tar zxf ../gtm_V62000_linux_x8664_pro.tar.gz
-gtmuser@gtmworkshop:/tmp/tmp$ 
-Then install GT.M in /usr/local/lib/fis-gtm/V6.2-000_x86_64 – since the gtminstall script would have already installed a GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. Note that this must be done as root.
+    wget -P /tmp http://sourceforge.net/projects/fis-gtm/files/GT.M-amd64-Linux/V6.2-000/gtm_V62000_linux_x8664_pro.tar.gz
 
-gtmuser@gtmworkshop:/tmp/tmp$ sudo ./configure
-[sudo] password for gtmuser: 
-                     GT.M Configuration Script
-Copyright 2009, 2014 Fidelity Information Services, Inc. Use of this
-software is restricted by the provisions of your license agreement.
+Then create a temporary directory and unpack the contents of the tarball into 
+it. If you installed GT.M using the gtminstall technique, you should already 
+have a /tmp/tmp directory.
 
-What user account should own the files? (bin) root
-What group should own the files? (bin) root
-Should execution of GT.M be restricted to this group? (y or n) n
-In what directory should GT.M be installed? /usr/local/lib/fis-gtm/V6.2-000_x86_64
+::
 
-Directory /usr/local/lib/fis-gtm/V6.2-000_x86_64 does not exist. Do you wish to create it as part of
-this installation? (y or n) y
+    gtmuser@gtmworkshop:~$ mkdir /tmp/tmp
+    gtmuser@gtmworkshop:~$ cd /tmp/tmp
+    gtmuser@gtmworkshop:/tmp/tmp$ tar zxf ../gtm_V62000_linux_x8664_pro.tar.gz
+    gtmuser@gtmworkshop:/tmp/tmp$ 
 
-Installing GT.M....
+Then install GT.M in /usr/local/lib/fis-gtm/V6.2-000_x86_64 – since the 
+gtminstall script would have already installed a GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. 
+Note that this must be done as root.
 
-Should UTF-8 support be installed? (y or n) y
-Should an ICU version other than the default be used? (y or n) n
+::
 
-All of the GT.M MUMPS routines are distributed with uppercase names.
-You can create lowercase copies of these routines if you wish, but
-to avoid problems with compatibility in the future, consider keeping
-only the uppercase versions of the files.
+    gtmuser@gtmworkshop:/tmp/tmp$ sudo ./configure
+    [sudo] password for gtmuser: 
+    
+    GT.M Configuration Script
+    Copyright 2009, 2014 Fidelity Information Services, Inc. Use of this
+    software is restricted by the provisions of your license agreement.
 
-Do you want uppercase and lowercase versions of the MUMPS routines? (y or n)y
+    What user account should own the files? (bin) root
+    What group should own the files? (bin) root
+    Should execution of GT.M be restricted to this group? (y or n) n
+    In what directory should GT.M be installed? /usr/local/lib/fis-gtm/V6.2-000_x86_64
 
-Creating lowercase versions of the MUMPS routines.
-./CHK2LEV.m --->  ./chk2lev.m
-./CHKOP.m --->  ./chkop.m
-./GENDASH.m --->  ./gendash.m
+    Directory /usr/local/lib/fis-gtm/V6.2-000_x86_64 does not exist. Do you wish to create it as part of
+    this installation? (y or n) y
 
-...
+    Installing GT.M....
 
-./_UCASE.m --->  ./_ucase.m
-./_UTF2HEX.m --->  ./_utf2hex.m
-./_XCMD.m --->  ./_xcmd.m
+    Should UTF-8 support be installed? (y or n) y
+    Should an ICU version other than the default be used? (y or n) n
 
-Compiling all of the MUMPS routines. This may take a moment.
+    All of the GT.M MUMPS routines are distributed with uppercase names.
+    You can create lowercase copies of these routines if you wish, but
+    to avoid problems with compatibility in the future, consider keeping
+    only the uppercase versions of the files.
+
+    Do you want uppercase and lowercase versions of the MUMPS routines? (y or n)y
+
+    Creating lowercase versions of the MUMPS routines.
+    ./CHK2LEV.m --->  ./chk2lev.m
+    ./CHKOP.m --->  ./chkop.m
+    ./GENDASH.m --->  ./gendash.m
+
+    ...
+
+    ./_UCASE.m --->  ./_ucase.m
+    ./_UTF2HEX.m --->  ./_utf2hex.m
+    ./_XCMD.m --->  ./_xcmd.m
+
+    Compiling all of the MUMPS routines. This may take a moment.
 
 
-Object files of M routines placed in shared library /usr/local/lib/fis-gtm/V6.2-000_x86_64/libgtmutil.so
-Keep original .o object files (y or n)? n
+    Object files of M routines placed in shared library /usr/local/lib/fis-gtm/V6.2-000_x86_64/libgtmutil.so
+    Keep original .o object files (y or n)? n
 
 
-Installation completed. Would you like all the temporary files
-removed from this directory? (y or n) y
-gtmuser@gtmworkshop:/tmp/tmp$ cd
-gtmuser@gtmworkshop:/tmp/tmp$ 
+    Installation completed. Would you like all the temporary files
+    removed from this directory? (y or n) y
+    gtmuser@gtmworkshop:/tmp/tmp$ cd
+    gtmuser@gtmworkshop:/tmp/tmp$
+
 GT.M is now installed and operational.
