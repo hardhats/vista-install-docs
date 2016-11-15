@@ -53,7 +53,7 @@ Forge. These instructions are based on V6.2-000; you can use it or any more
 recent GT.M release. Download it to a temporary directory, e.g., /tmp, with the 
 wget program:
 
-| $ **wget -P /tmp http://sourceforge.net/projects/fis-gtm/files/GT.M-amd64-Linux/V6.2-000/gtm_V62000_linux_x8664_pro.tar.gz**
+  | $ **wget -P /tmp http://sourceforge.net/projects/fis-gtm/files/GT.M-amd64-Linux/V6.2-000/gtm_V62000_linux_x8664_pro.tar.gz**
 
 Then create a temporary directory and unpack the contents of the tarball into 
 it. If you installed GT.M using the gtminstall technique, you should already 
