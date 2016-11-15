@@ -16,7 +16,7 @@ workshop is intended to teach GT.M Administration and Operations, we will not
 use this approach here.
 
 Using the Installation Script
-----------------
+-----------------------------
 
 The installation script, gminstall, is downloads and installs the current GT.M 
 release. From http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer, 
