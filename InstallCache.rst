@@ -1,29 +1,3 @@
-Caché
-`````
-  If necessary, OSEHRA has compiled a set of instructions on how to install the
-  Caché instance:
-
-  * InstallCache_
-
-  There are two methods available to import the VistA-M code into the Caché
-  environment.
-
-        To install a downloaded CACHE.DAT file as the source of the VistA MUMPS code
-        and follow the instructions here:
-
-        * InstallCacheDat_
-
-        Alternatively, for the instructions to import the MUMPS code from the
-        OSEHRA VistA-M Repository into a Caché instance, see:
-
-        * ImportCache_
-
-  Instructions for additional configuration of the Caché environment can be
-  found here:
-
-  * ConfigureCache_
-
-
 Installing Caché
 =================
 
