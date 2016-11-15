@@ -28,22 +28,22 @@ variables to be set to go through proxy servers, and the sudo command may
 require the -E option to pass your shell environment to root process invoked by 
 the sudo.
 
-.. highlight:: bash
-   
-   gtmuser@gtmworkshop:~$ mkdir /tmp/tmp
-   gtmuser@gtmworkshop:~$ cd /tmp/tmp
-   gtmuser@gtmworkshop:/tmp/tmp$ wget http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer/v0.13/gtminstall
+::
 
-   ...
-
-   gtmuser@gtmworkshop:/tmp/tmp$ chmod +x gtminstall
-   gtmuser@gtmworkshop:/tmp/tmp$ sudo ./gtminstall --utf8 default
-   [sudo] password for gtmuser: 
-   gtmuser@gtmworkshop:/tmp/tmp$ ls -l /usr/lib/fis-gtm
-   total 12
-   dr-xr-xr-x 5 root root 8192 Nov 13 10:57 V6.2-000_x86_64
-   gtmuser@gtmworkshop:/tmp/tmp$ cd
-   gtmuser@gtmworkshop:~$ 
+    gtmuser@gtmworkshop:~$ mkdir /tmp/tmp
+    gtmuser@gtmworkshop:~$ cd /tmp/tmp
+    gtmuser@gtmworkshop:/tmp/tmp$ wget http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer/v0.13/gtminstall
+    
+    ...
+    
+    gtmuser@gtmworkshop:/tmp/tmp$ chmod +x gtminstall
+    gtmuser@gtmworkshop:/tmp/tmp$ sudo ./gtminstall --utf8 default
+    [sudo] password for gtmuser: 
+    gtmuser@gtmworkshop:/tmp/tmp$ ls -l /usr/lib/fis-gtm
+    total 12
+    dr-xr-xr-x 5 root root 8192 Nov 13 10:57 V6.2-000_x86_64
+    gtmuser@gtmworkshop:/tmp/tmp$ cd
+    gtmuser@gtmworkshop:~$ 
 
 
 Traditional Technique
