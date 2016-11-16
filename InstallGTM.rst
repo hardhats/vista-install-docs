@@ -31,7 +31,7 @@ the sudo.
 
 .. raw:: html
 
-    <pre class="code">
+    <code>
     $ <strong>mkdir /tmp/tmp</strong>
     $ <strong>cd /tmp/tmp</strong>
     /tmp/tmp$ <strong>wget http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer/v0.13/gtminstall</strong>
@@ -46,7 +46,7 @@ the sudo.
     dr-xr-xr-x 5 root root 8192 Nov 13 10:57 V6.2-000_x86_64
     /tmp/tmp$ <strong>cd</strong>
     $
-    </pre>
+    </code>
 
 
 Traditional Technique
@@ -59,9 +59,9 @@ wget program:
 
 .. raw:: html
 
-    <pre class="code">
+    <code>
     $ <strong>wget -P /tmp http://sourceforge.net/projects/fis-gtm/files/GT.M-amd64-Linux/V6.2-000/gtm_V62000_linux_x8664_pro.tar.gz</strong>
-    </pre>
+    </code>
 
 Then create a temporary directory and unpack the contents of the tarball into 
 it. If you installed GT.M using the gtminstall technique, you should already 
@@ -69,12 +69,12 @@ have a /tmp/tmp directory.
 
 .. raw:: html
 
-    <pre class="code">
+    <code>
     $ <strong>mkdir /tmp/tmp</strong>
     $ <strong>cd /tmp/tmp</strong>
     /tmp/tmp$ <strong>tar zxf ../gtm_V62000_linux_x8664_pro.tar.gz</strong>
     /tmp/tmp$
-    </pre> 
+    </code> 
 
 Then install GT.M in /usr/local/lib/fis-gtm/V6.2-000_x86_64 – since the 
 gtminstall script would have already installed a GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. 
@@ -82,7 +82,7 @@ Note that this must be done as root.
 
 .. raw:: html
 
-    <pre class="code">
+    <code>
     /tmp/tmp$ <strong>sudo ./configure</strong>
     [sudo] password for gtmuser: 
     
@@ -132,6 +132,6 @@ Note that this must be done as root.
     removed from this directory? (y or n) <strong>y</strong>
     /tmp/tmp$ cd
     /tmp/tmp$
-    </pre>
+    </code>
 
 GT.M is now installed and operational.

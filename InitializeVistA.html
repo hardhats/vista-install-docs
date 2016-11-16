@@ -1,0 +1,478 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta http-equiv="Content-Style-Type" content="text/css" />
+  <meta name="generator" content="pandoc" />
+  <title>VistA Initialization</title>
+  <style type="text/css">code{white-space: pre;}</style>
+</head>
+<body>
+<div id="header">
+<h1 class="title">VistA Initialization</h1>
+</div>
+<p>The OSEHRA testing harness has a Python file that will perform a large amount of VistA work to initalize the instance as a hospital. It starts Taskman, the RPC Listener, and adds doctors, nurses and a patient.</p>
+<p>The file is called <code>PostImportSetupScript.py.in</code> and can be found in the <code>Testing/Setup</code> directory of the VistA source tree.</p>
+<p>The file is created when running a <code>Configure</code> step via CMake in an OSEHRA testing harness setup that has the <code>TEST_VISTA_FRESH</code> option selected. The file can be executed with the following command from the VistA Binary directory:</p>
+<code>user@machine VistA-build$ <strong>python Testing/Setup/PostImportSetupScript.py</strong></code>
+<p>It is highly recommended that you use this script to set up a test instance. In the event that it cannot be run, this page will go over the setup steps which will allow you to connect CPRS to the VistA instance and start the Task Manager.</p>
+<h1 id="edit-null-device">Edit NULL Device</h1>
+<p>CPRS is one of many users of the VistA NULL device, but the <code>$I</code> value, which contains the name or path to the device, is correct only for a VMS platform. It is necessary to change it to match the local platform before it is able to be accessed correctly. The Sign-On capability also needs to be removed from the device.</p>
+<code>VISTA> <strong>S DUZ=1 D Q^DI</strong>
+
+
+VA FileMan 22.0
+
+
+Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
+
+
+
+INPUT TO WHAT FILE: DEVICE// <strong>DEVICE</strong>       (52 entries)
+EDIT WHICH FIELD: ALL// <strong>$I</strong>
+THEN EDIT FIELD: <strong>SIGN-ON/SYSTEM DEVICE</strong>
+THEN EDIT FIELD:
+
+
+Select DEVICE NAME: <strong>NULL</strong>
+    1   NULL      NT SYSTEM     NLA0:
+    2   NULL  GTM-UNIX-NULL    Bit Bucket (GT.M-Unix)     /dev/null
+    3   NULL-DSM      Bit Bucket     _NLA0:
+CHOOSE 1-3: <strong>1</strong> NULL    NT SYSTEM     NLA0:</code>
+<h2 id="on-windows">On Windows</h2>
+<p>On Windows machines, the <code>$I</code> value should be set to <code>//./nul</code></p>
+<code>$I: NLA0:// <strong>//./nul</strong>
+SIGN-ON/SYSTEM DEVICE: YES// <strong>NO</strong>  NO
+
+
+Select DEVICE NAME: <strong>&lt;enter&gt;</strong>
+
+Select OPTION: <strong>&lt;enter&gt;</strong>
+
+VISTA></code>
+<h2 id="on-linux">On Linux</h2>
+<p>On Linux machines, the <code>$I</code> value should be set to <code>/dev/null</code></p>
+<code>$I: NLA0:// <strong>/dev/null</strong>          This $I in use by other Devices.
+SIGN-ON/SYSTEM DEVICE: NO// <strong>N</strong>  NO
+
+
+Select DEVICE NAME: <strong>&lt;enter&gt;</strong>
+
+Select OPTION: <strong>&lt;enter&gt;</strong>
+
+VISTA></code>
+<h1 id="set-up-a-domain">Set up a Domain</h1>
+<p>Next, a domain should be set up for the VistA instance. A domain name is typically used to uniquely identify an instance on a network. While this is not necessary to do for test instances, it is recommended that a new domain be added. The OSEHRA script adds a domain called <code>DEMO.OSEHRA.ORG</code>, and this example will do the same.</p>
+<p>First we add the entry to the <code>DOMAIN</code> file through FileMan</p>
+<code>VISTA> <strong>S DUZ=1 D Q^DI</strong>
+
+
+VA FileMan 22.0
+
+
+Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
+
+
+
+INPUT TO WHAT FILE: // <strong>DOMAIN</strong>
+                                     (70 entries)
+EDIT WHICH FIELD: ALL// <strong>ALL</strong>
+
+
+Select DOMAIN NAME: <strong>DEMO.OSEHRA.ORG</strong>
+  Are you adding 'DEMO.OSEHRA.ORG' as a new DOMAIN (the 71ST)? No// <strong>Y</strong>  (Yes)
+FLAGS: <strong>^</strong>
+
+Select DOMAIN NAME: <strong>&lt;enter&gt;</strong>
+
+Select OPTION: <strong>&lt;enter&gt;</strong>
+VISTA></code>
+<p>The next step is to find the IEN of the newly created domain. This can be done by inquiring about the entry using FileMan and printing the Record Number:</p>
+<code>VISTA> <strong>S DUZ=1 D Q^DI</strong>
+
+
+VA FileMan 22.0
+
+
+Select OPTION: <strong>5</strong>  INQUIRE TO FILE ENTRIES
+
+
+
+OUTPUT FROM WHAT FILE: DOMAIN// <strong>DOMAIN</strong>   (71 entries)
+Select DOMAIN NAME: <strong>DEMO.OSEHRA.ORG</strong>
+ANOTHER ONE:
+STANDARD CAPTIONED OUTPUT? Yes// <strong>Y</strong>  (Yes)
+Include COMPUTED fields:  (N/Y/R/B): NO// <strong>Record Number (IEN)</strong>
+
+NUMBER: 76                              NAME: DEMO.OSEHRA.ORG
+
+Select DOMAIN NAME: <strong>^</strong>
+
+
+
+
+Select OPTION: <strong>^</strong>
+VISTA></code>
+<p>Then we propogate that entry to the <code>Kernel System Parameters</code> and <code>RPC Broker Site Parameters</code> files. The value that is being set should be the same as the <code>NUMBER</code> value from the above result.</p>
+<code>VISTA> <strong>S $P(^XWB(8994.1,1,0),"^")=76</strong>
+VISTA> <strong>S $P(^XTV(8989.3,1,0),"^")=76</strong></code>
+<p>Once that is done, those two files need to be re-indexed through FileMan.</p>
+<code>VISTA> <strong>D Q^DI</strong>
+
+
+VA FileMan 22.0
+
+
+Select OPTION: <strong>UTILITY FUNCTIONS</strong>
+Select UTILITY OPTION: <strong>RE-INDEX FILE</strong>
+
+MODIFY WHAT FILE: RPC BROKER SITE PARAMETERS// <strong>8994.1</strong>  RPC BROKER SITE PARAMETERS
+                                     (1 entry)
+
+THERE ARE 5 INDICES WITHIN THIS FILE
+DO YOU WISH TO RE-CROSS-REFERENCE ONE PARTICULAR INDEX? No// <strong>No</strong>  (No)
+OK, ARE YOU SURE YOU WANT TO KILL OFF THE EXISTING 5 INDICES? No// <strong>Y</strong>  (Yes)
+DO YOU THEN WANT TO 'RE-CROSS-REFERENCE'? Yes// <strong>Y</strong>  (Yes)
+...SORRY, LET ME THINK ABOUT THAT A MOMENT...
+FILE WILL NOW BE 'RE-CROSS-REFERENCED'......
+
+
+Select UTILITY OPTION: <strong>RE-INDEX FILE</strong>
+
+MODIFY WHAT FILE: RPC BROKER SITE PARAMETERS// <strong>8989.3</strong>  KERNEL SYSTEM PARAMETERS
+                                     (1 entry)
+THERE ARE 14 INDICES WITHIN THIS FILE
+DO YOU WISH TO RE-CROSS-REFERENCE ONE PARTICULAR INDEX? No// <strong>N</strong>  (No)
+OK, ARE YOU SURE YOU WANT TO KILL OFF THE EXISTING 14 INDICES? No// <strong>Y</strong>  (Yes)
+DO YOU THEN WANT TO 'RE-CROSS-REFERENCE'? Yes// <strong>Y</strong> (Yes)
+...HMMM, THIS MAY TAKE A FEW MOMENTS...
+FILE WILL NOW BE 'RE-CROSS-REFERENCED'.................
+
+
+Select UTILITY OPTION: <strong>&lt;enter&gt;</strong>
+
+Select OPTION: <strong>&lt;enter&gt;</strong>
+
+VISTA></code>
+<h1 id="set-box-volume-pair">Set Box-Volume pair</h1>
+<p>The first step is to find the box volume pair for the local machine.</p>
+<code>VISTA> <strong>D GETENV^%ZOSV W Y</strong></code>
+<p>which will print out a message with four parts separated by <code>^</code> that could look something like:</p>
+<code>VISTA^VISTA^palaven^VISTA:CACHE</code>
+<p>The Box-Volume pair is the final piece of that string and contains two bits of information. The first piece is the Volume Set, which is used to determine where the VistA system will be able to find the routines.</p>
+<p>The second bit of info is the BOX, which references the system that the instance is on. In a Caché system, it would be the name of the Caché instance while on GT.M, it should reference the hostname of the machine.</p>
+<p>The Volume Set result needs to be altered in the <code>VOLUME SET</code> file, and we will reuse some setup by writing over the name of the first entry that is already in the VistA system. The first entry, the entry with an IEN of 1, can be selected by entering <code>`1</code>.</p>
+<p>Then we rename the first Box-Volume pair in the <code>TaskMan Site Parameters</code> file to match what was found above.</p>
+<p>For this demonstration instance, the Volume Set will be <code>VISTA</code> which is the Caché namespace that holds the files. On GT.M instances, the default value of <code>PLA</code> can be maintained.</p>
+<code>VISTA> <strong>S DUZ=1 D Q^DI</strong>
+
+
+VA FileMan 22.0
+
+Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
+
+INPUT TO WHAT FILE: DEVICE// <strong>14.5</strong>  VOLUME SET  (1 entry)
+EDIT WHICH FIELD: ALL// <strong>VOLUME SET</strong>
+THEN EDIT FIELD: <strong>TASKMAN FILES UCI</strong>
+THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
+
+
+Select VOLUME SET: <strong>&#96;1</strong>  PLA
+VOLUME SET: PLA// <strong>VISTA</strong>
+TASKMAN FILES UCI: PLA// <strong>VISTA</strong>
+
+
+Select VOLUME SET: <strong>&lt;enter&gt;</strong>
+
+
+INPUT TO WHAT FILE: TASKMAN SITE PARAMETERS// <strong>14.7</strong>  TASKMAN SITE PARAMETERS
+                                      (1 entry)
+EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
+
+
+Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: <strong>\&#96;1</strong>  PLA:PLAISCSVR
+BOX-VOLUME PAIR: PLA:PLAISCSVR// <strong>VISTA:CACHE</strong>
+RESERVED: <strong>^</strong>
+
+
+Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: <strong>&lt;enter&gt;</strong>
+Select OPTION: <strong>&lt;enter&gt;</strong></code>
+<p>Next, Edit the <code>Kernel System Parameters</code> file to add the new Volume Set to the <code>DEMO.OSEHRA.ORG</code> domain and set some constraints about signing on.</p>
+<code>Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
+
+
+
+INPUT TO WHAT FILE: RPC BROKER SITE PARAMETERS// <strong>KERNEL SYSTEM PARAMETERS</strong>
+                                      (1 entry)
+EDIT WHICH FIELD: ALL// <strong>VOLUME SET</strong>    (multiple)
+  EDIT WHICH VOLUME SET SUB-FIELD: ALL// <strong>&lt;enter&gt;</strong>
+THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
+
+
+Select KERNEL SYSTEM PARAMETERS DOMAIN NAME: <strong>DEMO.OSEHRA.ORG</strong>
+     ...OK? Yes// <strong>Y</strong> (Yes)
+
+Select VOLUME SET: PLA// <strong>VISTA</strong>
+  Are you adding 'VISTA' as a new VOLUME SET (the 2ND for this KERNEL SYSTEM PARAMETERS)? No// <strong>Y</strong>
+  (Yes)
+  MAX SIGNON ALLOWED: <strong>500</strong>
+  LOG SYSTEM RT?: <strong>N</strong>  NO
+Select VOLUME SET: <strong>&lt;enter&gt;</strong>
+
+
+Select KERNEL SYSTEM PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong>
+
+Select OPTION: <strong>&lt;enter&gt;</strong></code>
+<h1 id="setup-rpc-broker">Setup RPC Broker</h1>
+<p>The next step is to edit entries in the <code>RPC Broker Site Parameters</code> file and the <code>Kernel System Parameters</code> file. The RPC Broker steps will set up information that references both the the Port that the listener will listen on and the Box Volume pair of the instance.</p>
+<code>VISTA> <strong>S DUZ=1 D Q^DI</strong>
+
+
+VA FileMan 22.0
+
+
+Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
+
+INPUT TO WHAT FILE: VOLUME SET// <strong>8994.1</strong>  RPC BROKER SITE PARAMETERS
+                                         (1 entry)
+EDIT WHICH FIELD: ALL// <strong>LISTENER</strong>    (multiple)
+    EDIT WHICH LISTENER SUB-FIELD: ALL// <strong>&lt;enter&gt;</strong>
+THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
+
+
+Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>DEMO.OSEHRA.ORG</strong>
+        ...OK? Yes// <strong>Y</strong>   (Yes)
+
+Select BOX-VOLUME PAIR: // <strong>VISTA:CACHE</strong>
+  BOX-VOLUME PAIR: VISTA:CACHE//
+  Select PORT: <strong>9210</strong>
+  Are you adding '9210' as a new PORT (the 1ST for this LISTENER)? No// <strong>Y</strong>  (Yes)
+    TYPE OF LISTENER: <strong>1</strong>  New Style</code>
+<p>The final questions of this section asks if the listener should be started and then if it should be controlled by the Listener starter.</p>
+<p>The answer to these questions is dependent on the MUMPS platform that is in use:</p>
+<h2 id="on-caché">On Caché</h2>
+<p>Caché systems can use the Listener Starter to control the RPC Broker Listener.</p>
+<code>  STATUS: STOPPED// <strong>1</strong> START
+        Task: RPC Broker Listener START on VISTA-VISTA:CACHE, port 9210
+        has been queued as task 1023
+  CONTROLLED BY LISTENER STARTER: <strong>1</strong>  YES
+
+Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong>
+</code>
+<h2 id="on-gt.m">On GT.M</h2>
+<p>Since GT.M systems do not use the Listener as Caché systems, we will answer &quot;No&quot; or &quot;0&quot; to both of those questions. More information on setting up the listener for GT.M will follow.</p>
+<code>  STATUS: STOPPED// <strong>&lt;enter&gt;</strong>
+  CONTROLLED BY LISTENER STARTER: <strong>0</strong>  No
+
+Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong>
+</code>
+<h1 id="start-rpc-broker">Start RPC Broker</h1>
+<h2 id="on-caché-1">On Caché</h2>
+<p>The OSEHRA setup scrpt will also start the RPC Broker Listener which CPRS uses to communicate with the VistA instance. These steps only happen on platforms with a Caché instance. They create a task for the XWB Listener Starter that will be run when the Task Manager is started.</p>
+<code>VISTA> <strong>S DUZ=1 D ^XUP</strong>
+
+Setting up programmer environment
+This is a TEST account.
+
+Terminal Type set to: C-VT220
+
+Select OPTION NAME: <strong>Systems Manager Menu</strong>  EVE     Systems Manager Menu
+
+
+        Core Applications ...
+        Device Management ...
+        Menu Management ...
+        Programmer Options ...
+        Operations Management ...
+        Spool Management ...
+        Information Security Officer Menu ...
+        Taskman Management ...
+        User Management ...
+        Application Utilities ...
+        Capacity Planning ...
+        HL7 Main Menu ...
+
+
+You have PENDING ALERTS
+        Enter  "VA to jump to VIEW ALERTS option
+
+Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>Taskman Management</strong>
+
+
+        Schedule/Unschedule Options
+        One-time Option Queue
+        Taskman Management Utilities ...
+        List Tasks
+        Dequeue Tasks
+        Requeue Tasks
+        Delete Tasks
+        Print Options that are Scheduled to run
+        Cleanup Task List
+        Print Options Recommended for Queueing
+
+
+You have PENDING ALERTS
+        Enter  "VA to jump to VIEW ALERTS option
+
+Select Taskman Management <TEST ACCOUNT> Option: <strong>Schedule/Unschedule Options</strong>
+
+Select OPTION to schedule or reschedule: <strong>XWB LISTENER STARTER</strong>       Start All RP
+C Broker Listeners
+       ...OK? Yes// <strong>Y</strong>  (Yes)
+    (R)
+</code>
+<p>After answering that question another ScreenMan form will open with six options. To have the XWB Listener Starter be run on the start up of Taskman, enter <code>STARTUP</code> as the value for <code>SPECIAL QEUEING</code>:</p>
+<code>                        Edit Option Schedule
+  Option Name: XWB LISTENER STARTER
+  Menu Text: Start All RPC Broker Listeners            TASK ID:
+__________________________________________________________________________
+
+  QUEUED TO RUN AT WHAT TIME:
+
+DEVICE FOR QUEUED JOB OUTPUT:
+
+ QUEUED TO RUN ON VOLUME SET:
+
+      RESCHEDULING FREQUENCY:
+
+             TASK PARAMETERS:
+
+      ----> SPECIAL QUEUEING:
+
+_______________________________________________________________________________
+Exit     Save     Next Page     Refresh
+
+Enter a command or '^' followed by a caption to jump to a specific field.
+
+
+COMMAND:                                      Press <PF1>H for help    Insert</code>
+<p>To save the information put the ScreenMan form, navigate to the <code>COMMAND</code> entry point and enter <code>S</code> or <code>Save</code>. The same input location is used to exit, with an <code>E</code> or <code>Exit</code> to leave the form.</p>
+<code>Select OPTION to schedule or reschedule: <strong>&lt;enter&gt;</strong
+
+
+        Schedule/Unschedule Options
+        One-time Option Queue
+        Taskman Management Utilities ...
+        List Tasks
+        Dequeue Tasks
+        Requeue Tasks
+        Delete Tasks
+        Print Options that are Scheduled to run
+        Cleanup Task List
+        Print Options Recommended for Queueing
+
+
+You have PENDING ALERTS
+        Enter  "VA to jump to VIEW ALERTS option
+
+Select Taskman Management <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong>
+
+Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong></code>
+<h2 id="on-gt.m-1">On GT.M</h2>
+<p>The process is a bit more complicated, but OSEHRA has a <a href="http://wiki.osehra.org/pages/viewpage.action?pageId=3047628#Developmentenvironmentinstall%28OSEHRAVM%29-Configurexinetd">wiki page</a> which describes the process of the set up.</p>
+<h1 id="start-taskman">Start TaskMan</h1>
+<p>The Task Manager is an integral part of a running VistA instance. It lets actions and users schedule tasks to be performed at certain times or after certain trigger events. The XWB Listener Starter example is one example of scheduling a task.</p>
+<p>The OSEHRA script uses the <code>TaskMan Management Utilities</code> menu to control TaskMan:</p>
+<h1 id="add-user">Add User</h1>
+<p>The next step is to create a user that can sign on to the CPRS GUI. The things to make sure that this new user has are</p>
+<blockquote>
+<ul>
+<li>A Secondary menu option of &quot;OR CPRS GUI CHART&quot;</li>
+<li>CPRS Tab Access</li>
+<li>An ACCESS CODE</li>
+<li>A VERIFY CODE</li>
+<li>Service/Section (required for any user)</li>
+</ul>
+</blockquote>
+<p>The menu option ensures that the user has the proper permissions to access CPRS after signing in with their ACCESS and VERIFY codes. The Tab access can limit the amount of things a user can access once they have signed in.</p>
+<p>The adding of the user is done through the User Management menu in the menu system, which will ask for information in a series of prompts then will open a Screenman form to complete the task.</p>
+<p>The following steps will add a generic <code>CPRS,USER</code> person who will be able to sign into CPRS.</p>
+<blockquote>
+<p>VISTA&gt; S DUZ=1 D ^XUP</p>
+<p>Setting up programmer environment This is a TEST account.</p>
+<p>Terminal Type set to: C-VT220</p>
+<p>Select OPTION NAME: Systems Manager Menu</p>
+<blockquote>
+<p>Core Applications ... Device Management ... Menu Management ... Programmer Options ... Operations Management ... Spool Management ... Information Security Officer Menu ... Taskman Management ... User Management ... Application Utilities ... Capacity Planning ... HL7 Main Menu ...</p>
+</blockquote>
+<dl>
+<dt>You have PENDING ALERTS</dt>
+<dd><p>Enter &quot;VA to jump to VIEW ALERTS option</p>
+</dd>
+</dl>
+<p>Select Systems Manager Menu &lt;TEST ACCOUNT&gt; Option: User Management</p>
+<blockquote>
+<p>Add a New User to the System Grant Access by Profile Edit an Existing User Deactivate a User Reactivate a User List users User Inquiry Switch Identities File Access Security ... **&gt; Out of order: ACCESS DISABLED Clear Electronic signature code Electronic Signature Block Edit List Inactive Person Class Users Manage User File ... OAA Trainee Registration Menu ... Person Class Edit Reprint Access agreement letter</p>
+</blockquote>
+<dl>
+<dt>You have PENDING ALERTS</dt>
+<dd><p>Enter &quot;VA to jump to VIEW ALERTS option</p>
+</dd>
+</dl>
+<p>Select User Management &lt;TEST ACCOUNT&gt; Option: Add a New User to the System Enter NEW PERSON's name (Family,Given Middle Suffix): CPRS,USER Are you adding 'CPRS,USER' as a new NEW PERSON (the 56TH)? No// Y (Yes) Checking SOUNDEX for matches. No matches found. Now for the Identifiers. INITIAL: UC SSN: 000000002 SEX: M MALE NPI:</p>
+</blockquote>
+<p>Once in the ScreenMan form, you will need to set the necessary information mentioned above. Four pieces of information are able to be set on the first page of the ScreenMan form. The arrows are for emphasis to highlight where information needs to be entered and will not show up in the terminal window.</p>
+<p>To add an access or verify codes, you need to first answer <code>Y</code> to the <code>Want to edit ...</code> questions, it will then prompt you to change the codes.</p>
+<blockquote>
+<h4 id="name-cprsuser-page-1-of-5">NAME: CPRS,USER Page 1 of 5</h4>
+<blockquote>
+<dl>
+<dt>NAME... CPRS,USER INITIAL: UC</dt>
+<dd><dl>
+<dt>TITLE: NICK NAME:</dt>
+<dd><p>SSN: 000000002 DOB:</p>
+</dd>
+</dl>
+</dd>
+</dl>
+<p>DEGREE: MAIL CODE:</p>
+</blockquote>
+<blockquote>
+<p>DISUSER: TERMINATION DATE: Termination Reason:</p>
+<blockquote>
+<p>PRIMARY MENU OPTION:</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>Select SECONDARY MENU OPTIONS: &lt;---</p>
+</blockquote>
+<p>Want to edit ACCESS CODE (Y/N): &lt;--- FILE MANAGER ACCESS CODE: Want to edit VERIFY CODE (Y/N): &lt;---</p>
+<blockquote>
+<p>Select DIVISION:</p>
+</blockquote>
+<blockquote>
+<p>---&gt; SERVICE/SECTION:</p>
+</blockquote>
+<dl>
+<dt>_______________________________________________________________________________</dt>
+<dd><p>Exit Save Next Page Refresh</p>
+</dd>
+</dl>
+<p>Enter a command or '^' followed by a caption to jump to a specific field.</p>
+<p>COMMAND: Press &lt;PF1&gt;H for help Insert</p>
+</blockquote>
+<p>To change to other pages, press the down arrow key or &lt;TAB&gt; until the cursor reaches the COMMAND box. Then type <code>N</code> or <code>Next Page</code> and press &amp;lt;enter&amp;gt; to display the next page.</p>
+<p>There is nothing that needs to be set on the second or third pages, but the CPRS Tab Access is set on the fourth page. Navigate the cursor to the location under the <code>Name</code> header and enter <code>COR</code>, which stands <code>for Core Tab Access</code>, and enter an effective date of yesterday, <code>T-1</code> is the notation to use.</p>
+<blockquote>
+<h4 id="name-cprsuser-page-4-of-5">NAME: CPRS,USER Page 4 of 5</h4>
+<p>RESTRICT PATIENT SELECTION: OE/RR LIST:</p>
+<dl>
+<dt>CPRS TAB ACCESS:</dt>
+<dd><p>Name Description Effective Date Expiration Date</p>
+</dd>
+</dl>
+<p>-&gt;</p>
+<hr />
+<p>COMMAND: Press &lt;PF1&gt;H for help</p>
+</blockquote>
+<p>Once that is done, save and exit the ScreenMan form via the COMMAND box and then answer the final questions regarding access letters, security keys and mail groups:</p>
+<blockquote>
+<p>Exit Save Next Page Refresh</p>
+<p>Enter a command or '^' followed by a caption to jump to a specific field.</p>
+<p>COMMAND: E Press &lt;PF1&gt;H for help Insert</p>
+<p>Print User Account Access Letter? NO Do you wish to allocate security keys? NO// NO Do you wish to add this user to mail groups? NO// NO</p>
+<p><em>&lt;snip&gt;</em> Select User Management &lt;TEST ACCOUNT&gt; Option: ^&amp;lt;enter&amp;gt; VISTA&gt;</p>
+</blockquote>
+<p>At this point, CPRS can successfully connect to the local VistA instance and the <code>CPRS,USER</code> will be able to sign on and interact with the GUI. For instructions on how to set up the CPRS connection command or to download the executable, see <a href="http://www.osehra.org/document/guis-used-automatic-functional-testing">GUI page</a>.</p>
+</body>
+</html>
