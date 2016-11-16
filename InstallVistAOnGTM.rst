@@ -31,6 +31,18 @@ convention in the VistA community is to call these folders r g j and o::
     
     $ mkdir r g j o
 
+ | Aside: Fidelity (the company behind GT.M) recommends versioning objects
+ | and global directories to allow for rolling upgrades. I personally don't 
+ | think this is necessary for VistA. More details can be found at the
+ | `GT.M Acculturation Workshop <https://sourceforge.net/projects/fis-gtm/files/GT.M%20Acculturation%20Workshop/>`_.
+
+ | Another aside: Various people in the VistA community create another directory
+ | called "p" for patches, so that you can apply unix style "patches" to routines
+ | in the "r" directory and not overwrite the original routine. The intent is
+ | reasonable, but what what almost always happens is that I get calls or emails
+ | on why aren't my changes showing up. VistA tools (KIDS, Fileman, VPE) are all
+ | written just expecting a single routine list.
+
 At this point, we need to create an environment file that we will need to
 source in order to tell GT.M where are our routines and globals are. The reason
 we need to do this is simple: GT.M bases its operations almost entirely on
@@ -107,67 +119,70 @@ running ``mupip create``, but rather than do that, we need to write some code
 to tell GT.M to change its default database for VistA. I will create a file 
 called ``g/db.gde``::
 
-	! Change the default segment's file 
-	! to be g/mumps.dat
-	! to have 4096 byte blocks
-	! to have an initial DB size of 262144*4096=1GB
-	! to allow 1000 locks
-	! On production environments, add -extension_count=0 to prevent the database
-	! -> from growing automatically. You need to monitor it and expand it yourself.
-	change -segment DEFAULT -file="$vista_home/g/mumps.dat"   -allocation=262144  -block_size=4096 -lock_space=1000 !-extension_count=0
+    ! Change the default segment's file 
+    ! to be g/mumps.dat
+    ! to have 4096 byte blocks
+    ! to have an initial DB size of 262144*4096=1GB
+    ! to allow 1000 locks
+    ! On production environments, add -extension_count=0 to prevent the database
+    ! -> from growing automatically. You need to monitor it and expand it yourself.
+    change -segment DEFAULT -file="$vista_home/g/mumps.dat" -access_method=BG -allocation=262144  -block_size=4096 -lock_space=1000 !-extension_count=0
 
-	! Ditto pretty much, except this is smaller. Note that we create a new segment
-	! rather than modify an existing one.
-	add    -segment TEMPGBL -file="$vista_home/g/tempgbl.dat" -allocation=10000   -block_size=4096 -lock_space=1000 !-extension_count=0
+    ! Ditto pretty much, except this is smaller. Note that we create a new segment
+    ! rather than modify an existing one.
+    ! TEMPGBL unlike the others will be memory mapped to the RAM to allow instant
+    ! access.
+    add    -segment TEMPGBL -file="$vista_home/g/tempgbl.dat" -access_method=MM -allocation=10000   -block_size=4096 -lock_space=1000 !-extension_count=0
 
-	! Non-journaled static data (3 GB, intentionally not expandable)
-	add    -segment STATIC -file="$vista_home/g/static.dat"   -allocation=786432  -block_size=4096 -lock_space=1000 -extension_count=0
+    ! Non-journaled static data (3 GB, intentionally not expandable)
+    add    -segment STATIC -file="$vista_home/g/static.dat"   -access_method=BG -allocation=786432  -block_size=4096 -lock_space=1000 -extension_count=0
 
-	! Journaled mail data (1 GB, intentionally not expandable)
-	add    -segment MAILMAN -file="$vista_home/g/mailman.dat" -allocation=262144  -block_size=4096 -lock_space=1000 -extension_count=0
+    ! Journaled mail data (1 GB, intentionally not expandable)
+    add    -segment MAILMAN -file="$vista_home/g/mailman.dat" -access_method=BG -allocation=262144  -block_size=4096 -lock_space=1000 -extension_count=0
 
-	! Error data (not to be journaled, intentionally not expandable)
-	add    -segment ERRORS -file="$vista_home/g/errors.dat"   -allocation=100000  -block_size=4096 -lock_space=1000 -extension_count=0
+    ! Error data (not to be journaled, intentionally not expandable)
+    add    -segment ERRORS -file="$vista_home/g/errors.dat"   -access_method=BG -allocation=100000  -block_size=4096 -lock_space=1000 -extension_count=0
 
-	! Each global node can be 16384 bytes long; subscripts can be combined to be 1019 bytes long
-	change -region  DEFAULT -record_size=16384 -stdnullcoll -key_size=1019
+    ! Each global node can be 16384 bytes long; subscripts can be combined to be 1019 bytes long
+    change -region  DEFAULT -record_size=16384 -stdnullcoll -key_size=1019
 
-	! Ditto, but note that we need to assign the new region to its associated segment
-	add    -region  TEMPGBL -record_size=16384 -stdnullcoll -key_size=1019 -dyn=TEMPGBL
-	add    -region  STATIC  -record_size=16384 -stdnullcoll -key_size=1019 -dyn=STATIC
-	add    -region  MAILMAN -record_size=16384 -stdnullcoll -key_size=1019 -dyn=MAILMAN
-	add    -region  ERRORS  -record_size=16384 -stdnullcoll -key_size=1019 -dyn=ERRORS
+    ! Ditto, but note that we need to assign the new region to its associated segment
+    add    -region  TEMPGBL -record_size=16384 -stdnullcoll -key_size=1019 -dyn=TEMPGBL
+    add    -region  STATIC  -record_size=16384 -stdnullcoll -key_size=1019 -dyn=STATIC
+    add    -region  MAILMAN -record_size=16384 -stdnullcoll -key_size=1019 -dyn=MAILMAN
+    add    -region  ERRORS  -record_size=16384 -stdnullcoll -key_size=1019 -dyn=ERRORS
 
 
-	! Add globals to the temporary region
-	add    -name    HLTMP   -region=TEMPGBL
-	add    -name    TMP     -region=TEMPGBL
-	add    -name    UTILITY -region=TEMPGBL
-	add    -name    XTMP    -region=TEMPGBL
-	add    -name    BMXTMP  -region=TEMPGBL
-	add    -name    XUTL    -region=TEMPGBL
-	add    -name    VPRHTTP -region=TEMPGBL
-	add    -name    ZZ*     -region=TEMPGBL
+    ! Add globals to the temporary region
+    add    -name    HLTMP   -region=TEMPGBL
+    add    -name    TMP     -region=TEMPGBL
+    add    -name    UTILITY -region=TEMPGBL
+    add    -name    XTMP    -region=TEMPGBL
+    add    -name    BMXTMP  -region=TEMPGBL
+    add    -name    XUTL    -region=TEMPGBL
+    add    -name    VPRHTTP -region=TEMPGBL
+    add    -name    ZZ*     -region=TEMPGBL
 
-	! Add globals to the static segment
-	add    -name    %Z        -region=STATIC
-	add    -name    DOPT      -region=STATIC
-	add    -name    DIA(50.6:50.68) -region=STATIC
-	add    -name    DIA(56)    -region=STATIC
-	add    -name    ICD*       -region=STATIC
-	add    -name    ICPT       -region=STATIC
-	add    -name    LEX*       -region=STATIC
-	add    -name    PSNDF      -region=STATIC
-	add    -name    XVEMS      -region=STATIC
+    ! Add globals to the static segment
+    add    -name    %Z        -region=STATIC
+    add    -name    DOPT      -region=STATIC
+    add    -name    DIA(50.6:50.68) -region=STATIC
+    add    -name    DIA(56)    -region=STATIC
+    add    -name    ICD*       -region=STATIC
+    add    -name    ICPT       -region=STATIC
+    add    -name    LEX*       -region=STATIC
+    add    -name    PSNDF      -region=STATIC
+    add    -name    XVEMS      -region=STATIC
 
-	! Add globals to the mail segment
-	add    -name    XM*        -region=MAILMAN
+    ! Add globals to the mail segment
+    add    -name    XM*        -region=MAILMAN
 
-	! Add globals to the Error segment
-	add    -name    %ZTER     -region=ERRORS
+    ! Add globals to the Error segment
+    add    -name    %ZTER     -region=ERRORS
 
-	! show all for verification
-	show -all
+    ! show all for verification
+    show -all
+
 
 Once you save the file, run it::
 
@@ -269,7 +284,7 @@ g/db.gde.out as well::
 																						MSLT=1024
 																						DALL=YES
 	 TEMPGBL                         $vista_home/g/tempgbl.dat
-														 BG  DYN  4096      10000   100 GLOB=1024
+														 MM  DYN  4096      10000   100 GLOB=1024
 																						LOCK=1000
 																						RES =   0
 																						ENCR=OFF
@@ -422,4 +437,102 @@ At this point, we are ready to create our databases. This is easy::
 	Created file /var/db/foia201608/g/static.dat
 	Created file /var/db/foia201608/g/tempgbl.dat
 
+To check that everything works fine, run ``mumps -dir`` and then ``DO ^%GD``
+and ``DO ^%RD``. The first will open all the database files for searching and
+open a shared memory segment on your machine. The second will make sure that
+your ``$gtmroutines`` variable is correct::
 
+    $ mumps -dir
+
+    FOIA 2016-08>D ^%GD
+
+    Global Directory
+
+    Global ^*
+
+    Total of 0 globals.
+
+    Global ^
+
+    FOIA 2016-08>D ^%RD
+
+    Routine directory
+    Routine: *
+
+    Total of 0 routines.
+
+    Routine: 
+
+It's common with all Unix software relying on POSIX/SysV Shared Memory to
+report errors with ``shmget()``. If you when you are trying to run ^%GD, 
+you need to increase your shared memory limits. I will leave you to google
+that on your own.
+
+Loading VistA Into the GT.M Database we just Created
+----------------------------------------------------
+I said we will use FOIA VistA. Make sure that git is installed on your machine,
+and then run the following command (this command may take up to 1 hour to
+run, based on your internet connection)::
+
+    $ git clone -b foia --single-branch --depth=1 https://github.com/OSEHRA/VistA-M.git
+
+Next we need to copy the routines to VistA (takes about 30 seconds). There are
+quotes around the ``{}`` because the paths contain ::
+
+    $ find VistA-M -name '*.m' -exec cp "{}" r/ \;
+
+Next we need to load the globals. We use the versatile ``mupip load`` command
+for that. Note that mupip load wants quotes sent down from the shell for any
+paths that contain spaces; and these do. Again, we tee our output because there
+is so much of it and because we need to visually inspect that everything got
+loaded::
+
+    $ find VistA-M -name '*.zwr' -exec echo {} \; -exec mupip load \"{}\" \; |& tee g/foia201608-load.log
+
+Verify that none of the globals failed to import::
+
+    $ fgrep '%GTM' g/foia201608-load.log | wc -l
+
+If you get an output that isn't zero, you need to visually inspect what
+happened.
+
+After we are done with this, we will repeat our smoke test with %GD and %RD::
+
+    $ mumps -dir
+
+    FOIA 2016-08>D ^%GD
+
+    Global Directory
+
+    Global ^*
+    ...
+    Total of 391 globals.
+
+    FOIA 2016-08>D ^%RD
+
+    Routine directory
+    Routine: *
+    ...
+    Total of 35547 routines.
+
+At this point we are done loading VistA. It's time to enable journaling on
+all the regions we want. That can be a separate script, but I put it with my
+env script so that everything can be in one place and I only have to source
+one file to activate my VistA instance. Add this to the end. This recovers
+the database if it was journaled and then enables journaling. ::
+
+	# This is journaling.                                                                                                                                   
+	if [ -f j/mumps.mjl ]; then                                                     
+		$gtm_dist/mupip journal -recover -backward ${vista_home}/j/mumps.mjl                      
+	fi                                                                              
+	if [ -f j/mailman.mjl ]; then                                                   
+		$gtm_dist/mupip journal -recover -backward ${vista_home}/j/mumps.mjl                      
+	fi                                                                              
+													
+	if (( $(find ${vista_home}/j -name '*_*' -mtime +3 -print | wc -l) > 0 )); then 
+		echo "Deleting old journals"                                                
+		find ${vista_home}/j -name '*_*' -mtime +3 -print -delete                   
+	fi                                                                              
+								
+	$gtm_dist/mupip set -journal="enable,on,before,f=j/mumps.mjl" -region DEFAULT   
+	$gtm_dist/mupip set -journal="enable,on,before,f=j/mailman.mjl" -region MAILMAN   
