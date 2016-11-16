@@ -514,8 +514,7 @@ an ``E`` or ``Exit`` to leave the form.
 On GT.M
 *******
 
-The process is a bit more complicated, but OSEHRA has a
-`wiki page`_ which describes the process of the set up.
+TODO Replace use of xinetd with Sam's native solution!!!
 
 
 Start TaskMan
@@ -529,58 +528,58 @@ of scheduling a task.
 The OSEHRA script uses the ``TaskMan Management Utilities`` menu to control
 TaskMan:
 
-.. parsed-literal::
+.. raw:: html
 
-  VISTA> :usertype:`S DUZ=1 D ^XUP`
+    <code>VISTA> <strong>S DUZ=1 D ^XUP</strong>
 
-  Setting up programmer environment
-  This is a TEST account.
+    Setting up programmer environment
+    This is a TEST account.
 
-  Terminal Type set to: C-VT220
+    Terminal Type set to: C-VT220
 
-  Select OPTION NAME: :usertype:`TASKMAN MANAGEMENT UTILITIES`  XUTM UTIL     Taskman Manageme
-  nt Utilities
-
-
-   MTM    Monitor Taskman
-          Check Taskman's Environment
-          Edit Taskman Parameters ...
-          Restart Task Manager
-          Place Taskman in a WAIT State
-          Remove Taskman from WAIT State
-          Stop Task Manager
-          Taskman Error Log ...
-          Clean Task File
-          Problem Device Clear
-          Problem Device report.
-          SYNC flag file control
+    Select OPTION NAME: <strong>TASKMAN MANAGEMENT UTILITIES</strong>  XUTM UTIL     Taskman Manageme
+    nt Utilities
 
 
-  You've got PRIORITY mail!
+     MTM    Monitor Taskman
+            Check Taskman's Environment
+            Edit Taskman Parameters ...
+            Restart Task Manager
+            Place Taskman in a WAIT State
+            Remove Taskman from WAIT State
+            Stop Task Manager
+            Taskman Error Log ...
+            Clean Task File
+            Problem Device Clear
+            Problem Device report.
+            SYNC flag file control
 
 
-  Select Taskman Management Utilities <TEST ACCOUNT> Option: :usertype:`Restart Task Manager`
-  ARE YOU SURE YOU WANT TO RESTART TASKMAN? NO// :usertype:`Y`  (YES)
-  Restarting...TaskMan restarted!
+    You've got PRIORITY mail!
 
 
-   MTM    Monitor Taskman
-          Check Taskman's Environment
-          Edit Taskman Parameters ...
-          Restart Task Manager
-          Place Taskman in a WAIT State
-          Remove Taskman from WAIT State
-          Stop Task Manager
-          Taskman Error Log ...
-          Clean Task File<F5>
-          Problem Device Clear
-          Problem Device report.
-          SYNC flag file control
+    Select Taskman Management Utilities <TEST ACCOUNT> Option: <strong>Restart Task Manager</strong>
+    ARE YOU SURE YOU WANT TO RESTART TASKMAN? NO// <strong>Y</strong>  (YES)
+    Restarting...TaskMan restarted!
 
 
-  You've got PRIORITY mail!
+     MTM    Monitor Taskman
+            Check Taskman's Environment
+            Edit Taskman Parameters ...
+            Restart Task Manager
+            Place Taskman in a WAIT State
+            Remove Taskman from WAIT State
+            Stop Task Manager
+            Taskman Error Log ...
+            Clean Task File<F5>
+            Problem Device Clear
+            Problem Device report.
+            SYNC flag file control
 
-  Select Taskman Management Utilities <TEST ACCOUNT> Option: :usertype:`^`
+
+    You've got PRIORITY mail!
+
+    Select Taskman Management Utilities <TEST ACCOUNT> Option: <strong>^</strong></code>
 
 
 Add User
@@ -606,69 +605,70 @@ open a Screenman form to complete the task.
 The following steps will add a generic ``CPRS,USER`` person who will be able to
 sign into CPRS.
 
-.. parsed-literal::
-  VISTA> :usertype:`S DUZ=1 D ^XUP`
+.. raw:: html
 
-  Setting up programmer environment
-  This is a TEST account.
+    <code>VISTA> <strong>S DUZ=1 D ^XUP</strong>
 
-  Terminal Type set to: C-VT220
+    Setting up programmer environment
+    This is a TEST account.
 
-  Select OPTION NAME:  :usertype:`Systems Manager Menu`
+    Terminal Type set to: C-VT220
 
-
-          Core Applications ...
-          Device Management ...
-          Menu Management ...
-          Programmer Options ...
-          Operations Management ...
-          Spool Management ...
-          Information Security Officer Menu ...
-          Taskman Management ...
-          User Management ...
-          Application Utilities ...
-          Capacity Planning ...
-          HL7 Main Menu ...
+    Select OPTION NAME:  <strong>Systems Manager Menu</strong>
 
 
-  You have PENDING ALERTS
-          Enter  "VA to jump to VIEW ALERTS option
-
-  Select Systems Manager Menu <TEST ACCOUNT> Option: :usertype:`User Management`
-
-
-          Add a New User to the System
-          Grant Access by Profile
-          Edit an Existing User
-          Deactivate a User
-          Reactivate a User
-          List users
-          User Inquiry
-          Switch Identities
-          File Access Security ...
-             \**> Out of order:  ACCESS DISABLED
-          Clear Electronic signature code
-          Electronic Signature Block Edit
-          List Inactive Person Class Users
-          Manage User File ...
-          OAA Trainee Registration Menu ...
-          Person Class Edit
-          Reprint Access agreement letter
+            Core Applications ...
+            Device Management ...
+            Menu Management ...
+            Programmer Options ...
+            Operations Management ...
+            Spool Management ...
+            Information Security Officer Menu ...
+            Taskman Management ...
+            User Management ...
+            Application Utilities ...
+            Capacity Planning ...
+            HL7 Main Menu ...
 
 
-  You have PENDING ALERTS
-          Enter  "VA to jump to VIEW ALERTS option
+    You have PENDING ALERTS
+            Enter  "VA to jump to VIEW ALERTS option
 
-  Select User Management <TEST ACCOUNT> Option: :usertype:`Add a New User to the System`
-  Enter NEW PERSON's name (Family,Given Middle Suffix): :usertype:`CPRS,USER`
-    Are you adding 'CPRS,USER' as a new NEW PERSON (the 56TH)? No// :usertype:`Y`  (Yes)
-  Checking SOUNDEX for matches.
-  No matches found.
-  Now for the Identifiers.
-  INITIAL: :usertype:`UC`
-  SSN: :usertype:`000000002`
-  SEX: :usertype:`M`  MALE
-  NPI:
+    Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>User Management</strong>
+
+
+            Add a New User to the System
+            Grant Access by Profile
+            Edit an Existing User
+            Deactivate a User
+            Reactivate a User
+            List users
+            User Inquiry
+            Switch Identities
+            File Access Security ...
+               \**> Out of order:  ACCESS DISABLED
+            Clear Electronic signature code
+            Electronic Signature Block Edit
+            List Inactive Person Class Users
+            Manage User File ...
+            OAA Trainee Registration Menu ...
+            Person Class Edit
+            Reprint Access agreement letter
+
+
+    You have PENDING ALERTS
+            Enter  "VA to jump to VIEW ALERTS option
+
+    Select User Management <TEST ACCOUNT> Option: <strong>Add a New User to the System</strong>
+    Enter NEW PERSON's name (Family,Given Middle Suffix): <strong>CPRS,USER</strong>
+      Are you adding 'CPRS,USER' as a new NEW PERSON (the 56TH)? No// <strong>Y</strong>  (Yes)
+    Checking SOUNDEX for matches.
+    No matches found.
+    Now for the Identifiers.
+    INITIAL: <strong>UC</strong>
+    SSN: <strong>000000002</strong>
+    SEX: <strong>M</strong>  MALE
+    NPI: <strong>&lt;enter&gt;</strong></code>
 
 Once in the ScreenMan form, you will need to set the necessary
 information mentioned above. Four pieces of information are able to be set
@@ -679,31 +679,32 @@ terminal window.
 To add an access or verify codes, you need to first answer ``Y`` to the
 ``Want to edit ...`` questions, it will then prompt you to change the codes.
 
-.. parsed-literal::
-                             Edit an Existing User
- NAME: CPRS,USER                                                     Page 1 of 5
- _______________________________________________________________________________
-    NAME... CPRS,USER                                   INITIAL: UC
-     TITLE:                                           NICK NAME:
-       SSN: 000000002                                       DOB:
-    DEGREE:                                           MAIL CODE:
-   DISUSER:                                     TERMINATION DATE:
-   Termination Reason:
+.. raw:: html
 
-            PRIMARY MENU OPTION:
-  Select SECONDARY MENU OPTIONS:   <---
- Want to edit ACCESS CODE (Y/N):   <---  FILE MANAGER ACCESS CODE:
- Want to edit VERIFY CODE (Y/N):   <---
+    <code>                            Edit an Existing User
+    NAME: CPRS,USER                                                     Page 1 of 5
+    _______________________________________________________________________________
+       NAME... CPRS,USER                                   INITIAL: UC
+        TITLE:                                           NICK NAME:
+          SSN: 000000002                                       DOB:
+       DEGREE:                                           MAIL CODE:
+      DISUSER:                                     TERMINATION DATE:
+      Termination Reason:
 
-               Select DIVISION:
-          ---> SERVICE/SECTION:
- _______________________________________________________________________________
-  Exit     Save     Next Page     Refresh
+               PRIMARY MENU OPTION:
+     Select SECONDARY MENU OPTIONS:   <---
+    Want to edit ACCESS CODE (Y/N):   <---  FILE MANAGER ACCESS CODE:
+    Want to edit VERIFY CODE (Y/N):   <---
 
- Enter a command or '^' followed by a caption to jump to a specific field.
+                  Select DIVISION:
+             ---> SERVICE/SECTION:
+    _______________________________________________________________________________
+     Exit     Save     Next Page     Refresh
+
+    Enter a command or '^' followed by a caption to jump to a specific field.
 
 
- COMMAND:                                     Press <PF1>H for help    Insert
+    COMMAND:                                     Press <PF1>H for help    Insert</code>
 
 To change to other pages, press the down arrow key or <TAB> until the cursor
 reaches the COMMAND box.  Then type ``N`` or ``Next Page`` and press &lt;enter&gt; to
@@ -714,56 +715,53 @@ CPRS Tab Access is set on the fourth page. Navigate the cursor to the location
 under the ``Name`` header and enter ``COR``, which stands ``for Core Tab Access``,
 and enter an effective date of yesterday, ``T-1`` is the notation to use.
 
-.. parsed-literal::
-                             Edit an Existing User
- NAME: CPRS,USER                                                     Page 4 of 5
- _______________________________________________________________________________
- RESTRICT PATIENT SELECTION:        OE/RR LIST:
+.. raw:: html
 
- CPRS TAB ACCESS:
-   Name  Description                          Effective Date  Expiration Date
- ->
+    <code>                            Edit an Existing User
+    NAME: CPRS,USER                                                     Page 4 of 5
+    _______________________________________________________________________________
+    RESTRICT PATIENT SELECTION:        OE/RR LIST:
 
-
-
+    CPRS TAB ACCESS:
+      Name  Description                          Effective Date  Expiration Date
+    ->
 
 
 
 
 
- _______________________________________________________________________________
+
+
+
+    _______________________________________________________________________________
 
 
 
 
 
- COMMAND:                                       Press <PF1>H for help
+    COMMAND:                                       Press <PF1>H for help</code>
 
 Once that is done, save and exit the ScreenMan form via the COMMAND box and
 then answer the final questions regarding access letters, security keys
 and mail groups:
 
-.. parsed-literal::
- Exit     Save     Next Page     Refresh
+.. raw:: html
 
- Enter a command or '^' followed by a caption to jump to a specific field.
-
-
- COMMAND: :usertype:`E`                                     Press <PF1>H for help    Insert
-
- Print User Account Access Letter? :usertype:`NO`
- Do you wish to allocate security keys? NO// :usertype:`NO`
- Do you wish to add this user to mail groups? NO// :usertype:`NO`
-
- *<snip>*
- Select User Management <TEST ACCOUNT> Option: :usertype:`^&lt;enter&gt;`
- VISTA>
+    <code>Exit     Save     Next Page     Refresh
+    
+    Enter a command or '^' followed by a caption to jump to a specific field.
+    
+    
+    COMMAND: <strong>E</strong>                                     Press <PF1>H for help    Insert
+    
+    Print User Account Access Letter? <strong>NO</strong>
+    Do you wish to allocate security keys? NO// <strong>NO</strong>
+    Do you wish to add this user to mail groups? NO// <strong>NO</strong>
+    
+    ...
+    
+    Select User Management <TEST ACCOUNT> Option: <strong>^&lt;enter&gt;</strong>
+    VISTA></code>
 
 At this point, CPRS can successfully connect to the local VistA instance and
-the ``CPRS,USER`` will be able to sign on and interact with the GUI.  For
-instructions on how to set up the CPRS connection command or to download
-the executable, see `GUI page`_.
-
-.. _TEST_VISTA_FRESH: SetupTestingEnvironment.rst
-.. _`wiki page`: http://wiki.osehra.org/pages/viewpage.action?pageId=3047628#Developmentenvironmentinstall%28OSEHRAVM%29-Configurexinetd
-.. _`GUI page`: http://www.osehra.org/document/guis-used-automatic-functional-testing
+the ``CPRS,USER`` will be able to sign on and interact with the GUI.  
