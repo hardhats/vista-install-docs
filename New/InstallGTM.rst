@@ -30,9 +30,8 @@ require the -E option to pass your shell environment to root process invoked by
 the sudo.
 
 .. raw:: html
-
-    <code>
-    $ <strong>mkdir /tmp/tmp</strong>
+    
+    <div class="code"><code>$ <strong>mkdir /tmp/tmp</strong>
     $ <strong>cd /tmp/tmp</strong>
     /tmp/tmp$ <strong>wget http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer/v0.13/gtminstall</strong>
 
@@ -45,8 +44,7 @@ the sudo.
     total 12
     dr-xr-xr-x 5 root root 8192 Nov 13 10:57 V6.2-000_x86_64
     /tmp/tmp$ <strong>cd</strong>
-    $
-    </code>
+    $</code></div>
 
 
 Traditional Technique
@@ -58,32 +56,27 @@ recent GT.M release. Download it to a temporary directory, e.g., /tmp, with the
 wget program:
 
 .. raw:: html
-
-    <code>
-    $ <strong>wget -P /tmp http://sourceforge.net/projects/fis-gtm/files/GT.M-amd64-Linux/V6.2-000/gtm_V62000_linux_x8664_pro.tar.gz</strong>
-    </code>
+    
+    <div class="code"><code>$ <strong>wget -P /tmp http://sourceforge.net/projects/fis-gtm/files/GT.M-amd64-Linux/V6.2-000/gtm_V62000_linux_x8664_pro.tar.gz</strong></code></div>
 
 Then create a temporary directory and unpack the contents of the tarball into 
 it. If you installed GT.M using the gtminstall technique, you should already 
 have a /tmp/tmp directory.
 
 .. raw:: html
-
-    <code>
-    $ <strong>mkdir /tmp/tmp</strong>
+    
+    <div class="code"><code>$ <strong>mkdir /tmp/tmp</strong>
     $ <strong>cd /tmp/tmp</strong>
     /tmp/tmp$ <strong>tar zxf ../gtm_V62000_linux_x8664_pro.tar.gz</strong>
-    /tmp/tmp$
-    </code> 
+    /tmp/tmp$</code></div> 
 
 Then install GT.M in /usr/local/lib/fis-gtm/V6.2-000_x86_64 – since the 
 gtminstall script would have already installed a GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. 
 Note that this must be done as root.
 
 .. raw:: html
-
-    <code>
-    /tmp/tmp$ <strong>sudo ./configure</strong>
+    
+    <div class="code"><code>/tmp/tmp$ <strong>sudo ./configure</strong>
     [sudo] password for gtmuser: 
     
     GT.M Configuration Script
@@ -131,7 +124,6 @@ Note that this must be done as root.
     Installation completed. Would you like all the temporary files
     removed from this directory? (y or n) <strong>y</strong>
     /tmp/tmp$ cd
-    /tmp/tmp$
-    </code>
+    /tmp/tmp$</code></div>
 
 GT.M is now installed and operational.

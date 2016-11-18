@@ -5,7 +5,8 @@
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
   <title></title>
-  <style type="text/css">code{white-space: pre;}</style>
+  <link href="stylesheets/normalize.css" rel="stylesheet">
+  <link href="stylesheets/main.css" rel="stylesheet">
   <!--[if lt IE 9]>
     <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
   <![endif]-->
@@ -16,13 +17,13 @@
 <p>NOTE Always use VT-220 or VT-320</p>
 <p>NOTE Page up and page down don't work on Linux</p>
 <p>There should only be one device named &quot;NULL&quot;.</p>
-<code>><strong>D Q^DI</strong>
+<div class="code"><code>><strong>D Q^DI</strong>
 
 MSC Fileman 22.2
 
 Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
 
-Input to what File: DEVICE// <strong>&lt;enter&gt;</strong>             (53 entries)
+Input to what File: DEVICE// <strong>&lt;enter&gt;</strong>    (53 entries)
 EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
 
 Select DEVICE NAME: NULL
@@ -40,7 +41,7 @@ CHOOSE 1-2: 2  NULL-DSM    Bit Bucket     _NLA0:
 NAME: NULL-DSM// <strong>DSM-NULL</strong>
 LOCATION OF TERMINAL: Bit Bucket// <strong>^</strong>
 
-Select DEVICE NAME: <strong>NULL</strong>  GTM-UNIX-NULL    Bit Bucket (GT.M-Unix)     /dev/null 
+Select DEVICE NAME: <strong>NULL</strong>  GTM-UNIX-NULL    Bit Bucket (GT.M-Unix)    /dev/null 
 
 NAME: GTM-UNIX-NULL// <strong>NULL</strong>
 LOCATION OF TERMINAL: Bit Bucket (GT.M-Unix)  Replace 
@@ -49,38 +50,38 @@ Select MNEMONIC: NULL// <strong>@</strong>
 Select MNEMONIC: GTM-LINUX-NULL// <strong>@</strong>
    SURE YOU WANT TO DELETE? <strong>Y</strong>  (Yes)
 Select MNEMONIC: 
-LOCAL SYNONYM: <strong>^</strong></code>
+LOCAL SYNONYM: <strong>^</strong></code></div>
 
-Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code>
+Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 <p>CPRS is one of many users of the VistA NULL device, but the <code>$I</code> value, which contains the name or path to the device, is correct only for a VMS platform. It is necessary to change it to match the local platform before it is able to be accessed correctly. The Sign-On capability also needs to be removed from the device.</p>
-<code>Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
+<div class="code"><code>Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
 
 Input to what File: DEVICE// <strong>&lt;enter&gt;</strong>             (53 entries)
 EDIT WHICH FIELD: ALL// <strong>$I</strong>  
 THEN EDIT FIELD: <strong>SIGN-ON/SYSTEM DEVICE</strong>  
 THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
 
-Select DEVICE NAME: NULL      Bit Bucket (GT.M-Unix)     /dev/null</code>
+Select DEVICE NAME: NULL      Bit Bucket (GT.M-Unix)     /dev/null</code></div>
 <h3 id="on-windows">On Windows</h3>
 <p>On Windows machines, the <code>$I</code> value should be set to <code>//./nul</code>.</p>
-<code>$I: NLA0:// <strong>//./nul</strong>
+<div class="code"><code>$I: NLA0:// <strong>//./nul</strong>
 SIGN-ON/SYSTEM DEVICE: NO// N  NO
 
-Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code>
+Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 <h3 id="on-linux">On Linux</h3>
 <p>On Linux machines, the <code>$I</code> value should be set to <code>/dev/null</code>.</p>
-<code>$I: /dev/null// /dev/null
+<div class="code"><code>$I: /dev/null// /dev/null
 SIGN-ON/SYSTEM DEVICE: NO// N  NO
 
-Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code>
+Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 <h1 id="begin-to-set-up-the-vista-system">Begin to Set Up the VistA System</h1>
 <p>The routine ZTMGRSET defines VistA global variables and saves system wide M routines that are Caché specific. FileMan is the database system used by all VistA applications.</p>
 <h3 id="on-caché">On Caché</h3>
-<code>> <strong>D ^%CD</strong>
+<div class="code"><code>> <strong>D ^%CD</strong>
 
-NAMESPACE// <strong>VISTA</strong></code>
+NAMESPACE// <strong>VISTA</strong></code></div>
 <h3 id="ztmgrset">ZTMGRSET</h3>
-<code>><strong>K ^%ZOSF</strong>
+<div class="code"><code>><strong>K ^%ZOSF</strong>
 
 ><strong>D ^ZTMGRSET</strong>
 
@@ -138,16 +139,16 @@ Setting ^%ZIS('C')
 Now, I will check your % globals...........
 
 ALL DONE
-></code>
+></code></div>
 <h3 id="on-caché-1">On Caché</h3>
-<code>NAME OF MANAGER'S NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
+<div class="code"><code>NAME OF MANAGER'S NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
 
 PRODUCTION (SIGN-ON) NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
 
-NAME OF THIS CONFIGURATION: VISTA// <strong>&lt;enter&gt;</strong></code>
+NAME OF THIS CONFIGURATION: VISTA// <strong>&lt;enter&gt;</strong></code></div>
 <h3 id="fileman">Fileman</h3>
 <p>Initialize FileMan to set your site name and number.</p>
-<code>><strong>D ^DINIT</strong>
+<div class="code"><code>><strong>D ^DINIT</strong>
 
 VA FileMan V.22.2
 
@@ -161,7 +162,7 @@ Now loading MUMPS Operating System File
 
 Do you want to change the MUMPS OPERATING SYSTEM File? NO//....
 
-Now loading DIALOG and LANGUAGE Files..............................................................
+Now loading DIALOG and LANGUAGE Files.......................................
 
 TYPE OF MUMPS SYSTEM YOU ARE USING: GT.M(UNIX)// <strong>?</strong>
     Answer with MUMPS OPERATING SYSTEM NAME
@@ -176,9 +177,8 @@ TYPE OF MUMPS SYSTEM YOU ARE USING: GT.M(UNIX)// <strong>?</strong>
 
 TYPE OF MUMPS SYSTEM YOU ARE USING: GT.M(UNIX)// <strong>&lt;enter&gt;</strong>
 
-Now loading other FileMan files--please wait.................................................................................................
-........................................................................................................................................
-..........
+Now loading other FileMan files--please
+wait........................................................................
 
 The following files have been installed:
    .11     INDEX
@@ -221,20 +221,20 @@ THE FORM "LREPI" COULD NOT BE COMPILED.
 
 
 INITIALIZATION COMPLETED IN 4 SECONDS.
-></code>
+></code></div>
 <p>Also run D ^ZUSET to choose the correct version of ZU, the key login routine for the roll and scroll portions of VistA.</p>
-<code>><strong>D ^ZUSET</strong>
+<div class="code"><code>><strong>D ^ZUSET</strong>
 
 This routine will rename the correct routine to ZU for you.
 
 Rename ZUGTM to ZU, OK? No// <strong>Y</strong
 
-Routine ZUGTM was renamed to ZU</code>
+Routine ZUGTM was renamed to ZU</code></div>
 <h3 id="zosv">ZOSV</h3>
 <p>If you have the latest version of Caché with CacheWeb, you will need to edit the routine ^%ZOSV. To do this, right click the Caché Cube and choose Studio, File, Change Namespace, select VISTA then click OK.</p>
 <h2 id="remote-instance-domain-name-creation">Remote Instance Domain Name Creation</h2>
 <p>To send messages to Q-PATCH.OSEHRA.ORG from your own VISTA system, you can send it via the internet by setting up postfix and having it do the work for you (as above). An easier alternative is to configure a direct link, as follows: (NB: This example is only for GT.M. Use the Cache Mailman Conduits for Cache.) To send HFS checksum messages (for packages exported via HFS) you need to create FORUM.OSEHRA.ORG.</p>
-<code>><strong>D Q^DI</strong>
+<div class="code"><code>><strong>D Q^DI</strong>
 
 MSC Fileman 22.2
 
@@ -298,11 +298,11 @@ Select TRANSMISSION SCRIPT: ^
 Select DOMAIN NAME: <strong>&lt;enter&gt;</strong>
 
 Select OPTION: <strong>&lt;enter&gt;</strong>
-></code>
+></code></div>
 <h2 id="instance-domain">Instance Domain</h2>
 <p>Next, a domain should be set up for the VistA instance. A domain name is typically used to uniquely identify an instance on a network. While this is not necessary to do for test instances, it is recommended that a new domain be added. The OSEHRA script adds a domain called <code>DEMO.OSEHRA.ORG</code>, and this example will do the same.</p>
 <p>First we add the entry to the <code>DOMAIN</code> file through FileMan.</p>
-<code>> <strong>S DUZ=.5 D Q^DI</strong>
+<div class="code"><code>> <strong>S DUZ=.5 D Q^DI</strong>
 
 VA FileMan 22.0
 
@@ -319,9 +319,9 @@ FLAGS: <strong>^</strong>
 Select DOMAIN NAME: <strong>&lt;enter&gt;</strong>
 
 Select OPTION: <strong>&lt;enter&gt;</strong>
-></code>
+></code></div>
 <p>The next step is to find the IEN of the newly created domain. This can be done by inquiring about the entry using FileMan and printing the Record Number:</p>
-<code>> <strong>S DUZ=.5 D Q^DI</strong>
+<div class="code"><code>> <strong>S DUZ=.5 D Q^DI</strong>
 
 VA FileMan 22.0
 
@@ -338,15 +338,15 @@ NUMBER: 76                              NAME: DEMO.OSEHRA.ORG
 Select DOMAIN NAME: <strong>^</strong>
 
 Select OPTION: <strong>^</strong>
-></code>
+></code></div>
 <p>Then we propogate that entry to the <code>Kernel System Parameters</code> and <code>RPC Broker Site Parameters</code> files. The value that is being set should be the same as the <code>NUMBER</code> value from the above result.</p>
-<code>> <strong>S $P(^XWB(8994.1,1,0),"^")=76</strong>
-> <strong>S $P(^XTV(8989.3,1,0),"^")=76</strong></code>
+<div class="code"><code>> <strong>S $P(^XWB(8994.1,1,0),"^")=76</strong>
+> <strong>S $P(^XTV(8989.3,1,0),"^")=76</strong></code></div>
 <p>Re-index the files after making this change.</p>
-<code>><strong>F DIK="^XTV(8989.3,","^XWB(8994.1," S DA=1 D IXALL2^DIK,IXALL^DIK</strong></code>
+<div class="code"><code>><strong>F DIK="^XTV(8989.3,","^XWB(8994.1," S DA=1 D IXALL2^DIK,IXALL^DIK</strong></code></div>
 <h2 id="christening">Christening</h2>
 <p>System is christened using menu option XMCHIRS with FORUM.OSEHRA.ORG as the parent.</p>
-<code>><strong>S DUZ=.5 D ^XUP</strong>
+<div class="code"><code>><strong>S DUZ=.5 D ^XUP</strong>
 
 Setting up programmer environment
 This is a TEST account.
@@ -382,19 +382,19 @@ We will not initialize your transmission scripts.
 Use the 'Subroutine editor' option under network management menu to add your
 site passwords to the MINIENGINE script, and the 'Edit a script' option
 to edit any domain scripts that you choose to.
-></code>
+></code></div>
 <h2 id="set-box-volume-pair">Set Box-Volume pair</h2>
 <p>The first step is to find the box volume pair for the local machine.</p>
-<code>> <strong>D GETENV^%ZOSV W Y</strong></code>
+<div class="code"><code>> <strong>D GETENV^%ZOSV W Y</strong></code></div>
 <p>which will print out a message with four parts separated by <code>^</code> that could look something like:</p>
-<code>VISTA^VISTA^palaven^VISTA:CACHE</code>
+<div class="code"><code>VISTA^VISTA^palaven^VISTA:CACHE</code></div>
 <p>The four pieces of the string are:</p>
 <p><code>UCI^VOL^NODE^VOLUME:BOX</code></p>
 <p>The fourth piece, the VOLUME:BOX pair, is referred to as the &quot;BOX VOLUME pair&quot;. The first component of the Box Volume pair is the Volume Set, which is used to determine where the VistA system will be able to find the routines. The second component Box, which references the system that the instance is on. In a Caché system, it would be the name of the Caché instance while on GT.M, it should reference the hostname of the machine.</p>
 <p>The Volume Set result needs to be altered in the <code>VOLUME SET</code> file, and we will reuse some setup by writing over the name of the first entry that is already in the VistA system. The first entry, the entry with an IEN of 1, can be selected by entering <code>`1</code>.</p>
 <p>Then we rename the first Box-Volume pair in the <code>TaskMan Site Parameters</code> file to match what was found above.</p>
 <p>For this demonstration instance, the Volume Set will be <code>VISTA</code> which is the Caché namespace that holds the files. On GT.M instances, the default value of <code>PLA</code> can be maintained.</p>
-<code>><strong>D Q^DI</strong>
+<div class="code"><code>><strong>D Q^DI</strong>
 
 MSC Fileman 22.2
 
@@ -438,10 +438,10 @@ FROM VOLUME SET: PLA// <strong>&lt;enter&gt;</strong>
 TO VOLUME SET: <strong>&lt;enter&gt;</strong>
 TO UCI: <strong>&lt;enter&gt;</strong>
 
-Select UCI ASSOCIATION FROM UCI: <strong>&lt;enter&gt;</strong></code>
+Select UCI ASSOCIATION FROM UCI: <strong>&lt;enter&gt;</strong></code></div>
 <h2 id="setup-rpc-broker">Setup RPC Broker</h2>
 <p>The next step is to edit entries in the <code>RPC Broker Site Parameters</code> file and the <code>Kernel System Parameters</code> file. The RPC Broker steps will set up information that references both the the Port that the listener will listen on and the Box Volume pair of the instance.</p>
-<code>> <strong>S DUZ=.5 D Q^DI</strong>
+<div class="code"><code>> <strong>S DUZ=.5 D Q^DI</strong>
 
 VA FileMan 22.0
 
@@ -460,34 +460,34 @@ Select BOX-VOLUME PAIR: // <strong>VISTA:CACHE</strong>
   BOX-VOLUME PAIR: VISTA:CACHE//
   Select PORT: <strong>9210</strong>
   Are you adding '9210' as a new PORT (the 1ST for this LISTENER)? No// <strong>Y</strong>  (Yes)
-    TYPE OF LISTENER: <strong>1</strong>  New Style</code>
+    TYPE OF LISTENER: <strong>1</strong>  New Style</code></div>
 <p>The final questions of this section asks if the listener should be started and then if it should be controlled by the Listener starter.</p>
 <p>The answer to these questions is dependent on the MUMPS platform that is in use:</p>
 <h3 id="on-caché-2">On Caché</h3>
 <p>Caché systems can use the Listener Starter to control the RPC Broker Listener.</p>
-<code>  STATUS: STOPPED// <strong>1</strong> START
+<div class="code"><code>  STATUS: STOPPED// <strong>1</strong> START
         Task: RPC Broker Listener START on VISTA-VISTA:CACHE, port 9210
         has been queued as task 1023
   CONTROLLED BY LISTENER STARTER: <strong>1</strong>  YES
 
-Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code>
+Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code></div>
 <h3 id="on-gt.m">On GT.M</h3>
 <p>Since GT.M systems do not use the Listener as Caché systems, we will answer &quot;No&quot; or &quot;0&quot; to both of those questions. More information on setting up the listener for GT.M will follow.</p>
-<code>  STATUS: STOPPED// <strong>&lt;enter&gt;</strong>
+<div class="code"><code>  STATUS: STOPPED// <strong>&lt;enter&gt;</strong>
   CONTROLLED BY LISTENER STARTER: <strong>0</strong>  No
 
-Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code>
+Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code></div>
 <h2 id="start-rpc-broker">Start RPC Broker</h2>
 <h3 id="on-caché-3">On Caché</h3>
 <p>The OSEHRA setup scrpt will also start the RPC Broker Listener which CPRS uses to communicate with the VistA instance. These steps only happen on platforms with a Caché instance. They create a task for the XWB Listener Starter that will be run when the Task Manager is started.</p>
-<code>> <strong>S DUZ=.5 D ^XUP</strong>
+<div class="code"><code>> <strong>S DUZ=.5 D ^XUP</strong>
 
 Setting up programmer environment
 This is a TEST account.
 
 Terminal Type set to: C-VT220
 
-Select OPTION NAME: <strong>Systems Manager Menu</strong>  EVE     Systems Manager Menu
+Select OPTION NAME: <strong>Systems Manager Menu</strong>  EVE    Systems Manager Menu
 
 
         Core Applications ...
@@ -527,13 +527,13 @@ You have PENDING ALERTS
 
 Select Taskman Management <TEST ACCOUNT> Option: <strong>Schedule/Unschedule Options</strong>
 
-Select OPTION to schedule or reschedule: <strong>XWB LISTENER STARTER</strong>       Start All RP
-C Broker Listeners
+Select OPTION to schedule or reschedule: <strong>XWB LISTENER STARTER</strong>    
+Start All RPC Broker Listeners
        ...OK? Yes// <strong>Y</strong>  (Yes)
     (R)
-</code>
+</code></div>
 <p>After answering that question another ScreenMan form will open with six options. To have the XWB Listener Starter be run on the start up of Taskman, enter <code>STARTUP</code> as the value for <code>SPECIAL QEUEING</code>:</p>
-<code>                        Edit Option Schedule
+<div class="code"><code>                        Edit Option Schedule
   Option Name: XWB LISTENER STARTER
   Menu Text: Start All RPC Broker Listeners            TASK ID:
 __________________________________________________________________________
@@ -556,9 +556,9 @@ Exit     Save     Next Page     Refresh
 Enter a command or '^' followed by a caption to jump to a specific field.
 
 
-COMMAND:                                      Press <PF1>H for help    Insert</code>
+COMMAND:                                      Press <PF1>H for help    Insert</code></div>
 <p>To save the information put the ScreenMan form, navigate to the <code>COMMAND</code> entry point and enter <code>S</code> or <code>Save</code>. The same input location is used to exit, with an <code>E</code> or <code>Exit</code> to leave the form.</p>
-<code>Select OPTION to schedule or reschedule: <strong>&lt;enter&gt;</strong>
+<div class="code"><code>Select OPTION to schedule or reschedule: <strong>&lt;enter&gt;</strong>
 
 
         Schedule/Unschedule Options
@@ -578,11 +578,11 @@ You have PENDING ALERTS
 
 Select Taskman Management <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong>
 
-Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong></code>
+Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong></code></div>
 <h3 id="on-gt.m-1">On GT.M</h3>
 <p>TODO Replace use of xinetd with Sam's native solution!!!</p>
 <h2 id="configure-taskman">Configure TaskMan</h2>
-Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
+<div class="code"><code>Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
 
 Input to what File: UCI ASSOCIATION// 14.7  TASKMAN SITE PARAMETERS
                                           (1 entry)
@@ -607,9 +607,9 @@ LOAD BALANCE ROUTINE: <strong>&lt;enter&gt;</strong>
 Auto Delete Tasks: <strong>Y</strong>  Yes
 Manager Startup Delay: <strong>1</strong>
 
-Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: <strong>&lt;enter&gt;</strong></code>
+Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: <strong>&lt;enter&gt;</strong></code></div>
 <h2 id="configure-kernel-system-parameters">Configure Kernel System Parameters</h2>
-<code>><strong>D Q^DI</strong>
+<div class="code"><code>><strong>D Q^DI</strong>
 
 MSC Fileman 22.2
 
@@ -628,9 +628,9 @@ Select VOLUME SET: PLA// <strong>&lt;enter&gt;</strong>
   VOLUME SET: PLA// <strong>&lt;enter&gt;</strong>
   MAX SIGNON ALLOWED: 500// <strong>32</strong>
   LOG SYSTEM RT?: NO// <strong>&lt;enter&gt;</strong>
-Select VOLUME SET: <strong>&lt;enter&gt;</strong></code>
+Select VOLUME SET: <strong>&lt;enter&gt;</strong></code></div>
 <h2 id="pointing-ksp-and-rsp-to-new-domain">Pointing KSP and RSP to New Domain</h2>
-<code>Select OPTION: <strong>5</strong>    INQUIRE TO FILE ENTRIES
+<div class="code"><code>Select OPTION: <strong>5</strong>    INQUIRE TO FILE ENTRIES
 
 Output from what File: KERNEL SYSTEM PARAMETERS// <strong>DOMAIN</strong>
                                           (89 entries)
@@ -639,18 +639,18 @@ Another one: <strong>&lt;enter&gt;</strong>
 Standard Captioned Output? Yes// <strong>&lt;enter&gt;</strong>  (Yes)
 Include COMPUTED fields:  (N/Y/R/B): NO// <strong>R</strong>  Record Number (IEN)
 
-NUMBER: 92                              NAME: ANDRONICUS.VISTAEXPERTISE.NET</code>
+NUMBER: 92                              NAME: ANDRONICUS.VISTAEXPERTISE.NET</code></div>
 <p>The domain has an IEN of 92.</p>
-<code>><strong>S $P(^XTV(8989.3,1,0),"^")=92</strong
-><strong>S $P(^XWB(8994.1,1,0),"^")=92</strong></code>
+<div class="code"><code>><strong>S $P(^XTV(8989.3,1,0),"^")=92</strong
+><strong>S $P(^XWB(8994.1,1,0),"^")=92</strong></code></div>
 <p>Re-index the files after making this change.</p>
-<code>><strong>F DIK="^XTV(8989.3,","^XWB(8994.1," S DA=1 D IXALL2^DIK,IXALL^DIK</strong></code>
+<div class="code"><code>><strong>F DIK="^XTV(8989.3,","^XWB(8994.1," S DA=1 D IXALL2^DIK,IXALL^DIK</strong></code></div>
 <h2 id="start-taskman">Start TaskMan</h2>
 <p>The Task Manager is an integral part of a running VistA instance. It lets actions and users schedule tasks to be performed at certain times or after certain trigger events. The XWB Listener Starter example is one example of scheduling a task.</p>
-<code>><strong>D ^ZTMB</strong></code>
+<div class="code"><code>><strong>D ^ZTMB</strong></code></div>
 <h2 id="set-yourself-up-as-the-system-manager">Set Yourself Up as the System Manager</h2>
 <p>This is a super user who will have elevated privileges. You can add other users such as Physicians, Pharmacists, etc. later. Set up the System Manager user with minimal information. We will add more information later.</p>
-<code>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
+<div class="code"><code>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
 
 INPUT TO WHAT FILE: RPC BROKER PARAMETERS// <strong>200</strong>   NEW PERSON
           (2 entries)
@@ -671,9 +671,9 @@ OK, Access code has been changed!
 The VERIFY CODE has been deleted as a security measure.
 The user will have to enter a new one the next time they sign-on.
 
-Select NEW PERSON NAME: <strong>&lt;enter&gt;</strong></code>
+Select NEW PERSON NAME: <strong>&lt;enter&gt;</strong></code></div>
 <p>Next give your user privileges appropriate for a system manager.</p>
-<code>><strong>S DUZ=1</strong>
+<div class="code"><code>><strong>S DUZ=1</strong>
 ><strong>S $P(^VA(200,DUZ,0),"^",4)="@"</strong>
 ><strong>D ^XUP</strong>
 
@@ -725,10 +725,10 @@ XUPROGMODE being assigned to:
 XMMGR being assigned to:
    MANAGER,SYSTEM
 
-Select Key Management Option: <strong>&lt;enter&gt;</strong></code>
+Select Key Management Option: <strong>&lt;enter&gt;</strong></code></div>
 <h2 id="set-up-more-parameters">Set Up More Parameters</h2>
 <p>These are parameters that are more applicable to the VistA application software. If you are planning to use the VistA applications such as Registration, Scheduling etc. you need to add new Institution to the INSTITUTION File.</p>
-<code>><strong>S XUMF=1 D Q^DI</strong>
+<div class="code"><code>><strong>S XUMF=1 D Q^DI</strong>
 
 VA FileMan 22.0
 
@@ -742,9 +742,9 @@ Select INSTITUTION NAME: <strong>VISTA HEALTH CARE</strong>
   Are you adding 'VISTA HEALTH CARE' as a new INSTITUTION (the 28TH)? No// <strong>Y</strong>   (Yes)
 STATION NUMBER: <strong>6100</strong>
 
-Select INSTITUTION NAME:<strong>&lt;enter&gt;</strong></code>
+Select INSTITUTION NAME:<strong>&lt;enter&gt;</strong></code></div>
 <p>Then you need to add a Medical Center Division.</p>
-<code>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
+<div class="code"><code>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
 
 INPUT TO WHAT FILE: INSTITUTION// <strong>40.8</strong>   MEDICAL CENTER DIVISION (1 entry)
 EDIT WHICH FIELD: ALL// <strong>FACILITY NUMBER</strong>
@@ -759,9 +759,9 @@ Select MEDICAL CENTER DIVISION NAME: <strong>VISTA MEDICAL CENTER</strong>
 FACILITY NUMBER: 6100A//v<strong>&lt;enter&gt;</strong>
 INSTITUTION FILE POINTER:<strong> VISTA HEALTH CARE</strong>    6100
 
-Select MEDICAL CENTER DIVISION NAME: <strong>&lt;enter&gt;</strong></code>
+Select MEDICAL CENTER DIVISION NAME: <strong>&lt;enter&gt;</strong></code></div>
 <p>You are now ready to enter additional information for the system manager user like PRIMARY MENU, VERIFY CODE etc.</p>
-<code>><strong>D ^XUP</strong>
+<div class="code"><code>><strong>D ^XUP</strong>
 
 Setting up programmer environment
 Terminal Type set to: C-VT320
@@ -771,7 +771,7 @@ Select OPTION NAME: <strong>XUSERED</strong>
     2   XUSEREDITSELF   Edit User Characteristics
 CHOOSE 1-2: <strong>1</strong> XUSEREDIT  Edit an Existing User
 Edit an Existing User
-Select NEW PERSON NAME: <strong>MANAGER,SYSTEM</strong>    SM</code>
+Select NEW PERSON NAME: <strong>MANAGER,SYSTEM</strong>    SM</code></div>
 <p>Now you will be presented with a screen with multiple options. You can navigate the screen with the TAB key. For navigation help, use your keyboard arrows to move down to the command line and hold down either the Num Lock key (which is mapped as PF1 of a VT-320 terminal by Caché) or F1 for other terminal emulations and hit &quot;H&quot; and then Enter for help. You can exit by typing &quot;^&quot; on the command line and the change you made will be saved. At a minimum, assign EVE as the PRIMARY MENU and enter IRM (it's the only choice) as SERVICE/SECTION. If you plan to use CPRS, enter OR CPRS GUI CHART as a SECONDARY MENU OPTION. Enter other data as you deem appropriate.</p>
 <figure>
 <img src="images/InitializeVistA/pic25.gif" />
@@ -784,7 +784,7 @@ Select NEW PERSON NAME: <strong>MANAGER,SYSTEM</strong>    SM</code>
 <h2 id="set-up-menus-for-the-system-manager">Set Up Menus for the System Manager</h2>
 <p>EVE is the System Manager menu and XUCOMMAND is a common menu available to all users.</p>
 <p>The next step is to make FileMan, MailMan, and Manage MailMan menus accessible to the System Manager user from the menu system. From the VISTA prompt, type &quot;D ^XUP&quot;. At Select OPTION NAME: enter &quot;XUMAINT&quot;. Then at Select Menu Management, type &quot;EDIT OPTIONS&quot;, then pick EVE.</p>
-<code>Select OPTION to edit: <strong>XUCOMMAND</strong>     SYSTEM COMMAND OPTIONS
+<div class="code"><code>Select OPTION to edit: <strong>XUCOMMAND</strong>     SYSTEM COMMAND OPTIONS
 NAME: XUCOMMAND// <strong>^10</strong>   MENU
 Select ITEM: XQALERT// <strong>XMUSER</strong>   MailMan Menu
   Are you adding 'XMUSER' as a new MENU (the 8TH for this OPTION)? No// <strong>Y</strong>   (Yes)
@@ -792,7 +792,7 @@ Select ITEM: XQALERT// <strong>XMUSER</strong>   MailMan Menu
   SYNONYM: MM// <strong>&lt;enter&gt;</strong>
   DISPLAY ORDER: <strong>&lt;enter&gt;</strong>
 Select ITEM: <strong>&lt;enter&gt;</strong>
-CREATOR: MANAGER,SYSTEM// <strong>^</strong></code>
+CREATOR: MANAGER,SYSTEM// <strong>^</strong></code></div>
 <p>Select OPTION to edit:</p>
 <p>91.</p>
 <p>To change the default time it takes before users are automatically signed off the system from the default of 300 seconds. This, again, is to give you more time to work as you are learning. Back out to the VISTA prompt. At the VISTA prompt, Type &quot;D ^ZU&quot;.</p>
@@ -879,7 +879,7 @@ CREATOR: MANAGER,SYSTEM// <strong>^</strong></code>
 <p>The menu option ensures that the user has the proper permissions to access CPRS after signing in with their ACCESS and VERIFY codes. The Tab access can limit the amount of things a user can access once they have signed in.</p>
 <p>The adding of the user is done through the User Management menu in the menu system, which will ask for information in a series of prompts then will open a Screenman form to complete the task.</p>
 <p>The following steps will add a generic <code>CPRS,USER</code> person who will be able to sign into CPRS.</p>
-<code>> <strong>S DUZ=.5 D ^XUP</strong>
+<div class="code"><code>> <strong>S DUZ=.5 D ^XUP</strong>
 
 Setting up programmer environment
 This is a TEST account.
@@ -940,10 +940,10 @@ Now for the Identifiers.
 INITIAL: <strong>UC</strong>
 SSN: <strong>000000002</strong>
 SEX: <strong>M</strong>  MALE
-NPI: <strong>&lt;enter&gt;</strong></code>
+NPI: <strong>&lt;enter&gt;</strong></code></div>
 <p>Once in the ScreenMan form, you will need to set the necessary information mentioned above. Four pieces of information are able to be set on the first page of the ScreenMan form. The arrows are for emphasis to highlight where information needs to be entered and will not show up in the terminal window.</p>
 <p>To add an access or verify codes, you need to first answer <code>Y</code> to the <code>Want to edit ...</code> questions, it will then prompt you to change the codes.</p>
-<code>                            Edit an Existing User
+<div class="code"><code>                            Edit an Existing User
 NAME: CPRS,USER                                                     Page 1 of 5
 _______________________________________________________________________________
    NAME... CPRS,USER                                   INITIAL: UC
@@ -966,10 +966,10 @@ _______________________________________________________________________________
 Enter a command or '^' followed by a caption to jump to a specific field.
 
 
-COMMAND:                                     Press <PF1>H for help    Insert</code>
+COMMAND:                                     Press <PF1>H for help    Insert</code></div>
 <p>To change to other pages, press the down arrow key or &lt;TAB&gt; until the cursor reaches the COMMAND box. Then type <code>N</code> or <code>Next Page</code> and press &amp;lt;enter&amp;gt; to display the next page.</p>
 <p>There is nothing that needs to be set on the second or third pages, but the CPRS Tab Access is set on the fourth page. Navigate the cursor to the location under the <code>Name</code> header and enter <code>COR</code>, which stands <code>for Core Tab Access</code>, and enter an effective date of yesterday, <code>T-1</code> is the notation to use.</p>
-<code>                            Edit an Existing User
+<div class="code"><code>                            Edit an Existing User
 NAME: CPRS,USER                                                     Page 4 of 5
 _______________________________________________________________________________
 RESTRICT PATIENT SELECTION:        OE/RR LIST:
@@ -991,9 +991,9 @@ _______________________________________________________________________________
 
 
 
-COMMAND:                                       Press <PF1>H for help</code>
+COMMAND:                                       Press <PF1>H for help</code></div>
 <p>Once that is done, save and exit the ScreenMan form via the COMMAND box and then answer the final questions regarding access letters, security keys and mail groups:</p>
-<code>Exit     Save     Next Page     Refresh
+<div class="code"><code>Exit     Save     Next Page     Refresh
 
 Enter a command or '^' followed by a caption to jump to a specific field.
 
@@ -1007,7 +1007,7 @@ Do you wish to add this user to mail groups? NO// <strong>NO</strong>
 ...
 
 Select User Management <TEST ACCOUNT> Option: <strong>^&lt;enter&gt;</strong>
-></code>
+></code></div>
 <p>At this point, CPRS can successfully connect to the local VistA instance and the <code>CPRS,USER</code> will be able to sign on and interact with the GUI.</p>
 </body>
 </html>

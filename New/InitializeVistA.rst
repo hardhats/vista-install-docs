@@ -12,13 +12,13 @@ There should only be one device named "NULL".
 
 .. raw:: html
     
-    <code>><strong>D Q^DI</strong>
+    <div class="code"><code>><strong>D Q^DI</strong>
     
     MSC Fileman 22.2
     
     Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
     
-    Input to what File: DEVICE// <strong>&lt;enter&gt;</strong>             (53 entries)
+    Input to what File: DEVICE// <strong>&lt;enter&gt;</strong>    (53 entries)
     EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
     
     Select DEVICE NAME: NULL
@@ -36,7 +36,7 @@ There should only be one device named "NULL".
     NAME: NULL-DSM// <strong>DSM-NULL</strong>
     LOCATION OF TERMINAL: Bit Bucket// <strong>^</strong>
     
-    Select DEVICE NAME: <strong>NULL</strong>  GTM-UNIX-NULL    Bit Bucket (GT.M-Unix)     /dev/null 
+    Select DEVICE NAME: <strong>NULL</strong>  GTM-UNIX-NULL    Bit Bucket (GT.M-Unix)    /dev/null 
     
     NAME: GTM-UNIX-NULL// <strong>NULL</strong>
     LOCATION OF TERMINAL: Bit Bucket (GT.M-Unix)  Replace 
@@ -45,9 +45,9 @@ There should only be one device named "NULL".
     Select MNEMONIC: GTM-LINUX-NULL// <strong>@</strong>
        SURE YOU WANT TO DELETE? <strong>Y</strong>  (Yes)
     Select MNEMONIC: 
-    LOCAL SYNONYM: <strong>^</strong></code>
+    LOCAL SYNONYM: <strong>^</strong></code></div>
     
-    Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code>
+    Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 
 CPRS is one of many users of the VistA NULL device, but the ``$I`` value, which
 contains the name or path to the device, is correct only for a VMS platform.
@@ -57,14 +57,14 @@ the device.
 
 .. raw:: html
     
-    <code>Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
+    <div class="code"><code>Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
     
     Input to what File: DEVICE// <strong>&lt;enter&gt;</strong>             (53 entries)
     EDIT WHICH FIELD: ALL// <strong>$I</strong>  
     THEN EDIT FIELD: <strong>SIGN-ON/SYSTEM DEVICE</strong>  
     THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
     
-    Select DEVICE NAME: NULL      Bit Bucket (GT.M-Unix)     /dev/null</code>
+    Select DEVICE NAME: NULL      Bit Bucket (GT.M-Unix)     /dev/null</code></div>
 
 On Windows
 **********
@@ -73,10 +73,10 @@ On Windows machines, the ``$I`` value should be set to ``//./nul``.
 
 .. raw:: html
     
-    <code>$I: NLA0:// <strong>//./nul</strong>
+    <div class="code"><code>$I: NLA0:// <strong>//./nul</strong>
     SIGN-ON/SYSTEM DEVICE: NO// N  NO
     
-    Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code>
+    Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 
 On Linux
 ********
@@ -85,10 +85,10 @@ On Linux machines, the ``$I`` value should be set to ``/dev/null``.
 
 .. raw:: html
     
-    <code>$I: /dev/null// /dev/null
+    <div class="code"><code>$I: /dev/null// /dev/null
     SIGN-ON/SYSTEM DEVICE: NO// N  NO
     
-    Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code>
+    Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 
 
 
@@ -104,16 +104,16 @@ On Caché
 
 .. raw:: html
     
-    <code>> <strong>D ^%CD</strong>
+    <div class="code"><code>> <strong>D ^%CD</strong>
     
-    NAMESPACE// <strong>VISTA</strong></code>
+    NAMESPACE// <strong>VISTA</strong></code></div>
 
 ZTMGRSET
 ********
 
 .. raw:: html
     
-    <code>><strong>K ^%ZOSF</strong>
+    <div class="code"><code>><strong>K ^%ZOSF</strong>
     
     ><strong>D ^ZTMGRSET</strong>
     
@@ -171,18 +171,18 @@ ZTMGRSET
     Now, I will check your % globals...........
      
     ALL DONE
-    ></code>
+    ></code></div>
 
 On Caché
 ********
 
 .. raw:: html
     
-    <code>NAME OF MANAGER'S NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
+    <div class="code"><code>NAME OF MANAGER'S NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
     
     PRODUCTION (SIGN-ON) NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
     
-    NAME OF THIS CONFIGURATION: VISTA// <strong>&lt;enter&gt;</strong></code>
+    NAME OF THIS CONFIGURATION: VISTA// <strong>&lt;enter&gt;</strong></code></div>
 
 Fileman
 *******
@@ -191,7 +191,7 @@ Initialize FileMan to set your site name and number.
 
 .. raw:: html
     
-    <code>><strong>D ^DINIT</strong>
+    <div class="code"><code>><strong>D ^DINIT</strong>
     
     VA FileMan V.22.2
     
@@ -205,7 +205,7 @@ Initialize FileMan to set your site name and number.
     
     Do you want to change the MUMPS OPERATING SYSTEM File? NO//....
     
-    Now loading DIALOG and LANGUAGE Files..............................................................
+    Now loading DIALOG and LANGUAGE Files.......................................
     
     TYPE OF MUMPS SYSTEM YOU ARE USING: GT.M(UNIX)// <strong>?</strong>
         Answer with MUMPS OPERATING SYSTEM NAME
@@ -220,9 +220,8 @@ Initialize FileMan to set your site name and number.
    
     TYPE OF MUMPS SYSTEM YOU ARE USING: GT.M(UNIX)// <strong>&lt;enter&gt;</strong>
 
-    Now loading other FileMan files--please wait.................................................................................................
-    ........................................................................................................................................
-    ..........
+    Now loading other FileMan files--please
+    wait........................................................................
 
     The following files have been installed:
        .11     INDEX
@@ -265,7 +264,7 @@ Initialize FileMan to set your site name and number.
        
        
     INITIALIZATION COMPLETED IN 4 SECONDS.
-    ></code>
+    ></code></div>
 
 
 Also run D ^ZUSET to choose the correct version of ZU, the key login routine 
@@ -273,13 +272,13 @@ for the roll and scroll portions of VistA.
 
 .. raw:: html
     
-    <code>><strong>D ^ZUSET</strong>
+    <div class="code"><code>><strong>D ^ZUSET</strong>
     
     This routine will rename the correct routine to ZU for you.
     
     Rename ZUGTM to ZU, OK? No// <strong>Y</strong
     
-    Routine ZUGTM was renamed to ZU</code>
+    Routine ZUGTM was renamed to ZU</code></div>
 
 ZOSV
 ****
@@ -302,7 +301,7 @@ FORUM.OSEHRA.ORG.
 
 .. raw:: html
     
-    <code>><strong>D Q^DI</strong>
+    <div class="code"><code>><strong>D Q^DI</strong>
     
     MSC Fileman 22.2
     
@@ -366,7 +365,7 @@ FORUM.OSEHRA.ORG.
     Select DOMAIN NAME: <strong>&lt;enter&gt;</strong>
     
     Select OPTION: <strong>&lt;enter&gt;</strong>
-    ></code>
+    ></code></div>
 
 Instance Domain
 ---------------
@@ -381,7 +380,7 @@ First we add the entry to the ``DOMAIN`` file through FileMan.
 
 .. raw:: html
     
-    <code>> <strong>S DUZ=.5 D Q^DI</strong>
+    <div class="code"><code>> <strong>S DUZ=.5 D Q^DI</strong>
     
     VA FileMan 22.0
     
@@ -398,14 +397,14 @@ First we add the entry to the ``DOMAIN`` file through FileMan.
     Select DOMAIN NAME: <strong>&lt;enter&gt;</strong>
     
     Select OPTION: <strong>&lt;enter&gt;</strong>
-    ></code>
+    ></code></div>
 
 The next step is to find the IEN of the newly created domain. This can be done
 by inquiring about the entry using FileMan and printing the Record Number:
 
 .. raw:: html
     
-    <code>> <strong>S DUZ=.5 D Q^DI</strong>
+    <div class="code"><code>> <strong>S DUZ=.5 D Q^DI</strong>
     
     VA FileMan 22.0
     
@@ -422,7 +421,7 @@ by inquiring about the entry using FileMan and printing the Record Number:
     Select DOMAIN NAME: <strong>^</strong>
     
     Select OPTION: <strong>^</strong>
-    ></code>
+    ></code></div>
 
 Then we propogate that entry to the ``Kernel System Parameters`` and
 ``RPC Broker Site Parameters`` files.  The value that is being set should
@@ -430,14 +429,14 @@ be the same as the ``NUMBER`` value from the above result.
 
 .. raw:: html
 
-    <code>> <strong>S $P(^XWB(8994.1,1,0),"^")=76</strong>
-    > <strong>S $P(^XTV(8989.3,1,0),"^")=76</strong></code>
+    <div class="code"><code>> <strong>S $P(^XWB(8994.1,1,0),"^")=76</strong>
+    > <strong>S $P(^XTV(8989.3,1,0),"^")=76</strong></code></div>
 
 Re-index the files after making this change.
 
 .. raw:: html
     
-    <code>><strong>F DIK="^XTV(8989.3,","^XWB(8994.1," S DA=1 D IXALL2^DIK,IXALL^DIK</strong></code>
+    <div class="code"><code>><strong>F DIK="^XTV(8989.3,","^XWB(8994.1," S DA=1 D IXALL2^DIK,IXALL^DIK</strong></code></div>
 
 Christening
 -----------
@@ -446,7 +445,7 @@ System is christened using menu option XMCHIRS with FORUM.OSEHRA.ORG as the pare
 
 .. raw:: html
     
-    <code>><strong>S DUZ=.5 D ^XUP</strong>
+    <div class="code"><code>><strong>S DUZ=.5 D ^XUP</strong>
     
     Setting up programmer environment
     This is a TEST account.
@@ -482,7 +481,7 @@ System is christened using menu option XMCHIRS with FORUM.OSEHRA.ORG as the pare
     Use the 'Subroutine editor' option under network management menu to add your
     site passwords to the MINIENGINE script, and the 'Edit a script' option
     to edit any domain scripts that you choose to.
-    ></code>
+    ></code></div>
 
 
 Set Box-Volume pair
@@ -492,14 +491,14 @@ The first step is to find the box volume pair for the local machine.
 
 .. raw:: html
     
-    <code>> <strong>D GETENV^%ZOSV W Y</strong></code>
+    <div class="code"><code>> <strong>D GETENV^%ZOSV W Y</strong></code></div>
 
 which will print out a message with four parts separated by ``^`` that could
 look something like:
 
 .. raw:: html
     
-    <code>VISTA^VISTA^palaven^VISTA:CACHE</code>
+    <div class="code"><code>VISTA^VISTA^palaven^VISTA:CACHE</code></div>
 
 The four pieces of the string are:
 
@@ -527,7 +526,7 @@ Caché namespace that holds the files.  On GT.M instances, the default value of
 
 .. raw:: html
     
-    <code>><strong>D Q^DI</strong>
+    <div class="code"><code>><strong>D Q^DI</strong>
     
     MSC Fileman 22.2
     
@@ -571,7 +570,7 @@ Caché namespace that holds the files.  On GT.M instances, the default value of
     TO VOLUME SET: <strong>&lt;enter&gt;</strong>
     TO UCI: <strong>&lt;enter&gt;</strong>
     
-    Select UCI ASSOCIATION FROM UCI: <strong>&lt;enter&gt;</strong></code>
+    Select UCI ASSOCIATION FROM UCI: <strong>&lt;enter&gt;</strong></code></div>
 
 Setup RPC Broker
 ----------------
@@ -583,7 +582,7 @@ on and the Box Volume pair of the instance.
 
 .. raw:: html
     
-    <code>> <strong>S DUZ=.5 D Q^DI</strong>
+    <div class="code"><code>> <strong>S DUZ=.5 D Q^DI</strong>
     
     VA FileMan 22.0
     
@@ -602,7 +601,7 @@ on and the Box Volume pair of the instance.
       BOX-VOLUME PAIR: VISTA:CACHE//
       Select PORT: <strong>9210</strong>
       Are you adding '9210' as a new PORT (the 1ST for this LISTENER)? No// <strong>Y</strong>  (Yes)
-        TYPE OF LISTENER: <strong>1</strong>  New Style</code>
+        TYPE OF LISTENER: <strong>1</strong>  New Style</code></div>
 
 The final questions of this section asks if the listener should be started
 and then if it should be controlled by the Listener starter.
@@ -618,12 +617,12 @@ Caché systems can use the Listener Starter to control the RPC Broker Listener.
 
 .. raw:: html
     
-    <code>  STATUS: STOPPED// <strong>1</strong> START
+    <div class="code"><code>  STATUS: STOPPED// <strong>1</strong> START
             Task: RPC Broker Listener START on VISTA-VISTA:CACHE, port 9210
             has been queued as task 1023
       CONTROLLED BY LISTENER STARTER: <strong>1</strong>  YES
 
-    Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code>
+    Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code></div>
 
 On GT.M
 *******
@@ -634,10 +633,10 @@ listener for GT.M will follow.
 
 .. raw:: html
     
-    <code>  STATUS: STOPPED// <strong>&lt;enter&gt;</strong>
+    <div class="code"><code>  STATUS: STOPPED// <strong>&lt;enter&gt;</strong>
       CONTROLLED BY LISTENER STARTER: <strong>0</strong>  No
     
-    Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code>
+    Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code></div>
 
 Start RPC Broker
 ----------------
@@ -652,14 +651,14 @@ XWB Listener Starter that will be run when the Task Manager is started.
 
 .. raw:: html
     
-    <code>> <strong>S DUZ=.5 D ^XUP</strong>
+    <div class="code"><code>> <strong>S DUZ=.5 D ^XUP</strong>
     
     Setting up programmer environment
     This is a TEST account.
     
     Terminal Type set to: C-VT220
     
-    Select OPTION NAME: <strong>Systems Manager Menu</strong>  EVE     Systems Manager Menu
+    Select OPTION NAME: <strong>Systems Manager Menu</strong>  EVE    Systems Manager Menu
     
     
             Core Applications ...
@@ -699,11 +698,11 @@ XWB Listener Starter that will be run when the Task Manager is started.
             
     Select Taskman Management <TEST ACCOUNT> Option: <strong>Schedule/Unschedule Options</strong>
     
-    Select OPTION to schedule or reschedule: <strong>XWB LISTENER STARTER</strong>       Start All RP
-    C Broker Listeners
+    Select OPTION to schedule or reschedule: <strong>XWB LISTENER STARTER</strong>    
+    Start All RPC Broker Listeners
            ...OK? Yes// <strong>Y</strong>  (Yes)
         (R)
-    </code>
+    </code></div>
     
 After answering that question another ScreenMan form will open with six
 options.  To have the XWB Listener Starter be run on the start up of Taskman,
@@ -711,7 +710,7 @@ enter ``STARTUP`` as the value for ``SPECIAL QEUEING``:
 
 .. raw:: html
     
-    <code>                        Edit Option Schedule
+    <div class="code"><code>                        Edit Option Schedule
       Option Name: XWB LISTENER STARTER
       Menu Text: Start All RPC Broker Listeners            TASK ID:
     __________________________________________________________________________
@@ -734,7 +733,7 @@ enter ``STARTUP`` as the value for ``SPECIAL QEUEING``:
     Enter a command or '^' followed by a caption to jump to a specific field.
     
     
-    COMMAND:                                      Press <PF1>H for help    Insert</code>
+    COMMAND:                                      Press <PF1>H for help    Insert</code></div>
 
 To save the information put the ScreenMan form, navigate to the ``COMMAND`` entry
 point and enter ``S`` or ``Save``.  The same input location is used to exit, with
@@ -742,7 +741,7 @@ an ``E`` or ``Exit`` to leave the form.
 
 .. raw:: html
     
-    <code>Select OPTION to schedule or reschedule: <strong>&lt;enter&gt;</strong>
+    <div class="code"><code>Select OPTION to schedule or reschedule: <strong>&lt;enter&gt;</strong>
     
     
             Schedule/Unschedule Options
@@ -762,7 +761,7 @@ an ``E`` or ``Exit`` to leave the form.
             
     Select Taskman Management <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong>
     
-    Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong></code>
+    Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong></code></div>
 
 
 On GT.M
@@ -775,7 +774,7 @@ Configure TaskMan
 
 .. raw:: html
     
-    Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
+    <div class="code"><code>Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
     
     Input to what File: UCI ASSOCIATION// 14.7  TASKMAN SITE PARAMETERS
                                               (1 entry)
@@ -800,7 +799,7 @@ Configure TaskMan
     Auto Delete Tasks: <strong>Y</strong>  Yes
     Manager Startup Delay: <strong>1</strong>
     
-    Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: <strong>&lt;enter&gt;</strong></code>
+    Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: <strong>&lt;enter&gt;</strong></code></div>
 
 
 Configure Kernel System Parameters
@@ -808,7 +807,7 @@ Configure Kernel System Parameters
 
 .. raw:: html
     
-    <code>><strong>D Q^DI</strong>
+    <div class="code"><code>><strong>D Q^DI</strong>
     
     MSC Fileman 22.2
     
@@ -827,7 +826,7 @@ Configure Kernel System Parameters
       VOLUME SET: PLA// <strong>&lt;enter&gt;</strong>
       MAX SIGNON ALLOWED: 500// <strong>32</strong>
       LOG SYSTEM RT?: NO// <strong>&lt;enter&gt;</strong>
-    Select VOLUME SET: <strong>&lt;enter&gt;</strong></code>
+    Select VOLUME SET: <strong>&lt;enter&gt;</strong></code></div>
 
 
 
@@ -837,7 +836,7 @@ Pointing KSP and RSP to New Domain
 
 .. raw:: html
     
-    <code>Select OPTION: <strong>5</strong>    INQUIRE TO FILE ENTRIES
+    <div class="code"><code>Select OPTION: <strong>5</strong>    INQUIRE TO FILE ENTRIES
     
     Output from what File: KERNEL SYSTEM PARAMETERS// <strong>DOMAIN</strong>
                                               (89 entries)
@@ -846,20 +845,20 @@ Pointing KSP and RSP to New Domain
     Standard Captioned Output? Yes// <strong>&lt;enter&gt;</strong>  (Yes)
     Include COMPUTED fields:  (N/Y/R/B): NO// <strong>R</strong>  Record Number (IEN)
 
-    NUMBER: 92                              NAME: ANDRONICUS.VISTAEXPERTISE.NET</code>
+    NUMBER: 92                              NAME: ANDRONICUS.VISTAEXPERTISE.NET</code></div>
 
 The domain  has an IEN of 92.
 
 .. raw:: html
     
-    <code>><strong>S $P(^XTV(8989.3,1,0),"^")=92</strong
-    ><strong>S $P(^XWB(8994.1,1,0),"^")=92</strong></code>
+    <div class="code"><code>><strong>S $P(^XTV(8989.3,1,0),"^")=92</strong
+    ><strong>S $P(^XWB(8994.1,1,0),"^")=92</strong></code></div>
 
 Re-index the files after making this change.
 
 .. raw:: html
     
-    <code>><strong>F DIK="^XTV(8989.3,","^XWB(8994.1," S DA=1 D IXALL2^DIK,IXALL^DIK</strong></code>
+    <div class="code"><code>><strong>F DIK="^XTV(8989.3,","^XWB(8994.1," S DA=1 D IXALL2^DIK,IXALL^DIK</strong></code></div>
 
 Start TaskMan
 ------------------------
@@ -871,7 +870,7 @@ of scheduling a task.
 
 .. raw:: html
     
-    <code>><strong>D ^ZTMB</strong></code>
+    <div class="code"><code>><strong>D ^ZTMB</strong></code></div>
 
 Set Yourself Up as the System Manager
 -------------------------------------
@@ -882,7 +881,7 @@ with minimal information. We will add more information later.
 
 .. raw:: html
     
-    <code>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
+    <div class="code"><code>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
     
     INPUT TO WHAT FILE: RPC BROKER PARAMETERS// <strong>200</strong>   NEW PERSON
               (2 entries)
@@ -903,13 +902,13 @@ with minimal information. We will add more information later.
     The VERIFY CODE has been deleted as a security measure.
     The user will have to enter a new one the next time they sign-on.
     
-    Select NEW PERSON NAME: <strong>&lt;enter&gt;</strong></code>
+    Select NEW PERSON NAME: <strong>&lt;enter&gt;</strong></code></div>
 
 Next give your user privileges appropriate for a system manager.
 
 .. raw:: html
     
-    <code>><strong>S DUZ=1</strong>
+    <div class="code"><code>><strong>S DUZ=1</strong>
     ><strong>S $P(^VA(200,DUZ,0),"^",4)="@"</strong>
     ><strong>D ^XUP</strong>
     
@@ -961,7 +960,7 @@ Next give your user privileges appropriate for a system manager.
     XMMGR being assigned to:
        MANAGER,SYSTEM
     
-    Select Key Management Option: <strong>&lt;enter&gt;</strong></code>
+    Select Key Management Option: <strong>&lt;enter&gt;</strong></code></div>
 
 
 Set Up More Parameters
@@ -974,7 +973,7 @@ INSTITUTION File.
 
 .. raw:: html
     
-    <code>><strong>S XUMF=1 D Q^DI</strong>
+    <div class="code"><code>><strong>S XUMF=1 D Q^DI</strong>
     
     VA FileMan 22.0
     
@@ -988,13 +987,13 @@ INSTITUTION File.
       Are you adding 'VISTA HEALTH CARE' as a new INSTITUTION (the 28TH)? No// <strong>Y</strong>   (Yes)
     STATION NUMBER: <strong>6100</strong>
     
-    Select INSTITUTION NAME:<strong>&lt;enter&gt;</strong></code>
+    Select INSTITUTION NAME:<strong>&lt;enter&gt;</strong></code></div>
 
 Then you need to add a Medical Center Division.
 
 .. raw:: html
     
-    <code>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
+    <div class="code"><code>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
     
     INPUT TO WHAT FILE: INSTITUTION// <strong>40.8</strong>   MEDICAL CENTER DIVISION (1 entry)
     EDIT WHICH FIELD: ALL// <strong>FACILITY NUMBER</strong>
@@ -1009,14 +1008,14 @@ Then you need to add a Medical Center Division.
     FACILITY NUMBER: 6100A//v<strong>&lt;enter&gt;</strong>
     INSTITUTION FILE POINTER:<strong> VISTA HEALTH CARE</strong>    6100
     
-    Select MEDICAL CENTER DIVISION NAME: <strong>&lt;enter&gt;</strong></code>
+    Select MEDICAL CENTER DIVISION NAME: <strong>&lt;enter&gt;</strong></code></div>
 
 You are now ready to enter additional information for the system manager user
 like PRIMARY MENU, VERIFY CODE etc.
 
 .. raw:: html
     
-    <code>><strong>D ^XUP</strong>
+    <div class="code"><code>><strong>D ^XUP</strong>
     
     Setting up programmer environment
     Terminal Type set to: C-VT320
@@ -1026,7 +1025,7 @@ like PRIMARY MENU, VERIFY CODE etc.
         2   XUSEREDITSELF   Edit User Characteristics
     CHOOSE 1-2: <strong>1</strong> XUSEREDIT  Edit an Existing User
     Edit an Existing User
-    Select NEW PERSON NAME: <strong>MANAGER,SYSTEM</strong>    SM</code>
+    Select NEW PERSON NAME: <strong>MANAGER,SYSTEM</strong>    SM</code></div>
 
 Now you will be presented with a screen with multiple options. You can navigate
 the screen with the TAB key. For navigation help, use your keyboard arrows to
@@ -1077,7 +1076,7 @@ type "EDIT OPTIONS", then pick EVE.
 
 .. raw:: html
     
-    <code>Select OPTION to edit: <strong>XUCOMMAND</strong>     SYSTEM COMMAND OPTIONS
+    <div class="code"><code>Select OPTION to edit: <strong>XUCOMMAND</strong>     SYSTEM COMMAND OPTIONS
     NAME: XUCOMMAND// <strong>^10</strong>   MENU
     Select ITEM: XQALERT// <strong>XMUSER</strong>   MailMan Menu
       Are you adding 'XMUSER' as a new MENU (the 8TH for this OPTION)? No// <strong>Y</strong>   (Yes)
@@ -1085,7 +1084,7 @@ type "EDIT OPTIONS", then pick EVE.
       SYNONYM: MM// <strong>&lt;enter&gt;</strong>
       DISPLAY ORDER: <strong>&lt;enter&gt;</strong>
     Select ITEM: <strong>&lt;enter&gt;</strong>
-    CREATOR: MANAGER,SYSTEM// <strong>^</strong></code>
+    CREATOR: MANAGER,SYSTEM// <strong>^</strong></code></div>
 
 Select OPTION to edit:
 
@@ -1354,7 +1353,7 @@ sign into CPRS.
 
 .. raw:: html
 
-    <code>> <strong>S DUZ=.5 D ^XUP</strong>
+    <div class="code"><code>> <strong>S DUZ=.5 D ^XUP</strong>
 
     Setting up programmer environment
     This is a TEST account.
@@ -1415,7 +1414,7 @@ sign into CPRS.
     INITIAL: <strong>UC</strong>
     SSN: <strong>000000002</strong>
     SEX: <strong>M</strong>  MALE
-    NPI: <strong>&lt;enter&gt;</strong></code>
+    NPI: <strong>&lt;enter&gt;</strong></code></div>
 
 Once in the ScreenMan form, you will need to set the necessary
 information mentioned above. Four pieces of information are able to be set
@@ -1428,7 +1427,7 @@ To add an access or verify codes, you need to first answer ``Y`` to the
 
 .. raw:: html
 
-    <code>                            Edit an Existing User
+    <div class="code"><code>                            Edit an Existing User
     NAME: CPRS,USER                                                     Page 1 of 5
     _______________________________________________________________________________
        NAME... CPRS,USER                                   INITIAL: UC
@@ -1451,7 +1450,7 @@ To add an access or verify codes, you need to first answer ``Y`` to the
     Enter a command or '^' followed by a caption to jump to a specific field.
 
 
-    COMMAND:                                     Press <PF1>H for help    Insert</code>
+    COMMAND:                                     Press <PF1>H for help    Insert</code></div>
 
 To change to other pages, press the down arrow key or <TAB> until the cursor
 reaches the COMMAND box.  Then type ``N`` or ``Next Page`` and press &lt;enter&gt; to
@@ -1464,7 +1463,7 @@ and enter an effective date of yesterday, ``T-1`` is the notation to use.
 
 .. raw:: html
 
-    <code>                            Edit an Existing User
+    <div class="code"><code>                            Edit an Existing User
     NAME: CPRS,USER                                                     Page 4 of 5
     _______________________________________________________________________________
     RESTRICT PATIENT SELECTION:        OE/RR LIST:
@@ -1486,7 +1485,7 @@ and enter an effective date of yesterday, ``T-1`` is the notation to use.
 
 
 
-    COMMAND:                                       Press <PF1>H for help</code>
+    COMMAND:                                       Press <PF1>H for help</code></div>
 
 Once that is done, save and exit the ScreenMan form via the COMMAND box and
 then answer the final questions regarding access letters, security keys
@@ -1494,7 +1493,7 @@ and mail groups:
 
 .. raw:: html
 
-    <code>Exit     Save     Next Page     Refresh
+    <div class="code"><code>Exit     Save     Next Page     Refresh
     
     Enter a command or '^' followed by a caption to jump to a specific field.
     
@@ -1508,7 +1507,7 @@ and mail groups:
     ...
     
     Select User Management <TEST ACCOUNT> Option: <strong>^&lt;enter&gt;</strong>
-    ></code>
+    ></code></div>
 
 At this point, CPRS can successfully connect to the local VistA instance and
 the ``CPRS,USER`` will be able to sign on and interact with the GUI.
