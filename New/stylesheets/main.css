@@ -20,3 +20,7 @@ body {
 code {
   background: #e0e0e0;
 }
+
+img {
+  max-width: 960px;
+}
