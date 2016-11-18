@@ -461,7 +461,7 @@ and ``DO ^%RD``. The first will open all the database files for searching and
 open a shared memory segment on your machine. The second will make sure that
 your ``$gtmroutines`` variable is correct.
 
-.. code::
+.. code:: html
     $ mumps -dir
     
     FOIA 2016-08>D ^%GD
