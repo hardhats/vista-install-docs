@@ -34,9 +34,9 @@ the sudo.
     <div class="code"><code>$ <strong>mkdir /tmp/tmp</strong>
     $ <strong>cd /tmp/tmp</strong>
     /tmp/tmp$ <strong>wget http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer/v0.13/gtminstall</strong>
-
+    
     ...
-
+    
     /tmp/tmp$ <strong>chmod +x gtminstall</strong>
     /tmp/tmp$ <strong>sudo ./gtminstall --utf8 default</strong>
     [sudo] password for gtmuser: 

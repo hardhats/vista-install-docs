@@ -1,9 +1,6 @@
 Installing Caché
 =================
 
-.. role:: usertype
-    :class: usertype
-
 The following instructions were adapted from Nancy Anthracite\'s document
 entitled `InstallingVistAWithSingleUserVersionCache5.2`_, which was created
 to guide a user through installing InterSystems Caché onto a Windows operating
@@ -22,6 +19,35 @@ If you already have a Caché installation and are looking to install VistA as
 an additional database, you do not have to re-install Caché.
 Please use your existing installation and pick up the instructions at the point
 where the folder is created within the mgr folder.
+
+These Images Are Out Of Order
+-----------------------------
+
+.. figure::
+   images/InstallCache/InstanceName.png
+   :align: center
+   :alt: Instance Name
+
+.. figure::
+   images/InstallCache/SetupType.png
+   :align: center
+   :alt: Setup Type
+
+.. figure::
+   images/InstallCache/UnicodeSupport.png
+   :align: center
+   :alt: Unicode Support
+
+.. figure::
+   images/InstallCache/InitialSecuritySettings.png
+   :align: center
+   :alt: Initial Security Settings
+
+.. figure::
+   images/InstallCache/ReadyToInstall.png
+   :align: center
+   :alt: Ready To Install The System
+
 
 Download and Install Caché
 --------------------------
@@ -294,7 +320,6 @@ There are six other mappings that need to be entered in the same manner -
 |       |
 | %ZV*  |
 +-------+
-
 
 After the final mapping is set, click OK to be sent back to the Routine Mapping
 page. You should now see the seven mappings listed on the page. Click on the

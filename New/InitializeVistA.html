@@ -7,9 +7,6 @@
   <title></title>
   <link href="stylesheets/normalize.css" rel="stylesheet">
   <link href="stylesheets/main.css" rel="stylesheet">
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv-printshiv.min.js"></script>
-  <![endif]-->
 </head>
 <body>
 <h1 id="vista-initialization">VistA Initialization</h1>
@@ -44,13 +41,13 @@ LOCATION OF TERMINAL: Bit Bucket// <strong>^</strong>
 Select DEVICE NAME: <strong>NULL</strong>  GTM-UNIX-NULL    Bit Bucket (GT.M-Unix)    /dev/null 
 
 NAME: GTM-UNIX-NULL// <strong>NULL</strong>
-LOCATION OF TERMINAL: Bit Bucket (GT.M-Unix)  Replace 
+LOCATION OF TERMINAL: Bit Bucket (GT.M-Unix)  Replace <strong>&lt;enter&gt;</strong>
 Select MNEMONIC: NULL// <strong>@</strong>
    SURE YOU WANT TO DELETE? <strong>Y</strong>  (Yes)
 Select MNEMONIC: GTM-LINUX-NULL// <strong>@</strong>
    SURE YOU WANT TO DELETE? <strong>Y</strong>  (Yes)
-Select MNEMONIC: 
-LOCAL SYNONYM: <strong>^</strong></code></div>
+Select MNEMONIC: <strong>&lt;enter&gt;</strong>
+LOCAL SYNONYM: <strong>^</strong>
 
 Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 <p>CPRS is one of many users of the VistA NULL device, but the <code>$I</code> value, which contains the name or path to the device, is correct only for a VMS platform. It is necessary to change it to match the local platform before it is able to be accessed correctly. The Sign-On capability also needs to be removed from the device.</p>
@@ -77,7 +74,7 @@ Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 <h1 id="begin-to-set-up-the-vista-system">Begin to Set Up the VistA System</h1>
 <p>The routine ZTMGRSET defines VistA global variables and saves system wide M routines that are Caché specific. FileMan is the database system used by all VistA applications.</p>
 <h3 id="on-caché">On Caché</h3>
-<div class="code"><code>> <strong>D ^%CD</strong>
+<div class="code"><code>><strong>D ^%CD</strong>
 
 NAMESPACE// <strong>VISTA</strong></code></div>
 <h3 id="ztmgrset">ZTMGRSET</h3>
@@ -302,7 +299,7 @@ Select OPTION: <strong>&lt;enter&gt;</strong>
 <h2 id="instance-domain">Instance Domain</h2>
 <p>Next, a domain should be set up for the VistA instance. A domain name is typically used to uniquely identify an instance on a network. While this is not necessary to do for test instances, it is recommended that a new domain be added. The OSEHRA script adds a domain called <code>DEMO.OSEHRA.ORG</code>, and this example will do the same.</p>
 <p>First we add the entry to the <code>DOMAIN</code> file through FileMan.</p>
-<div class="code"><code>> <strong>S DUZ=.5 D Q^DI</strong>
+<div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
 
 VA FileMan 22.0
 
@@ -321,7 +318,7 @@ Select DOMAIN NAME: <strong>&lt;enter&gt;</strong>
 Select OPTION: <strong>&lt;enter&gt;</strong>
 ></code></div>
 <p>The next step is to find the IEN of the newly created domain. This can be done by inquiring about the entry using FileMan and printing the Record Number:</p>
-<div class="code"><code>> <strong>S DUZ=.5 D Q^DI</strong>
+<div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
 
 VA FileMan 22.0
 
@@ -340,8 +337,8 @@ Select DOMAIN NAME: <strong>^</strong>
 Select OPTION: <strong>^</strong>
 ></code></div>
 <p>Then we propogate that entry to the <code>Kernel System Parameters</code> and <code>RPC Broker Site Parameters</code> files. The value that is being set should be the same as the <code>NUMBER</code> value from the above result.</p>
-<div class="code"><code>> <strong>S $P(^XWB(8994.1,1,0),"^")=76</strong>
-> <strong>S $P(^XTV(8989.3,1,0),"^")=76</strong></code></div>
+<div class="code"><code>><strong>S $P(^XWB(8994.1,1,0),"^")=76</strong>
+><strong>S $P(^XTV(8989.3,1,0),"^")=76</strong></code></div>
 <p>Re-index the files after making this change.</p>
 <div class="code"><code>><strong>F DIK="^XTV(8989.3,","^XWB(8994.1," S DA=1 D IXALL2^DIK,IXALL^DIK</strong></code></div>
 <h2 id="christening">Christening</h2>
@@ -385,7 +382,7 @@ to edit any domain scripts that you choose to.
 ></code></div>
 <h2 id="set-box-volume-pair">Set Box-Volume pair</h2>
 <p>The first step is to find the box volume pair for the local machine.</p>
-<div class="code"><code>> <strong>D GETENV^%ZOSV W Y</strong></code></div>
+<div class="code"><code>><strong>D GETENV^%ZOSV W Y</strong></code></div>
 <p>which will print out a message with four parts separated by <code>^</code> that could look something like:</p>
 <div class="code"><code>VISTA^VISTA^palaven^VISTA:CACHE</code></div>
 <p>The four pieces of the string are:</p>
@@ -440,8 +437,8 @@ TO UCI: <strong>&lt;enter&gt;</strong>
 
 Select UCI ASSOCIATION FROM UCI: <strong>&lt;enter&gt;</strong></code></div>
 <h2 id="setup-rpc-broker">Setup RPC Broker</h2>
-<p>The next step is to edit entries in the <code>RPC Broker Site Parameters</code> file and the <code>Kernel System Parameters</code> file. The RPC Broker steps will set up information that references both the the Port that the listener will listen on and the Box Volume pair of the instance.</p>
-<div class="code"><code>> <strong>S DUZ=.5 D Q^DI</strong>
+<p>The next step is to edit entries in the RPC Broker Site Parameters file and the Kernel System Parameters file. The RPC Broker steps will set up information that references both the the Port that the listener will listen on and the Box Volume pair of the instance.</p>
+<div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
 
 VA FileMan 22.0
 
@@ -472,7 +469,7 @@ Select BOX-VOLUME PAIR: // <strong>VISTA:CACHE</strong>
 
 Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code></div>
 <h3 id="on-gt.m">On GT.M</h3>
-<p>Since GT.M systems do not use the Listener as Caché systems, we will answer &quot;No&quot; or &quot;0&quot; to both of those questions. More information on setting up the listener for GT.M will follow.</p>
+<p>Since GT.M systems do not use the Listener as Caché systems, we will answer <code>No</code> or <code>0</code> to both of those questions. More information on setting up the listener for GT.M will follow.</p>
 <div class="code"><code>  STATUS: STOPPED// <strong>&lt;enter&gt;</strong>
   CONTROLLED BY LISTENER STARTER: <strong>0</strong>  No
 
@@ -480,7 +477,7 @@ Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></c
 <h2 id="start-rpc-broker">Start RPC Broker</h2>
 <h3 id="on-caché-3">On Caché</h3>
 <p>The OSEHRA setup scrpt will also start the RPC Broker Listener which CPRS uses to communicate with the VistA instance. These steps only happen on platforms with a Caché instance. They create a task for the XWB Listener Starter that will be run when the Task Manager is started.</p>
-<div class="code"><code>> <strong>S DUZ=.5 D ^XUP</strong>
+<div class="code"><code>><strong>S DUZ=.5 D ^XUP</strong>
 
 Setting up programmer environment
 This is a TEST account.
@@ -641,8 +638,8 @@ Include COMPUTED fields:  (N/Y/R/B): NO// <strong>R</strong>  Record Number (IEN
 
 NUMBER: 92                              NAME: ANDRONICUS.VISTAEXPERTISE.NET</code></div>
 <p>The domain has an IEN of 92.</p>
-<div class="code"><code>><strong>S $P(^XTV(8989.3,1,0),"^")=92</strong
-><strong>S $P(^XWB(8994.1,1,0),"^")=92</strong></code></div>
+<div class="code"><code>><strong>S $P(^XTV(8989.3,1,0),"^")=92</strong>
+> <strong>S $P(^XWB(8994.1,1,0),"^")=92</strong></code></div>
 <p>Re-index the files after making this change.</p>
 <div class="code"><code>><strong>F DIK="^XTV(8989.3,","^XWB(8994.1," S DA=1 D IXALL2^DIK,IXALL^DIK</strong></code></div>
 <h2 id="start-taskman">Start TaskMan</h2>
@@ -783,7 +780,7 @@ Select NEW PERSON NAME: <strong>MANAGER,SYSTEM</strong>    SM</code></div>
 </figure>
 <h2 id="set-up-menus-for-the-system-manager">Set Up Menus for the System Manager</h2>
 <p>EVE is the System Manager menu and XUCOMMAND is a common menu available to all users.</p>
-<p>The next step is to make FileMan, MailMan, and Manage MailMan menus accessible to the System Manager user from the menu system. From the VISTA prompt, type &quot;D ^XUP&quot;. At Select OPTION NAME: enter &quot;XUMAINT&quot;. Then at Select Menu Management, type &quot;EDIT OPTIONS&quot;, then pick EVE.</p>
+<p>The next step is to make FileMan, MailMan, and Manage MailMan menus accessible to the System Manager user from the menu system. From the VISTA prompt, type <code>D ^XUP</code>. At Select OPTION NAME: enter <code>XUMAINT</code>. Then at Select Menu Management, type <code>EDIT OPTIONS</code>, then pick <code>EVE</code>.</p>
 <div class="code"><code>Select OPTION to edit: <strong>XUCOMMAND</strong>     SYSTEM COMMAND OPTIONS
 NAME: XUCOMMAND// <strong>^10</strong>   MENU
 Select ITEM: XQALERT// <strong>XMUSER</strong>   MailMan Menu
@@ -792,82 +789,126 @@ Select ITEM: XQALERT// <strong>XMUSER</strong>   MailMan Menu
   SYNONYM: MM// <strong>&lt;enter&gt;</strong>
   DISPLAY ORDER: <strong>&lt;enter&gt;</strong>
 Select ITEM: <strong>&lt;enter&gt;</strong>
-CREATOR: MANAGER,SYSTEM// <strong>^</strong></code></div>
-<p>Select OPTION to edit:</p>
-<p>91.</p>
-<p>To change the default time it takes before users are automatically signed off the system from the default of 300 seconds. This, again, is to give you more time to work as you are learning. Back out to the VISTA prompt. At the VISTA prompt, Type &quot;D ^ZU&quot;.</p>
-<p>92.</p>
-<p>At ACCESS CODE, type in the code you chose when setting up MANAGER, SYSTEM as a NEW PERSON.</p>
-<p>93.</p>
-<p>At VERIFY CODE, hit ENTER. When asked for a new verify code, type the code you choose and remember it.</p>
-<p>94.</p>
-<p>At Select Systems Manager Menu Option: Type &quot;OPER&quot;, (short for operations management) and hit enter. You can see all of the choices available to you if you type &quot;??&quot;.</p>
-<p>95.</p>
-<p>At Select Operations Management Option: Type &quot;KER&quot; short for Kernel Management Menu and hit enter. At Select Kernel Management Menu Option: Type &quot;ENT&quot;, short for Enter/Edit Kernel Site Parameters. Hit enter.</p>
-<p>96.</p>
-<p>You will be presented with a similar screen as in editing the SYSTEM MANAGER characteristics. You can navigate the screen with the TAB key. For DEFAULT TIMED-READ (SECONDS): change it to 3600 to allow an hour before being automatically signed off, or whatever you choose.</p>
-<p>pic 27 - Kernel Parameters</p>
-<p>Update the Devices, Start Taskman and Mail a Message</p>
-<p>These are basic devices to complete the setup. You can setup other devices, such as printers, later.</p>
-<p>97.</p>
-<p>Now to update devices. The Platinum CACHE.DAT already comes with preconfigured devices. It is best to leave the VOLUME SET(CPU) field blank. The help text for the field states: &quot;If no name has been entered for this field, this device is assumed to be accessible from all CPUs in the network. In other words, when this device is referenced, the device handler will operate as if this device is resident on the local CPU&quot;. The SIGN-ON/SYSTEM DEVICE: field should be set to NO or left blank for output devices and YES if the device is used to log on to the system. Use FileMan to edit the CONSOLE, NULL, HFS, and TELNET devices. CONSOLE is the primary logon device. The NULL device is used by the Vista RPC Broker and HFS is used by the Kernel Installation and Distribution System (KIDS) to install application patches and new applications when they are released. On the single user Caché PC you will not need the TELNET device since it does not allow remote access. At the &gt; prompt, type &quot;D Q^DI&quot; to invoke VA Fileman. At Select OPTION: type &quot;1&quot; (ENTER OR EDIT FILE ENTRIES) and at INPUT TO WHAT FILE:, enter &quot;3.5&quot;.</p>
-<p>VA FileMan 22.0</p>
-<p>Select OPTION: 1 ENTER OR EDIT FILE ENTRIES</p>
-<p>INPUT TO WHAT FILE: PACKAGE// 3.5 DEVICE (35 entries) EDIT WHICH FIELD: ALL//</p>
-<p>Select DEVICE NAME: CONSOLE CONSOLE |TRM| NAME: CONSOLE// LOCATION OF TERMINAL: CONSOLE// Select MNEMONIC: LOCAL SYNONYM: $I: |TRM|// VOLUME SET(CPU): SIGN-ON/SYSTEM DEVICE: Y YES TYPE: VIRTUAL TERMINAL// SUBTYPE: C-VT320// ^</p>
-<p>Select DEVICE NAME: TELNET TELNET |TNT| VISTA NAME: TELNET// LOCATION OF TERMINAL: TELNET// Select MNEMONIC: LOCAL SYNONYM: $I: |TNT|// VOLUME SET(CPU): VISTA// @ SURE YOU WANT TO DELETE? Y (Yes) SIGN-ON/SYSTEM DEVICE: Y YES TYPE: VIRTUAL TERMINAL// SUBTYPE: C-VT320// ^</p>
-<p>Select DEVICE NAME: HFS Host File Server C:PLATINUMTMP.DAT NAME: HFS// LOCATION OF TERMINAL: Host File Server// Select MNEMONIC: LOCAL SYNONYM: $I: C:PLATINUMTMP.DAT// C:TEMPTMP.TXT VOLUME SET(CPU): SIGN-ON/SYSTEM DEVICE: ^</p>
-<dl>
-<dt>Select DEVICE NAME: NULL</dt>
-<dd><p>1 NULL NT SYSTEM NALO: 2 NULL-DSM Bit Bucket _NLA0:</p>
-</dd>
-</dl>
-<p>CHOOSE 1-2: 1 NULL NT SYSTEM NALO: NAME: NULL// LOCATION OF TERMINAL: NT SYSTEM// Select MNEMONIC: LOCAL SYNONYM: $I: NALO:// //./nul VOLUME SET(CPU): SIGN-ON/SYSTEM DEVICE: YES// N NO TYPE: TERMINAL// SUBTYPE: C-VT320// ^</p>
-<p>Select DEVICE NAME:</p>
-<p>98.</p>
-<p>Again from the VISTA promt, enter &quot;D ^ZTMCHK&quot; to check if TaskMan's environment is OK. This will present you with two screens with information on TaskMan's environment.</p>
-<p>pic 28 - Check TaskMan Environment1</p>
+CREATOR: MANAGER,SYSTEM// <strong>^</strong>
+
+Select OPTION to edit:</code></div>
+<p>Change the default time it takes before users are automatically signed off the system from the default of 300 seconds. This, again, is to give you more time to work as you are learning. Back out to the VISTA prompt. At the VISTA prompt, Type <code>D ^ZU</code>.</p>
+<p>At ACCESS CODE, type in the code you chose when setting up MANAGER, SYSTEM as a NEW PERSON. At VERIFY CODE, hit ENTER. When asked for a new verify code, type the code you choose and remember it.</p>
+<p>At Select Systems Manager Menu Option: Type <code>OPER</code>, (short for operations management) and hit enter. You can see all of the choices available to you if you type <code>??</code>.</p>
+<p>At Select Operations Management Option: Type <code>KER</code> short for Kernel Management Menu and hit enter. At Select Kernel Management Menu Option: Type <code>ENT</code>, short for Enter/Edit Kernel Site Parameters. Hit enter.</p>
+<p>You will be presented with a similar screen as in editing the SYSTEM MANAGER characteristics. You can navigate the screen with the <code>TAB</code> key. For DEFAULT TIMED-READ (SECONDS): change it to <code>3600</code> to allow an hour before being automatically signed off, or whatever you choose.</p>
+<figure>
+<img src="images/InitializeVistA/pic27.gif" />
+</figure>
+<h2 id="update-the-devices-start-taskman-and-mail-a-message">Update the Devices, Start Taskman and Mail a Message</h2>
+<p>These are basic devices to complete the setup. You can setup other devices, such as printers, later. The Platinum CACHE.DAT already comes with preconfigured devices. It is best to leave the VOLUME SET(CPU) field blank. The help text for the field states: &quot;If no name has been entered for this field, this device is assumed to be accessible from all CPUs in the network. In other words, when this device is referenced, the device handler will operate as if this device is resident on the local CPU&quot;. The SIGN-ON/SYSTEM DEVICE: field should be set to <code>NO</code> or left blank for output devices and <code>YES</code> if the device isused to log on to the system. Use FileMan to edit the CONSOLE, NULL, HFS, and TELNET devices. CONSOLE is the primary logon device. The NULL device is used by the Vista RPC Broker and HFS is used by the Kernel Installation and Distribution System (KIDS) to install application patches and new applications when they are released. On the single user Caché PC you will not need the TELNET device since it does not allow remote access.</p>
+<div class="code"><code>><strong>D Q^DI</strong>
+
+VA FileMan 22.0
+
+Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
+
+INPUT TO WHAT FILE: PACKAGE// <strong>3.5</strong>   DEVICE (35 entries)
+EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
+
+Select DEVICE NAME: <strong>CONSOLE</strong>     CONSOLE |TRM|
+NAME: CONSOLE// <strong>&lt;enter&gt;</strong>
+LOCATION OF TERMINAL: CONSOLE// <strong>&lt;enter&gt;</strong>
+Select MNEMONIC: <strong>&lt;enter&gt;</strong>
+LOCAL SYNONYM: <strong>&lt;enter&gt;</strong>
+$I: |TRM|// <strong>&lt;enter&gt;</strong>
+VOLUME SET(CPU): <strong>&lt;enter&gt;</strong>
+SIGN-ON/SYSTEM DEVICE: <strong>Y</strong>   YES
+TYPE: VIRTUAL TERMINAL// <strong>&lt;enter&gt;</strong>
+SUBTYPE: C-VT320// <strong>^</strong>
+
+Select DEVICE NAME: <strong>TELNET</strong>     TELNET |TNT| VISTA
+NAME: TELNET// <strong>&lt;enter&gt;</strong>
+LOCATION OF TERMINAL: TELNET// <strong>&lt;enter&gt;</strong>
+Select MNEMONIC: <strong>&lt;enter&gt;</strong>
+LOCAL SYNONYM: <strong>&lt;enter&gt;</strong>
+$I: |TNT|// <strong>&lt;enter&gt;</strong>
+VOLUME SET(CPU): VISTA// <strong>@</strong>
+  SURE YOU WANT TO DELETE? <strong>Y</strong>   (Yes)
+SIGN-ON/SYSTEM DEVICE: <strong>Y</strong>   YES
+TYPE: VIRTUAL TERMINAL// <strong>&lt;enter&gt;</strong>
+SUBTYPE: C-VT320// <strong>^</strong>
+
+Select DEVICE NAME: <strong>HFS</strong>     Host File Server C:\PLATINUM\TMP.DAT
+NAME: HFS// <strong>&lt;enter&gt;</strong>
+LOCATION OF TERMINAL: Host File Server// <strong>&lt;enter&gt;</strong>
+Select MNEMONIC: <strong>&lt;enter&gt;</strong>
+LOCAL SYNONYM: <strong>&lt;enter&gt;</strong>
+$I: C:\PLATINUM\TMP.DAT// <strong>C:\TEMP\TMP.TXT</strong>
+VOLUME SET(CPU): <strong>&lt;enter&gt;</strong>
+SIGN-ON/SYSTEM DEVICE: <strong>^</strong>
+
+Select DEVICE NAME: NULL
+    1   NULL     NT SYSTEM NALO:
+    2   NULL-DSM     Bit Bucket _NLA0:
+CHOOSE 1-2: <strong>1</strong>   NULL     NT SYSTEM     NALO: 
+NAME: NULL// <strong>&lt;enter&gt;</strong>
+LOCATION OF TERMINAL: NT SYSTEM// <strong>&lt;enter&gt;</strong>
+Select MNEMONIC: <strong>&lt;enter&gt;</strong>
+LOCAL SYNONYM: <strong>&lt;enter&gt;</strong>
+$I: NALO:// <strong>//./nul</strong>
+VOLUME SET(CPU): <strong>&lt;enter&gt;</strong>
+SIGN-ON/SYSTEM DEVICE: YES// <strong>N</strong>   NO
+TYPE: TERMINAL// <strong>&lt;enter&gt;</strong>
+SUBTYPE: C-VT320// <strong>^</strong>
+
+Select DEVICE NAME: <strong>&lt;enter&gt;</strong><code></div>
+<p>Again from the VISTA promt, enter <code>D ^ZTMCHK</code> to check if TaskMan's environment is OK. This will present you with two screens with information on TaskMan's environment.</p>
+<figure>
+<img src="images/InitializeVistA/pic28.gif" />
+</figure>
 <p>Screen #1</p>
-<p>pic 29 - Check TaskMan Environment2</p>
+<figure>
+<img src="images/InitializeVistA/pic29.gif" />
+</figure>
 <p>Screen #2</p>
-<p>99.</p>
-<p>If TaskMan's environment is OK, you are ready to start TaskMan. Go back to the VISTA prompt and type &quot;D ^ZTMB&quot; to start TASKMAN.</p>
-<p>100.</p>
-<p>To monitor TaskMan, enter &quot;D ^ZTMON&quot; from the VISTA prompt. Enter &quot;^&quot; at the UPDATE// prompt to exit the monitor or enter a &quot;?&quot; to see what the other options are.</p>
-<p>pic 30 - Monitor TaskMan</p>
-<p>101.</p>
-<p>From the &gt; programmer prompt you can check the system status with &quot;D ^%SS&quot;. You should see at least two Taskman processes - %ZTM and %ZTMS.</p>
-<p>pic 31 - System Status with TM</p>
-<p>102.</p>
-<p>Now send a message using Postmaster to your DUZ number. Use D ^%CD to get into the namespace, VISTA, and then type &quot;S DUZ=.5 D ^XUP&quot;. You will get the response SETTING UP PROGRAMMER ENVIROMENT then TERMINAL TYPE SET TO: (your default) and Select OPTION NAME:. You will need to respond: &quot;XMUSER&quot;. At Select Mailman Menu Option: type &quot;S&quot; (for send). At Subject: enter your subject, such as Test, and then hit enter. You will then be prompted You may enter the text of the message and you will be offered the line number 1&gt; where you can type your message, such as the infamous Hello world. Next will be line 2&gt; and if you are done, just hit enter and at EDIT Option: you can do the same. At Send mail to: POSTMASTER// enter the initials you used for your DUZ which were probably SM for System Manager. You will then be told when MailMan was last used, which is probably NEVER. Hit enter at And Send to: and you should receive the message Select Message option: Transmit now// at which you hit enter and will hopefully receive the message Sending [1] Sent. Type &quot;^&quot; to exit.</p>
-<p>103.</p>
-<p>Now see if you received it. Log on using &quot;D ^ZU&quot;. At the Systems Manager prompt, type &quot;MAIL&quot;. Then at the Select MailMan Menu Option: type &quot;NEW&quot; Messages and Responses. Read the mail.</p>
-<p>pic 32 - Read Mail</p>
+<p>If TaskMan's environment is OK, you are ready to start TaskMan. Go back to the VISTA prompt and type <code>D ^ZTMB</code> to start TASKMAN.</p>
+<p>To monitor TaskMan, enter <code>D ^ZTMON</code> from the VISTA prompt. Enter <code>^</code> at the UPDATE// prompt to exit the monitor or enter a <code>?</code> to see what the other options are.</p>
+<figure>
+<img src="images/InitializeVistA/pic30.gif" />
+</figure>
+<p>From the &gt; programmer prompt you can check the system status with <code>D ^%SS</code>. You should see at least two Taskman processes - %ZTM and %ZTMS.</p>
+<figure>
+<img src="images/InitializeVistA/pic31.gif" />
+</figure>
+<p>Now send a message using Postmaster to your DUZ number. Use D ^%CD to get into the namespace, VISTA, and then type <code>S DUZ=.5 D ^XUP</code>. You will get the response SETTING UP PROGRAMMER ENVIROMENT then TERMINAL TYPE SET TO: (your default) and Select OPTION NAME:. You will need to respond: <code>XMUSER</code>. At Select Mailman Menu Option: type <code>S</code> (for send). At Subject: enter your subject, such as Test, and then hit enter. You will then be prompted You may enter the text of the message and you will be offered the line number 1&gt; where you can type your message, such as the infamous Hello world. Next will be line 2&gt; and if you are done, just hit enter and at EDIT Option: you can do the same. At Send mail to: POSTMASTER// enter the initials you used for your DUZ which were probably SM for System Manager. You will then be told when MailMan was last used, which is probably NEVER. Hit enter at And Send to: and you should receive the message Select Message option: Transmit now// at which you hit enter and will hopefully receive the message Sending [1] Sent. Type <code>^</code> to exit.</p>
+<p>Now see if you received it. Log on using <code>D ^ZU</code>. At the Systems Manager prompt, type <code>MAIL</code>. Then at the Select MailMan Menu Option: type <code>NEW</code> Messages and Responses. Read the mail.</p>
+<figure>
+<img src="images/InitializeVistA/pic32.gif" />
+</figure>
 <p>Start and test the RPC Broker.</p>
 <p>The RPC Broker is VistA's Client/Server software and is needed by VistA's GUI client.</p>
-<p>104.</p>
-<p>Now to see of the RPC BROKER will start. To start the broker, type &quot;D STRT^XWBTCP(port)&quot; at the VISTA prompt. The system status should now show the broker listener (XWBTCPL) running.</p>
-<p>&gt;D STRT^XWBTCP(9210) Start TCP Listener... Checking if TCP Listener has started... TCP Listener started successfully. &gt;</p>
-<p>Now run &quot;D ^%SS&quot; again. You should see something like the following with XWBPTCL running.</p>
-<p>pic 33 - Broker</p>
-<p>105.</p>
-<p>If you have the RPCTEST.EXT on your workstation, you test your connection to the localhost. Download the file XWB1_1WS.EXE from <a href="ftp://ftp.va.gov/vista/Software/Packages/RPC" class="uri">ftp://ftp.va.gov/vista/Software/Packages/RPC</a> Broker - XWB/PROGRAMS/. (Note: The VA's ftp site is not compatible with Netscape's ftp. Either use Windows Explorer or FTP software). Double click on this file once you have downloaded it. Accept the defaults. It will install RPC Broker's Client software including RPCTEST.EXE. Then go to C:program filesvistabrokerrcptest.exe and double click on it or create a shortcut on your desktop.</p>
-<p>pic 34 - RPC Test</p>
-<p>106.</p>
+<p>Now to see of the RPC BROKER will start. To start the broker, type <code>D STRT^XWBTCP(port)</code> at the VISTA prompt. The system status should now show the broker listener (XWBTCPL) running.</p>
+<div class="code"><code>><strong>D STRT^XWBTCP(9210)</strong>
+Start TCP Listener...
+Checking if TCP Listener has started...
+TCP Listener started successfully.
+></code></div>
+<p>Now run <code>D ^%SS</code> again. You should see something like the following with XWBPTCL running.</p>
+<figure>
+<img src="images/InitializeVistA/pic33.gif" />
+</figure>
+<p>If you have the RPCTEST.EXT on your workstation, you test your connection to the localhost. Download the file XWB1_1WS.EXE from <a href="ftp://ftp.va.gov/vista/Software/Packages/RPC%20Broker%20-%20XWB/PROGRAMS/">ftp://ftp.va.gov/vista/Software/Packages/RPC%20Broker%20-%20XWB/PROGRAMS/</a>. (Note: The VA's ftp site is not compatible with Netscape's ftp. Either use Windows Explorer or FTP software). Double click on this file once you have downloaded it. Accept the defaults. It will install RPC Broker's Client software including RPCTEST.EXE. Then go to C:program filesvistabrokerrcptest.exe and double click on it or create a shortcut on your desktop.</p>
+<figure>
+<img src="images/InitializeVistA/pic34.gif" />
+</figure>
 <p>You should see a Vista logon screen.</p>
-<p>pic 35 - Vista Logon</p>
-<p>108.</p>
+<figure>
+<img src="images/InitializeVistA/pic35.gif" />
+</figure>
 <p>If you connect successfully, the link state will turn green.</p>
-<p>pic 36 - Broker Connect</p>
-<p>109.</p>
-<p>To stop TaskMan, use &quot;D STOP^ZTMKU&quot; and answer &quot;YES&quot; to stopping the submanagers.</p>
-<p>110.</p>
-<p>To stop Broker, use &quot;D STOP^XWBTCP(9210)&quot;. This is the last time you should be using these direct access to the routines to manage VistA. You should be using the menu system from now on to manage starting and stopping Taskman, the background filers and the RPC Broker. That way any code changes, etc., will be accounted for. Programmers will usually enter from the programmer prompt beginning with D ^XUP. The system managers menu option is EVE.</p>
-<p>Last edited 5/27/06 7:40 AM EST</p>
-<p>End of Chapter 1 ---&gt; Chapter 2</p>
+<figure>
+<img src="images/InitializeVistA/pic36.gif" />
+</figure>
+<p>To stop TaskMan, use <code>D STOP^ZTMKU</code> and answer <code>YES</code> to stopping the submanagers.</p>
+<p>To stop Broker, use <code>D STOP^XWBTCP(9210)</code>. This is the last time you should be using these direct access to the routines to manage VistA. You should be using the menu system from now on to manage starting and stopping Taskman, the background filers and the RPC Broker. That way any code changes, etc., will be accounted for. Programmers will usually enter from the programmer prompt beginning with D ^XUP. The system managers menu option is EVE.</p>
 <h2 id="add-user">Add User</h2>
 <p>The next step is to create a user that can sign on to the CPRS GUI. The things to make sure that this new user has are</p>
-<blockquote>
 <ul>
 <li>A Secondary menu option of &quot;OR CPRS GUI CHART&quot;</li>
 <li>CPRS Tab Access</li>
@@ -875,19 +916,17 @@ CREATOR: MANAGER,SYSTEM// <strong>^</strong></code></div>
 <li>A VERIFY CODE</li>
 <li>Service/Section (required for any user)</li>
 </ul>
-</blockquote>
 <p>The menu option ensures that the user has the proper permissions to access CPRS after signing in with their ACCESS and VERIFY codes. The Tab access can limit the amount of things a user can access once they have signed in.</p>
 <p>The adding of the user is done through the User Management menu in the menu system, which will ask for information in a series of prompts then will open a Screenman form to complete the task.</p>
 <p>The following steps will add a generic <code>CPRS,USER</code> person who will be able to sign into CPRS.</p>
-<div class="code"><code>> <strong>S DUZ=.5 D ^XUP</strong>
+<div class="code"><code>><strong>S DUZ=.5 D ^XUP</strong>
 
 Setting up programmer environment
 This is a TEST account.
 
-Terminal Type set to: C-VT220
+Terminal Type set to: C-VT320
 
 Select OPTION NAME:  <strong>Systems Manager Menu</strong>
-
 
         Core Applications ...
         Device Management ...
@@ -907,7 +946,6 @@ You have PENDING ALERTS
         Enter  "VA to jump to VIEW ALERTS option
 
 Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>User Management</strong>
-
 
         Add a New User to the System
         Grant Access by Profile
