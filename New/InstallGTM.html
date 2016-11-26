@@ -14,9 +14,9 @@
 </header>
 <p>The instructions are taken from the <a href="https://sourceforge.net/projects/fis-gtm/files/GT.M%20Acculturation%20Workshop/">GT.M Acculturation Workshop</a>. They have been only slightly modified.</p>
 <h1 id="using-the-package-manager">Using the Package Manager</h1>
-<p>If you are using Ubuntu Linux 14.04 LTS or later; or Debian Jessie, Testing, or Unstable; or other Linux distributions that may already have GT.M packages accessed using their normal package managers, you may be able to install GT.M using the package manager, e.g., apt-get install fis-gtm. However, as this workshop is intended to teach GT.M Administration and Operations, we will not use this approach here.</p>
+<p>If you are using Ubuntu Linux 14.04 LTS or later; or Debian Jessie, Testing, or Unstable; or other Linux distributions that may already have GT.M packages accessed using their normal package managers, you may be able to install GT.M using the package manager, e.g., as root/via sudo, <code>apt install fis-gtm</code>.</p>
 <h1 id="using-the-installation-script">Using the Installation Script</h1>
-<p>The installation script, gminstall, is downloads and installs the current GT.M release. From <a href="http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer">http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer</a>, download the latest version of the GT.M installer (currently version 0.13) into a temporary directory, either using a browser, or a program such as wget, and execute it.</p>
+<p>The installation script, gtminstall, is downloads and installs the current GT.M release. From <a href="http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer">http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer</a>, download the latest version of the GT.M installer (currently version 0.13) into a temporary directory, either using a browser, or a program such as wget, and execute it.</p>
 <p>Depending on your network configuration the wget command may need environment variables to be set to go through proxy servers, and the sudo command may require the -E option to pass your shell environment to root process invoked by the sudo.</p>
 <div class="code"><code>$ <strong>mkdir /tmp/tmp</strong>
 $ <strong>cd /tmp/tmp</strong>
@@ -40,7 +40,7 @@ $</code></div>
 $ <strong>cd /tmp/tmp</strong>
 /tmp/tmp$ <strong>tar zxf ../gtm_V62000_linux_x8664_pro.tar.gz</strong>
 /tmp/tmp$</code></div> 
-<p>Then install GT.M in /usr/local/lib/fis-gtm/V6.2-000_x86_64 – since the gtminstall script would have already installed a GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. Note that this must be done as root.</p>
+<p>Then install GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. Note that this must be done as root.</p>
 <div class="code"><code>/tmp/tmp$ <strong>sudo ./configure</strong>
 [sudo] password for gtmuser: 
 
@@ -51,7 +51,7 @@ software is restricted by the provisions of your license agreement.
 What user account should own the files? (bin) <strong>root</strong>
 What group should own the files? (bin) <strong>root</strong>
 Should execution of GT.M be restricted to this group? (y or n) <strong>n</strong>
-In what directory should GT.M be installed? <strong>/usr/local/lib/fis-gtm/V6.2-000_x86_64</strong>
+In what directory should GT.M be installed? <strong>/usr/lib/fis-gtm/V6.2-000_x86_64</strong>
 
 Directory /usr/local/lib/fis-gtm/V6.2-000_x86_64 does not exist. Do you wish to create it as part of
 this installation? (y or n) <strong>y</strong>
@@ -91,5 +91,6 @@ removed from this directory? (y or n) <strong>y</strong>
 /tmp/tmp$ cd
 /tmp/tmp$</code></div>
 <p>GT.M is now installed and operational.</p>
+<p>At this point, you are ready to continue to <a href="./InstallVistAOnGTM.html">Install VistA on GT.M</a>.</p>
 </body>
 </html>

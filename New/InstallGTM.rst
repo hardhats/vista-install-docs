@@ -2,32 +2,19 @@ Download and Install GT.M
 =========================
 
 The instructions are taken from the `GT.M Acculturation Workshop 
-<https://sourceforge.net/projects/fis-gtm/files/GT.M%20Acculturation%20Workshop/>`_. 
-They have been only slightly modified.
+<https://sourceforge.net/projects/fis-gtm/files/GT.M%20Acculturation%20Workshop/>`_.  They have been only slightly modified.
 
 Using the Package Manager
 -------------------------
 
-If you are using Ubuntu Linux 14.04 LTS or later; or Debian Jessie, Testing, or 
-Unstable; or other Linux distributions that may already have GT.M packages 
-accessed using their normal package managers, you may be able to install GT.M 
-using the package manager, e.g., apt-get install fis-gtm. However, as this 
-workshop is intended to teach GT.M Administration and Operations, we will not 
-use this approach here.
+If you are using Ubuntu Linux 14.04 LTS or later; or Debian Jessie, Testing, or Unstable; or other Linux distributions that may already have GT.M packages accessed using their normal package managers, you may be able to install GT.M using the package manager, e.g., as root/via sudo, ``apt install fis-gtm``.
 
 Using the Installation Script
 -----------------------------
 
-The installation script, gminstall, is downloads and installs the current GT.M 
-release. From http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer, 
-download the latest version of the GT.M installer (currently version 0.13) into 
-a temporary directory, either using a browser, or a program such as wget, and 
-execute it.
+The installation script, gtminstall, is downloads and installs the current GT.M release. From http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer, download the latest version of the GT.M installer (currently version 0.13) into a temporary directory, either using a browser, or a program such as wget, and execute it.
 
-Depending on your network configuration the wget command may need environment 
-variables to be set to go through proxy servers, and the sudo command may 
-require the -E option to pass your shell environment to root process invoked by 
-the sudo.
+Depending on your network configuration the wget command may need environment variables to be set to go through proxy servers, and the sudo command may require the -E option to pass your shell environment to root process invoked by the sudo.
 
 .. raw:: html
     
@@ -49,7 +36,6 @@ the sudo.
 
 Traditional Technique
 ---------------------
-
 First download GT.M for 64-bit GNU/Linux on the x86_64 platform from Source 
 Forge. These instructions are based on V6.2-000; you can use it or any more 
 recent GT.M release. Download it to a temporary directory, e.g., /tmp, with the 
@@ -70,9 +56,7 @@ have a /tmp/tmp directory.
     /tmp/tmp$ <strong>tar zxf ../gtm_V62000_linux_x8664_pro.tar.gz</strong>
     /tmp/tmp$</code></div> 
 
-Then install GT.M in /usr/local/lib/fis-gtm/V6.2-000_x86_64 – since the 
-gtminstall script would have already installed a GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. 
-Note that this must be done as root.
+Then install GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. Note that this must be done as root.
 
 .. raw:: html
     
@@ -86,7 +70,7 @@ Note that this must be done as root.
     What user account should own the files? (bin) <strong>root</strong>
     What group should own the files? (bin) <strong>root</strong>
     Should execution of GT.M be restricted to this group? (y or n) <strong>n</strong>
-    In what directory should GT.M be installed? <strong>/usr/local/lib/fis-gtm/V6.2-000_x86_64</strong>
+    In what directory should GT.M be installed? <strong>/usr/lib/fis-gtm/V6.2-000_x86_64</strong>
     
     Directory /usr/local/lib/fis-gtm/V6.2-000_x86_64 does not exist. Do you wish to create it as part of
     this installation? (y or n) <strong>y</strong>
@@ -127,3 +111,7 @@ Note that this must be done as root.
     /tmp/tmp$</code></div>
 
 GT.M is now installed and operational.
+
+
+At this point, you are ready to continue to `Install VistA on GT.M
+<./InstallVistAOnGTM.html>`_.

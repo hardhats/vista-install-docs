@@ -12,29 +12,13 @@
 <header>
 <h1 class="title">Installing Caché</h1>
 </header>
-<p>The following instructions were adapted from Nancy Anthracite's document entitled <a href="http://opensourcevista.net:8888/NancysVistAServer/InstallingVistAWithSingleUserVersionCache5.2.doc">InstallingVistAWithSingleUserVersionCache5.2</a>, which was created to guide a user through installing InterSystems Caché onto a Windows operating system. The instructions were using an older version of Caché; this uses the Caché 2011 trial version and shows the updated Management Portal interface.</p>
+<p>The following instructions were adapted from Nancy Anthracite's document entitled <a href="http://opensourcevista.net:8888/NancysVistAServer/InstallingVistAWithSingleUserVersionCache5.2.doc">InstallingVistAWithSingleUserVersionCache5.2</a>, which was created to guide a user through installing InterSystems Caché onto a Windows operating system. The instructions were using an older version of Caché; this uses the Caché 2015 version and the and shows the updated Management Portal interface.</p>
 <p>Trial versions of the Caché installer can be downloaded from</p>
 <blockquote>
-<p><a href="http://download.intersystems.com/download/register.csp" class="uri">http://download.intersystems.com/download/register.csp</a>.</p>
+<p><a href="http://download.intersystems.com/download/register.csp">http://download.intersystems.com/download/register.csp</a>.</p>
 </blockquote>
-<p>This installation guide uses Caché 2011.1, it should also apply for Cache 2013. If you already have a Caché installation and are looking to install VistA as an additional database, you do not have to re-install Caché. Please use your existing installation and pick up the instructions at the point where the folder is created within the mgr folder.</p>
-<h1 id="these-images-are-out-of-order">These Images Are Out Of Order</h1>
-<figure>
-<img src="images/InstallCache/InstanceName.png" />
-</figure>
-<figure>
-<img src="images/InstallCache/SetupType.png" />
-</figure>
-<figure>
-<img src="images/InstallCache/UnicodeSupport.png" />
-</figure>
-<figure>
-<img src="images/InstallCache/InitialSecuritySettings.png" />
-</figure>
-<figure>
-<img src="images/InstallCache/ReadyToInstall.png" />
-</figure>
-<h1 id="download-and-install-caché">Download and Install Caché</h1>
+<p>This installation guide uses Caché 2011.1, it should also apply for Cache 2013 to 2016. If you already have a Caché installation and are looking to install VistA as an additional database, you do not have to re-install Caché. Please use your existing installation and pick up the instructions at the point where the folder is created within the mgr folder.</p>
+<h1 id="download-and-install-caché-on-microsoft-windows">Download and Install Caché on Microsoft Windows</h1>
 <p>Download the Caché installer from the above link and double click on the downloaded .exe file. The first window that requires interaction is the Licensing Agreement shown in the figure below. Agree to the license in order to continue in the installation process.</p>
 <figure>
 <img src="images/InstallCache/License.png" />
@@ -42,6 +26,22 @@
 <p>The next window asks to set the directory in which Caché will be installed. Most users will be able to accept the default path. If more than one instance is found on the machine, the next instances will be denoted with a number appended to the end of the instance name.</p>
 <figure>
 <img src="images/InstallCache/InstallPath.png" />
+</figure>
+<p>The following dialog will show if you are installing the production version of Caché: You can have several instances of Caché on your machine; each instance can hold several namespaces.</p>
+<figure>
+<img src="images/InstallCache/InstanceName.png" />
+</figure>
+<p>The following dialog will show if you are installing the production version of Caché: you can install different components.</p>
+<figure>
+<img src="images/InstallCache/SetupType.png" />
+</figure>
+<p>The following dialog will show if you are installing the production version of Caché: you can install the Unicode version of Cache. For VistA, you do not need to do that. Due to the fact that there is no way to switch between versions of Caché (ASCII vs Unicode), and most CACHE.DATs in the United States are distributed in ASCII mode, you should install the ASCII version. (On GT.M, you can dynamically switch between ASCII and UTF-8 mode.)</p>
+<figure>
+<img src="images/InstallCache/UnicodeSupport.png" />
+</figure>
+<p>The following dialog will show if you are installing the production version of Caché: You can decide what security settings to start with. If you are just trying VistA, you should choose the least secure settings.</p>
+<figure>
+<img src="images/InstallCache/InitialSecuritySettings.png" />
 </figure>
 <p>Once the install directory is set, the installer will display a summary of the instance that will be installed in the process. There is the option to enter a license if you have one, but this is not a required step for the current testing configuration.</p>
 <figure>
@@ -63,8 +63,10 @@
 <figure>
 <img src="images/InstallCache/DocMainPage.png" />
 </figure>
+<h1 id="download-and-install-caché-on-mac-os-x-or-linux">Download and Install Caché on Mac OS X or Linux</h1>
+<p>On Mac OS X, there is a graphical installer based on downloading a .dmg opening it, and then running the .pkg file. On Linux, it is a text based installer. In either case, you should follow the instructions found on Intersystems' website.</p>
 <h1 id="configuring-caché">Configuring Caché</h1>
-<p>Once Caché is installed, it is time to create the proper folders and environment to run the VistA instance within Caché. The first step is to go to the mgr folder of Caché and create a new folder as shown below. This folder will hold the database file cache.dat that will contain the VistA routines and globals.</p>
+<p>Once Caché is installed, it is time to create the proper folders and environment to run the VistA instance within Caché. The first step is to go to the mgr folder of Caché and create a new folder as shown below. This folder will hold the database file cache.dat that will contain the VistA routines and globals. In reality, the folder can be anywhere on your system; it doesn't have to be with the other databases Caché supplies.</p>
 <figure>
 <img src="images/InstallCache/MgrFldr.png" />
 </figure>
@@ -72,7 +74,7 @@
 <figure>
 <img src="images/InstallCache/MgrFldrVistA.png" />
 </figure>
-<p>At this point we are ready to stand up the VistA instance. Right click on the Caché cube and select Management Portal of Caché.</p>
+<p>At this point we are ready to stand up the VistA instance. Right click on the Caché cube and select Management Portal of Caché. On macOS and on Linux, the URL is <a href="http://localhost:57772/csp/sys/UtilHome.csp">http://localhost:57772/csp/sys/UtilHome.csp</a>.</p>
 <figure>
 <img src="images/InstallCache/MenuSysMgt.png" />
 </figure>
@@ -125,11 +127,24 @@
 <figure>
 <img src="images/InstallCache/NewGlobalMapping.png" />
 </figure>
-<p>For VistA, there is only one global mapping that needs to be made. First set the Global Database location to the VistA database name, and for the Global Name enter &quot;%Z*&quot;. This will map all globals that start with &quot;%Z&quot; to be specific to the VistA namespace. Click OK and the wizard will exit and display the new mapping in the window. Be sure to click on Save Changes before navigating back to the Namespaces page.</p>
-<figure>
-<img src="images/InstallCache/SetGlobalMapping.png" />
-</figure>
-<p>Verify that the global mapping has been saved to the namespace.</p>
+<p>First set the Global Database location to the VistA database name, and for the Global Name enter &quot;%Z*&quot;. This will map all globals that start with &quot;%Z&quot; to be specific to the VistA namespace. Click OK and the wizard will exit and display the new mapping in the window. Repeat this for %ut and %Serenj*</p>
+<p>Repeat this for the following, but with different settings: The global database location is &quot;CACHETEMP&quot;, and the Global Names are the following:</p>
+<table>
+<colgroup>
+<col style="width: 13%" />
+</colgroup>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><p>HLTMP</p>
+<p>TMP</p>
+<p>UTILITY</p>
+<p>XTMP</p>
+<p>XUTL</p></td>
+</tr>
+</tbody>
+</table>
+<p>This is necessary to do to speed the performance of any temporary globals which are very frequently used. The CACHETEMP database is memory mapped for speed.</p>
+<p>Be sure to click on Save Changes before navigating back to the Namespaces page. This is what you will see. (Your database name may differ.)</p>
 <figure>
 <img src="images/InstallCache/SaveGlobalMapping.png" />
 </figure>
@@ -141,31 +156,33 @@
 <figure>
 <img src="images/InstallCache/NewRoutineMapping.png" />
 </figure>
-<p>Again select the database location that corresponds to the VistA database, enter &quot;%DT*&quot; into the Routine name, and click Apply. This adds the first namespace mapping to the VistA database.</p>
+<p>Again select the database location that corresponds to the VistA database, enter &quot;%DT&quot; into the Routine name, and click Apply. This adds the first namespace mapping to the VistA database.</p>
 <figure>
 <img src="images/InstallCache/SetRoutineMapping.png" />
 </figure>
-<p>There are six other mappings that need to be entered in the same manner -</p>
-<table style="width:11%;">
+<p>There are 8 other mappings that need to be entered in the same manner -</p>
+<table>
 <colgroup>
 <col style="width: 11%" />
 </colgroup>
 <tbody>
 <tr class="odd">
-<td><p>%RCR</p>
-<p>%XU*</p>
-<p>%ZIS*</p>
-<p>%ZO*</p>
-<p>%ZT*</p>
-<p>%ZV*</p></td>
+<td style="text-align: left;"><p>%DTC</p>
+<p>%RCR</p>
+<p>%XUCI</p>
+<p>%Z*</p>
+<p>%</p>
+<p>%KIDS</p>
+<p>%ut*</p>
+<p>%Serenj*</p></td>
 </tr>
 </tbody>
 </table>
-<p>After the final mapping is set, click OK to be sent back to the Routine Mapping page. You should now see the seven mappings listed on the page. Click on the Save Changes button.</p>
+<p>After the final mapping is set, click OK to be sent back to the Routine Mapping page. You should now see the nine mappings listed on the page. Click on the Save Changes button.</p>
 <figure>
 <img src="images/InstallCache/SaveRoutineMapping.png" />
 </figure>
-<p>The final step of preparing the Caché installation for testing is to set the instance to allow TELNET service. This is done though the System Administration &gt; Security &gt; Services menu.</p>
+<p>The final step of preparing the Caché installation for testing is to set the instance to allow TELNET service. The evaluation version of Cache won't let you do this; so this is only for licensed versions. This is done though the System Administration &gt; Security &gt; Services menu.</p>
 <figure>
 <img src="images/InstallCache/ServicesMenu.png" />
 </figure>
@@ -174,9 +191,6 @@
 <img src="images/InstallCache/TelenetServiceoff.png" />
 </figure>
 <p>Click on the link to bring up the &quot;Edit Service&quot; page.</p>
-<figure>
-<img src="" alt=":align: center :alt: Edit Service page for %Service_Telnet." /><figcaption>:align: center :alt: Edit Service page for %Service_Telnet.</figcaption>
-</figure>
 <p>To enable the Telnet session, simply check the box next to &quot;Service Enabled&quot; and then click &quot;Save&quot;.</p>
 <figure>
 <img src="images/InstallCache/EnableTelnetService.png" />
@@ -186,9 +200,7 @@
 <img src="images/InstallCache/TelnetServiceEnabled.png" />
 </figure>
 <h1 id="install-cache.dat">Install CACHE.DAT</h1>
-<p>These instructions for installing CACHE.DAT are copied from the <a href="https://github.com/OSEHRA/VistA/blob/master/Documentation/InstallCacheDat.rst">OSEHRA VistA repository on GitHub</a>.</p>
-<p><strong>--- These instructions are for Windows environments only ---</strong></p>
-<p>If you have a CACHE.DAT file that was downloaded from an external source (The VA or OSEHRA) or from a backup, then you can use that file rather than <a href="ImportCache.rst">importing from the VistA-M repository</a>.</p>
+<p>Download the CACHE.DAT from <a href="http://foia-vista.osehra.org/DBA_VistA_FOIA_System_Files/">http://foia-vista.osehra.org/DBA_VistA_FOIA_System_Files/</a>.</p>
 <p>The first step in installing the CACHE.DAT is to stop the Caché instance so that the instance will not clobber a process during the copy.</p>
 <p>Right click on the Caché Cube in the taskbar</p>
 <figure>
@@ -206,11 +218,14 @@
 <figure>
 <img src="images/InstallCache/CubeDown.png" />
 </figure>
-<p>At this point, you can take your downloaded CACHE.DAT and copy it into the directory that has been set up in Caché for VistA. If you followed the InstallCache.rst_ script, it will be &quot;C:/Intersystems/TryCache/mgr/VistA&quot;.</p>
+<p>On macOS and Linux, you should run <code>ccontrol list</code> to find your instance name, and then <code>ccontrol stop &lt;instance name&gt;</code>.</p>
+<p>At this point, you can take your downloaded CACHE.DAT and copy it into the directory that has been set up in Caché for VistA. If you followed the above, it will be &quot;C:/Intersystems/TryCache/mgr/VistA&quot;. Your directory will differ for macOS and Linux.</p>
 <p>All that is left is to restart the Caché instance. Right-click on the grayed-out Caché Cube and click &quot;Start Caché&quot;. A status window will pop up to signifiy the instance is starting up.</p>
 <figure>
 <img src="images/InstallCache/StartupStatus.png" />
 </figure>
 <p>When it disappears and the Caché Cube is blue, the instance is ready for use again.</p>
+<p>On macOS and Linux, run <code>ccontrol start &lt;instance name&gt;</code> to start it back up.</p>
+<p>At this point, you are ready to continue to <a href="./InitializeVistA.html">Initialize Vista</a>.</p>
 </body>
 </html>
