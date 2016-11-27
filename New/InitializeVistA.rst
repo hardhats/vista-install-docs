@@ -90,6 +90,7 @@ There are a few confusing conventions that outsiders don't understand right away
 * ``Replace`` means that the existing text is long and you can edit it. Typing ``...`` means that you will replace the entire thing; ``END`` appends to the end. You can also use ``...`` to signify a range between two elements.
 * ``@`` deletes an item.
 * ``^`` usually lets you quit what you are in the middle of.
+* ``^FIELD NAME`` lets you jump to a field while editing other fields. You may be blocked depending on what the programmer decides you are allowed to do.
 * ``?`` Short Help. Typically it tells you that you need to type a number or text.
 * ``??`` More Help. Should tell you what the field you are filling does. In the menu system, show all menus with what security keys they need.
 * ``???`` In the menu system, display help for each immediate submenu.
@@ -99,6 +100,16 @@ There are a few confusing conventions that outsiders don't understand right away
 
 Begin to Set Up the VistA System
 ================================
+Before you Start
+----------------
+You need to either invent or be given a few pieces of data:
+
+ * What's your station number? If you use VISTA or RPMS deployed by VA, IHS, or an external vendor; they will assign you your station number. Otherwise, pick a number from 130 to 199; or 971 to 999. These numbers are not used by VISTA.
+ * What's your domain name? If you have a domain, use it; otherwise, invent one like ``WWW.HABIEL.NAME``.
+ * What's your parent domain? If you are not part of VA or IHS, your parent domain is ``FORUM.OSEHRA.ORG``.
+ * You need to know if you are running on Cache vs GT.M; and what operating system you are running on. If you followed this guide from the very beginning, you would certainly know; but day to day users of VistA have no idea actually what it is running on.
+ * You need to decide what port number you will have VistA listen on for the RPC Broker. By convention, it's either 9000, 9200, or 9211.
+ * The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA and run the RPC broker, and then connect to CPRS; but you won't be able to have more than one session open at once.
 
 Device Configuration
 --------------------
@@ -180,10 +191,10 @@ for the system. All Unices have ``/dev/null``; Windows is ``//./nul``.
 
     <div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES
 
-    Input to what File: DEVICE//              (54 entries)
+    Input to what File: DEVICE// <strong>&lt;enter&gt;</strong>             (54 entries)
     EDIT WHICH FIELD: ALL// $I  
 
-    Select DEVICE NAME: <strong>NULL</strong></code></div>
+    Select DEVICE NAME: <strong>NULL</strong>
     $I: /dev/null// <strong>//./nul</strong> (or leave it alone as it is correct for Unix).
     
     Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
@@ -204,39 +215,39 @@ You need to fill these fields as follows; and no others:
 * SIGN-ON/SYSTEM DEVICE = YES
 
 Here's an example:
+
 .. raw:: html
 
-    <div class="code"><code>
-    Select OPTION: ENTER OR EDIT FILE ENTRIES  
+    <div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES  
 
 
 
-    Input to what File: DEVICE//              (54 entries)
-    EDIT WHICH FIELD: ALL// NAME  
-    THEN EDIT FIELD: $I  
-    THEN EDIT FIELD: LOCATION OF TERMINAL  
-    THEN EDIT FIELD: TYPE
+    Input to what File: DEVICE//  <strong>&lt;enter&gt;</strong>            (54 entries)
+    EDIT WHICH FIELD: ALL// <strong>NAME</strong>  
+    THEN EDIT FIELD: <strong>$I</strong>
+    THEN EDIT FIELD: <strong>LOCATION OF TERMINAL  </strong>
+    THEN EDIT FIELD: <strong>TYPE</strong>
          1   TYPE  
          2   TYPE-AHEAD  
-    CHOOSE 1-2: 1  TYPE
-    THEN EDIT FIELD: SUBTYPE  
-    THEN EDIT FIELD: SIGN-ON/SYSTEM DEVICE  
-    THEN EDIT FIELD: 
-    STORE THESE FIELDS IN TEMPLATE: 
+    CHOOSE 1-2: 1  <strong>TYPE</strong>
+    THEN EDIT FIELD: <strong>SUBTYPE</strong>
+    THEN EDIT FIELD: <strong>SIGN-ON/SYSTEM DEVICE</strong>
+    THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
+    STORE THESE FIELDS IN TEMPLATE: <strong>&lt;enter&gt;</strong>
 
 
-    Select DEVICE NAME: CONSOLE
+    Select DEVICE NAME: <strong>CONSOLE</strong>
          1   CONSOLE      CONSOLE     OPA     
          2   CONSOLE  GTM-UNIX-CONSOLE    Console (GT.M)     /dev/tty     
          3   CONSOLE  CACHE-WINDOWS-CONSOLE    Console (Cache' on Windows)     |TRM|
          
-    CHOOSE 1-3: 2  GTM-UNIX-CONSOLE    Console (GT.M)     /dev/tty     
-    NAME: GTM-UNIX-CONSOLE// 
-    $I: /dev/tty// 
-    LOCATION OF TERMINAL: Console (GT.M)// 
-    TYPE: VIRTUAL TERMINAL// 
-    SUBTYPE: C-VT100// C-VT220      Digital Equipment Corporation VT-220 terminal
-    SIGN-ON/SYSTEM DEVICE: Y  YES
+    CHOOSE 1-3: <strong>2</strong>  GTM-UNIX-CONSOLE    Console (GT.M)     /dev/tty     
+    NAME: GTM-UNIX-CONSOLE// <strong>&lt;enter&gt;</strong>
+    $I: /dev/tty// <strong>&lt;enter&gt;</strong>
+    LOCATION OF TERMINAL: Console (GT.M)// <strong>&lt;enter&gt;</strong>
+    TYPE: VIRTUAL TERMINAL// <strong>&lt;enter&gt;</strong>
+    SUBTYPE: C-VT100// <strong>C-VT220</strong>      Digital Equipment Corporation VT-220 terminal
+    SIGN-ON/SYSTEM DEVICE: <strong>Y</strong>  YES
     </code></div>
 
 VIRTUAL Device
@@ -254,7 +265,9 @@ to fill it out.
 ZTMGRSET
 --------
 The routine ZTMGRSET defines VistA global variables and saves system wide M 
-routines that are M and OS specific.
+routines that are M and OS specific. We need to kill ^%ZOSF to make sure we don't have
+old answers here; and sometimes having ^%ZOSF when you have just switched M implementations
+causes a catch 22 problem. The text scrape below is for GT.M; Cache follows.
 
 .. raw:: html
     
@@ -321,6 +334,8 @@ routines that are M and OS specific.
 On Caché
 ********
 
+On Cache, you will see different prompts.
+
 .. raw:: html
     
     <div class="code"><code>NAME OF MANAGER'S NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
@@ -330,9 +345,9 @@ On Caché
     NAME OF THIS CONFIGURATION: VISTA// <strong>&lt;enter&gt;</strong></code></div>
 
 Fileman
-*******
+-------
 
-Initialize FileMan to set your site name and number.  
+Initialize FileMan to set your domain name and number and Operating System (GT.M shown below).
 
 .. raw:: html
     
@@ -344,7 +359,7 @@ Initialize FileMan to set your site name and number.
     
     SITE NAME: DEMO.OSEHRA.ORG// <strong>&lt;enter&gt;</strong>
     
-    SITE NUMBER: 6161// <strong>&lt;enter&gt;</strong>
+    SITE NUMBER: 999// <strong>&lt;enter&gt;</strong>
     
     Now loading MUMPS Operating System File
     
@@ -411,9 +426,11 @@ Initialize FileMan to set your site name and number.
     INITIALIZATION COMPLETED IN 4 SECONDS.
     ></code></div>
 
+ZUSET
+-----
 
 Also run D ^ZUSET to choose the correct version of ZU, the key login routine 
-for the roll and scroll portions of VistA.
+for the roll and scroll portions of VistA (GT.M shown).
 
 .. raw:: html
     
@@ -425,14 +442,6 @@ for the roll and scroll portions of VistA.
     
     Routine ZUGTM was renamed to ZU</code></div>
 
-ZOSV
-****
-
-If you have the latest version of Caché with CacheWeb, you will need to edit the 
-routine ^%ZOSV. To do this, right click the Caché Cube and choose Studio, File, 
-Change Namespace, select VISTA then click OK.
-
- 
 
 Remote Instance Domain Name Creation
 ------------------------------------

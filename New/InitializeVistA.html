@@ -48,6 +48,7 @@ D Q^DI ; Do starting from Label Q in Routine DI. Q^DI is how to enter Fileman.</
 <li><code>Replace</code> means that the existing text is long and you can edit it. Typing <code>...</code> means that you will replace the entire thing; <code>END</code> appends to the end. You can also use <code>...</code> to signify a range between two elements.</li>
 <li><code>@</code> deletes an item.</li>
 <li><code>^</code> usually lets you quit what you are in the middle of.</li>
+<li><code>^FIELD NAME</code> lets you jump to a field while editing other fields. You may be blocked depending on what the programmer decides you are allowed to do.</li>
 <li><code>?</code> Short Help. Typically it tells you that you need to type a number or text.</li>
 <li><code>??</code> More Help. Should tell you what the field you are filling does. In the menu system, show all menus with what security keys they need.</li>
 <li><code>???</code> In the menu system, display help for each immediate submenu.</li>
@@ -56,6 +57,18 @@ D Q^DI ; Do starting from Label Q in Routine DI. Q^DI is how to enter Fileman.</
 <li><code>Select &lt;item&gt;</code> Whenever you see select, you can select or add an item; after that, you can edit it.</li>
 </ul>
 <h1 id="begin-to-set-up-the-vista-system">Begin to Set Up the VistA System</h1>
+<h2 id="before-you-start">Before you Start</h2>
+<p>You need to either invent or be given a few pieces of data:</p>
+<blockquote>
+<ul>
+<li>What's your station number? If you use VISTA or RPMS deployed by VA, IHS, or an external vendor; they will assign you your station number. Otherwise, pick a number from 130 to 199; or 971 to 999. These numbers are not used by VISTA.</li>
+<li>What's your domain name? If you have a domain, use it; otherwise, invent one like <code>WWW.HABIEL.NAME</code>.</li>
+<li>What's your parent domain? If you are not part of VA or IHS, your parent domain is <code>FORUM.OSEHRA.ORG</code>.</li>
+<li>You need to know if you are running on Cache vs GT.M; and what operating system you are running on. If you followed this guide from the very beginning, you would certainly know; but day to day users of VistA have no idea actually what it is running on.</li>
+<li>You need to decide what port number you will have VistA listen on for the RPC Broker. By convention, it's either 9000, 9200, or 9211.</li>
+<li>The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA and run the RPC broker, and then connect to CPRS; but you won't be able to have more than one session open at once.</li>
+</ul>
+</blockquote>
 <h2 id="device-configuration">Device Configuration</h2>
 <p>The very first thing we want to do is to set-up 3 devices: NULL, CONSOLE, and VIRTUAL (known historically as TELNET due to what often accessed it). The NULL device corresponds to a place where we dump data we don't want; that's <code>/dev/null</code> on all Unices; <code>//./nul</code> on Windows. The NULL device is also known as the &quot;BIT BUCKET&quot;, for obvious reasons.</p>
 <p>CONSOLE stands for the device the terminal presents itself as if directly connected to a computer. These days, no computer has real console devices. Linux still has an emulated console device: <code>/dev/tty</code>. Cache Terminal presents a console device called <code>|TRM|</code>.</p>
@@ -110,10 +123,10 @@ Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 <p>At this point, we need to make sure that $I (short for $IO) for the device is correct for the system. All Unices have <code>/dev/null</code>; Windows is <code>//./nul</code>.</p>
 <div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES
 
-Input to what File: DEVICE//              (54 entries)
+Input to what File: DEVICE// <strong>&lt;enter&gt;</strong>             (54 entries)
 EDIT WHICH FIELD: ALL// $I  
 
-Select DEVICE NAME: <strong>NULL</strong></code></div>
+Select DEVICE NAME: <strong>NULL</strong>
 $I: /dev/null// <strong>//./nul</strong> (or leave it alone as it is correct for Unix).
 
 Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
@@ -128,17 +141,38 @@ Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 <li>SUBTYPE = C-VT220</li>
 <li>SIGN-ON/SYSTEM DEVICE = YES</li>
 </ul>
-<p>Here's an example: .. raw:: html</p>
-<blockquote>
-<p>&lt;div class=&quot;code&quot;&gt;&lt;code&gt; Select OPTION: ENTER OR EDIT FILE ENTRIES</p>
-<p>Input to what File: DEVICE// (54 entries) EDIT WHICH FIELD: ALL// NAME THEN EDIT FIELD: $I THEN EDIT FIELD: LOCATION OF TERMINAL THEN EDIT FIELD: TYPE 1 TYPE 2 TYPE-AHEAD CHOOSE 1-2: 1 TYPE THEN EDIT FIELD: SUBTYPE THEN EDIT FIELD: SIGN-ON/SYSTEM DEVICE THEN EDIT FIELD: STORE THESE FIELDS IN TEMPLATE:</p>
-<dl>
-<dt>Select DEVICE NAME: CONSOLE</dt>
-<dd><p>1 CONSOLE CONSOLE OPA 2 CONSOLE GTM-UNIX-CONSOLE Console (GT.M) /dev/tty 3 CONSOLE CACHE-WINDOWS-CONSOLE Console (Cache' on Windows) |TRM|</p>
-</dd>
-</dl>
-<p>CHOOSE 1-3: 2 GTM-UNIX-CONSOLE Console (GT.M) /dev/tty NAME: GTM-UNIX-CONSOLE// $I: /dev/tty// LOCATION OF TERMINAL: Console (GT.M)// TYPE: VIRTUAL TERMINAL// SUBTYPE: C-VT100// C-VT220 Digital Equipment Corporation VT-220 terminal SIGN-ON/SYSTEM DEVICE: Y YES &lt;/code&gt;&lt;/div&gt;</p>
-</blockquote>
+<p>Here's an example:</p>
+<div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES  
+
+
+
+Input to what File: DEVICE//  <strong>&lt;enter&gt;</strong>            (54 entries)
+EDIT WHICH FIELD: ALL// <strong>NAME</strong>  
+THEN EDIT FIELD: <strong>$I</strong>
+THEN EDIT FIELD: <strong>LOCATION OF TERMINAL  </strong>
+THEN EDIT FIELD: <strong>TYPE</strong>
+     1   TYPE  
+     2   TYPE-AHEAD  
+CHOOSE 1-2: 1  <strong>TYPE</strong>
+THEN EDIT FIELD: <strong>SUBTYPE</strong>
+THEN EDIT FIELD: <strong>SIGN-ON/SYSTEM DEVICE</strong>
+THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
+STORE THESE FIELDS IN TEMPLATE: <strong>&lt;enter&gt;</strong>
+
+
+Select DEVICE NAME: <strong>CONSOLE</strong>
+     1   CONSOLE      CONSOLE     OPA     
+     2   CONSOLE  GTM-UNIX-CONSOLE    Console (GT.M)     /dev/tty     
+     3   CONSOLE  CACHE-WINDOWS-CONSOLE    Console (Cache' on Windows)     |TRM|
+
+CHOOSE 1-3: <strong>2</strong>  GTM-UNIX-CONSOLE    Console (GT.M)     /dev/tty     
+NAME: GTM-UNIX-CONSOLE// <strong>&lt;enter&gt;</strong>
+$I: /dev/tty// <strong>&lt;enter&gt;</strong>
+LOCATION OF TERMINAL: Console (GT.M)// <strong>&lt;enter&gt;</strong>
+TYPE: VIRTUAL TERMINAL// <strong>&lt;enter&gt;</strong>
+SUBTYPE: C-VT100// <strong>C-VT220</strong>      Digital Equipment Corporation VT-220 terminal
+SIGN-ON/SYSTEM DEVICE: <strong>Y</strong>  YES
+</code></div>
 <h3 id="virtual-device">VIRTUAL Device</h3>
 <p>The FOIA only comes with Linux Virtual Terminal. As before, here's what you need to fill it out.</p>
 <ul>
@@ -150,7 +184,7 @@ Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 <li>SIGN-ON/SYSTEM DEVICE = YES</li>
 </ul>
 <h2 id="ztmgrset">ZTMGRSET</h2>
-<p>The routine ZTMGRSET defines VistA global variables and saves system wide M routines that are M and OS specific.</p>
+<p>The routine ZTMGRSET defines VistA global variables and saves system wide M routines that are M and OS specific. We need to kill ^%ZOSF to make sure we don't have old answers here; and sometimes having ^%ZOSF when you have just switched M implementations causes a catch 22 problem. The text scrape below is for GT.M; Cache follows.</p>
 <div class="code"><code>><strong>K ^%ZOSF</strong>
 
 ><strong>D ^ZTMGRSET</strong>
@@ -211,13 +245,14 @@ Now, I will check your % globals...........
 ALL DONE
 ></code></div>
 <h3 id="on-caché">On Caché</h3>
+<p>On Cache, you will see different prompts.</p>
 <div class="code"><code>NAME OF MANAGER'S NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
 
 PRODUCTION (SIGN-ON) NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
 
 NAME OF THIS CONFIGURATION: VISTA// <strong>&lt;enter&gt;</strong></code></div>
-<h3 id="fileman">Fileman</h3>
-<p>Initialize FileMan to set your site name and number.</p>
+<h2 id="fileman">Fileman</h2>
+<p>Initialize FileMan to set your domain name and number and Operating System (GT.M shown below).</p>
 <div class="code"><code>><strong>D ^DINIT</strong>
 
 VA FileMan V.22.2
@@ -226,7 +261,7 @@ Initialize VA FileMan now?  NO// <strong>Y</strong>
 
 SITE NAME: DEMO.OSEHRA.ORG// <strong>&lt;enter&gt;</strong>
 
-SITE NUMBER: 6161// <strong>&lt;enter&gt;</strong>
+SITE NUMBER: 999// <strong>&lt;enter&gt;</strong>
 
 Now loading MUMPS Operating System File
 
@@ -292,7 +327,8 @@ THE FORM "LREPI" COULD NOT BE COMPILED.
 
 INITIALIZATION COMPLETED IN 4 SECONDS.
 ></code></div>
-<p>Also run D ^ZUSET to choose the correct version of ZU, the key login routine for the roll and scroll portions of VistA.</p>
+<h2 id="zuset">ZUSET</h2>
+<p>Also run D ^ZUSET to choose the correct version of ZU, the key login routine for the roll and scroll portions of VistA (GT.M shown).</p>
 <div class="code"><code>><strong>D ^ZUSET</strong>
 
 This routine will rename the correct routine to ZU for you.
@@ -300,8 +336,6 @@ This routine will rename the correct routine to ZU for you.
 Rename ZUGTM to ZU, OK? No// <strong>Y</strong
 
 Routine ZUGTM was renamed to ZU</code></div>
-<h3 id="zosv">ZOSV</h3>
-<p>If you have the latest version of Caché with CacheWeb, you will need to edit the routine ^%ZOSV. To do this, right click the Caché Cube and choose Studio, File, Change Namespace, select VISTA then click OK.</p>
 <h2 id="remote-instance-domain-name-creation">Remote Instance Domain Name Creation</h2>
 <p>To send messages to Q-PATCH.OSEHRA.ORG from your own VISTA system, you can send it via the internet by setting up postfix and having it do the work for you (as above). An easier alternative is to configure a direct link, as follows: (NB: This example is only for GT.M. Use the Cache Mailman Conduits for Cache.) To send HFS checksum messages (for packages exported via HFS) you need to create FORUM.OSEHRA.ORG.</p>
 <div class="code"><code>><strong>D Q^DI</strong>
