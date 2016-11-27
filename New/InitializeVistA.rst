@@ -1,31 +1,155 @@
 VistA Initialization
 ====================
 
-Device Configuration
---------------------
+If you have reached this point, it means that you have finished `Install Cache
+<./InstallCache.html>`_; or `Install GT.M <./InstallGTM.html>`_ and `Install VistA on GT.M
+<./InstallVistAOnGTM.html>`_.
 
-NOTE Always use VT-220 or VT-320
+Getting into the Direct Mode (aka) Programmer Mode
+--------------------------------------------------
+Before there were `REPLs <https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop>`_,
+Mumps always has had something called Direct Mode, which is a simplified REPL. It's also
+known as Programmer Mode. Normally, end users are not allowed to access Programmer Mode, as
+it is essentially like running as root on a Unix System.
 
-NOTE Page up and page down don't work on Linux
+To connect to VISTA and start configuring it, you need a terminal emulator. Make sure that
+your terminal emulator emulates VT-100, VT-220, VT-320 or VT-52. By default, most terminal emulators
+do that already. You specifically cannot use the rxvt terminal emulator though.
 
-There should only be one device named "NULL".
+If you modified your $TERM, you need to make sure it's either ``xterm`` or ``ansi``. Others generally
+will work, but I am sure of these two.
+
+To get into Direct Mode using Cache, on Windows you need to right click on the Cache Cube and
+choose Terminal. If you have a licnesed version of Cache, you can also use Telnet to connect
+to the Terminal. Please note that while you can use Windows Telnet, it does not emulate VT-200
+series terminals properly, so you may have some issues. If you want to use Telnet, I recommend downloading
+PuTTY or TeraTerm. 
+
+PuTTY: http://www.chiark.greenend.org.uk/~sgtatham/putty/.
+
+TeraTerm: https://ttssh2.osdn.jp/index.html.en.
+
+If you use PuTTY, change the function key bindings so that they behave like
+VT-100+. See here: https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys.
+
+On a Mac, Terminal is a fully featured terminal emulator. You may wish to tell it via System Preferences that you want your function keys to send Function commands, rather than dimming your screen or muting your volume. Otherwise, you have to use FN all the time to override the function keys (https://support.apple.com/en-us/HT204436).
+
+On Linux, you can use any Terminal Emulator program, with the exception of rxvt. You can actually even use PuTTY on Linux.
+F1 may be bound to do help. You need to unmap that in the Terminal application. 
+(http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal).
+
+After you open your terminal emulator, do the following:
+
+On Cache on Linux or Mac, you need to run ``ccontrol list`` to find your instance name, and then
+run ``csession <instance name>``.
+
+On GT.M, you need to source your environement file (if you followed this guide, it should be in
+/var/db/<name> as env.vista). To source, type ``. /var/db/<name>/env.vista``. The dot is all
+by itself. Then type ``mumps -dir`` to go into direct mode.
+
+You will see something like this:
 
 .. raw:: html
     
-    <div class="code"><code>><strong>D Q^DI</strong>
+    <div class="code"><code>GTM></code></div>
+
+or in Cache:
+
+.. raw:: html
+
+    <div class="code"><code>USER></code></div>
+
+If you are in Cache, you need to switch namespaces. (If you don't remember, type ? to see your choices.)
+
+.. raw:: html
     
-    MSC Fileman 22.2
+    <div class="code"><code>><strong>D ^%CD</strong>
+    
+    NAMESPACE// <strong>VISTA</strong></code></div>
+
+Commands and what they mean (a short M primer)
+----------------------------------------------
+In the excerpts below, you will enter Mumps (M) commands into direct mode. Here are a few
+interesting ones:
+
+.. code-block:: M
+
+    S DUZ=.5 ; S is a shortcut for SET, DUZ means user number; .5 is a user that is always present on VistA systems.
+
+    D ^XUP ; D is a shortcut for DO, ^XUP is the name of the routine. ^XUP is the programmer mode menu runner.
+
+    ; A semicolon, like in GAS assembly, is the comment character. M, like C, was written to replace assembly.
+
+    D Q^DI ; Do starting from Label Q in Routine DI. Q^DI is how to enter Fileman.
+
+VistA Text Mode Conventions
+---------------------------
+There are a few confusing conventions that outsiders don't understand right away. Here they are:
+
+* ``//`` means that the preceding text is the default. If you press enter, you will accept it.
+* ``Replace`` means that the existing text is long and you can edit it. Typing ``...`` means that you will replace the entire thing; ``END`` appends to the end. You can also use ``...`` to signify a range between two elements.
+* ``@`` deletes an item.
+* ``^`` usually lets you quit what you are in the middle of.
+* ``?`` Short Help. Typically it tells you that you need to type a number or text.
+* ``??`` More Help. Should tell you what the field you are filling does. In the menu system, show all menus with what security keys they need.
+* ``???`` In the menu system, display help for each immediate submenu.
+* ``????`` In the menu system, display help for current menu.
+* ``<enter>`` key is the main navigation key in VistA. Typing it after an entry enters that entry; typing when nothing is entered will move you forward or up, depending on the context.
+* ``Select <item>`` Whenever you see select, you can select or add an item; after that, you can edit it.
+
+Begin to Set Up the VistA System
+================================
+
+Device Configuration
+--------------------
+The very first thing we want to do is to set-up 3 devices: NULL, CONSOLE, and VIRTUAL 
+(known historically as TELNET due to what often accessed it). The NULL device corresponds
+to a place where we dump data we don't want; that's ``/dev/null`` on all Unices; ``//./nul``
+on Windows. The NULL device is also known as the "BIT BUCKET", for obvious reasons.
+
+CONSOLE stands for the device the terminal presents itself as if directly connected to
+a computer. These days, no computer has real console devices. 
+Linux still has an emulated console device: ``/dev/tty``. Cache Terminal
+presents a console device called ``|TRM|``.
+
+VIRTUAL stands for all connections from Virtual Emulators. Unfortunately every different
+operating system provides a different console device:
+
+* Linux: ``/dev/pts`` (Use with both Cache and GT.M)
+* macOS: ``/dev/ttys`` (ditto)
+* Cygwin: ``/dev/cons`` (GT.M)
+* Cache Telnet: ``|TNT|`` (Cache/Windows ONLY)
+
+The way set up devices is to edit the DEVICE file in Fileman. Fileman is the Database 
+Management System for VistA; unlike most databases in the market, it provides a user
+interface as well, albiet a text-based one.
+
+To get into Fileman, you need to set your user (DUZ) to .5, and then go in.
+
+NULL Device
+***********
+There should only be one device named "NULL". Unfortunately, there are three NULLs of
+various flavors in the FOIA; we need to make sure there is only one. Follow the following.
+We rename the nulls we don't want, and we delete a synonym.
+
+
+.. raw:: html
+    
+    <div class="code"><code>><strong>S DUZ=.5</strong>
+    <strong>D Q^DI</strong>
+    
+    VA Fileman 22.2
     
     Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
     
     Input to what File: DEVICE// <strong>&lt;enter&gt;</strong>    (53 entries)
     EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
     
-    Select DEVICE NAME: NULL
-         1   NULL      NT SYSTEM     /dev/null     
+    Select DEVICE NAME: <strong>NULL</strong>
+         1   NULL      NT SYSTEM     NLA:
          2   NULL  GTM-UNIX-NULL    Bit Bucket (GT.M-Unix)     /dev/null     
          3   NULL-DSM      Bit Bucket     _NLA0:     
-    CHOOSE 1-3: <strong>1</strong>  NULL    NT SYSTEM     /dev/null     
+    CHOOSE 1-3: <strong>1</strong>  NULL    NT SYSTEM     NLA:
     NAME: NULL// <strong>NT-NULL</strong>
     LOCATION OF TERMINAL: NT SYSTEM// <strong>^</strong>
     
@@ -49,67 +173,88 @@ There should only be one device named "NULL".
     
     Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 
-CPRS is one of many users of the VistA NULL device, but the ``$I`` value, which
-contains the name or path to the device, is correct only for a VMS platform.
-It is necessary to change it to match the local platform before it is able
-to be accessed correctly.  The Sign-On capability also needs to be removed from
-the device.
+At this point, we need to make sure that $I (short for $IO) for the device is correct
+for the system. All Unices have ``/dev/null``; Windows is ``//./nul``.
 
 .. raw:: html
-    
-    <div class="code"><code>Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
-    
-    Input to what File: DEVICE// <strong>&lt;enter&gt;</strong>             (53 entries)
-    EDIT WHICH FIELD: ALL// <strong>$I</strong>  
-    THEN EDIT FIELD: <strong>SIGN-ON/SYSTEM DEVICE</strong>  
-    THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
-    
-    Select DEVICE NAME: NULL      Bit Bucket (GT.M-Unix)     /dev/null</code></div>
 
-On Windows
-**********
+    <div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES
 
-On Windows machines, the ``$I`` value should be set to ``//./nul``.
+    Input to what File: DEVICE//              (54 entries)
+    EDIT WHICH FIELD: ALL// $I  
 
-.. raw:: html
-    
-    <div class="code"><code>$I: NLA0:// <strong>//./nul</strong>
-    SIGN-ON/SYSTEM DEVICE: NO// N  NO
+    Select DEVICE NAME: <strong>NULL</strong></code></div>
+    $I: /dev/null// <strong>//./nul</strong> (or leave it alone as it is correct for Unix).
     
     Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 
-On Linux
-********
+CONSOLE Device
+**************
+If you use Cache on Windows or Linux; or GT.M, you should be *theoretically* set; however,
+the FOIA set-up is incomplete or overspecified. I would prefer to select an entry and make
+sure it's properly specified:
 
-On Linux machines, the ``$I`` value should be set to ``/dev/null``.
+You need to fill these fields as follows; and no others:
 
+* NAME = CONSOLE
+* $I = /dev/tty on Linux; |TRM| on Cache/Windows.
+* LOCATION OF TERMINAL = Physical Console
+* TYPE = VIRTUAL TERMINAL
+* SUBTYPE = C-VT220
+* SIGN-ON/SYSTEM DEVICE = YES
+
+Here's an example:
 .. raw:: html
-    
-    <div class="code"><code>$I: /dev/null// /dev/null
-    SIGN-ON/SYSTEM DEVICE: NO// N  NO
-    
-    Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
+
+    <div class="code"><code>
+    Select OPTION: ENTER OR EDIT FILE ENTRIES  
 
 
 
-Begin to Set Up the VistA System
-================================
+    Input to what File: DEVICE//              (54 entries)
+    EDIT WHICH FIELD: ALL// NAME  
+    THEN EDIT FIELD: $I  
+    THEN EDIT FIELD: LOCATION OF TERMINAL  
+    THEN EDIT FIELD: TYPE
+         1   TYPE  
+         2   TYPE-AHEAD  
+    CHOOSE 1-2: 1  TYPE
+    THEN EDIT FIELD: SUBTYPE  
+    THEN EDIT FIELD: SIGN-ON/SYSTEM DEVICE  
+    THEN EDIT FIELD: 
+    STORE THESE FIELDS IN TEMPLATE: 
 
-The routine ZTMGRSET defines VistA global variables and saves system wide M 
-routines that are Caché specific. FileMan is the database system used by all 
-VistA applications.
 
-On Caché
-********
+    Select DEVICE NAME: CONSOLE
+         1   CONSOLE      CONSOLE     OPA     
+         2   CONSOLE  GTM-UNIX-CONSOLE    Console (GT.M)     /dev/tty     
+         3   CONSOLE  CACHE-WINDOWS-CONSOLE    Console (Cache' on Windows)     |TRM|
+         
+    CHOOSE 1-3: 2  GTM-UNIX-CONSOLE    Console (GT.M)     /dev/tty     
+    NAME: GTM-UNIX-CONSOLE// 
+    $I: /dev/tty// 
+    LOCATION OF TERMINAL: Console (GT.M)// 
+    TYPE: VIRTUAL TERMINAL// 
+    SUBTYPE: C-VT100// C-VT220      Digital Equipment Corporation VT-220 terminal
+    SIGN-ON/SYSTEM DEVICE: Y  YES
+    </code></div>
 
-.. raw:: html
-    
-    <div class="code"><code>><strong>D ^%CD</strong>
-    
-    NAMESPACE// <strong>VISTA</strong></code></div>
+VIRTUAL Device
+**************
+The FOIA only comes with Linux Virtual Terminal. As before, here's what you need
+to fill it out. 
+
+* NAME = VIRTUAL TERMINAL
+* $I = /dev/pts on Linux; /dev/ttys on macOS; /dev/cons on Cygwin; |TNT| on Cache/Windows.
+* LOCATION OF TERMINAL = Virtual Terminal
+* TYPE = VIRTUAL TERMINAL
+* SUBTYPE = C-VT220
+* SIGN-ON/SYSTEM DEVICE = YES
 
 ZTMGRSET
-********
+--------
+The routine ZTMGRSET defines VistA global variables and saves system wide M 
+routines that are M and OS specific.
 
 .. raw:: html
     
@@ -142,11 +287,11 @@ ZTMGRSET
     Routine: ZOSV2GTM Loaded, Saved as   %ZOSV2
     Routine:  ZISTCPS Loaded, Saved as %ZISTCPS
     
-    NAME OF MANAGER'S UCI,VOLUME SET: VAH,ROU// PLA,PLA
+    NAME OF MANAGER'S UCI,VOLUME SET: VAH,ROU//
     The value of PRODUCTION will be used in the GETENV api.
-    PRODUCTION (SIGN-ON) UCI,VOLUME SET: VAH,ROU// PLA,PLA
+    PRODUCTION (SIGN-ON) UCI,VOLUME SET: VAH,ROU//
     The VOLUME name must match the one in PRODUCTION.
-    NAME OF VOLUME SET: PLA//
+    NAME OF VOLUME SET: ROU//
     The temp directory for the system: '/tmp/'// <strong>&lt;enter&gt;</strong>
     ^%ZOSF setup
     
