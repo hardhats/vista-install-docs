@@ -7,6 +7,25 @@
   <title></title>
   <link href="stylesheets/normalize.css" rel="stylesheet">
   <link href="stylesheets/main.css" rel="stylesheet">
+  <style type="text/css">
+table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
+  margin: 0; padding: 0; vertical-align: baseline; border: none; }
+table.sourceCode { width: 100%; line-height: 100%; }
+td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
+td.sourceCode { padding-left: 5px; }
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
+  </style>
 </head>
 <body>
 <h1 id="vista-initialization">VistA Initialization</h1>
@@ -32,6 +51,14 @@
 <div class="code"><code>><strong>D ^%CD</strong>
 
 NAMESPACE// <strong>VISTA</strong></code></div>
+<h2 id="note-to-gt.m-users">Note to GT.M Users</h2>
+<p>Due to the fact that Cache does not enforce the M standard as strictly, many illegal instructions have found themselves into VistA code. In addition, neither Cache nor GT.M is fully M95 standards compliant. As a result, there is always the game of making sure what we write supports both systems. For these reasons, the hardhats community maintains fixes for these routines and when possible sends the fixes back to the VA. In the future, the OSEHRA repositories will contain the fixes so that end users don't have to download the code and fix it themselves.</p>
+<p>The WorldVistA Distrubution of VistA is GT.M compatible; you don't need any fixes for it; but the below provides a lot more functionality.</p>
+<p>If you downloaded vxVistA or FOIA VistA, you need to copy the routines from this repository to your routines directory: <a href="https://github.com/shabiel/Kernel-GTM">https://github.com/shabiel/Kernel-GTM</a>. Here's how to do it:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> clone https://github.com/shabiel/Kernel-GTM <span class="kw">&amp;&amp;</span> <span class="kw">cd</span> Kernel-GTM
+$ <span class="kw">cp</span> -v <span class="ot">$(</span><span class="kw">git</span> diff --name-only 29bc19..a7565b -- Kernel/Routines<span class="ot">)</span> /var/db/foia201611-gtm/r/</code></pre>
+<h2 id="note-to-cache-users">Note to Cache Users</h2>
+<p>The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA and run the RPC broker, and then connect CPRS; but you won't be able to have more than one session open at once; and you may need to restart Cache repeatedly as it sometimes &quot;forgets&quot; that you logged off.</p>
 <h2 id="commands-and-what-they-mean-a-short-m-primer">Commands and what they mean (a short M primer)</h2>
 <p>In the excerpts below, you will enter Mumps (M) commands into direct mode. Here are a few interesting ones:</p>
 <pre class="sourceCode M"><code>S DUZ=.5 ; S is a shortcut for SET, DUZ means user number; .5 is a user that is always present on VistA systems.
@@ -59,18 +86,18 @@ D Q^DI ; Do starting from Label Q in Routine DI. Q^DI is how to enter Fileman.</
 <h1 id="begin-to-set-up-the-vista-system">Begin to Set Up the VistA System</h1>
 <h2 id="before-you-start">Before you Start</h2>
 <p>You need to either invent or be given a few pieces of data:</p>
-<blockquote>
 <ul>
-<li>What's your station number? If you use VISTA or RPMS deployed by VA, IHS, or an external vendor; they will assign you your station number. Otherwise, pick a number from 130 to 199; or 971 to 999. These numbers are not used by VISTA.</li>
+<li>What are you going to call your Hospital or Clinic?</li>
+<li>What's your station number? If you use VISTA or RPMS deployed by VA, IHS, or an external vendor; they will assign you your station number. Otherwise, pick a number from 130 to 199; or 971 to 999. These numbers are not used by VISTA. In this guide, we will use 999.</li>
 <li>What's your domain name? If you have a domain, use it; otherwise, invent one like <code>WWW.HABIEL.NAME</code>.</li>
 <li>What's your parent domain? If you are not part of VA or IHS, your parent domain is <code>FORUM.OSEHRA.ORG</code>.</li>
 <li>You need to know if you are running on Cache vs GT.M; and what operating system you are running on. If you followed this guide from the very beginning, you would certainly know; but day to day users of VistA have no idea actually what it is running on.</li>
 <li>You need to decide what port number you will have VistA listen on for the RPC Broker. By convention, it's either 9000, 9200, or 9211.</li>
-<li>The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA and run the RPC broker, and then connect to CPRS; but you won't be able to have more than one session open at once.</li>
+<li>What's the maximum number of processes that you will allow at once on a VistA system? Today (2016), commodity hardware (a good laptop, for example), can handle up to 200 concurrent processes. I usually set my test instances with a maximum of 30 processes, which is the number I use below.</li>
+<li>What's your DNS Server? If you don't know, just use 8.8.8.8.</li>
 </ul>
-</blockquote>
 <h2 id="device-configuration">Device Configuration</h2>
-<p>The very first thing we want to do is to set-up 3 devices: NULL, CONSOLE, and VIRTUAL (known historically as TELNET due to what often accessed it). The NULL device corresponds to a place where we dump data we don't want; that's <code>/dev/null</code> on all Unices; <code>//./nul</code> on Windows. The NULL device is also known as the &quot;BIT BUCKET&quot;, for obvious reasons.</p>
+<p>The very first thing we want to do is to set-up 4 devices: NULL, CONSOLE, VIRTUAL, and HFS. (known historically as TELNET due to what often accessed it). The NULL device corresponds to a place where we dump data we don't want; that's <code>/dev/null</code> on all Unices; <code>//./nul</code> on Windows. The NULL device is also known as the &quot;BIT BUCKET&quot;, for obvious reasons.</p>
 <p>CONSOLE stands for the device the terminal presents itself as if directly connected to a computer. These days, no computer has real console devices. Linux still has an emulated console device: <code>/dev/tty</code>. Cache Terminal presents a console device called <code>|TRM|</code>.</p>
 <p>VIRTUAL stands for all connections from Virtual Emulators. Unfortunately every different operating system provides a different console device:</p>
 <ul>
@@ -182,6 +209,27 @@ SIGN-ON/SYSTEM DEVICE: <strong>Y</strong>  YES
 <li>TYPE = VIRTUAL TERMINAL</li>
 <li>SUBTYPE = C-VT220</li>
 <li>SIGN-ON/SYSTEM DEVICE = YES</li>
+</ul>
+<h3 id="hfs-device">HFS Device</h3>
+<p>The HFS device is necessary because KIDS (the installation system used by VISTA) uses it to open files on the operating system. (Technically, it only uses the Open Parameters field.) The one that comes in FOIA looks like this:</p>
+<pre class="sourceCode "><code>NAME: HFS                               $I: USER$:[TEMP]TMP.DAT
+ASK DEVICE: YES                       ASK PARAMETERS: YES
+LOCATION OF TERMINAL: Host File Server
+ASK HOST FILE: YES                    ASK HFS I/O OPERATION: YES
+OPEN COUNT: 870                       OPEN PARAMETERS: &quot;WNS&quot;
+SUBTYPE: P-OTHER                      TYPE: HOST FILE SERVER</code></pre>
+<p>You need to select it and change the settings as follows:</p>
+<ul>
+<li>NAME = HFS</li>
+<li>$I = /tmp/hfs.dat or /dev/shm/hfs.dat or d:hfs, depending on your operating system (All Unices has /tmp/; only Linux has /dev/shm; last one is an example on Windows)</li>
+<li>ASK DEVICE = YES</li>
+<li>ASK PARAMETERS = @ (Delete it)</li>
+<li>LOCATION OF TERMINAL = Host File Server</li>
+<li>ASK HOST FILE = YES</li>
+<li>ASK HFS I/O OPERATION = @ (Delete it)</li>
+<li>OPEN PARAMETERS: &quot;WNS&quot; for Cache, (newvesrion) for GT.M (note quotes on Cache and their abcense on GT.M)</li>
+<li>SUBYTPE: P-HFS/80/99999</li>
+<li>TYPE: HOST FILE SERVER</li>
 </ul>
 <h2 id="ztmgrset">ZTMGRSET</h2>
 <p>The routine ZTMGRSET defines VistA global variables and saves system wide M routines that are M and OS specific. We need to kill ^%ZOSF to make sure we don't have old answers here; and sometimes having ^%ZOSF when you have just switched M implementations causes a catch 22 problem. The text scrape below is for GT.M; Cache follows.</p>
@@ -329,23 +377,27 @@ INITIALIZATION COMPLETED IN 4 SECONDS.
 ></code></div>
 <h2 id="zuset">ZUSET</h2>
 <p>Also run D ^ZUSET to choose the correct version of ZU, the key login routine for the roll and scroll portions of VistA (GT.M shown).</p>
-<div class="code"><code>><strong>D ^ZUSET</strong>
+<div class="code"><code><strong>D ^ZUSET</strong>
 
 This routine will rename the correct routine to ZU for you.
 
-Rename ZUGTM to ZU, OK? No// <strong>Y</strong
-
+Rename ZUGTM to ZU, OK? No// <strong>Y</strong>
 Routine ZUGTM was renamed to ZU</code></div>
-<h2 id="remote-instance-domain-name-creation">Remote Instance Domain Name Creation</h2>
-<p>To send messages to Q-PATCH.OSEHRA.ORG from your own VISTA system, you can send it via the internet by setting up postfix and having it do the work for you (as above). An easier alternative is to configure a direct link, as follows: (NB: This example is only for GT.M. Use the Cache Mailman Conduits for Cache.) To send HFS checksum messages (for packages exported via HFS) you need to create FORUM.OSEHRA.ORG.</p>
-<div class="code"><code>><strong>D Q^DI</strong>
+<h2 id="instance-domain-parent-domain-and-q-patch-domain">Instance Domain, Parent Domain, and Q-PATCH domain</h2>
+<p>Next, a domain should be set up for the VistA instance. A domain name is typically used to uniquely identify an instance on a network. The parent domain is the domain responsible for routing your traffic to the outside world. The Q-PATCH domain is only necessary for developers wishing to use OSEHRA Forum. First we add the entry to the <code>DOMAIN</code> file through FileMan.</p>
+<div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
 
-MSC Fileman 22.2
+VA FileMan 22.0
 
 Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
 
-Input to what File: DEVICE// <strong>DOMAIN</strong>       (89 entries)
-EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
+INPUT TO WHAT FILE: // <strong>DOMAIN</strong>
+                                     (70 entries)
+EDIT WHICH FIELD: ALL// <strong>ALL</strong>
+
+Select DOMAIN NAME: <strong>DEMO.OSEHRA.ORG</strong>
+  Are you adding 'DEMO.OSEHRA.ORG' as a new DOMAIN (the 71ST)? No// <strong>Y</strong>  (Yes)
+FLAGS: <strong>^</strong>
 
 Select DOMAIN NAME: <strong>Q-PATCH.OSEHRA.ORG</strong>
 NAME: Q-PATCH.OSEHRA.ORG// <strong>&lt;enter&gt;</strong>
@@ -403,31 +455,10 @@ Select DOMAIN NAME: <strong>&lt;enter&gt;</strong>
 
 Select OPTION: <strong>&lt;enter&gt;</strong>
 ></code></div>
-<h2 id="instance-domain">Instance Domain</h2>
-<p>Next, a domain should be set up for the VistA instance. A domain name is typically used to uniquely identify an instance on a network. While this is not necessary to do for test instances, it is recommended that a new domain be added. The OSEHRA script adds a domain called <code>DEMO.OSEHRA.ORG</code>, and this example will do the same.</p>
-<p>First we add the entry to the <code>DOMAIN</code> file through FileMan.</p>
+<p>The next step is to find the IEN of the instance domain. This can be done by inquiring about the entry using FileMan and printing the Record Number:</p>
 <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
 
-VA FileMan 22.0
-
-Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
-
-INPUT TO WHAT FILE: // <strong>DOMAIN</strong>
-                                     (70 entries)
-EDIT WHICH FIELD: ALL// <strong>ALL</strong>
-
-Select DOMAIN NAME: <strong>DEMO.OSEHRA.ORG</strong>
-  Are you adding 'DEMO.OSEHRA.ORG' as a new DOMAIN (the 71ST)? No// <strong>Y</strong>  (Yes)
-FLAGS: <strong>^</strong>
-
-Select DOMAIN NAME: <strong>&lt;enter&gt;</strong>
-
-Select OPTION: <strong>&lt;enter&gt;</strong>
-></code></div>
-<p>The next step is to find the IEN of the newly created domain. This can be done by inquiring about the entry using FileMan and printing the Record Number:</p>
-<div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
-
-VA FileMan 22.0
+VA FileMan 22.2
 
 Select OPTION: <strong>5</strong>  INQUIRE TO FILE ENTRIES
 
@@ -439,9 +470,9 @@ Include COMPUTED fields:  (N/Y/R/B): NO// <strong>Record Number (IEN)</strong>
 
 NUMBER: 76                              NAME: DEMO.OSEHRA.ORG
 
-Select DOMAIN NAME: <strong>^</strong>
+Select DOMAIN NAME: <strong>&lt;enter&gt;</strong>
 
-Select OPTION: <strong>^</strong>
+Select OPTION: <strong>&lt;enter&gt;</strong>
 ></code></div>
 <p>Then we propogate that entry to the <code>Kernel System Parameters</code> and <code>RPC Broker Site Parameters</code> files. The value that is being set should be the same as the <code>NUMBER</code> value from the above result.</p>
 <div class="code"><code>><strong>S $P(^XWB(8994.1,1,0),"^")=76</strong>
@@ -465,14 +496,15 @@ Christen a domain
 You are about to change the domain name of this facility
 in the MailMan Site Parameters file.
 
-Currently, this facility is named: ANDRONICUS.VISTAEXPERTISE.NET
+Currently, this facility is named: FOIA.DOMAIN.EXT
 
 You must be extremely sure before you proceed!
 
 Are you sure you want to change the name of this facility? NO// <strong>YES</strong>
-Select DOMAIN NAME: ANDRONICUS.VISTAEXPERTISE.NET//   
+Select DOMAIN NAME: FOIA.DOMAIN.EXT// <strong>DEMO.OSEHRA.ORG</strong>
 
-The domain name for this facility remains: ANDRONICUS.VISTAEXPERTISE.NET
+The domain name for this facility is now: DEMO.OSEHRA.ORG
+
 PARENT: DOMAIN.EXT// <strong>FORUM.OSEHRA.ORG</strong>
 TIME ZONE: EST// <strong>PST</strong>       PACIFIC STANDARD
 
@@ -487,20 +519,23 @@ Use the 'Subroutine editor' option under network management menu to add your
 site passwords to the MINIENGINE script, and the 'Edit a script' option
 to edit any domain scripts that you choose to.
 ></code></div>
-<h2 id="set-box-volume-pair">Set Box-Volume pair</h2>
+<h2 id="set-up-taskman">Set-up Taskman</h2>
+<p>Taskman is the VistA subsystem that is repsonsible for running processes in the background.</p>
 <p>The first step is to find the box volume pair for the local machine.</p>
 <div class="code"><code>><strong>D GETENV^%ZOSV W Y</strong></code></div>
-<p>which will print out a message with four parts separated by <code>^</code> that could look something like:</p>
+<p>which will print out a message with four parts separated by <code>^</code> that could look something like (Cache):</p>
 <div class="code"><code>VISTA^VISTA^palaven^VISTA:CACHE</code></div>
+<p>or (GT.M)</p>
+<div class="code"><code>VAH^ROU^Macintosh^ROU:Macintosh</code></div>
 <p>The four pieces of the string are:</p>
 <p><code>UCI^VOL^NODE^VOLUME:BOX</code></p>
 <p>The fourth piece, the VOLUME:BOX pair, is referred to as the &quot;BOX VOLUME pair&quot;. The first component of the Box Volume pair is the Volume Set, which is used to determine where the VistA system will be able to find the routines. The second component Box, which references the system that the instance is on. In a Caché system, it would be the name of the Caché instance while on GT.M, it should reference the hostname of the machine.</p>
 <p>The Volume Set result needs to be altered in the <code>VOLUME SET</code> file, and we will reuse some setup by writing over the name of the first entry that is already in the VistA system. The first entry, the entry with an IEN of 1, can be selected by entering <code>`1</code>.</p>
 <p>Then we rename the first Box-Volume pair in the <code>TaskMan Site Parameters</code> file to match what was found above.</p>
-<p>For this demonstration instance, the Volume Set will be <code>VISTA</code> which is the Caché namespace that holds the files. On GT.M instances, the default value of <code>PLA</code> can be maintained.</p>
-<div class="code"><code>><strong>D Q^DI</strong>
+<p>For this demonstration instance, the Volume Set will be <code>ROU</code>, as per the output above.</p>
+<div class="code"><code>&gt;<strong>D Q^DI</strong>
 
-MSC Fileman 22.2
+VA Fileman 22.2
 
 Select OPTION: 1  ENTER OR EDIT FILE ENTRIES
 
@@ -508,41 +543,183 @@ Input to what File: RPC BROKER SITE PARAMETERS// 14.5  VOLUME SET
                                           (1 entry)
 EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
 
-Select VOLUME SET: <strong>PLA</strong>
-VOLUME SET: PLA// <strong>&lt;enter&gt;</strong>
+Select VOLUME SET: <strong>`1</strong>
+VOLUME SET: ROU// <strong>&lt;enter&gt;</strong>
 TYPE: GENERAL PURPOSE VOLUME SET// <strong>&lt;enter&gt;</strong>
 INHIBIT LOGONS?: NO// <strong>&lt;enter&gt;</strong>
 LINK ACCESS?: NO// <strong>&lt;enter&gt;</strong>
 OUT OF SERVICE?: NO// <strong>&lt;enter&gt;</strong>
 REQUIRED VOLUME SET?: NO// <strong>&lt;enter&gt;</strong>
-TASKMAN FILES UCI: PLA// <strong>&lt;enter&gt;</strong>
-TASKMAN FILES VOLUME SET: PLA// <strong>&lt;enter&gt;</strong>
-REPLACEMENT VOLUME SET: <strong>PLA</strong>
+TASKMAN FILES UCI: VAH// <strong>&lt;enter&gt;</strong>
+TASKMAN FILES VOLUME SET: ROU// <strong>&lt;enter&gt;</strong>
+REROUCEMENT VOLUME SET: <strong>&lt;enter&gt;</strong>
 DAYS TO KEEP OLD TASKS: 4// <strong>14</strong>
 SIGNON/PRODUCTION VOLUME SET: Yes// <strong>&lt;enter&gt;</strong>
 RE-QUEUES BEFORE UN-SCHEDULE: 12// <strong>&lt;enter&gt;</strong>
 
-Select VOLUME SET: <strong>&lt;enter&gt;</strong>
+Select VOLUME SET: <strong>&lt;enter&gt;</strong></code></div>
+<p>The next step is there to tell Taskman what the parameters are to run itself:</p>
+<div class="code"><code>Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
 
+Input to what File: UCI ASSOCIATION// 14.7  TASKMAN SITE PARAMETERS
+                                          (1 entry)
+EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
+
+Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: <strong>`1</strong> 
+BOX-VOLUME PAIR: PLA:PLAISCSVR// <strong>?</strong>  ; Type a ? to see what is the correct value you should enter.
+     Answer must be 3-30 characters in length.
+
+     The value for the current account is ROU:Macintosh
+BOX-VOLUME PAIR: PLA:PLAISCSVR// <strong>ROU:Macintosh</strong> ; Enter that value.
+RESERVED: <strong>&lt;enter&gt;</strong>
+LOG TASKS?: NO// <strong>@</strong>
+   SURE YOU WANT TO DELETE? <strong>y</strong>  (Yes)
+DEFAULT TASK PRIORITY: <strong>&lt;enter&gt;</strong>
+TASK PARTITION SIZE: <strong>&lt;enter&gt;</strong>
+SUBMANAGER RETENTION TIME: 0// <strong>&lt;enter&gt;</strong>
+TASKMAN JOB LIMIT: 100// <strong>24</strong> ; Must be 80% of maximum; in our case that's 30.
+TASKMAN HANG BETWEEN NEW JOBS: 1// <strong>0</strong> ; No need to throttle process creation.
+MODE OF TASKMAN: GENERAL PROCESSOR// <strong>&lt;enter&gt;</strong>
+VAX ENVIROMENT FOR DCL: <strong>&lt;enter&gt;</strong>
+OUT OF SERVICE: NO// <strong>&lt;enter&gt;</strong>
+MIN SUBMANAGER CNT: 5// <strong>1</strong> ; Change that to 1
+TM MASTER: <strong>&lt;enter&gt;</strong>
+Balance Interval: <strong>&lt;enter&gt;</strong>
+LOAD BALANCE ROUTINE: <strong>&lt;enter&gt;</strong>
+Auto Delete Tasks: <strong>Y</strong>  Yes ; Delete Tasks automatically
+Manager Startup Delay: <strong>1</strong> ; Don't wait to start the Manager when first starting.
+
+Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: <strong>&lt;enter&gt;</strong></code></div>
+<h2 id="kernel-set-up">Kernel Set-Up</h2>
+<p>We are not done with setting Taskman up yet; but our next stop is the Kernel System Parameters file. We need to fix the Volume multiple there; but since we are there, we will fix several other items as well:</p>
+<ul>
+<li>AGENCY CODE = EHR (We are not running this inside of the VA)</li>
+<li>VOLUME SET:VOLUME SET = ROU</li>
+<li>VOLUME SET:MAX SIGNON ALLOWED = 30 (That's the maximum number of processes allowed to run)</li>
+<li>VOLUME SET:LOG SYSTEM RT? = @ (delete)</li>
+<li>DNS IP = Your DNS Server, or a public one</li>
+<li>DEFAULT AUTO-MENU = YES (print menus automatically)</li>
+<li>INTRO MESSSAGE (word-processing) = Put whatever you want here. This is what users see when they log-on.</li>
+<li>PRIMARY HFS DIRECTORY = Default directory where to write things to. Put an appropriate directory for your OS.</li>
+</ul>
+<div class="code"><code>><strong>D Q^DI</strong>
+
+VA Fileman 22.2
 
 Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
 
-Input to what File: TASKMAN SITE PARAMETERS// <strong>14.6</strong>  UCI ASSOCIATION
-                                          (0 entries)
-EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
+Input to what File: UCI ASSOCIATION// <strong>KERNEL SYSTEM PARAMETERS</strong>
+                                          (1 entry)
+EDIT FIELD: <strong>AGENCY</strong> CODE  
+THEN EDIT FIELD: <strong>VOLUME</strong> SET    (multiple)
+   EDIT WHICH VOLUME SET SUB-FIELD: ALL//<strong>&lt;enter&gt;</strong> 
+THEN EDIT FIELD: <strong>DNS</strong> IP  
+THEN EDIT FIELD: <strong>DEFAULT</strong> AU
+     1   DEFAULT AUTO SIGN-ON  
+     2   DEFAULT AUTO-MENU  
+CHOOSE 1-2: <strong>2</strong>  DEFAULT AUTO-MENU
+THEN EDIT FIELD: <strong>INTRO</strong> MESSAGE    (word-processing)
+THEN EDIT FIELD: <strong>PRIMARY</strong> HFS DIRECTORY  
+THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
+
+Select KERNEL SYSTEM PARAMETERS DOMAIN NAME: <strong>`1</strong> DEMO.OSEHRA.ORG
+         ...OK? Yes// <strong>&lt;enter&gt;</strong>  (Yes)
+
+AGENCY CODE: VA// <strong>E</strong>  EHR
+Select VOLUME SET: PLA// <strong>@</strong>
+   SURE YOU WANT TO DELETE THE ENTIRE 'PLA' VOLUME SET? Y  (Yes)
+Select VOLUME SET: <strong>ROU</strong>
+  Are you adding 'ROU' as a new VOLUME SET? No// <strong>Y</strong>  (Yes)
+  MAX SIGNON ALLOWED: <strong>30</strong>
+  LOG SYSTEM RT?:<strong>&lt;enter&gt;</strong>
+Select VOLUME SET: 
+DNS IP: 127.0.0.1,127.0.0.12  Replace <strong>...</strong> With <strong>8.8.8.8</strong>
+  Replace 
+   8.8.8.8
+DEFAULT AUTO-MENU: NO// <strong>Y</strong>  YES
+INTRO MESSAGE:
+  1>NEW SYSTEM 304-262-7078
+EDIT Option: <strong>1</strong>
+  1>NEW SYSTEM 304-262-7078
+  Replace <strong>...</strong> With <strong>This is my test system.</strong>  Replace 
+   This is my test system.
+Edit line: <strong>&lt;enter&gt;</strong>
+EDIT Option: <strong>&lt;enter&gt;</strong>
+PRIMARY HFS DIRECTORY: /tmp/// <strong>&lt;enter&gt;</strong>
 
 
-Select UCI ASSOCIATION FROM UCI: <strong>PLA</strong>
-  Are you adding 'PLA' as a new UCI ASSOCIATION (the 1ST)? No// <strong>Y</strong>  (Yes)
-   UCI ASSOCIATION NUMBER: 1// <strong>&lt;enter&gt;</strong>
-   UCI ASSOCIATION FROM VOLUME SET: <strong>PLA</strong>  
-   UCI ASSOCIATION TO VOLUME SET: <strong>&lt;enter&gt;</strong>
-   UCI ASSOCIATION TO UCI: <strong>&lt;enter&gt;</strong>
-FROM VOLUME SET: PLA// <strong>&lt;enter&gt;</strong>
-TO VOLUME SET: <strong>&lt;enter&gt;</strong>
-TO UCI: <strong>&lt;enter&gt;</strong>
+Select KERNEL SYSTEM PARAMETERS DOMAIN NAME:</code></div>
+<h2 id="back-to-taskman">Back to Taskman</h2>
+<p>At this point, we are ready to go back to getting taskman to run. We will now run <code>^ZTMCHK</code> which checks our work and makes sure we didn't royally screw up.</p>
+<div class="code"><code>><strong>D ^ZTMCHK</strong>
+Checking Task Manager's Environment.
 
-Select UCI ASSOCIATION FROM UCI: <strong>&lt;enter&gt;</strong></code></div>
+Checking Taskman's globals...
+     ^%ZTSCH is defined!
+     ^%ZTSK is defined!
+     ^%ZTSK(-1) is defined!
+     ^%ZIS(14.5,0) is defined!
+     ^%ZIS(14.6,0) is defined!
+     ^%ZIS(14.7,0) is defined!
+
+Checking the ^%ZOSF nodes required by Taskman...
+     All ^%ZOSF nodes required by Taskman are defined!
+
+Checking the links to the required volume sets...
+     There are no volume sets whose links are required!
+
+Checks completed...Taskman's environment is okay!
+
+Press RETURN to continue or '^' to exit: 
+
+Here is the information that Taskman is using:
+     Operating System:  GT.M (Unix)
+     Volume Set:  ROU
+     Cpu-volume Pair:  ROU:Macintosh
+     TaskMan Files UCI and Volume Set:  VAH,ROU
+
+     Log Tasks?  
+     Submanager Retention Time: 0
+     Min Submanager Count: 1
+     Taskman Hang Between New Jobs: 0
+     TaskMan running as a type: GENERAL
+
+     Logons Inhibited?:  N
+     Taskman Job Limit:  24
+     Max sign-ons: 30
+     Current number of active jobs: 1
+
+End of listing.  Press RETURN to continue:</code></div>
+<p>If ANY of the fields in the last screen are empty except &quot;Log Tasks?&quot;, you made a mistake. Double check your work.</p>
+<p>Next we need to initialize the recurring and start-up tasks that VistA will run. The set of tasks you want your system to run with is very variable; you can see my page here for guidance: <a href="http://www.vistapedia.com/index.php/Taskman_Recurring_Tasks">http://www.vistapedia.com/index.php/Taskman_Recurring_Tasks</a>. We will set-up these base tasks on your VistA system, which every VistA system ought to have:</p>
+<p>Start-up Jobs:</p>
+<ul>
+<li>XWB LISTENER STARTER (Starts RPC Broker)</li>
+<li>XOBV LISTENER STARTUP (Starts VistALink Broker)</li>
+<li>XUSER-CLEAR-ALL (Cleans signed on users for a system that just got booted)</li>
+<li>XUDEV RES-CLEAR (Clear resource devices for a system that just got booted)</li>
+<li>XMMGR-START-BACKGROUND-FILER (Start mailman background processor)</li>
+</ul>
+<p>Nightly Jobs:</p>
+<ul>
+<li>XMAUTOPURGE (Delete unreferenced mail messages)</li>
+<li>XMCLEAN (Delete from system messages deleted by users)</li>
+<li>XMMGR-PURGE-AI-XREF (Delete duplicate network messages)</li>
+<li>XQBUILDTREEQUE (Rebuild the menus in the menu system)</li>
+<li>XQ XUTL $J NODES (IMPORTANT: Delete left over temp globals from process activity)</li>
+<li>XUERTRP AUTO CLEAN (Cleans the error trap after 7 days)</li>
+<li>XUTM QCLEAN (Clean Task file from completed tasks if the task didn't delete itself after it ran)</li>
+</ul>
+<p>Beyond these tasks, what tasks you want to run depends on what's important to you. If you write notes, you will want TIU tasks; if you use Drug Accountability, you will want PSA tasks, etc.</p>
+<p>FOIA VistA comes with a lot of junk; so I advise starting from a clean slate. Be careful with the next few commands: they should never be run on an existing system:</p>
+<div class="code"><code>><strong>K ^%ZTSK,^%ZTSCH</strong> ; clean taskman Globals
+><strong>D DT^DICRW S DIK="^DIC(19.2," F DA=0:0 S DA=$O(^DIC(19.2,DA)) Q:'DA  D ^DIK</strong> ; Delete all tasks</code></div>
+<p>There are actually just two more steps:</p>
+<ul>
+<li></li>
+<li>Run <code>^ZTMB</code> to start Taskman. <em>NOTE THAT IS THIS THE ONLY WAY TO START TASKMAN!</em> Restarting Taskman means that data control structure from the old system will be assumed to be correct. Don't do it!</li>
+<li>Run <code>^ZTMON</code> to confirm that everything is running.</li>
+</ul>
 <h2 id="setup-rpc-broker">Setup RPC Broker</h2>
 <p>The next step is to edit entries in the RPC Broker Site Parameters file and the Kernel System Parameters file. The RPC Broker steps will set up information that references both the the Port that the listener will listen on and the Box Volume pair of the instance.</p>
 <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
@@ -683,72 +860,6 @@ You have PENDING ALERTS
 Select Taskman Management <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong>
 
 Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong></code></div>
-<h3 id="on-gt.m-1">On GT.M</h3>
-<p>TODO Replace use of xinetd with Sam's native solution!!!</p>
-<h2 id="configure-taskman">Configure TaskMan</h2>
-<div class="code"><code>Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
-
-Input to what File: UCI ASSOCIATION// 14.7  TASKMAN SITE PARAMETERS
-                                          (1 entry)
-EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
-
-Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: <strong>PLA:andronicus</strong> 
-BOX-VOLUME PAIR: PLA:andronicus// <strong>&lt;enter&gt;</strong>
-RESERVED: <strong>&lt;enter&gt;</strong>
-LOG TASKS?: NO// <strong>&lt;enter&gt;</strong>
-DEFAULT TASK PRIORITY: <strong>&lt;enter&gt;</strong>
-TASK PARTITION SIZE: <strong>&lt;enter&gt;</strong>
-SUBMANAGER RETENTION TIME: 0// <strong>&lt;enter&gt;</strong>
-TASKMAN JOB LIMIT: 100// <strong>26</strong>
-TASKMAN HANG BETWEEN NEW JOBS: 1// <strong>0</strong>
-MODE OF TASKMAN: GENERAL PROCESSOR// <strong>&lt;enter&gt;</strong>
-VAX ENVIROMENT FOR DCL: <strong>&lt;enter&gt;</strong>
-OUT OF SERVICE: NO// <strong>&lt;enter&gt;</strong>
-MIN SUBMANAGER CNT: 5// <strong>1</strong>
-TM MASTER: <strong>&lt;enter&gt;</strong>
-Balance Interval: <strong>&lt;enter&gt;</strong>
-LOAD BALANCE ROUTINE: <strong>&lt;enter&gt;</strong>
-Auto Delete Tasks: <strong>Y</strong>  Yes
-Manager Startup Delay: <strong>1</strong>
-
-Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: <strong>&lt;enter&gt;</strong></code></div>
-<h2 id="configure-kernel-system-parameters">Configure Kernel System Parameters</h2>
-<div class="code"><code>><strong>D Q^DI</strong>
-
-MSC Fileman 22.2
-
-Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
-
-Input to what File: UCI ASSOCIATION// <strong>KERNEL SYSTEM PARAMETERS</strong>
-                                          (1 entry)
-EDIT WHICH FIELD: ALL// <strong>VOLUME SET</strong>    (multiple)
-   EDIT WHICH VOLUME SET SUB-FIELD: ALL// <strong>&lt;enter&gt;</strong>
-THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
-
-Select KERNEL SYSTEM PARAMETERS DOMAIN NAME: <strong>ANDRONICUS.VISTAEXPERTISE.NET</strong>
-         ...OK? Yes// <strong>&lt;enter&gt;</strong>  (Yes)
-
-Select VOLUME SET: PLA// <strong>&lt;enter&gt;</strong>
-  VOLUME SET: PLA// <strong>&lt;enter&gt;</strong>
-  MAX SIGNON ALLOWED: 500// <strong>32</strong>
-  LOG SYSTEM RT?: NO// <strong>&lt;enter&gt;</strong>
-Select VOLUME SET: <strong>&lt;enter&gt;</strong></code></div>
-<h2 id="pointing-ksp-and-rsp-to-new-domain">Pointing KSP and RSP to New Domain</h2>
-<div class="code"><code>Select OPTION: <strong>5</strong>    INQUIRE TO FILE ENTRIES
-
-Output from what File: KERNEL SYSTEM PARAMETERS// <strong>DOMAIN</strong>
-                                          (89 entries)
-Select DOMAIN NAME: <strong>ANDRONICUS.VISTAEXPERTISE.NET</strong>
-Another one: <strong>&lt;enter&gt;</strong>
-Standard Captioned Output? Yes// <strong>&lt;enter&gt;</strong>  (Yes)
-Include COMPUTED fields:  (N/Y/R/B): NO// <strong>R</strong>  Record Number (IEN)
-
-NUMBER: 92                              NAME: ANDRONICUS.VISTAEXPERTISE.NET</code></div>
-<p>The domain has an IEN of 92.</p>
-<div class="code"><code>><strong>S $P(^XTV(8989.3,1,0),"^")=92</strong>
-> <strong>S $P(^XWB(8994.1,1,0),"^")=92</strong></code></div>
-<p>Re-index the files after making this change.</p>
-<div class="code"><code>><strong>F DIK="^XTV(8989.3,","^XWB(8994.1," S DA=1 D IXALL2^DIK,IXALL^DIK</strong></code></div>
 <h2 id="start-taskman">Start TaskMan</h2>
 <p>The Task Manager is an integral part of a running VistA instance. It lets actions and users schedule tasks to be performed at certain times or after certain trigger events. The XWB Listener Starter example is one example of scheduling a task.</p>
 <div class="code"><code>><strong>D ^ZTMB</strong></code></div>
