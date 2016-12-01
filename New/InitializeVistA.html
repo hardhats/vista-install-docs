@@ -711,15 +711,188 @@ End of listing.  Press RETURN to continue:</code></div>
 <li>XUTM QCLEAN (Clean Task file from completed tasks if the task didn't delete itself after it ran)</li>
 </ul>
 <p>Beyond these tasks, what tasks you want to run depends on what's important to you. If you write notes, you will want TIU tasks; if you use Drug Accountability, you will want PSA tasks, etc.</p>
-<p>FOIA VistA comes with a lot of junk; so I advise starting from a clean slate. Be careful with the next few commands: they should never be run on an existing system:</p>
+<p>FOIA VistA comes with a lot of junk; so I advise starting from a clean slate. Be careful with the next few commands: they should never be run on an existing system, otherwise they may delete patient data:</p>
 <div class="code"><code>><strong>K ^%ZTSK,^%ZTSCH</strong> ; clean taskman Globals
 ><strong>D DT^DICRW S DIK="^DIC(19.2," F DA=0:0 S DA=$O(^DIC(19.2,DA)) Q:'DA  D ^DIK</strong> ; Delete all tasks</code></div>
+<p>Next add the tasks outlined above to OPTION SCHEDULING (#19.2). The startup entries will only need the NAME and SPECIAL QUEUING fields; the nightly jobs will need NAME, QUEUED TO RUN AT WHAT TIME, and RESCHEDULING FREQUENCY fields.</p>
+<div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
+Select OPTION:    <strong>ENTER OR EDIT FILE ENTRIES</strong>
+
+Input to what File: OPTION SCHEDULING// <strong>&lt;enter&gt;</strong> (0 entries)
+EDIT WHICH FIELD: ALL// <strong>.01</strong>  NAME
+THEN EDIT FIELD: <strong>2</strong>  QUEUED TO RUN AT WHAT TIME
+THEN EDIT FIELD: <strong>6</strong>  RESCHEDULING FREQUENCY
+THEN EDIT FIELD: <strong>9</strong>  SPECIAL QUEUEING
+THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
+
+Select OPTION SCHEDULING NAME: <strong>XWB LISTENER STARTER</strong>       Start All RPC Broker Listeners
+  Are you adding 'XWB LISTENER STARTER' as 
+    a new OPTION SCHEDULING (the 1ST)? No// <strong>Y</strong>  (Yes)
+QUEUED TO RUN AT WHAT TIME: <strong>&lt;enter&gt;</strong>
+RESCHEDULING FREQUENCY: <strong>&lt;enter&gt;</strong>
+SPECIAL QUEUEING: <strong>S</strong>  STARTUP
+
+
+Select OPTION SCHEDULING NAME: <strong>XOBV LISTENER STARTUP</strong>       Start VistaLink Listener Configuration
+  Are you adding 'XOBV LISTENER STARTUP' as 
+    a new OPTION SCHEDULING (the 2ND)? No// <strong>Y</strong>  (Yes)
+QUEUED TO RUN AT WHAT TIME: <strong>&lt;enter&gt;</strong>
+RESCHEDULING FREQUENCY: <strong>&lt;enter&gt;</strong>
+SPECIAL QUEUEING: <strong>S</strong>  STARTUP
+
+
+Select OPTION SCHEDULING NAME: <strong>XUSER-CLEAR-ALL</strong>       Clear all users at startup
+  Are you adding 'XUSER-CLEAR-ALL' as 
+    a new OPTION SCHEDULING (the 3RD)? No// <strong>Y</strong>  (Yes)
+QUEUED TO RUN AT WHAT TIME: <strong>&lt;enter&gt;</strong>
+RESCHEDULING FREQUENCY: <strong>&lt;enter&gt;</strong>
+SPECIAL QUEUEING: <strong>S</strong>  STARTUP
+
+
+Select OPTION SCHEDULING NAME: <strong>XUDEV RES-CLEAR</strong>
+  Are you adding 'XUDEV RES-CLEAR' as 
+    a new OPTION SCHEDULING (the 4TH)? No// <strong>Y</strong>  (Yes)
+QUEUED TO RUN AT WHAT TIME: <strong>&lt;enter&gt;</strong>
+RESCHEDULING FREQUENCY: <strong>&lt;enter&gt;</strong>
+SPECIAL QUEUEING: <strong>S</strong>  STARTUP
+
+
+Select OPTION SCHEDULING NAME: <strong>XMMGR-START-BACKGROUND-FILER</strong>       START background filer
+  Are you adding 'XMMGR-START-BACKGROUND-FILER' as 
+    a new OPTION SCHEDULING (the 5TH)? No// <strong>Y</strong>  (Yes)
+QUEUED TO RUN AT WHAT TIME: <strong>&lt;enter&gt;</strong>
+RESCHEDULING FREQUENCY: <strong>&lt;enter&gt;</strong>
+SPECIAL QUEUEING: <strong>S</strong>  STARTUP
+
+Select OPTION SCHEDULING NAME:    <strong>XMAUTOPURGE</strong>
+  Are you adding 'XMAUTOPURGE' as 
+    a new OPTION SCHEDULING (the 6TH)? No// <strong>Y</strong>  (Yes)
+QUEUED TO RUN AT WHAT TIME: <strong>T+1@0001</strong>  (DEC 01, 2016@00:01)
+RESCHEDULING FREQUENCY: <strong>1D</strong>
+SPECIAL QUEUEING: <strong>&lt;enter&gt;</strong>
+
+
+Select OPTION SCHEDULING NAME: <strong>XMCLEAN</strong>       Clean out waste baskets
+  Are you adding 'XMCLEAN' as a new OPTION SCHEDULING (the 7TH)? No// <strong>Y</strong>  (Yes)
+QUEUED TO RUN AT WHAT TIME: <strong>T+1@0005</strong>  (DEC 01, 2016@00:05)
+RESCHEDULING FREQUENCY: <strong>1D</strong>
+SPECIAL QUEUEING: <strong>&lt;enter&gt;</strong>
+
+
+Select OPTION SCHEDULING NAME: <strong>XMMGR-PURGE-AI-XREF</strong>      AI x-Ref Purge of Received Network Messages
+  Are you adding 'XMMGR-PURGE-AI-XREF' as 
+    a new OPTION SCHEDULING (the 8TH)? No// <strong>Y</strong>  (Yes)
+QUEUED TO RUN AT WHAT TIME: <strong>T+1@0010</strong>  (DEC 01, 2016@00:10)
+RESCHEDULING FREQUENCY: <strong>1D</strong>
+SPECIAL QUEUEING: <strong>&lt;enter&gt;</strong>
+
+
+Select OPTION SCHEDULING NAME: <strong>XQBUILDTREEQUE</strong>       Non-interactive Build Primary Menu Trees
+  Are you adding 'XQBUILDTREEQUE' as a new OPTION SCHEDULING (the 9TH)? No// <strong>Y</strong>
+  (Yes)
+QUEUED TO RUN AT WHAT TIME: <strong>T+1@0015</strong>  (DEC 01, 2016@00:15)
+RESCHEDULING FREQUENCY: <strong>1D</strong>
+SPECIAL QUEUEING: <strong>&lt;enter&gt;</strong>
+
+
+Select OPTION SCHEDULING NAME: <strong>XQ XUTL $J NODES</strong>       Clean old Job Nodes in XUTL
+  Are you adding 'XQ XUTL $J NODES' as 
+    a new OPTION SCHEDULING (the 10TH)? No// <strong>Y</strong>  (Yes)
+QUEUED TO RUN AT WHAT TIME: <strong>T+1@0020</strong>  (DEC 01, 2016@00:20)
+RESCHEDULING FREQUENCY: <strong>1D</strong>
+SPECIAL QUEUEING: <strong>&lt;enter&gt;</strong>
+
+
+Select OPTION SCHEDULING NAME: <strong>XUERTRP AUTO CLEAN</strong>       Error trap Auto clean
+  Are you adding 'XUERTRP AUTO CLEAN' as 
+    a new OPTION SCHEDULING (the 11TH)? No// <strong>Y</strong>  (Yes)
+QUEUED TO RUN AT WHAT TIME: <strong>T+1@0025</strong>  (DEC 01, 2016@00:25)
+RESCHEDULING FREQUENCY: <strong>1D</strong>
+SPECIAL QUEUEING: <strong>&lt;enter&gt;</strong>
+
+
+Select OPTION SCHEDULING NAME: <strong>XUTM QCLEAN</strong>       Queuable Task Log Cleanup
+  Are you adding 'XUTM QCLEAN' as a new OPTION SCHEDULING (the 12TH)? No// <strong>Y</strong>
+  (Yes)
+QUEUED TO RUN AT WHAT TIME: <strong>T+1@0030</strong>  (DEC 01, 2016@00:30)
+RESCHEDULING FREQUENCY: <strong>1D</strong>
+SPECIAL QUEUEING: <strong>&lt;enter&gt;</strong></code></div>
 <p>There are actually just two more steps:</p>
 <ul>
-<li></li>
-<li>Run <code>^ZTMB</code> to start Taskman. <em>NOTE THAT IS THIS THE ONLY WAY TO START TASKMAN!</em> Restarting Taskman means that data control structure from the old system will be assumed to be correct. Don't do it!</li>
-<li>Run <code>^ZTMON</code> to confirm that everything is running.</li>
+<li>Run <code>DO ^ZTMB</code> to start Taskman. <em>NOTE THAT IS THIS THE ONLY WAY TO START TASKMAN!</em> Restarting Taskman means that data control structure from the old system will be assumed to be correct. Don't do it!</li>
+<li>Run <code>DO ^ZTMON</code> to confirm that everything is running.</li>
 </ul>
+<p>You should see this (press enter serveral times to update the screen; it should take at least 1 second to start); to exit, type <code>^</code>.</p>
+<div class="code"><code>><strong>D ^ZTMB,^ZTMON</strong>
+
+Checking Taskman.   Current $H=64252,53277  (Nov 30, 2016@14:47:57)
+                      RUN NODE=64252,53274  (Nov 30, 2016@14:47:54)
+Taskman is current..
+Checking the Status List:
+  Node        weight  status      time       $J
+ ROU:Macintosh        RUN      T@14:47:54   81569     Main Loop
+
+Checking the Schedule List:
+     Taskman has 3 tasks scheduled.
+     None of them are overdue.
+
+Checking the IO Lists:  Last TM scan: 2 sec, 
+     There are no tasks waiting for devices.
+
+Checking the Job List:
+     There are no tasks waiting for partitions.
+
+Checking the Task List:
+     There are no tasks currently running.
+Checking Sub-Managers:
+     On node ROU:Macintosh there is  1 free Sub-Manager(s). Status: Run</code></div>
+<p>On CACHE, you can run <code>D THIS^%SS</code> to find out what started; on GT.M, you should have a ZSY which does the same thing. If ZSY isn't present on your instance, you can do something similar to this until you find a ZSY:</p>
+<p>Cache:</p>
+<div class="code"><code>><strong>D THIS^%SS</strong>
+
+                   Cache System Status:  3:16 pm 30 Nov 2016
+ Process  Device      Namespace      Routine         CPU,Glob  Pr User/Location
+   72316* /dev/ttys004FOIA1611       shell       3506713,3993500  UnknownUser
+   85180  /dev/null   FOIA1611       %ZTM          11266,1562  0  UnknownUser
+   85393  /dev/null   FOIA1611       %ZTMS1         5177,203   0  UnknownUser
+   85404  /dev/null   FOIA1611       %ZTMS1         5177,203   0  UnknownUser
+   85218  /dev/null   FOIA1611       %ZTMS1         5288,214   0  UnknownUser
+   85230  /dev/null   FOIA1611       %ZTMS1         5287,214   0  UnknownUser
+   85242  /dev/null   FOIA1611       %ZTMS1         5287,214   0  UnknownUser
+   85254  /dev/null   FOIA1611       %ZTMS1         5287,214   0  UnknownUser
+   85266  /dev/null   FOIA1611       %ZTMS1         5287,214   0  UnknownUser
+   85269  /dev/null   FOIA1611       %ZTMS1         5287,214   0  UnknownUser
+   85295  /dev/null   FOIA1611       %ZTMS1         5287,214   0  UnknownUser
+   85398  /dev/null   FOIA1611       %ZTMS1         5177,203   0  UnknownUser
+   85409  /dev/null   FOIA1611       %ZTMS1         5177,203   0  UnknownUser
+   85414  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser
+   85342  /dev/null   FOIA1611       %ZTMS1         5287,214   0  UnknownUser
+   85348  /dev/null   FOIA1611       %ZTMS1         5287,214   0  UnknownUser
+   85354  /dev/null   FOIA1611       %ZTMS1         5177,203   0  UnknownUser
+   85359  /dev/null   FOIA1611       %ZTMS1         5177,203   0  UnknownUser
+   85419  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser
+   85424  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser
+   85430  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser
+   85435  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser
+   85441  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser</code></div>
+<p>GT.M:</p>
+<div class="code"><code>><strong>K ^XUTL("XUSYS")</strong>
+><strong>zsy "kill -SIGUSR1 $(lsof -t ${vista_home}/g/mumps.dat)"</strong>
+
+><strong>zwrite ^XUTL("XUSYS",:,"INTERRUPT")</strong>
+^XUTL("XUSYS",81732,"INTERRUPT")="+1^GTM$DMOD"
+^XUTL("XUSYS",81826,"INTERRUPT")="IDLE+3^%ZTM"
+^XUTL("XUSYS",81842,"INTERRUPT")="LOOP+7^HLCSLM"
+^XUTL("XUSYS",81847,"INTERRUPT")="GO+26^XMKPLQ"
+^XUTL("XUSYS",81928,"INTERRUPT")="GO+12^XMTDT"
+^XUTL("XUSYS",81932,"INTERRUPT")="STARTIN+28^HLCSIN"
+^XUTL("XUSYS",81936,"INTERRUPT")="LOOP+2^HLCSMM1"
+^XUTL("XUSYS",81940,"INTERRUPT")="PAUSE+1^HLUOPTF2"
+^XUTL("XUSYS",81944,"INTERRUPT")="STARTOUT+17^HLCSOUT"
+^XUTL("XUSYS",81948,"INTERRUPT")="LOOP+2^HLCSMM1"
+^XUTL("XUSYS",81954,"INTERRUPT")="LOOP+2^HLCSMM1"
+^XUTL("XUSYS",81970,"INTERRUPT")="PAUSE+1^HLUOPTF2"
+^XUTL("XUSYS",81974,"INTERRUPT")="GO+28^XMTDL"</code></div>
 <h2 id="setup-rpc-broker">Setup RPC Broker</h2>
 <p>The next step is to edit entries in the RPC Broker Site Parameters file and the Kernel System Parameters file. The RPC Broker steps will set up information that references both the the Port that the listener will listen on and the Box Volume pair of the instance.</p>
 <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
