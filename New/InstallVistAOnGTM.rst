@@ -430,7 +430,7 @@ the database if it was journaled and then enables journaling.
 .. raw:: html
     
     <div class="code"><code># This is journaling.
-    if [ -f j/mumps.mjl ]; then
+    if [ -f {vista_home}/j/mumps.mjl ]; then
         $gtm_dist/mupip journal -recover -backward ${vista_home}/j/mumps.mjl
     fi
     
@@ -439,7 +439,7 @@ the database if it was journaled and then enables journaling.
         find ${vista_home}/j -name '*_*' -mtime +3 -print -delete
     fi
     
-    $gtm_dist/mupip set -journal="enable,on,before,f=j/mumps.mjl" -region DEFAULT</code></div>
+    $gtm_dist/mupip set -journal="enable,on,before,f={vista_home}/j/mumps.mjl" -region DEFAULT</code></div>
 
 Source the env.vista script again to enable journaling.
 

@@ -321,7 +321,7 @@ Routine: <strong>*</strong>
 Total of 35547 routines.</code></div>
 <p>At this point we are done loading VistA. It's time to enable journaling on all the regions we want. That can be a separate script, but I put it with my env script so that everything can be in one place and I only have to source one file to activate my VistA instance. Add this to the end. This recovers the database if it was journaled and then enables journaling.</p>
 <div class="code"><code># This is journaling.
-if [ -f j/mumps.mjl ]; then
+if [ -f {vista_home}/j/mumps.mjl ]; then
     $gtm_dist/mupip journal -recover -backward ${vista_home}/j/mumps.mjl
 fi
 
@@ -330,10 +330,10 @@ if (( $(find ${vista_home}/j -name '*_*' -mtime +3 -print | wc -l) > 0 )); then
     find ${vista_home}/j -name '*_*' -mtime +3 -print -delete
 fi
 
-$gtm_dist/mupip set -journal="enable,on,before,f=j/mumps.mjl" -region DEFAULT</code></div>
+$gtm_dist/mupip set -journal="enable,on,before,f={vista_home}/j/mumps.mjl" -region DEFAULT</code></div>
 <p>Source the env.vista script again to enable journaling.</p>
 <p>The next step is not necessary if you don't plan to have users log-in. You should pre-compile the routines on GT.M so they do not have to be compiled at runtime.</p>
-<div class="code"><code> $ cd o
+<div class="code"><code>$ cd o
 $ for r in ../r/*.m; do mumps $r; done 2>&1 | tee ../compile_all.log
 </code></div>
 <p>At this point, you are ready to continue to <a href="./InitializeVistA.html">Initialize Vista</a>.</p>
