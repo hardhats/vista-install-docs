@@ -317,7 +317,7 @@ You need to select it and change the settings as follows:
 * LOCATION OF TERMINAL = Host File Server
 * ASK HOST FILE = YES
 * ASK HFS I/O OPERATION = @ (Delete it)
-* OPEN PARAMETERS: "WNS" for Cache, (newvesrion) for GT.M (note quotes on Cache and their abcense on GT.M)
+* OPEN PARAMETERS: "WNS" for Cache, (newversion) for GT.M (note quotes on Cache and their abcense on GT.M)
 * SUBYTPE: P-HFS/80/99999
 * TYPE: HOST FILE SERVER
 
@@ -1488,7 +1488,21 @@ http://foia-vista.osehra.org/Patches_By_Application/XWB-RPC%20BROKER/XWB_1_1_P60
 Once you unzip it, you will find this file: ``./Samples/BrokerEx/BrokerExample.exe``.
 Run this, replace the server name and port with your ip address and port, and then click on connect.
 
---TBC--
+.. figure::
+   images/InitializeVistA/pic38.png
+   :align: center
+   :alt: Broker Log-in
+
+Once you click connect, you will see the sign-in dialog: That means that the broker is functional.
+
+.. figure::
+   images/InitializeVistA/pic37.png
+   :align: center
+   :alt: Broker Log-in
+
+Note: Because of the the `infamous XUSRB1.m problem <https://groups.google.com/forum/#!msg/hardhats/tmuguZ1GK7k/at_0i82n-zgJ>`_,
+you won't be able to log-on right now. But you should be able to using CPRS.
+
 
 Set Yourself Up as the System Manager
 -------------------------------------
@@ -1747,19 +1761,9 @@ Messages and Responses. Read the mail.
    :align: center
    :alt: Read Mail
 
---TBC--
-
-To stop TaskMan, use ``D STOP^ZTMKU`` and answer ``YES`` to stopping the submanagers.
-
-To stop Broker, use ``D STOP^XWBTCP(9210)``. This is the last time you should be
-using these direct access to the routines to manage VistA. You should be using
-the menu system from now on to manage starting and stopping Taskman, the
-background filers and the RPC Broker. That way any code changes, etc., will be
-accounted for. Programmers will usually enter from the programmer prompt
-beginning with D ^XUP. The system managers menu option is EVE.
-
 Add User
 --------
+--TBC--
 
 The next step is to create a user that can sign on to the CPRS GUI.
 The things to make sure that this new user has are
@@ -1939,3 +1943,11 @@ and mail groups:
 
 At this point, CPRS can successfully connect to the local VistA instance and
 the ``CPRS,USER`` will be able to sign on and interact with the GUI.
+
+Stopping VistA
+--------------
+To stop TaskMan, use ``D STOP^ZTMKU`` and answer ``YES`` to stopping the submanagers.
+
+To stop Broker, use ``D STOP^XWBTCP(<port no>)``.
+
+To stop mailman, use ``D STOP^XMKPL`` and answer ``YES`` to stop it.

@@ -229,7 +229,7 @@ SUBTYPE: P-OTHER                      TYPE: HOST FILE SERVER</code></pre>
 <li>LOCATION OF TERMINAL = Host File Server</li>
 <li>ASK HOST FILE = YES</li>
 <li>ASK HFS I/O OPERATION = @ (Delete it)</li>
-<li>OPEN PARAMETERS: &quot;WNS&quot; for Cache, (newvesrion) for GT.M (note quotes on Cache and their abcense on GT.M)</li>
+<li>OPEN PARAMETERS: &quot;WNS&quot; for Cache, (newversion) for GT.M (note quotes on Cache and their abcense on GT.M)</li>
 <li>SUBYTPE: P-HFS/80/99999</li>
 <li>TYPE: HOST FILE SERVER</li>
 </ul>
@@ -1176,7 +1176,14 @@ Stop All RPC Broker Listeners</code></div>
 <p>Independent of our set-up above, we can start the broker at any port we want from direct mode using <code>J ZISTCP^XWBTCPM1(&lt;port no&gt;)</code>.</p>
 <p>To test the broker from the client side, you can download the Broker SDK from the FOIA site: <a href="http://foia-vista.osehra.org/Patches_By_Application/XWB-RPC%20BROKER/XWB_1_1_P60_scrubbed.zip">http://foia-vista.osehra.org/Patches_By_Application/XWB-RPC%20BROKER/XWB_1_1_P60_scrubbed.zip</a></p>
 <p>Once you unzip it, you will find this file: <code>./Samples/BrokerEx/BrokerExample.exe</code>. Run this, replace the server name and port with your ip address and port, and then click on connect.</p>
-<p>--TBC--</p>
+<figure>
+<img src="images/InitializeVistA/pic38.png" />
+</figure>
+<p>Once you click connect, you will see the sign-in dialog: That means that the broker is functional.</p>
+<figure>
+<img src="images/InitializeVistA/pic37.png" />
+</figure>
+<p>Note: Because of the the <a href="https://groups.google.com/forum/#!msg/hardhats/tmuguZ1GK7k/at_0i82n-zgJ">infamous XUSRB1.m problem</a>, you won't be able to log-on right now. But you should be able to using CPRS.</p>
 <h2 id="set-yourself-up-as-the-system-manager">Set Yourself Up as the System Manager</h2>
 <p>This is a super user who will have elevated privileges. You can add other users such as Physicians, Pharmacists, etc. later. Set up the System Manager user with minimal information. We will add more information later. By convention, the super user has a DUZ of 1. So far we have been using the DUZ of .5. We have to use it one last time to make the system manager. Your access code is really your username. I set it up as SM1234, but you can put whatever you like. Go back into Fileman using <code>S DUZ=.5 D Q^DI</code>:</p>
 <div class="code"><code>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
