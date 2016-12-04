@@ -20,7 +20,7 @@ If you modified your $TERM, you need to make sure it's either ``xterm`` or ``ans
 will work, but I am sure of these two.
 
 To get into Direct Mode using Cache, on Windows you need to right click on the Cache Cube and
-choose Terminal. If you have a licnesed version of Cache, you can also use Telnet to connect
+choose Terminal. If you have a licensed version of Cache, you can also use Telnet to connect
 to the Terminal. Please note that while you can use Windows Telnet, it does not emulate VT-200
 series terminals properly, so you may have some issues. If you want to use Telnet, I recommend downloading
 PuTTY or TeraTerm. 
@@ -94,7 +94,7 @@ to your routines directory: https://github.com/shabiel/Kernel-GTM. Here's how to
 
 Note to Cache Users
 -------------------
-The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA and run the RPC broker, and then connect CPRS; but you won't be able to have more than one session open at once; and you may need to restart Cache repeatedly as it sometimes "forgets" that you logged off.
+The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA but don't try to run the RPC broker. A "friend" wasted so much of my time because he had an evaulation version and couldn't start the RPC broker. You may need to restart Cache repeatedly as it sometimes "forgets" that you logged off.
 
 Commands and what they mean (a short M primer)
 ----------------------------------------------
@@ -1556,7 +1556,8 @@ What we do below is a couple of things: We give ourselves the Fileman Access Cod
 of "@", which gives you the equivalent of root priviliges in Fileman. Next, we give ourselves the keys
 ``XUMGR`` (let's you add users and manipulate tasks); ``XUPROG`` (let's you edit users [don't ask me why--I have
 no clue why they put that key there], and install Software); ``XUPROGMODE`` (let's you enter programmer mode);
-and ``XMMGR`` (let's you manage mailman). By the way, priviliged users can be given the ability to add new users
+``XMMGR`` (let's you manage mailman), ``XUSPF200`` (let's you add users without requiring an SSN).
+By the way, priviliged users can be given the ability to add new users
 and assign and take away keys using a mechanism called delegation. I won't cover that here.
 
 .. raw:: html
@@ -1585,6 +1586,10 @@ and assign and take away keys using a mechanism called delegation. I won't cover
     Another key: <strong>XUPROGMODE</strong>
     
     Another key: <strong>XMMGR</strong>
+
+    Another key: <strong>XMMGR</strong>
+    
+    Another key: <strong>XUSPF200</strong>
     
     Another key:
     
@@ -1593,7 +1598,7 @@ and assign and take away keys using a mechanism called delegation. I won't cover
     Another holder:
     
     You've selected the following keys:
-    XUPROG     XUMGR     XUPROGMODE     XMMGR
+    XUPROG     XUMGR     XUPROGMODE     XMMGR   XUSPF200
     
     You've selected the following holders:
     
@@ -1611,6 +1616,9 @@ and assign and take away keys using a mechanism called delegation. I won't cover
        MANAGER,SYSTEM
        
     XMMGR being assigned to:
+       MANAGER,SYSTEM
+
+    XUSPF200 being assigned to:
        MANAGER,SYSTEM
     
     Select Key Management Option: <strong>&lt;enter&gt;</strong></code></div>
@@ -1761,10 +1769,8 @@ Messages and Responses. Read the mail.
    :align: center
    :alt: Read Mail
 
-Add User
---------
---TBC--
-
+Add CPRS User
+-------------
 The next step is to create a user that can sign on to the CPRS GUI.
 The things to make sure that this new user has are
 
@@ -1787,7 +1793,7 @@ sign into CPRS.
 
 .. raw:: html
     
-    <div class="code"><code>><strong>S DUZ=.5 D ^XUP</strong>
+    <div class="code"><code>><strong>S DUZ=1 D ^XUP</strong>
     
     Setting up programmer environment
     This is a TEST account.
@@ -1810,9 +1816,6 @@ sign into CPRS.
             HL7 Main Menu ...
             
             
-    You have PENDING ALERTS
-            Enter  "VA to jump to VIEW ALERTS option
-            
     Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>User Management</strong>
     
             Add a New User to the System
@@ -1834,9 +1837,6 @@ sign into CPRS.
             Reprint Access agreement letter
             
             
-    You have PENDING ALERTS
-            Enter  "VA to jump to VIEW ALERTS option
-            
     Select User Management <TEST ACCOUNT> Option: <strong>Add a New User to the System</strong>
     Enter NEW PERSON's name (Family,Given Middle Suffix): <strong>CPRS,USER</strong>
       Are you adding 'CPRS,USER' as a new NEW PERSON (the 56TH)? No// <strong>Y</strong>  (Yes)
@@ -1844,8 +1844,8 @@ sign into CPRS.
     No matches found.
     Now for the Identifiers.
     INITIAL: <strong>UC</strong>
-    SSN: <strong>000000002</strong>
-    SEX: <strong>M</strong>  MALE
+    SSN: <strong>&lt;enter&gt;</strong>
+    SEX: <strong>F</strong>  FEMALE
     NPI: <strong>&lt;enter&gt;</strong></code></div>
 
 Once in the ScreenMan form, you will need to set the necessary
@@ -1856,6 +1856,16 @@ terminal window.
 
 To add an access or verify codes, you need to first answer ``Y`` to the
 ``Want to edit ...`` questions, it will then prompt you to change the codes.
+Remember to give the user both an access and veify codes; otherwise, they won't be
+able to log-in.
+
+Fill in as follows:
+
+* PRIMARY MENU OPTION = XUCORE
+* SECONDARY MENU OPTIONS = OR CPRS CHART GUI
+* ACCESS CODE = CPRS1234
+* VERIFY CODE = USR.1234
+* SERVICE/SECTION = IRM
 
 .. raw:: html
     
@@ -1864,12 +1874,12 @@ To add an access or verify codes, you need to first answer ``Y`` to the
     _______________________________________________________________________________
        NAME... CPRS,USER                                   INITIAL: UC
         TITLE:                                           NICK NAME:
-          SSN: 000000002                                       DOB:
+          SSN:                                                 DOB:
        DEGREE:                                           MAIL CODE:
       DISUSER:                                     TERMINATION DATE:
       Termination Reason:
       
-               PRIMARY MENU OPTION:
+               PRIMARY MENU OPTION:   <---
      Select SECONDARY MENU OPTIONS:   <---
     Want to edit ACCESS CODE (Y/N):   <---  FILE MANAGER ACCESS CODE:
     Want to edit VERIFY CODE (Y/N):   <---
@@ -1888,8 +1898,41 @@ To change to other pages, press the down arrow key or <TAB> until the cursor
 reaches the COMMAND box.  Then type ``N`` or ``Next Page`` and press &lt;enter&gt; to
 display the next page.
 
-There is nothing that needs to be set on the second or third pages, but the
-CPRS Tab Access is set on the fourth page. Navigate the cursor to the location
+There is nothing that needs to be set on the second page. On the third page, you MUST
+put in a provider person class (Physician, Nurse, etc; otherwise you won't be able to 
+be a provider on encounters). Navigate to Person Class and then type "PHYSICIAN", press
+enter twice, and then choose #1. Press enter once, say yes, and then enter. At this point,
+you should see the entry; and the effective date should be today.
+
+.. raw:: html
+    
+    <div class="code"><code>                            Edit an Existing User
+    NAME: CPRS,USER                                                     Page 3 of 5
+    _______________________________________________________________________________
+    PROHIBITED TIMES FOR SIGN-ON:                      
+
+               PHONE:                        OFFICE PHONE:                     
+    COMMERCIAL PHONE:                          FAX NUMBER:                     
+         VOICE PAGER:                       DIGITAL PAGER:                     
+            LANGUAGE:           
+
+     Person Class                                         Effective     Expired
+
+     Physician Assistants and Advanced Practi          DEC 4,2016                 
+                                                                                  
+                                                                                  
+                                                                                  
+
+    _______________________________________________________________________________
+     
+    Exit    Save    Next Page    Previous Page    Refresh    Quit
+     
+    Enter a COMMAND, or "^" followed by the CAPTION of a FIELD to jump to.
+    COMMAND: e                                       Press <PF1>H for help  Insert</code></div>
+
+
+On the fourth page, CPRS Tab Access is set. Navigate first to "RESTRICT PATIENT
+SELECTION", set that to "NO", and then navigate the cursor to the location
 under the ``Name`` header and enter ``COR``, which stands ``for Core Tab Access``,
 and enter an effective date of yesterday, ``T-1`` is the notation to use.
 
@@ -1898,7 +1941,7 @@ and enter an effective date of yesterday, ``T-1`` is the notation to use.
     <div class="code"><code>                            Edit an Existing User
     NAME: CPRS,USER                                                     Page 4 of 5
     _______________________________________________________________________________
-    RESTRICT PATIENT SELECTION:        OE/RR LIST:
+    RESTRICT PATIENT SELECTION:->      OE/RR LIST:
     
     CPRS TAB ACCESS:
       Name  Description                          Effective Date  Expiration Date
@@ -1921,7 +1964,7 @@ and enter an effective date of yesterday, ``T-1`` is the notation to use.
 
 Once that is done, save and exit the ScreenMan form via the COMMAND box and
 then answer the final questions regarding access letters, security keys
-and mail groups:
+and mail groups. For security keys, there are two we need to add: ORES and PROVIDER.
 
 .. raw:: html
     
@@ -1933,7 +1976,35 @@ and mail groups:
     COMMAND: <strong>E</strong>                                     Press <PF1>H for help    Insert
     
     Print User Account Access Letter? <strong>NO</strong>
-    Do you wish to allocate security keys? NO// <strong>NO</strong>
+    Do you wish to allocate security keys? NO// <strong>YES</strong>
+
+    Allocate key: <strong>PROVIDER</strong>
+         1   PROVIDER  
+         2   PROVIDER ID EDIT  IB PROVIDER EDIT
+    CHOOSE 1-2: <strong>1</strong>  PROVIDER
+
+    Another key: <strong>ORES</strong>  
+
+    Another key: <strong>&lt;enter&gt;</strong>
+
+    Another holder: <strong>&lt;enter&gt;</strong>
+
+    You've selected the following keys: 
+
+    PROVIDER       ORES
+
+    You've selected the following holders: 
+
+    CPRS,USER
+
+    You are allocating keys.  Do you wish to proceed? YES// <strong>&lt;enter&gt;</strong>
+
+    PROVIDER being assigned to:
+         CPRS,USER
+
+    ORES being assigned to:
+         CPRS,USER
+
     Do you wish to add this user to mail groups? NO// <strong>NO</strong>
     
     ...
@@ -1943,6 +2014,58 @@ and mail groups:
 
 At this point, CPRS can successfully connect to the local VistA instance and
 the ``CPRS,USER`` will be able to sign on and interact with the GUI.
+
+Downloading CPRS and Running It
+-------------------------------
+The next part is laborious and tedious: finding the correct vesion of CPRS to run on
+your FOIA instance. The first thing is that you need to go into Fileman, and find
+out what the version of CPRS you need to use is:
+
+.. raw:: html
+    
+    <div class="code"><code>><strong>S DUZ=1 D Q^DI</strong>
+
+
+    VA FileMan 22.2
+
+
+    Select OPTION: <strong>INQUIRE TO FILE ENTRIES</strong>  
+
+
+
+    Output from what File: <strong>19</strong>  OPTION         (10351 entries)
+    Select OPTION NAME: <strong>OR CPRS GUI CHART</strong>       CPRSChart version 1.0.30.75
+    Another one: <strong>^</strong></code></div>
+
+Okay. So we need ``1.0.30.75``. So we navigate here: http://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/,
+and from there, try to guess which version we need. From my version string, it looks like we need version 30. There are two
+version 30's; so I guess I should choose the latter one.
+
+At this point, we need to look for a .zip file. Looking through the list, I see
+
+* MHA_501_116_scrubbed.zip
+* OR_30_350_scrubbed.zip
+* OR_30_350_SRC_scrubbed.zip
+* VITL5_P28_scrubbed.zip
+* XU_8_0_P641_scrubbed.zip
+
+The one most likely to contain the CPRS exe is OR_30_350_scrubbed.zip; SRC_scrubbed.zip is the CPRS source code, which also
+may contain a compiled version.
+
+*Please please note that this is what I see when I write this at the end of 2016; what you see in the future will
+certainly be different.*
+
+So I download OR_30_350_scrubbed.zip, and open it. There is a CPRSChart.exe in that one. But what version?
+
+We can try running it, but you will get an error right away saying that 'borlndmm.dll' is needed.
+
+You can find 'borlndmm.dll' in the source code download: http://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/CPRS%20VERSION%2030b/OR_30_350_SRC_scrubbed.zip
+
+Unzip that, and copy borlndmm.dll to the same directory that CPRS is located in.
+
+Now, try to run CPRS again. You will see the version on the splash screen: in my case, it's ``1.0.30.72``.
+
+Okay. I am stuck!
 
 Stopping VistA
 --------------

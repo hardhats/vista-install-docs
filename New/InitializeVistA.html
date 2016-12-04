@@ -34,7 +34,7 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>Before there were <a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">REPLs</a>, Mumps always has had something called Direct Mode, which is a simplified REPL. It's also known as Programmer Mode. Normally, end users are not allowed to access Programmer Mode, as it is essentially like running as root on a Unix System.</p>
 <p>To connect to VISTA and start configuring it, you need a terminal emulator. Make sure that your terminal emulator emulates VT-100, VT-220, VT-320 or VT-52. By default, most terminal emulators do that already. You specifically cannot use the rxvt terminal emulator though.</p>
 <p>If you modified your $TERM, you need to make sure it's either <code>xterm</code> or <code>ansi</code>. Others generally will work, but I am sure of these two.</p>
-<p>To get into Direct Mode using Cache, on Windows you need to right click on the Cache Cube and choose Terminal. If you have a licnesed version of Cache, you can also use Telnet to connect to the Terminal. Please note that while you can use Windows Telnet, it does not emulate VT-200 series terminals properly, so you may have some issues. If you want to use Telnet, I recommend downloading PuTTY or TeraTerm.</p>
+<p>To get into Direct Mode using Cache, on Windows you need to right click on the Cache Cube and choose Terminal. If you have a licensed version of Cache, you can also use Telnet to connect to the Terminal. Please note that while you can use Windows Telnet, it does not emulate VT-200 series terminals properly, so you may have some issues. If you want to use Telnet, I recommend downloading PuTTY or TeraTerm.</p>
 <p>PuTTY: <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">http://www.chiark.greenend.org.uk/~sgtatham/putty/</a>.</p>
 <p>TeraTerm: <a href="https://ttssh2.osdn.jp/index.html.en">https://ttssh2.osdn.jp/index.html.en</a>.</p>
 <p>If you use PuTTY, change the function key bindings so that they behave like VT-100+. See here: <a href="https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys">https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys</a>.</p>
@@ -60,7 +60,7 @@ NAMESPACE// <strong>VISTA</strong></code></div>
 <pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> clone https://github.com/shabiel/Kernel-GTM <span class="kw">&amp;&amp;</span> <span class="kw">cd</span> Kernel-GTM
 $ <span class="kw">cp</span> -v <span class="ot">$(</span><span class="kw">git</span> diff --name-only 29bc19..a7565b -- Kernel/Routines<span class="ot">)</span> /var/db/foia201611-gtm/r/</code></pre>
 <h2 id="note-to-cache-users">Note to Cache Users</h2>
-<p>The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA and run the RPC broker, and then connect CPRS; but you won't be able to have more than one session open at once; and you may need to restart Cache repeatedly as it sometimes &quot;forgets&quot; that you logged off.</p>
+<p>The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA but don't try to run the RPC broker. A &quot;friend&quot; wasted so much of my time because he had an evaulation version and couldn't start the RPC broker. You may need to restart Cache repeatedly as it sometimes &quot;forgets&quot; that you logged off.</p>
 <h2 id="commands-and-what-they-mean-a-short-m-primer">Commands and what they mean (a short M primer)</h2>
 <p>In the excerpts below, you will enter Mumps (M) commands into direct mode. Here are a few interesting ones:</p>
 <pre class="sourceCode M"><code>S DUZ=.5 ; S is a shortcut for SET, DUZ means user number; .5 is a user that is always present on VistA systems.
@@ -1213,7 +1213,7 @@ Select NEW PERSON NAME: <strong>&lt;enter&gt;</strong></code></div>
 h='&#34;';a='&#64;';n='&#34;';e=n+a+h;
 document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'&quot;@&quot;'+'<\/'+'a'+'>');
 // -->
-</script><noscript>&#34;&#64;&#34;&#32;&#40;&#34;&#32;&#x61;&#116;&#32;&#34;&#x29;</noscript>, which gives you the equivalent of root priviliges in Fileman. Next, we give ourselves the keys <code>XUMGR</code> (let's you add users and manipulate tasks); <code>XUPROG</code> (let's you edit users [don't ask me why--I have no clue why they put that key there], and install Software); <code>XUPROGMODE</code> (let's you enter programmer mode); and <code>XMMGR</code> (let's you manage mailman). By the way, priviliged users can be given the ability to add new users and assign and take away keys using a mechanism called delegation. I won't cover that here.</p>
+</script><noscript>&#34;&#64;&#34;&#32;&#40;&#34;&#32;&#x61;&#116;&#32;&#34;&#x29;</noscript>, which gives you the equivalent of root priviliges in Fileman. Next, we give ourselves the keys <code>XUMGR</code> (let's you add users and manipulate tasks); <code>XUPROG</code> (let's you edit users [don't ask me why--I have no clue why they put that key there], and install Software); <code>XUPROGMODE</code> (let's you enter programmer mode); <code>XMMGR</code> (let's you manage mailman), <code>XUSPF200</code> (let's you add users without requiring an SSN). By the way, priviliged users can be given the ability to add new users and assign and take away keys using a mechanism called delegation. I won't cover that here.</p>
 <div class="code"><code>><strong>S DUZ=1</strong>
 ><strong>S $P(^VA(200,DUZ,0),"^",4)="@"</strong>
 ><strong>D ^XUP</strong>
@@ -1239,6 +1239,10 @@ Another key: <strong>XUPROGMODE</strong>
 
 Another key: <strong>XMMGR</strong>
 
+Another key: <strong>XMMGR</strong>
+
+Another key: <strong>XUSPF200</strong>
+
 Another key:
 
 Holder of key: <strong>MANAGER,SYSTEM</strong>       SM
@@ -1246,7 +1250,7 @@ Holder of key: <strong>MANAGER,SYSTEM</strong>       SM
 Another holder:
 
 You've selected the following keys:
-XUPROG     XUMGR     XUPROGMODE     XMMGR
+XUPROG     XUMGR     XUPROGMODE     XMMGR   XUSPF200
 
 You've selected the following holders:
 
@@ -1264,6 +1268,9 @@ XUPROGMODE being assigned to:
    MANAGER,SYSTEM
 
 XMMGR being assigned to:
+   MANAGER,SYSTEM
+
+XUSPF200 being assigned to:
    MANAGER,SYSTEM
 
 Select Key Management Option: <strong>&lt;enter&gt;</strong></code></div>
@@ -1336,10 +1343,7 @@ Select Systems Manager Menu <TEST ACCOUNT> Option:</code></div>
 <figure>
 <img src="images/InitializeVistA/pic32.gif" />
 </figure>
-<p>--TBC--</p>
-<p>To stop TaskMan, use <code>D STOP^ZTMKU</code> and answer <code>YES</code> to stopping the submanagers.</p>
-<p>To stop Broker, use <code>D STOP^XWBTCP(9210)</code>. This is the last time you should be using these direct access to the routines to manage VistA. You should be using the menu system from now on to manage starting and stopping Taskman, the background filers and the RPC Broker. That way any code changes, etc., will be accounted for. Programmers will usually enter from the programmer prompt beginning with D ^XUP. The system managers menu option is EVE.</p>
-<h2 id="add-user">Add User</h2>
+<h2 id="add-cprs-user">Add CPRS User</h2>
 <p>The next step is to create a user that can sign on to the CPRS GUI. The things to make sure that this new user has are</p>
 <ul>
 <li>A Secondary menu option of &quot;OR CPRS GUI CHART&quot;</li>
@@ -1351,7 +1355,7 @@ Select Systems Manager Menu <TEST ACCOUNT> Option:</code></div>
 <p>The menu option ensures that the user has the proper permissions to access CPRS after signing in with their ACCESS and VERIFY codes. The Tab access can limit the amount of things a user can access once they have signed in.</p>
 <p>The adding of the user is done through the User Management menu in the menu system, which will ask for information in a series of prompts then will open a Screenman form to complete the task.</p>
 <p>The following steps will add a generic <code>CPRS,USER</code> person who will be able to sign into CPRS.</p>
-<div class="code"><code>><strong>S DUZ=.5 D ^XUP</strong>
+<div class="code"><code>><strong>S DUZ=1 D ^XUP</strong>
 
 Setting up programmer environment
 This is a TEST account.
@@ -1374,9 +1378,6 @@ Select OPTION NAME:  <strong>Systems Manager Menu</strong>
         HL7 Main Menu ...
 
 
-You have PENDING ALERTS
-        Enter  "VA to jump to VIEW ALERTS option
-
 Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>User Management</strong>
 
         Add a New User to the System
@@ -1398,9 +1399,6 @@ Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>User Management</stro
         Reprint Access agreement letter
 
 
-You have PENDING ALERTS
-        Enter  "VA to jump to VIEW ALERTS option
-
 Select User Management <TEST ACCOUNT> Option: <strong>Add a New User to the System</strong>
 Enter NEW PERSON's name (Family,Given Middle Suffix): <strong>CPRS,USER</strong>
   Are you adding 'CPRS,USER' as a new NEW PERSON (the 56TH)? No// <strong>Y</strong>  (Yes)
@@ -1408,22 +1406,30 @@ Checking SOUNDEX for matches.
 No matches found.
 Now for the Identifiers.
 INITIAL: <strong>UC</strong>
-SSN: <strong>000000002</strong>
-SEX: <strong>M</strong>  MALE
+SSN: <strong>&lt;enter&gt;</strong>
+SEX: <strong>F</strong>  FEMALE
 NPI: <strong>&lt;enter&gt;</strong></code></div>
 <p>Once in the ScreenMan form, you will need to set the necessary information mentioned above. Four pieces of information are able to be set on the first page of the ScreenMan form. The arrows are for emphasis to highlight where information needs to be entered and will not show up in the terminal window.</p>
-<p>To add an access or verify codes, you need to first answer <code>Y</code> to the <code>Want to edit ...</code> questions, it will then prompt you to change the codes.</p>
+<p>To add an access or verify codes, you need to first answer <code>Y</code> to the <code>Want to edit ...</code> questions, it will then prompt you to change the codes. Remember to give the user both an access and veify codes; otherwise, they won't be able to log-in.</p>
+<p>Fill in as follows:</p>
+<ul>
+<li>PRIMARY MENU OPTION = XUCORE</li>
+<li>SECONDARY MENU OPTIONS = OR CPRS CHART GUI</li>
+<li>ACCESS CODE = CPRS1234</li>
+<li>VERIFY CODE = USR.1234</li>
+<li>SERVICE/SECTION = IRM</li>
+</ul>
 <div class="code"><code>                            Edit an Existing User
 NAME: CPRS,USER                                                     Page 1 of 5
 _______________________________________________________________________________
    NAME... CPRS,USER                                   INITIAL: UC
     TITLE:                                           NICK NAME:
-      SSN: 000000002                                       DOB:
+      SSN:                                                 DOB:
    DEGREE:                                           MAIL CODE:
   DISUSER:                                     TERMINATION DATE:
   Termination Reason:
 
-           PRIMARY MENU OPTION:
+           PRIMARY MENU OPTION:   <---
  Select SECONDARY MENU OPTIONS:   <---
 Want to edit ACCESS CODE (Y/N):   <---  FILE MANAGER ACCESS CODE:
 Want to edit VERIFY CODE (Y/N):   <---
@@ -1438,11 +1444,35 @@ Enter a command or '^' followed by a caption to jump to a specific field.
 
 COMMAND:                                     Press <PF1>H for help    Insert</code></div>
 <p>To change to other pages, press the down arrow key or &lt;TAB&gt; until the cursor reaches the COMMAND box. Then type <code>N</code> or <code>Next Page</code> and press &amp;lt;enter&amp;gt; to display the next page.</p>
-<p>There is nothing that needs to be set on the second or third pages, but the CPRS Tab Access is set on the fourth page. Navigate the cursor to the location under the <code>Name</code> header and enter <code>COR</code>, which stands <code>for Core Tab Access</code>, and enter an effective date of yesterday, <code>T-1</code> is the notation to use.</p>
+<p>There is nothing that needs to be set on the second page. On the third page, you MUST put in a provider person class (Physician, Nurse, etc; otherwise you won't be able to be a provider on encounters). Navigate to Person Class and then type &quot;PHYSICIAN&quot;, press enter twice, and then choose #1. Press enter once, say yes, and then enter. At this point, you should see the entry; and the effective date should be today.</p>
+<div class="code"><code>                            Edit an Existing User
+NAME: CPRS,USER                                                     Page 3 of 5
+_______________________________________________________________________________
+PROHIBITED TIMES FOR SIGN-ON:                      
+
+           PHONE:                        OFFICE PHONE:                     
+COMMERCIAL PHONE:                          FAX NUMBER:                     
+     VOICE PAGER:                       DIGITAL PAGER:                     
+        LANGUAGE:           
+
+ Person Class                                         Effective     Expired
+
+ Physician Assistants and Advanced Practi          DEC 4,2016                 
+
+
+
+
+_______________________________________________________________________________
+
+Exit    Save    Next Page    Previous Page    Refresh    Quit
+
+Enter a COMMAND, or "^" followed by the CAPTION of a FIELD to jump to.
+COMMAND: e                                       Press <PF1>H for help  Insert</code></div>
+<p>On the fourth page, CPRS Tab Access is set. Navigate first to &quot;RESTRICT PATIENT SELECTION&quot;, set that to &quot;NO&quot;, and then navigate the cursor to the location under the <code>Name</code> header and enter <code>COR</code>, which stands <code>for Core Tab Access</code>, and enter an effective date of yesterday, <code>T-1</code> is the notation to use.</p>
 <div class="code"><code>                            Edit an Existing User
 NAME: CPRS,USER                                                     Page 4 of 5
 _______________________________________________________________________________
-RESTRICT PATIENT SELECTION:        OE/RR LIST:
+RESTRICT PATIENT SELECTION:->      OE/RR LIST:
 
 CPRS TAB ACCESS:
   Name  Description                          Effective Date  Expiration Date
@@ -1462,7 +1492,7 @@ _______________________________________________________________________________
 
 
 COMMAND:                                       Press <PF1>H for help</code></div>
-<p>Once that is done, save and exit the ScreenMan form via the COMMAND box and then answer the final questions regarding access letters, security keys and mail groups:</p>
+<p>Once that is done, save and exit the ScreenMan form via the COMMAND box and then answer the final questions regarding access letters, security keys and mail groups. For security keys, there are two we need to add: ORES and PROVIDER.</p>
 <div class="code"><code>Exit     Save     Next Page     Refresh
 
 Enter a command or '^' followed by a caption to jump to a specific field.
@@ -1471,7 +1501,35 @@ Enter a command or '^' followed by a caption to jump to a specific field.
 COMMAND: <strong>E</strong>                                     Press <PF1>H for help    Insert
 
 Print User Account Access Letter? <strong>NO</strong>
-Do you wish to allocate security keys? NO// <strong>NO</strong>
+Do you wish to allocate security keys? NO// <strong>YES</strong>
+
+Allocate key: <strong>PROVIDER</strong>
+     1   PROVIDER  
+     2   PROVIDER ID EDIT  IB PROVIDER EDIT
+CHOOSE 1-2: <strong>1</strong>  PROVIDER
+
+Another key: <strong>ORES</strong>  
+
+Another key: <strong>&lt;enter&gt;</strong>
+
+Another holder: <strong>&lt;enter&gt;</strong>
+
+You've selected the following keys: 
+
+PROVIDER       ORES
+
+You've selected the following holders: 
+
+CPRS,USER
+
+You are allocating keys.  Do you wish to proceed? YES// <strong>&lt;enter&gt;</strong>
+
+PROVIDER being assigned to:
+     CPRS,USER
+
+ORES being assigned to:
+     CPRS,USER
+
 Do you wish to add this user to mail groups? NO// <strong>NO</strong>
 
 ...
@@ -1479,5 +1537,41 @@ Do you wish to add this user to mail groups? NO// <strong>NO</strong>
 Select User Management <TEST ACCOUNT> Option: <strong>^&lt;enter&gt;</strong>
 ></code></div>
 <p>At this point, CPRS can successfully connect to the local VistA instance and the <code>CPRS,USER</code> will be able to sign on and interact with the GUI.</p>
+<h2 id="downloading-cprs-and-running-it">Downloading CPRS and Running It</h2>
+<p>The next part is laborious and tedious: finding the correct vesion of CPRS to run on your FOIA instance. The first thing is that you need to go into Fileman, and find out what the version of CPRS you need to use is:</p>
+<div class="code"><code>><strong>S DUZ=1 D Q^DI</strong>
+
+
+VA FileMan 22.2
+
+
+Select OPTION: <strong>INQUIRE TO FILE ENTRIES</strong>  
+
+
+
+Output from what File: <strong>19</strong>  OPTION         (10351 entries)
+Select OPTION NAME: <strong>OR CPRS GUI CHART</strong>       CPRSChart version 1.0.30.75
+Another one: <strong>^</strong></code></div>
+<p>Okay. So we need <code>1.0.30.75</code>. So we navigate here: <a href="http://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/">http://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/</a>, and from there, try to guess which version we need. From my version string, it looks like we need version 30. There are two version 30's; so I guess I should choose the latter one.</p>
+<p>At this point, we need to look for a .zip file. Looking through the list, I see</p>
+<ul>
+<li>MHA_501_116_scrubbed.zip</li>
+<li>OR_30_350_scrubbed.zip</li>
+<li>OR_30_350_SRC_scrubbed.zip</li>
+<li>VITL5_P28_scrubbed.zip</li>
+<li>XU_8_0_P641_scrubbed.zip</li>
+</ul>
+<p>The one most likely to contain the CPRS exe is OR_30_350_scrubbed.zip; SRC_scrubbed.zip is the CPRS source code, which also may contain a compiled version.</p>
+<p><em>Please please note that this is what I see when I write this at the end of 2016; what you see in the future will certainly be different.</em></p>
+<p>So I download OR_30_350_scrubbed.zip, and open it. There is a CPRSChart.exe in that one. But what version?</p>
+<p>We can try running it, but you will get an error right away saying that 'borlndmm.dll' is needed.</p>
+<p>You can find 'borlndmm.dll' in the source code download: <a href="http://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/CPRS%20VERSION%2030b/OR_30_350_SRC_scrubbed.zip">http://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/CPRS%20VERSION%2030b/OR_30_350_SRC_scrubbed.zip</a></p>
+<p>Unzip that, and copy borlndmm.dll to the same directory that CPRS is located in.</p>
+<p>Now, try to run CPRS again. You will see the version on the splash screen: in my case, it's <code>1.0.30.72</code>.</p>
+<p>Okay. I am stuck!</p>
+<h2 id="stopping-vista">Stopping VistA</h2>
+<p>To stop TaskMan, use <code>D STOP^ZTMKU</code> and answer <code>YES</code> to stopping the submanagers.</p>
+<p>To stop Broker, use <code>D STOP^XWBTCP(&lt;port no&gt;)</code>.</p>
+<p>To stop mailman, use <code>D STOP^XMKPL</code> and answer <code>YES</code> to stop it.</p>
 </body>
 </html>
