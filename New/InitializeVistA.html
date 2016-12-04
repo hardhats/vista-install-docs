@@ -40,7 +40,9 @@ code > span.er { color: #ff0000; font-weight: bold; }
 <p>If you use PuTTY, change the function key bindings so that they behave like VT-100+. See here: <a href="https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys">https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys</a>.</p>
 <p>On a Mac, Terminal is a fully featured terminal emulator. You may wish to tell it via System Preferences that you want your function keys to send Function commands, rather than dimming your screen or muting your volume. Otherwise, you have to use FN all the time to override the function keys (<a href="https://support.apple.com/en-us/HT204436">https://support.apple.com/en-us/HT204436</a>).</p>
 <p>On Linux, you can use any Terminal Emulator program, with the exception of rxvt. You can actually even use PuTTY on Linux. F1 may be bound to do help. You need to unmap that in the Terminal application. (<a href="http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal">http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal</a>).</p>
+<p>If a VistA system was installed by you or somebody else on the &quot;Cloud&quot;, almost certainly you will need to use SSH (Secure Shell) to log-in. If you use Telnet, there are some existential questions you have to ask yourself. SSH is a protocol written in the mid-90's to replace Telnet. It's the standard of connecting to other computers on the Cloud. Nobody can see the traffic inside of SSH; where as Telnet is just plain text. The ssh client comes installed by default in all Unices; on Windows, you can use PuTTY or TeraTerm.</p>
 <p>After you open your terminal emulator, do the following:</p>
+<p>If you need to connect to a remote server first where your VistA is hosted, do that first.</p>
 <p>On Cache on Linux or Mac, you need to run <code>ccontrol list</code> to find your instance name, and then run <code>csession &lt;instance name&gt;</code>.</p>
 <p>On GT.M, you need to source your environement file (if you followed this guide, it should be in /var/db/&lt;name&gt; as env.vista). To source, type <code>. /var/db/&lt;name&gt;/env.vista</code>. The dot is all by itself. Then type <code>mumps -dir</code> to go into direct mode.</p>
 <p>You will see something like this:</p>
@@ -72,7 +74,7 @@ D Q^DI ; Do starting from Label Q in Routine DI. Q^DI is how to enter Fileman.</
 <p>There are a few confusing conventions that outsiders don't understand right away. Here they are:</p>
 <ul>
 <li><code>//</code> means that the preceding text is the default. If you press enter, you will accept it.</li>
-<li><code>Replace</code> means that the existing text is long and you can edit it. Typing <code>...</code> means that you will replace the entire thing; <code>END</code> appends to the end. You can also use <code>...</code> to signify a range between two elements.</li>
+<li><code>Replace</code> means that the existing text is long and you can edit it. Typing <code>...</code> means that you will replace the entire thing; <code>END</code> appends to the end. You can also use <code>...</code> to signify a range between two elements in the existing text. You can also enter a unique segment of the text, press enter, and at the with prompt put in what you want to replace that bit of text with. If you don't type anything in, it deletes that part of the text.</li>
 <li><code>@</code> deletes an item.</li>
 <li><code>^</code> usually lets you quit what you are in the middle of.</li>
 <li><code>^FIELD NAME</code> lets you jump to a field while editing other fields. You may be blocked depending on what the programmer decides you are allowed to do.</li>
@@ -88,9 +90,9 @@ D Q^DI ; Do starting from Label Q in Routine DI. Q^DI is how to enter Fileman.</
 <p>You need to either invent or be given a few pieces of data:</p>
 <ul>
 <li>What are you going to call your Hospital or Clinic?</li>
-<li>What's your station number? If you use VISTA or RPMS deployed by VA, IHS, or an external vendor; they will assign you your station number. Otherwise, pick a number from 130 to 199; or 971 to 999. These numbers are not used by VISTA. In this guide, we will use 999.</li>
+<li>What's your station number? If you use VISTA or RPMS deployed by VA, IHS, or an external vendor; they will assign you your station number. Otherwise, pick a number from 130 to 199; or 971 to 999. These numbers are not used by the VA in VistA. In this guide, we will use 999.</li>
 <li>What's your domain name? If you have a domain, use it; otherwise, invent one like <code>WWW.HABIEL.NAME</code>.</li>
-<li>What's your parent domain? If you are not part of VA or IHS, your parent domain is <code>FORUM.OSEHRA.ORG</code>.</li>
+<li>What's your parent domain? If you are not part of VA or IHS, you can use OSEHRA Forum: <code>FORUM.OSEHRA.ORG</code>.</li>
 <li>You need to know if you are running on Cache vs GT.M; and what operating system you are running on. If you followed this guide from the very beginning, you would certainly know; but day to day users of VistA have no idea actually what it is running on.</li>
 <li>You need to decide what port number you will have VistA listen on for the RPC Broker. By convention, it's either 9000, 9200, or 9211.</li>
 <li>What's the maximum number of processes that you will allow at once on a VistA system? Today (2016), commodity hardware (a good laptop, for example), can handle up to 200 concurrent processes. I usually set my test instances with a maximum of 30 processes, which is the number I use below.</li>
@@ -876,6 +878,28 @@ Checking Sub-Managers:
    85435  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser
    85441  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser</code></div>
 <p>GT.M:</p>
+<p><code>DO ^ZSY</code>.</p>
+<div class="code"><code>
+Proc. id Proc. name      PS  Device   Routine            MODE     CPU time
+-------- --------------- --- -------- --------           -------  
+8757     Sub 8757        hib          GETTASK+3^%ZTMS1   -direct  00:00:00
+                             0 OPEN RMS STREAM NOWRAP :
+                             0-out OPEN RMS STREAM NOWRAP :
+8771                     S+  pts/1    JOBSET+9^ZSY       -dir     00:00:00
+                             /dev/pts/1 OPEN TERMINAL CTRA=$C(3) NOPAST NOESCA 
+                             ps OPEN PIPE SHELL="/bin/sh" COMMAND="ps eo pid,tt
+28250    Taskman ROU 1   hib          IDLE+3^%ZTM        -direct  00:55:38
+                             0 OPEN RMS STREAM NOWRAP :
+                             0-out OPEN RMS STREAM NOWRAP :
+28311    BTask 619367    hib          GO+12^XMTDT        -direct  00:06:54
+                             0 OPEN RMS STREAM NOWRAP :
+                             0-out OPEN RMS STREAM NOWRAP :
+29662    BTask 619368    hib          GO+26^XMKPLQ       -direct  00:06:39
+                             0 OPEN RMS STREAM NOWRAP :
+                             0-out OPEN RMS STREAM NOWRAP :
+
+Total 5 users.</code></div>
+<p>If you don't have ^ZSY on GT.M, try this: it does what ZSY does:</p>
 <div class="code"><code>><strong>K ^XUTL("XUSYS")</strong>
 ><strong>zsy "kill -SIGUSR1 $(lsof -t ${vista_home}/g/mumps.dat)"</strong>
 
@@ -893,8 +917,196 @@ Checking Sub-Managers:
 ^XUTL("XUSYS",81954,"INTERRUPT")="LOOP+2^HLCSMM1"
 ^XUTL("XUSYS",81970,"INTERRUPT")="PAUSE+1^HLUOPTF2"
 ^XUTL("XUSYS",81974,"INTERRUPT")="GO+28^XMTDL"</code></div>
+<h2 id="setup-your-institution">Setup your Institution</h2>
+<p>VistA has a very complex structure to deal with the question of: in what hospital are you signed in right now? The answer determines the value of the all important variable <code>DUZ(2)</code> and the API <code>SITE^VASITE()</code>.</p>
+<p>There are four files that are important in that regard: INSTITUTION (#4), STATION NUMBER (TIME SENSITIVE) (#389.9), KERNEL SYSTEM PARAMETERS (#8989.3), and the MEDICAL CENTER DIVISION file (#40.8). We will add our Hopstial to the INSTITUTION file first, with the station number 999. Then we will make sure that the STATION NUMBER file says 999; and then will will point the KERNEL SYSTEM PARAMETERS and MEDICAL CENTER DIVISION to our new Hospital.</p>
+<p>Bt default, FOIA VistA comes with station number 050, and the institution is called SOFTWARE SERVICE. We can't leave that alone because VistA malfunctions with station numbers are are just 2 digits long (050 becomes 50 in code).</p>
+<p>The INSITUTION file is protected from editing by requiring the variable XUMF to be defined. That tells us that inside of the VA, the file is updated by something called Standard Terminology Services (STS), which works by sending VistA mail messages of what to update, and VistA creates the entry based on that mail message. Normally when you see that, you should stay the hell out of the file: it's standardized and should not be tampered with. However, people outside of the VA have no other way to run VistA without updating this file.</p>
+<p>We enter Fileman after setting the XUMF variable. Note that in the US, we are supposed to fill the NPI variable, and Fileman won't let me go further without filling it; but I was able to jump forward to avoid answering it. Also, note that we have to fill the STATION NUMBER entry twice, once in the field named so, and another time in the coding system multiple.</p>
+<div class="code"><code>><strong>S DUZ=.5,XUMF=1 D Q^DI</strong>
+
+
+VA FileMan 22.2
+
+
+Select OPTION: <strong>ENTER OR EDIT FILE ENTRIES</strong> 
+
+
+
+Input to what File: OPTION SCHEDULING// <strong>4</strong>  INSTITUTION
+                                          (2535 entries)
+
+EDIT WHICH FIELD: ALL// <strong>NAME</strong>  
+THEN EDIT FIELD: <strong>STATE</strong>
+     1   STATE  
+     2   STATE (MAILING)  
+CHOOSE 1-2: <strong>1</strong>  STATE
+THEN EDIT FIELD: <strong>SHORT</strong> NAME  
+THEN EDIT FIELD: <strong>.06</strong>  VA TYPE CODE
+THEN EDIT FIELD: <strong>1.01</strong>  STREET ADDR. 1
+THEN EDIT FIELD: <strong>1.02</strong>  STREET ADDR. 2
+THEN EDIT FIELD: <strong>1.03</strong>  CITY
+THEN EDIT FIELD: <strong>1.04</strong>  ZIP
+THEN EDIT FIELD: <strong>5</strong>  MULTI-DIVISION FACILITY
+THEN EDIT FIELD: <strong>11</strong>  STATUS
+THEN EDIT FIELD: <strong>41.99</strong>  NPI
+THEN EDIT FIELD: <strong>52</strong>  FACILITY DEA NUMBER
+THEN EDIT FIELD: <strong>52.1</strong>  FACILITY DEA EXPIRATION DATE
+THEN EDIT FIELD: <strong>60</strong>  DOMAIN
+THEN EDIT FIELD: <strong>95</strong>  AGENCY CODE
+THEN EDIT FIELD: <strong>99</strong>  STATION NUMBER
+THEN EDIT FIELD: <strong>9999</strong>  IDENTIFIER  (multiple)
+   EDIT WHICH IDENTIFIER SUB-FIELD: ALL// <strong>&lt;enter&gt;</strong>
+
+Select INSTITUTION NAME: <strong>PALM DESERT HOSPITAL</strong>
+  Are you adding 'PALM DESERT HOSPITAL' as a new INSTITUTION (the 2536TH)? No// <strong>Y</strong>
+  (Yes)
+STATE: <strong>CA</strong>
+     1   CALIFORNIA  
+     2   CANADA  
+CHOOSE 1-2: <strong>1</strong>  CALIFORNIA
+SHORT NAME: <strong>PDH</strong>??
+     ANSWER MUST BE 4-80 CHARACTERS IN LENGTH
+SHORT NAME: <strong>PALDH</strong>
+VA TYPE CODE: <strong>MC</strong>  HOSP
+STREET ADDR. 1: <strong>111 ANY LANE</strong>
+STREET ADDR. 2: <strong>&lt;enter&gt;</strong>
+CITY: <strong>PALM DESERT</strong> 
+ZIP: <strong>92211</strong>
+MULTI-DIVISION FACILITY: <strong>N</strong>  NO
+STATUS: <strong>N</strong>  National
+NPI: <strong>&lt;enter&gt;</strong>??
+     Answer must be 10 characters in length and not being used.
+NPI: <strong>&lt;enter&gt;</strong>?
+     Answer must be 10 characters in length and not being used.
+NPI: <strong>^FACIL</strong>
+     1   FACILITY DEA EXPIRATION DATE  
+     2   FACILITY DEA NUMBER  
+     3   FACILITY TYPE  
+CHOOSE 1-3: <strong>2</strong>  FACILITY DEA NUMBER
+FACILITY DEA NUMBER: <strong>&lt;enter&gt;</strong>
+FACILITY DEA EXPIRATION DATE: <strong>&lt;enter&gt;</strong>
+DOMAIN: <strong>DEMO.OSEHRA.ORG</strong>  
+AGENCY CODE: <strong>E</strong>  EHR
+STATION NUMBER: <strong>999</strong>
+Select CODING SYSTEM: <strong>VASTANUM</strong>
+   CODING SYSTEM ID: <strong>999</strong>
+  ID: 999// <strong>&lt;enter&gt;</strong>
+  EFFECTIVE DATE/TIME: <strong>N</strong>  (DEC 03, 2016)
+  STATUS: <strong>?</strong>
+     Choose from: 
+       1        ACTIVE
+       0        INACTIVE
+  STATUS: <strong>1</strong>  ACTIVE
+
+
+Select INSTITUTION NAME: <strong>&lt;enter&gt;</strong></code></div>
+<p>Next, we will tackle the STATION NUMBER file. We technically can create an new entry; but I would just rather reuse the existing entry, which I do by typing <code>`1</code>.</p>
+<div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES  
+
+
+
+Input to what File: INSTITUTION// <strong>STATION NUMBER</strong> (TIME SENSITIVE)  
+                                          (1 entry)
+EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
+
+
+Select STATION NUMBER (TIME SENSITIVE) REFERENCE NUMBER: <strong>?</strong>
+    Answer with STATION NUMBER (TIME SENSITIVE), or REFERENCE NUMBER, or
+        EFFECTIVE DATE, or MEDICAL CENTER DIVISION:
+   50        01-01-82     DBA     050
+
+        You may enter a new STATION NUMBER (TIME SENSITIVE), if you wish
+        Type a Number between 1 and 9999, 0 Decimal Digits
+
+Select STATION NUMBER (TIME SENSITIVE) REFERENCE NUMBER: <strong>`1</strong>  50     01-01-82    
+ DBA     050
+REFERENCE NUMBER: 50// <strong>999</strong>
+EFFECTIVE DATE: JAN 1,1982// <strong>&lt;enter&gt;</strong>
+MEDICAL CENTER DIVISION: DBA// <strong>?</strong>
+    Answer with MEDICAL CENTER DIVISION NUM, or NAME, or FACILITY NUMBER, or
+        TREATING SPECIALTY:
+   1            DBA     050
+
+MEDICAL CENTER DIVISION: DBA// <strong>&lt;enter&gt;</strong>
+STATION NUMBER: 050// <strong>999</strong>
+IS PRIMARY DIVISION: YES// <strong>&lt;enter&gt;</strong>
+INACTIVE: <strong>&lt;enter&gt;</strong>
+OTHER INSTITUTION: <strong>&lt;enter&gt;</strong>
+INTEGRATION NAME: <strong>&lt;enter&gt;</strong>
+
+Select STATION NUMBER (TIME SENSITIVE) REFERENCE NUMBER: <strong>&lt;enter&gt;</strong></code></div>
+<p>Next, the KERNEL SYSTEM PARAMETERS file:</p>
+<div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES  
+
+
+
+Input to what File: STATION NUMBER (TIME SENSITIVE)// <strong>KERNEL SYSTEM PARAMETERS</strong>  
+                                          (1 entry)
+EDIT WHICH FIELD: ALL// <strong>DEFAULT INSTITUTION</strong>  
+THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
+
+
+Select KERNEL SYSTEM PARAMETERS DOMAIN NAME: <strong>`1</strong>  FOIA.DOMAIN.EXT
+DEFAULT INSTITUTION: SOFTWARE SERVICE// <strong>PALM DES</strong>
+     1   PALM DESERT CBOC      CA  CBOC      605GC  
+     2   PALM DESERT HOSPITAL    CA          999  
+CHOOSE 1-2: <strong>2</strong>  PALM DESERT HOSPITAL  CA      999  
+
+
+Select KERNEL SYSTEM PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code></div>
+<p>Next, the MEDICAL CENTER DIVISION file:</p>
+<div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES  
+
+Input to what File: KERNEL SYSTEM PARAMETERS// <strong>MEDICAL CENTER DIVISION</strong>  
+                                          (1 entry)
+
+EDIT WHICH FIELD: ALL// <strong>.01</strong>  NAME
+THEN EDIT FIELD: <strong>.07</strong>  INSTITUTION FILE POINTER
+THEN EDIT FIELD: <strong>1</strong>  FACILITY NUMBER
+
+
+
+Select MEDICAL CENTER DIVISION NAME: <strong>`1</strong>  DBA     050
+NAME: DBA// <strong>MAIN CAMPUS</strong>
+INSTITUTION FILE POINTER: SOFTWARE SERVICE// <strong>PALM DESERT HOSPITAL</strong>    CA    999  
+FACILITY NUMBER: 050// <strong>999</strong>
+
+
+Select MEDICAL CENTER DIVISION NAME:<strong>&lt;enter&gt;</strong></code></div>
+<p>At this point, we are ready to check our work. First, we need to know the internal entry number (IEN) of the institution we just created:</p>
+<div class="code"><code>Select OPTION: <strong>INQ</strong>UIRE TO FILE ENTRIES
+
+
+Output from what File: MEDICAL CENTER DIVISION// <strong>4</strong>  INSTITUTION
+                                          (2536 entries)
+Select INSTITUTION NAME: <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>   PALM DESERT HOSPITAL  CA    999  
+Another one: <strong>&lt;enter&gt;</strong>
+Standard Captioned Output? Yes// <strong>N</strong>  (No)
+First Print FIELD: <strong>NUMBER</strong>
+Then Print FIELD: <strong>&lt;enter&gt;</strong>
+Heading (S/C): INSTITUTION List// <strong>&lt;enter&gt;</strong>
+INSTITUTION List                                     DEC 03, 2016@20:33   PAGE 1
+NUMBER
+--------------------------------------------------------------------------------
+
+2957</code></div>
+<p>Okay, let's kill our symbol table (the table that keeps our current variables), log-in, and then run <code>$$SITE^VASITE</code>.</p>
+<div class="code"><code>><strong>K  S DUZ=.5 D ^XUP</strong>
+
+Setting up programmer environment
+This is a TEST account.
+
+Terminal Type set to: C-VT100
+
+Select OPTION NAME: <strong>&lt;enter&gt;</strong>
+><strong>W DUZ(2)</strong>
+2957
+><strong>W $$SITE^VASITE()</strong>
+2957^PALM DESERT HOSPITAL^999</code></div>
+<p>As you can see, our DUZ(2) matches our site number, and $$SITE^VASITE() gives us the correct site number and station number.</p>
 <h2 id="setup-rpc-broker">Setup RPC Broker</h2>
-<p>The next step is to edit entries in the RPC Broker Site Parameters file and the Kernel System Parameters file. The RPC Broker steps will set up information that references both the the Port that the listener will listen on and the Box Volume pair of the instance.</p>
+<p>Next, we set-up a port that CPRS can connect to. What CPRS connects to is the Remote Procedure Calls Broker, and it connects using Remote Procedures. The next step is to edit entries in the RPC Broker Site Parameters file. The RPC Broker steps will set up information that references both the the Port that the listener will listen on and the Box Volume pair of the instance.</p>
 <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
 
 VA FileMan 22.0
@@ -910,134 +1122,63 @@ THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
 Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>DEMO.OSEHRA.ORG</strong>
         ...OK? Yes// <strong>Y</strong>   (Yes)
 
-Select BOX-VOLUME PAIR: // <strong>VISTA:CACHE</strong>
+Select BOX-VOLUME PAIR: VISTA:CACHE// <strong>&lt;enter&gt;</strong>
   BOX-VOLUME PAIR: VISTA:CACHE//
-  Select PORT: <strong>9210</strong>
-  Are you adding '9210' as a new PORT (the 1ST for this LISTENER)? No// <strong>Y</strong>  (Yes)
-    TYPE OF LISTENER: <strong>1</strong>  New Style</code></div>
-<p>The final questions of this section asks if the listener should be started and then if it should be controlled by the Listener starter.</p>
-<p>The answer to these questions is dependent on the MUMPS platform that is in use:</p>
-<h3 id="on-caché-1">On Caché</h3>
-<p>Caché systems can use the Listener Starter to control the RPC Broker Listener.</p>
-<div class="code"><code>  STATUS: STOPPED// <strong>1</strong> START
-        Task: RPC Broker Listener START on VISTA-VISTA:CACHE, port 9210
-        has been queued as task 1023
-  CONTROLLED BY LISTENER STARTER: <strong>1</strong>  YES
+  Select PORT: <strong>9000</strong>
+  Are you adding '9000' as a new PORT (the 1ST for this LISTENER)? No// <strong>Y</strong>  (Yes)
+    TYPE OF LISTENER: <strong>1</strong>  New Style
+  STATUS: STOPPED// 
+  CONTROLLED BY LISTENER STARTER: <strong>Y</strong>  YES
+
 
 Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code></div>
-<h3 id="on-gt.m">On GT.M</h3>
-<p>Since GT.M systems do not use the Listener as Caché systems, we will answer <code>No</code> or <code>0</code> to both of those questions. More information on setting up the listener for GT.M will follow.</p>
-<div class="code"><code>  STATUS: STOPPED// <strong>&lt;enter&gt;</strong>
-  CONTROLLED BY LISTENER STARTER: <strong>0</strong>  No
-
-Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code></div>
-<h2 id="start-rpc-broker">Start RPC Broker</h2>
-<h3 id="on-caché-2">On Caché</h3>
-<p>The OSEHRA setup scrpt will also start the RPC Broker Listener which CPRS uses to communicate with the VistA instance. These steps only happen on platforms with a Caché instance. They create a task for the XWB Listener Starter that will be run when the Task Manager is started.</p>
-<div class="code"><code>><strong>S DUZ=.5 D ^XUP</strong>
+<p>Now, start the listener:</p>
+<div class="code"><code>><strong>D ^XUP</strong>
 
 Setting up programmer environment
 This is a TEST account.
 
-Terminal Type set to: C-VT220
+Terminal Type set to: C-VT100
 
-Select OPTION NAME: <strong>Systems Manager Menu</strong>  EVE    Systems Manager Menu
-
-
-        Core Applications ...
-        Device Management ...
-        Menu Management ...
-        Programmer Options ...
-        Operations Management ...
-        Spool Management ...
-        Information Security Officer Menu ...
-        Taskman Management ...
-        User Management ...
-        Application Utilities ...
-        Capacity Planning ...
-        HL7 Main Menu ...
-
-
-You have PENDING ALERTS
-        Enter  "VA to jump to VIEW ALERTS option
-
-Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>Taskman Management</strong>
-
-
-        Schedule/Unschedule Options
-        One-time Option Queue
-        Taskman Management Utilities ...
-        List Tasks
-        Dequeue Tasks
-        Requeue Tasks
-        Delete Tasks
-        Print Options that are Scheduled to run
-        Cleanup Task List
-        Print Options Recommended for Queueing
-
-
-You have PENDING ALERTS
-        Enter  "VA to jump to VIEW ALERTS option
-
-Select Taskman Management <TEST ACCOUNT> Option: <strong>Schedule/Unschedule Options</strong>
-
-Select OPTION to schedule or reschedule: <strong>XWB LISTENER STARTER</strong>    
+Select OPTION NAME: <strong>XWB LISTEN</strong>
+     1   XWB LISTENER EDIT       RPC Listener Edit
+     2   XWB LISTENER STARTER       Start All RPC Broker Listeners
+     3   XWB LISTENER STOP ALL       Stop All RPC Broker Listeners
+CHOOSE 1-3: <strong>2</strong>  XWB LISTENER STARTER     Start All RPC Broker Listeners
 Start All RPC Broker Listeners
-       ...OK? Yes// <strong>Y</strong>  (Yes)
-    (R)
-</code></div>
-<p>After answering that question another ScreenMan form will open with six options. To have the XWB Listener Starter be run on the start up of Taskman, enter <code>STARTUP</code> as the value for <code>SPECIAL QEUEING</code>:</p>
-<div class="code"><code>                        Edit Option Schedule
-  Option Name: XWB LISTENER STARTER
-  Menu Text: Start All RPC Broker Listeners            TASK ID:
-__________________________________________________________________________
+          Task: RPC Broker Listener START on VAH-ROU:Macintosh, port 9000
+          has been queued as task 32372</code></div>
+<p>Finally, we need to check that the broker started. While many people use ^%SS or ^ZSY to find that out, I prefer OS level tools that show me the port is active.</p>
+<p>On Mac or Linux, you can run <code>lsof -iTCP -sTCP:LISTEN -P</code>; on Linux, <code>netstat -tnlp</code>. On Windows (including Cygwin), <code>netstat -aon | find /i &quot;listening&quot;</code>. Here's an example output on a Mac:</p>
+<div class="code"><code>$ lsof -iTCP -sTCP:LISTEN -P
+COMMAND   PID USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
+mumps   85939  sam    6u  IPv6 0x5ee953ac0e7fceab      0t0  TCP \*:9000 (LISTEN)</code></div>
+<p>If you shut down your system, and then use bring it back up, starting Taskman using <code>^ZTMB</code> will start your broker, as we set it up previously as one of the startup tasks.</p>
+<p>Back to business: To check that the RPC Broker is REALLY working, run <code>DO ^XWBTCPMT</code>.</p>
+<div class="code"><code>><strong>D ^XWBTCPMT</strong>
 
-  QUEUED TO RUN AT WHAT TIME:
+Interactive Broker Test
+IP ADDRESS: <strong>127.0.0.1</strong>
+PORT: <strong>9000</strong>
 
-DEVICE FOR QUEUED JOB OUTPUT:
+Success, response: accept</code></div>
+<p>Our response was &quot;Success&quot;. You may get &quot;Fail&quot; if you don't succeed. If that happens, I have written a page on troubleshooting the Broker in VistAPedia: <a href="http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting">http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting</a>.</p>
+<p>To stop the broker, <code>do ^XUP</code>, and then choose <code>XWB LISTENER STOP ALL</code>:</p>
+<div class="code"><code>><strong>D ^XUP</strong>
+Setting up programmer environment
+This is a TEST account.
 
- QUEUED TO RUN ON VOLUME SET:
+Terminal Type set to: C-VT100
 
-      RESCHEDULING FREQUENCY:
-
-             TASK PARAMETERS:
-
-      ----> SPECIAL QUEUEING:
-
-_______________________________________________________________________________
-Exit     Save     Next Page     Refresh
-
-Enter a command or '^' followed by a caption to jump to a specific field.
-
-
-COMMAND:                                      Press <PF1>H for help    Insert</code></div>
-<p>To save the information put the ScreenMan form, navigate to the <code>COMMAND</code> entry point and enter <code>S</code> or <code>Save</code>. The same input location is used to exit, with an <code>E</code> or <code>Exit</code> to leave the form.</p>
-<div class="code"><code>Select OPTION to schedule or reschedule: <strong>&lt;enter&gt;</strong>
-
-
-        Schedule/Unschedule Options
-        One-time Option Queue
-        Taskman Management Utilities ...
-        List Tasks
-        Dequeue Tasks
-        Requeue Tasks
-        Delete Tasks
-        Print Options that are Scheduled to run
-        Cleanup Task List
-        Print Options Recommended for Queueing
-
-
-You have PENDING ALERTS
-        Enter  "VA to jump to VIEW ALERTS option
-
-Select Taskman Management <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong>
-
-Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong></code></div>
-<h2 id="start-taskman">Start TaskMan</h2>
-<p>The Task Manager is an integral part of a running VistA instance. It lets actions and users schedule tasks to be performed at certain times or after certain trigger events. The XWB Listener Starter example is one example of scheduling a task.</p>
-<div class="code"><code>><strong>D ^ZTMB</strong></code></div>
+Select OPTION NAME: <strong>XWB LISTENER STOP ALL</strong>       Stop All RPC Broker Listeners
+Stop All RPC Broker Listeners</code></div>
+<p>If you run <code>lsof -iTCP -sTCP:LISTEN -P</code> again, you won't see any output.</p>
+<p>Independent of our set-up above, we can start the broker at any port we want from direct mode using <code>J ZISTCP^XWBTCPM1(&lt;port no&gt;)</code>.</p>
+<p>To test the broker from the client side, you can download the Broker SDK from the FOIA site: <a href="http://foia-vista.osehra.org/Patches_By_Application/XWB-RPC%20BROKER/XWB_1_1_P60_scrubbed.zip">http://foia-vista.osehra.org/Patches_By_Application/XWB-RPC%20BROKER/XWB_1_1_P60_scrubbed.zip</a></p>
+<p>Once you unzip it, you will find this file: <code>./Samples/BrokerEx/BrokerExample.exe</code>. Run this, replace the server name and port with your ip address and port, and then click on connect.</p>
+<p>--TBC--</p>
 <h2 id="set-yourself-up-as-the-system-manager">Set Yourself Up as the System Manager</h2>
-<p>This is a super user who will have elevated privileges. You can add other users such as Physicians, Pharmacists, etc. later. Set up the System Manager user with minimal information. We will add more information later.</p>
+<p>This is a super user who will have elevated privileges. You can add other users such as Physicians, Pharmacists, etc. later. Set up the System Manager user with minimal information. We will add more information later. By convention, the super user has a DUZ of 1. So far we have been using the DUZ of .5. We have to use it one last time to make the system manager. Your access code is really your username. I set it up as SM1234, but you can put whatever you like. Go back into Fileman using <code>S DUZ=.5 D Q^DI</code>:</p>
 <div class="code"><code>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
 
 INPUT TO WHAT FILE: RPC BROKER PARAMETERS// <strong>200</strong>   NEW PERSON
@@ -1046,12 +1187,8 @@ EDIT WHICH FIELD: ALL// <strong>.01</strong>   NAME
 THEN EDIT FIELD: <strong>ACCESS CODE</strong>   Want to edit ACCESS CODE (Y/N)
 THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
 
-Select NEW PERSON NAME: <strong>MANAGER,SYSTEM</strong>
-  Are you adding 'MANAGER,SYSTEM' as a new NEW PERSON (the 3RD)? No// <strong>Y</strong>   (Yes)
-Checking SOUNDEX for matches.
-No matches found.
-  NEW PERSON INITIAL: <strong>SM</strong>
-  NEW PERSON MAIL CODE: <strong>&lt;enter&gt;</strong>
+Select NEW PERSON NAME: <strong>`1</strong>  USER,ONE
+NAME: USER,ONE// <strong>MANAGER,SYSTEM</strong>
 Want to edit ACCESS CODE (Y/N): <strong>Y</strong>
 Enter a new ACCESS CODE <Hidden>: <strong>******</strong>
 Please re-type the new code to show that I have it right: <strong>******</strong>
@@ -1060,7 +1197,16 @@ The VERIFY CODE has been deleted as a security measure.
 The user will have to enter a new one the next time they sign-on.
 
 Select NEW PERSON NAME: <strong>&lt;enter&gt;</strong></code></div>
-<p>Next give your user privileges appropriate for a system manager.</p>
+<p>Next give your user privileges appropriate for a system manager. This brings us to VistA's security system.</p>
+<p>VistA menu tree is built just like the Windows Registry: Folders (known as menus) which contain other folders or actual items which you can run. Each menu is like a door: it has a &quot;key&quot; which locks it; or it could be one of those sliding doors which doesn't have keys. A key to a door (ahem, menu) protects all the subsequent doors beyond the first door. If you lock the first door, you can keep the doors below it open. When we ran <code>DO ^XUP</code>, what we really did was that we went into the menu system.</p>
+<p>Keys are also checked by runtime code in order to give priviliges when performing certain operations. It's a very common practice in VistA for all users to have access to something, but only the holders of specific keys can perform certain actions. For example, all Lab users have &quot;LRLAB&quot;; but only those credentialed as Lab Technicians will have &quot;LRVERIFY&quot; to release the result.</p>
+<p>Let's enlarge our analogy a bit: Users of the VistA system can be assigned a specific door to enter into: This is known as their PRIMARY MENU. A prevalent practice is to give everybody the PRIMARY MENU of <code>XUCORE</code>, which is analogous to a City Portal. Once you say who you are (ACCESS CODE) and your password (VERIFY CODE), you enter the City (XUCORE) and you can only enter the building for which you have the key.</p>
+<p>What we do below is a couple of things: We give ourselves the Fileman Access Code (different from ACCESS CODE) of <script type="text/javascript">
+<!--
+h='&#34;';a='&#64;';n='&#34;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'&quot;@&quot;'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#34;&#64;&#34;&#32;&#40;&#34;&#32;&#x61;&#116;&#32;&#34;&#x29;</noscript>, which gives you the equivalent of root priviliges in Fileman. Next, we give ourselves the keys <code>XUMGR</code> (let's you add users and manipulate tasks); <code>XUPROG</code> (let's you edit users [don't ask me why--I have no clue why they put that key there], and install Software); <code>XUPROGMODE</code> (let's you enter programmer mode); and <code>XMMGR</code> (let's you manage mailman). By the way, priviliged users can be given the ability to add new users and assign and take away keys using a mechanism called delegation. I won't cover that here.</p>
 <div class="code"><code>><strong>S DUZ=1</strong>
 ><strong>S $P(^VA(200,DUZ,0),"^",4)="@"</strong>
 ><strong>D ^XUP</strong>
@@ -1114,41 +1260,7 @@ XMMGR being assigned to:
    MANAGER,SYSTEM
 
 Select Key Management Option: <strong>&lt;enter&gt;</strong></code></div>
-<h2 id="set-up-more-parameters">Set Up More Parameters</h2>
-<p>These are parameters that are more applicable to the VistA application software. If you are planning to use the VistA applications such as Registration, Scheduling etc. you need to add new Institution to the INSTITUTION File.</p>
-<div class="code"><code>><strong>S XUMF=1 D Q^DI</strong>
-
-VA FileMan 22.0
-
-Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
-
-INPUT TO WHAT FILE: NEW PERSON// <strong>4</strong>   INSTITUTION (27 entries)
-EDIT WHICH FIELD: ALL// <strong>STATION NUMBER</strong>
-THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
-
-Select INSTITUTION NAME: <strong>VISTA HEALTH CARE</strong>
-  Are you adding 'VISTA HEALTH CARE' as a new INSTITUTION (the 28TH)? No// <strong>Y</strong>   (Yes)
-STATION NUMBER: <strong>6100</strong>
-
-Select INSTITUTION NAME:<strong>&lt;enter&gt;</strong></code></div>
-<p>Then you need to add a Medical Center Division.</p>
-<div class="code"><code>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
-
-INPUT TO WHAT FILE: INSTITUTION// <strong>40.8</strong>   MEDICAL CENTER DIVISION (1 entry)
-EDIT WHICH FIELD: ALL// <strong>FACILITY NUMBER</strong>
-THEN EDIT FIELD: <strong>INSTITUTION FILE POINTER</strong>
-THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
-
-Select MEDICAL CENTER DIVISION NAME: <strong>VISTA MEDICAL CENTER</strong>
-   Are you adding 'VISTA MEDICAL CENTER' as
-   a new MEDICAL CENTER DIVISION (the 2ND)? No// <strong>Y</strong>   (Yes)
-   MEDICAL CENTER DIVISION NUM: 2// <strong>&lt;enter&gt;</strong>
-   MEDICAL CENTER DIVISION FACILITY NUMBER: <strong>6100A</strong>
-FACILITY NUMBER: 6100A//v<strong>&lt;enter&gt;</strong>
-INSTITUTION FILE POINTER:<strong> VISTA HEALTH CARE</strong>    6100
-
-Select MEDICAL CENTER DIVISION NAME: <strong>&lt;enter&gt;</strong></code></div>
-<p>You are now ready to enter additional information for the system manager user like PRIMARY MENU, VERIFY CODE etc.</p>
+<p>You are now ready to enter additional information for the system manager user like PRIMARY MENU, VERIFY CODE etc. You MUST enter a VERIFY CODE, otherwise, you won't be able to log in.</p>
 <div class="code"><code>><strong>D ^XUP</strong>
 
 Setting up programmer environment
@@ -1160,142 +1272,64 @@ Select OPTION NAME: <strong>XUSERED</strong>
 CHOOSE 1-2: <strong>1</strong> XUSEREDIT  Edit an Existing User
 Edit an Existing User
 Select NEW PERSON NAME: <strong>MANAGER,SYSTEM</strong>    SM</code></div>
-<p>Now you will be presented with a screen with multiple options. You can navigate the screen with the TAB key. For navigation help, use your keyboard arrows to move down to the command line and hold down either the Num Lock key (which is mapped as PF1 of a VT-320 terminal by Caché) or F1 for other terminal emulations and hit &quot;H&quot; and then Enter for help. You can exit by typing &quot;^&quot; on the command line and the change you made will be saved. At a minimum, assign EVE as the PRIMARY MENU and enter IRM (it's the only choice) as SERVICE/SECTION. If you plan to use CPRS, enter OR CPRS GUI CHART as a SECONDARY MENU OPTION. Enter other data as you deem appropriate.</p>
+<p>Now you will be presented with a screen with multiple options. You can navigate the screen with the TAB key. For navigation help, use your keyboard arrows to move down to the command line and hold down either the Num Lock key (which is mapped as PF1 of a VT-320 terminal by Caché) or F1 for other terminal emulations and hit &quot;H&quot; and then Enter for help. You can exit by typing &quot;^&quot; on the command line and the change you made will be saved. At a minimum, assign EVE as the PRIMARY MENU and enter IRM (it's the only choice) as SERVICE/SECTION. If you plan to use CPRS, enter OR CPRS GUI CHART as a SECONDARY MENU OPTION. Enter other data as you deem appropriate. If DISUSER or Termination Reason is set, use the '@' to delete both of them.</p>
 <figure>
 <img src="images/InitializeVistA/pic25.gif" />
 </figure>
-<p>Type &quot;N&quot;EXT PAGE at COMMAND: to go to page 2 to update the TIMED READ field and other fields you wish to update. For DEFAULT TIMED-READ (SECONDS): if you change it to 3600 you will be allow an hour before being automatically signed off. It makes it easier to work when you are learning and setting things up.</p>
-<p>Press &lt;PF1&gt; refers to notations for use of Vista on Terminals. For example, the original VT-320 keyboard had additional character sets and keys which include Find, Select, Insert, Remove, Previous Screen, Next Screen, an arrow cluster and F1 to F20. With Caché, the Keys are &quot;mapped&quot;, which means when you push a given key it acts as the key would in a terminal. For instance, F1, F2, F3 and F4 are equivalent to the PF1, PF2, PF3 and PF4 keys on the terminal keyboard and Page Up and Page Down on the computer keyboard correspond to Previous Screen and Next Screen. A listing of other mappings can be found at the Caché Cube Terminal window under Help and search Keyboard Mappings. Also there is lots of information about terminal if you are interested at www.VT100.net.</p>
+<p>Type &quot;N&quot;EXT PAGE at COMMAND: to go to page 2 to update the TIMED READ field and other fields you wish to update. For DEFAULT TIMED-READ (SECONDS): if you change it to 3600 you will be allow an hour before being automatically signed off. It makes it easier to work when you are learning and setting things up. And for God's sake, please make sure that your Preferred Editor is <code>SCREEN EDITOR - VA FILEMAN</code>, otherwise you can only edit a line of text at a time.</p>
+<p>Press &lt;PF1&gt; refers to notations for use of Vista on Terminals. For example, the original VT-320 keyboard had additional character sets and keys which include Find, Select, Insert, Remove, Previous Screen, Next Screen, an arrow cluster and F1 to F20. With Terminal Emulators, the Keys are &quot;mapped&quot;, which means when you push a given key it acts as the key would in a terminal. For instance, F1, F2, F3 and F4 are equivalent to the PF1, PF2, PF3 and PF4 keys on the terminal keyboard and Page Up and Page Down on the computer keyboard correspond to Previous Screen and Next Screen. Also there is lots of information about terminal if you are interested at <a href="http://www.vt100.net">http://www.vt100.net</a>. Also, the very beginning of this document tells you what are the recommended terminal emulators to use.</p>
 <figure>
 <img src="images/InitializeVistA/pic26.gif" />
 </figure>
-<h2 id="set-up-menus-for-the-system-manager">Set Up Menus for the System Manager</h2>
-<p>EVE is the System Manager menu and XUCOMMAND is a common menu available to all users.</p>
-<p>The next step is to make FileMan, MailMan, and Manage MailMan menus accessible to the System Manager user from the menu system. From the VISTA prompt, type <code>D ^XUP</code>. At Select OPTION NAME: enter <code>XUMAINT</code>. Then at Select Menu Management, type <code>EDIT OPTIONS</code>, then pick <code>EVE</code>.</p>
-<div class="code"><code>Select OPTION to edit: <strong>XUCOMMAND</strong>     SYSTEM COMMAND OPTIONS
-NAME: XUCOMMAND// <strong>^10</strong>   MENU
-Select ITEM: XQALERT// <strong>XMUSER</strong>   MailMan Menu
-  Are you adding 'XMUSER' as a new MENU (the 8TH for this OPTION)? No// <strong>Y</strong>   (Yes)
-  MENU SYNONYM: <strong>MM</strong>
-  SYNONYM: MM// <strong>&lt;enter&gt;</strong>
-  DISPLAY ORDER: <strong>&lt;enter&gt;</strong>
-Select ITEM: <strong>&lt;enter&gt;</strong>
-CREATOR: MANAGER,SYSTEM// <strong>^</strong>
+<p>At this point, you can go back to Direct Mode. We will now run <code>^ZU</code>, which is the VistA front door, or in the above analogy, the City Portal. At the VISTA prompt, Type <code>D ^ZU</code>.</p>
+<p>At ACCESS CODE, type in the code you chose when setting up MANAGER, SYSTEM as a NEW PERSON. At VERIFY CODE, enter the verify code you chose for yourself earlier, and then you will be asked to change it. The introduction message &quot;This is my test system.&quot; is what we put in a while ago in the Kernel Set-Up section.</p>
+<div class="code"><code>><strong>D ^ZU</strong>
+This is my test system.
 
-Select OPTION to edit:</code></div>
-<p>Change the default time it takes before users are automatically signed off the system from the default of 300 seconds. This, again, is to give you more time to work as you are learning. Back out to the VISTA prompt. At the VISTA prompt, Type <code>D ^ZU</code>.</p>
-<p>At ACCESS CODE, type in the code you chose when setting up MANAGER, SYSTEM as a NEW PERSON. At VERIFY CODE, hit ENTER. When asked for a new verify code, type the code you choose and remember it.</p>
+
+
+Volume set: ROU:Macintosh  UCI: VAH  Device: /dev/ttys007
+
+ACCESS CODE: <strong>******</strong>
+VERIFY CODE: <strong>*********</strong>
+Device: /dev/ttys007
+
+Good evening MANAGER,SYSTEM
+     You last signed on today at 22:20
+There were 2 unsuccessful attempts since you last signed on.
+
+
+          Core Applications ...
+          Device Management ...
+          Menu Management ...
+          Programmer Options ...
+          Operations Management ...
+          Spool Management ...
+          Information Security Officer Menu ...
+          Taskman Management ...
+          User Management ...
+          Application Utilities ...
+          Capacity Planning ...
+          HL7 Main Menu ...
+
+Select Systems Manager Menu <TEST ACCOUNT> Option:</code></div>
 <p>At Select Systems Manager Menu Option: Type <code>OPER</code>, (short for operations management) and hit enter. You can see all of the choices available to you if you type <code>??</code>.</p>
 <p>At Select Operations Management Option: Type <code>KER</code> short for Kernel Management Menu and hit enter. At Select Kernel Management Menu Option: Type <code>ENT</code>, short for Enter/Edit Kernel Site Parameters. Hit enter.</p>
 <p>You will be presented with a similar screen as in editing the SYSTEM MANAGER characteristics. You can navigate the screen with the <code>TAB</code> key. For DEFAULT TIMED-READ (SECONDS): change it to <code>3600</code> to allow an hour before being automatically signed off, or whatever you choose.</p>
+<p>I recommend making these other changes:</p>
+<ul>
+<li>DEFAULT MULTIPLE SIGN-ON = YES</li>
+</ul>
 <figure>
 <img src="images/InitializeVistA/pic27.gif" />
 </figure>
-<h2 id="update-the-devices-start-taskman-and-mail-a-message">Update the Devices, Start Taskman and Mail a Message</h2>
-<p>These are basic devices to complete the setup. You can setup other devices, such as printers, later. The Platinum CACHE.DAT already comes with preconfigured devices. It is best to leave the VOLUME SET(CPU) field blank. The help text for the field states: &quot;If no name has been entered for this field, this device is assumed to be accessible from all CPUs in the network. In other words, when this device is referenced, the device handler will operate as if this device is resident on the local CPU&quot;. The SIGN-ON/SYSTEM DEVICE: field should be set to <code>NO</code> or left blank for output devices and <code>YES</code> if the device isused to log on to the system. Use FileMan to edit the CONSOLE, NULL, HFS, and TELNET devices. CONSOLE is the primary logon device. The NULL device is used by the Vista RPC Broker and HFS is used by the Kernel Installation and Distribution System (KIDS) to install application patches and new applications when they are released. On the single user Caché PC you will not need the TELNET device since it does not allow remote access.</p>
-<div class="code"><code>><strong>D Q^DI</strong>
-
-VA FileMan 22.0
-
-Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
-
-INPUT TO WHAT FILE: PACKAGE// <strong>3.5</strong>   DEVICE (35 entries)
-EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
-
-Select DEVICE NAME: <strong>CONSOLE</strong>     CONSOLE |TRM|
-NAME: CONSOLE// <strong>&lt;enter&gt;</strong>
-LOCATION OF TERMINAL: CONSOLE// <strong>&lt;enter&gt;</strong>
-Select MNEMONIC: <strong>&lt;enter&gt;</strong>
-LOCAL SYNONYM: <strong>&lt;enter&gt;</strong>
-$I: |TRM|// <strong>&lt;enter&gt;</strong>
-VOLUME SET(CPU): <strong>&lt;enter&gt;</strong>
-SIGN-ON/SYSTEM DEVICE: <strong>Y</strong>   YES
-TYPE: VIRTUAL TERMINAL// <strong>&lt;enter&gt;</strong>
-SUBTYPE: C-VT320// <strong>^</strong>
-
-Select DEVICE NAME: <strong>TELNET</strong>     TELNET |TNT| VISTA
-NAME: TELNET// <strong>&lt;enter&gt;</strong>
-LOCATION OF TERMINAL: TELNET// <strong>&lt;enter&gt;</strong>
-Select MNEMONIC: <strong>&lt;enter&gt;</strong>
-LOCAL SYNONYM: <strong>&lt;enter&gt;</strong>
-$I: |TNT|// <strong>&lt;enter&gt;</strong>
-VOLUME SET(CPU): VISTA// <strong>@</strong>
-  SURE YOU WANT TO DELETE? <strong>Y</strong>   (Yes)
-SIGN-ON/SYSTEM DEVICE: <strong>Y</strong>   YES
-TYPE: VIRTUAL TERMINAL// <strong>&lt;enter&gt;</strong>
-SUBTYPE: C-VT320// <strong>^</strong>
-
-Select DEVICE NAME: <strong>HFS</strong>     Host File Server C:\PLATINUM\TMP.DAT
-NAME: HFS// <strong>&lt;enter&gt;</strong>
-LOCATION OF TERMINAL: Host File Server// <strong>&lt;enter&gt;</strong>
-Select MNEMONIC: <strong>&lt;enter&gt;</strong>
-LOCAL SYNONYM: <strong>&lt;enter&gt;</strong>
-$I: C:\PLATINUM\TMP.DAT// <strong>C:\TEMP\TMP.TXT</strong>
-VOLUME SET(CPU): <strong>&lt;enter&gt;</strong>
-SIGN-ON/SYSTEM DEVICE: <strong>^</strong>
-
-Select DEVICE NAME: NULL
-    1   NULL     NT SYSTEM NALO:
-    2   NULL-DSM     Bit Bucket _NLA0:
-CHOOSE 1-2: <strong>1</strong>   NULL     NT SYSTEM     NALO: 
-NAME: NULL// <strong>&lt;enter&gt;</strong>
-LOCATION OF TERMINAL: NT SYSTEM// <strong>&lt;enter&gt;</strong>
-Select MNEMONIC: <strong>&lt;enter&gt;</strong>
-LOCAL SYNONYM: <strong>&lt;enter&gt;</strong>
-$I: NALO:// <strong>//./nul</strong>
-VOLUME SET(CPU): <strong>&lt;enter&gt;</strong>
-SIGN-ON/SYSTEM DEVICE: YES// <strong>N</strong>   NO
-TYPE: TERMINAL// <strong>&lt;enter&gt;</strong>
-SUBTYPE: C-VT320// <strong>^</strong>
-
-Select DEVICE NAME: <strong>&lt;enter&gt;</strong><code></div>
-<p>Again from the VISTA promt, enter <code>D ^ZTMCHK</code> to check if TaskMan's environment is OK. This will present you with two screens with information on TaskMan's environment.</p>
-<figure>
-<img src="images/InitializeVistA/pic28.gif" />
-</figure>
-<p>Screen #1</p>
-<figure>
-<img src="images/InitializeVistA/pic29.gif" />
-</figure>
-<p>Screen #2</p>
-<p>If TaskMan's environment is OK, you are ready to start TaskMan. Go back to the VISTA prompt and type <code>D ^ZTMB</code> to start TASKMAN.</p>
-<p>To monitor TaskMan, enter <code>D ^ZTMON</code> from the VISTA prompt. Enter <code>^</code> at the UPDATE// prompt to exit the monitor or enter a <code>?</code> to see what the other options are.</p>
-<figure>
-<img src="images/InitializeVistA/pic30.gif" />
-</figure>
-<p>From the &gt; programmer prompt you can check the system status with <code>D ^%SS</code>. You should see at least two Taskman processes - %ZTM and %ZTMS.</p>
-<figure>
-<img src="images/InitializeVistA/pic31.gif" />
-</figure>
-<p>Now send a message using Postmaster to your DUZ number. Use D ^%CD to get into the namespace, VISTA, and then type <code>S DUZ=.5 D ^XUP</code>. You will get the response SETTING UP PROGRAMMER ENVIROMENT then TERMINAL TYPE SET TO: (your default) and Select OPTION NAME:. You will need to respond: <code>XMUSER</code>. At Select Mailman Menu Option: type <code>S</code> (for send). At Subject: enter your subject, such as Test, and then hit enter. You will then be prompted You may enter the text of the message and you will be offered the line number 1&gt; where you can type your message, such as the infamous Hello world. Next will be line 2&gt; and if you are done, just hit enter and at EDIT Option: you can do the same. At Send mail to: POSTMASTER// enter the initials you used for your DUZ which were probably SM for System Manager. You will then be told when MailMan was last used, which is probably NEVER. Hit enter at And Send to: and you should receive the message Select Message option: Transmit now// at which you hit enter and will hopefully receive the message Sending [1] Sent. Type <code>^</code> to exit.</p>
-<p>Now see if you received it. Log on using <code>D ^ZU</code>. At the Systems Manager prompt, type <code>MAIL</code>. Then at the Select MailMan Menu Option: type <code>NEW</code> Messages and Responses. Read the mail.</p>
+<h2 id="mail-a-message">Mail a Message</h2>
+<p>Now send a message using Postmaster to your DUZ number. From Direct Mode, type <code>S DUZ=.5 D ^XUP</code>. You will get the response SETTING UP PROGRAMMER ENVIROMENT then TERMINAL TYPE SET TO: (your default) and Select OPTION NAME:. You will need to respond: <code>XMUSER</code>. At Select Mailman Menu Option: type <code>S</code> (for send). At Subject: enter your subject, such as Test, and then hit enter. You will then be prompted You may enter the text of the message and you will be offered the line number 1&gt; where you can type your message, such as the infamous Hello world. Next will be line 2&gt; and if you are done, just hit enter and at EDIT Option: you can do the same. At Send mail to: POSTMASTER// enter the initials you used for your DUZ which were probably DBA for System Manager. You will then be told when MailMan was last used, which is probably NEVER. Hit enter at And Send to: and you should receive the message Select Message option: Transmit now// at which you hit enter and will hopefully receive the message Sending [1] Sent. Type <code>^</code> to exit.</p>
+<p>Now see if you received it. Log on using <code>D ^ZU</code>. At the Systems Manager prompt, type <code>MAILMAN MENU</code>. Then at the Select MailMan Menu Option: type <code>NEW</code> Messages and Responses. Read the mail.</p>
 <figure>
 <img src="images/InitializeVistA/pic32.gif" />
 </figure>
-<p>Start and test the RPC Broker.</p>
-<p>The RPC Broker is VistA's Client/Server software and is needed by VistA's GUI client.</p>
-<p>Now to see of the RPC BROKER will start. To start the broker, type <code>D STRT^XWBTCP(port)</code> at the VISTA prompt. The system status should now show the broker listener (XWBTCPL) running.</p>
-<div class="code"><code>><strong>D STRT^XWBTCP(9210)</strong>
-Start TCP Listener...
-Checking if TCP Listener has started...
-TCP Listener started successfully.
-></code></div>
-<p>Now run <code>D ^%SS</code> again. You should see something like the following with XWBPTCL running.</p>
-<figure>
-<img src="images/InitializeVistA/pic33.gif" />
-</figure>
-<p>If you have the RPCTEST.EXT on your workstation, you test your connection to the localhost. Download the file XWB1_1WS.EXE from <a href="ftp://ftp.va.gov/vista/Software/Packages/RPC%20Broker%20-%20XWB/PROGRAMS/">ftp://ftp.va.gov/vista/Software/Packages/RPC%20Broker%20-%20XWB/PROGRAMS/</a>. (Note: The VA's ftp site is not compatible with Netscape's ftp. Either use Windows Explorer or FTP software). Double click on this file once you have downloaded it. Accept the defaults. It will install RPC Broker's Client software including RPCTEST.EXE. Then go to C:program filesvistabrokerrcptest.exe and double click on it or create a shortcut on your desktop.</p>
-<figure>
-<img src="images/InitializeVistA/pic34.gif" />
-</figure>
-<p>You should see a Vista logon screen.</p>
-<figure>
-<img src="images/InitializeVistA/pic35.gif" />
-</figure>
-<p>If you connect successfully, the link state will turn green.</p>
-<figure>
-<img src="images/InitializeVistA/pic36.gif" />
-</figure>
+<p>--TBC--</p>
 <p>To stop TaskMan, use <code>D STOP^ZTMKU</code> and answer <code>YES</code> to stopping the submanagers.</p>
 <p>To stop Broker, use <code>D STOP^XWBTCP(9210)</code>. This is the last time you should be using these direct access to the routines to manage VistA. You should be using the menu system from now on to manage starting and stopping Taskman, the background filers and the RPC Broker. That way any code changes, etc., will be accounted for. Programmers will usually enter from the programmer prompt beginning with D ^XUP. The system managers menu option is EVE.</p>
 <h2 id="add-user">Add User</h2>
