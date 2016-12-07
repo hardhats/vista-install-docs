@@ -50,4 +50,9 @@ Install EWD3 & EWD VistA On Linux With GT.M
     $ cp node_modules/ewd-xpress/example/ewd-xpress-gtm.js ./ewd-xpress.js
     $ node ewd-xpress.js</code></div>
 
-Visit http://localhost:8080/ewd-vista/
+Test Your EWD3 Apps
+-------------------
+
+http://localhost:8080/ewd-vista/
+
+http://localhost:8080/ewd-xpress-monitor/
