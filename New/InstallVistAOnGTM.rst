@@ -20,12 +20,13 @@ Creating an Empty GT.M Database suitable for VistA
 --------------------------------------------------
 Create a directory where you will place your environment. These two steps need
 to be done as a superuser. The directory name or location doesn't matter. In this case,
-it's ``foia201608`` under ``/var/db``.
+it's ``foia201608`` under ``/var/db``. Second step changes the ownership to your
+user name and your user group.
 
 .. raw:: html
     
     <div class="code"><code>$ <strong>sudo mkdir -p /var/db/foia201608</strong>
-    $ <strong>sudo chown $USER. /var/db/foia201608</strong>
+    $ <strong>sudo chown $USER. /var/db/foia201608</strong> or <strong>sudo chown $USER:$USER /var/db/foia201608</strong> on BSD variants.
     $ <strong>cd /var/db/foia201608</strong></code></div>
 
 Then create folders to hold your routines, globals, journals, and objects. The
@@ -39,7 +40,7 @@ convention.
 
 Two parenthetical remarks:
 
-    Fidelity (the company behind GT.M) recommends versioning objects
+    FIS (the company behind GT.M) recommends versioning objects
     and global directories to allow for rolling upgrades. I personally don't 
     think this is necessary for VistA. More details can be found at the
     `GT.M Acculturation Workshop <https://sourceforge.net/projects/fis-gtm/files/GT.M%20Acculturation%20Workshop/>`_.
@@ -48,24 +49,23 @@ Two parenthetical remarks:
     called "p" for patches, so that you can apply updated  routines
     in the "r" directory and not overwrite the original routine. The intent is
     reasonable, but what what almost always happens is that I get calls or emails
-    on why aren't my changes showing up. VistA tools (KIDS, Fileman, VPE) are all
+    on why changes aren't showing up. VistA tools (KIDS, Fileman, VPE) are all
     written just expecting a single routine list.
 
 At this point, we need to create an environment file that we will need to
 source in order to tell GT.M where are our routines and globals are. The reason
 we need to do this is simple: GT.M bases its operations almost entirely on
-environment variables from the shell. Here's the file, which I called ``env.vista``.
+environment variables from the shell. Here's the file, which I called `env.vista<./env.vista>`_.
 
 .. raw:: html
     
-    <div class="code"><code>#!/bin/bash
-    # This is just a temporary variable so I don't have to type the same thing
+    <div class="code"><code> # This is just a variable so I don't have to type the same thing
     # over and over again.
-    export vista_home="/var/db/foia201608"
+    export vista_home="/var/db/{your directory name}"
     
     # This will set the prompt. This can be anything you want.
     # I make it something meaningful to let me know which environment I am on.
-    export gtm_prompt="FOIA 2016-08>"
+    export gtm_prompt="YOUR INSTANCE NAME>"
     
     # Intial Value of error trap upon VistA start-up
     #export gtm_etrap='W !,"ERROR IN STARTUP",!! D ^%ZTER HALT' # for production environments
@@ -82,6 +82,7 @@ environment variables from the shell. Here's the file, which I called ``env.vist
     # Where the routines are. 
     # If you run 32 bit GT.M, you need to remove libgtmutil.so
     # On older versions of GT.M (&lt;6.2), the * isn't recognized.
+    # There should be no reason for you to run 32-bit GT.M these days.
     export gtmroutines="${vista_home}/o*(${vista_home}/r) $gtm_dist/libgtmutil.so"
     
     # Allow relink of routine even if it is on the stack
@@ -98,7 +99,7 @@ environment variables from the shell. Here's the file, which I called ``env.vist
     
     # GT.M has non-standard default behavior for null subscripts for local
     # variables. Make it standard
-    export gtm_lvnullsubs=2
+    export gtm_lct_stdnull=1
     
     # Add GT.M to the path if not already there.
     [[ ":$PATH:" != *":${gtm_dist}"* ]] && export PATH="${PATH}:${gtm_dist}"
@@ -123,14 +124,14 @@ what you did works by running ``$ mumps -dir``. You should see this:
 
 .. raw:: html
     
-    <div class="code"><code>FOIA 2016-08></code></div>
+    <div class="code"><code>YOUR INSTANCE NAME></code></div>
 
 Type Control-D or "HALT" to get out.
 
 Now we need to create the database. You can create a default database by just
 running ``mupip create``, but rather than do that, we need to write some code
 to tell GT.M to change its default database for VistA. I will create a file 
-called ``g/db.gde``.
+called `g/db.gde<./db.gde>`_.
 
 .. raw:: html
     
@@ -141,22 +142,24 @@ called ``g/db.gde``.
     ! to allow 1000 locks
     ! On production environments, add -extension_count=0 to prevent the database
     ! -> from growing automatically. You need to monitor it and expand it yourself.
+    ! -> Here, it extends by 100MB each time.
     ! Global buffer count is how many buffers of size block_size should stay in
     ! -> RAM to cache the data read and written to disk. This set-up uses about 33MB in RAM.
-    change -segment DEFAULT -file="$vista_home/g/mumps.dat" -access_method=BG -allocation=1048576  -block_size=4096 -lock_space=1000 -global_buffer_count=8192 !-extension_count=0
+    change -segment DEFAULT -file="$vista_home/g/mumps.dat" -access_method=BG -allocation=1048576  -block_size=4096 -lock_space=1000 -global_buffer_count=8192 -extension_count=25600
     
     ! Ditto pretty much, except this is smaller. Note that we create a new segment
     ! rather than modify an existing one.
     ! TEMPGBL unlike the others will be memory mapped to the RAM to allow instant
     ! access.
     ! Since it's located in RAM, global_buffer_count does not apply to it.
-    add    -segment TEMPGBL -file="$vista_home/g/tempgbl.dat" -access_method=MM -allocation=10000   -block_size=4096 -lock_space=1000 !-extension_count=0
+    add    -segment TEMPGBL -file="$vista_home/g/tempgbl.dat" -access_method=MM -allocation=10000   -block_size=4096 -lock_space=1000 !-extension_count=2560
     
-    ! Each global node can be 16384 bytes long; subscripts can be combined to be 1019 bytes long
-    change -region  DEFAULT -record_size=16384 -stdnullcoll -key_size=1019
+    ! Each global node can be 1024 bytes long; subscripts can be combined to be 512 bytes long
+    ! You will need to increase this for RPMS
+    change -region  DEFAULT -record_size=1024 -stdnullcoll -key_size=512
     
     ! Ditto, but note that we need to assign the new region to its associated segment
-    add    -region  TEMPGBL -record_size=16384 -stdnullcoll -key_size=1019 -dyn=TEMPGBL
+    add    -region  TEMPGBL -record_size=1024 -stdnullcoll -key_size=512 -dynamic=TEMPGBL
     
     ! Add globals to the temporary region
     add    -name    HLTMP   -region=TEMPGBL
