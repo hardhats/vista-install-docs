@@ -15,7 +15,7 @@ change -segment DEFAULT -file="$vista_home/g/mumps.dat" -access_method=BG -alloc
 ! TEMPGBL unlike the others will be memory mapped to the RAM to allow instant
 ! access.
 ! Since it's located in RAM, global_buffer_count does not apply to it.
-add    -segment TEMPGBL -file="$vista_home/g/tempgbl.dat" -access_method=MM -allocation=10000   -block_size=4096 -lock_space=1000 !-extension_count=2560
+add    -segment TEMPGBL -file="$vista_home/g/tempgbl.dat" -access_method=MM -allocation=10000   -block_size=4096 -lock_space=1000 -extension_count=2560
 
 ! Each global node can be 1024 bytes long; subscripts can be combined to be 512 bytes long
 ! You will need to increase this for RPMS

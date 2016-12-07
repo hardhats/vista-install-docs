@@ -152,7 +152,7 @@ called `g/db.gde<./db.gde>`_.
     ! TEMPGBL unlike the others will be memory mapped to the RAM to allow instant
     ! access.
     ! Since it's located in RAM, global_buffer_count does not apply to it.
-    add    -segment TEMPGBL -file="$vista_home/g/tempgbl.dat" -access_method=MM -allocation=10000   -block_size=4096 -lock_space=1000 !-extension_count=2560
+    add    -segment TEMPGBL -file="$vista_home/g/tempgbl.dat" -access_method=MM -allocation=10000   -block_size=4096 -lock_space=1000 -extension_count=2560
     
     ! Each global node can be 1024 bytes long; subscripts can be combined to be 512 bytes long
     ! You will need to increase this for RPMS
@@ -189,7 +189,13 @@ g/db.gde.out as well.
 .. raw:: html
     
  <div class="code"><code>
-                                         *** TEMPLATES ***
+
+%GDE-I-GDUSEDEFS, Using defaults for Global Directory 
+	/var/db/foia0616/g/mumps.gld
+
+GDE> 
+
+                               *** TEMPLATES ***
                                                                           Std      Inst
                                              Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
  Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
@@ -227,21 +233,21 @@ g/db.gde.out as well.
                                  Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
  Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
  ----------------------------------------------------------------------------------------------------------------------------------
- DEFAULT                         DEFAULT                            0    16384  1019 NEVER      Y    N   DISABLED DISABLED ENABLED
- TEMPGBL                         TEMPGBL                            0    16384  1019 NEVER      Y    N   DISABLED DISABLED ENABLED
+ DEFAULT                         DEFAULT                            0     1024   512 NEVER      Y    N   DISABLED DISABLED ENABLED
+ TEMPGBL                         TEMPGBL                            0     1024   512 NEVER      Y    N   DISABLED DISABLED ENABLED
 
                                 *** SEGMENTS ***
  Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
  -------------------------------------------------------------------------------------------
  DEFAULT                         $vista_home/g/mumps.dat
-                                                     BG  DYN  4096    1048576   100 GLOB=8192
+                                                     BG  DYN  4096    1048576 25600 GLOB=8192
                                                                                     LOCK=1000
                                                                                     RES =   0
                                                                                     ENCR=OFF
                                                                                     MSLT=1024
                                                                                     DALL=YES
  TEMPGBL                         $vista_home/g/tempgbl.dat
-                                                     MM  DYN  4096      10000   100 DEFER
+                                                     MM  DYN  4096      10000  2560 DEFER
                                                                                     LOCK=1000
                                                                                     RES =   0
                                                                                     ENCR=OFF
@@ -306,13 +312,13 @@ g/db.gde.out as well.
  LOCAL LOCKS                                                      REG = DEFAULT
                                                                   SEG = DEFAULT
                                                                   FILE = $vista_home/g/mumps.dat
- GDE> 
- GDE> 
- GDE> 
- %GDE-I-VERIFY, Verification OK
- 
- %GDE-I-GDCREATE, Creating Global Directory file 
-     /var/db/foia201608/g/mumps.gld
+GDE> 
+GDE> 
+GDE> 
+%GDE-I-VERIFY, Verification OK
+
+%GDE-I-GDCREATE, Creating Global Directory file 
+	/var/db/foia0616/g/mumps.gld
  </code></div>
 
 If you fail, you will see something similar to the following at the end of the
