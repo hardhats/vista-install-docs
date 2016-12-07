@@ -2171,6 +2171,235 @@ confirm that it changed, and then you will see the patient selection screen.
 You should be happy when you reach this point; except that a medical records
 system is useless without patients.
 
+Registering your First Patient
+------------------------------
+Let's register a patient. Login using the CPRS User we just set-up.
+
+    NB: On GT.M, patient registration will crash, as it tries to use Cache Specific Code.
+    If you want to register the patient on GT.M, change entry point PATIENT^MPIFXMLP to
+    ZPATIENT; and change line 25 of DGRPD, to remove the errant space:
+    
+    ``N DGSKIP S DGSKIP=$S(DGFORGN:"!,?42,""From/To: """,1:"?42, ""From/To: """)``
+
+    to
+
+    ``N DGSKIP S DGSKIP=$S(DGFORGN:"!,?42,""From/To: """,1:"?42,""From/To: """)``
+
+    Make sure to exit GT.M using HALT or Ctrl-D so that the changes will "take".
+    (There are smarter ways of doing this, but this is the easiest for beginners.)
+    
+
+    
+
+.. raw:: html
+    
+  <div class="code"><pre>><strong>$ mumps -r ^ZU</strong>
+  This is my test system.
+
+  Volume set: ROU:Macintosh  UCI: VAH  Device: /dev/ttys001
+
+  ACCESS CODE: <strong>*****************</strong> (Access Code;Verify Code)
+
+  Good afternoon CPRS,USER
+       You last signed on today at 16:36
+
+
+     DENT   Dental ...
+     EN     Engineering Main Menu ...
+     FEE    Fee Basis Main Menu ...
+     FH     Dietetic Administration ...
+     GECO   Miscellaneous Code Sheet Manager Menu ...
+     GECS   Generic Code Sheet Menu ...
+     GMRA   Adverse Reaction Tracking ...
+     IB     Integrated Billing Master Menu ...
+     MCAR   Medicine Menu ...
+     NU     Nursing System Manager's Menu ...
+     PDX    Patient Data Exchange ...
+     PROS   Prosthetic Official's Menu ...
+     PRPF   Patient Funds (INTEGRATED) System ...
+     RA     Rad/Nuc Med Total System Menu ...
+     ROES   Remote Order/Entry System ASPS Menu ...
+     RT     Record Tracking Total System Menu ...
+     SR     Surgery Menu ...
+     SW     Information Management Systems (SWIMS) ...
+     TIU    TIU Maintenance Menu ...
+     VMAS   Volunteer Timekeeping Activity ...
+     VOL    Volunteer Master Menu ...
+     YSM    MHS Manager ...
+
+             Press 'RETURN' to continue, '^' to stop: <strong>&lt;enter&gt;</strong>
+     YSU    Mental Health ...
+            ADT Manager Menu ...
+            CPRS Manager Menu ...
+            CPRS Menu
+            Employee Menu ...
+            Finance AR Manager Menu ...
+            Health Summary Coordinator's Menu ...
+            Health Summary Enhanced Menu ...
+            Health Summary Menu ...
+            IV Menu ...
+            Library Management ...
+            National Drug File Menu ...
+            Outpatient Pharmacy Manager ...
+            Payroll Main Menu ...
+            Payroll Supervisor Menu ...
+            Scheduling Manager's Menu ...
+            Serials Control ...
+            Unit Dose Medications ...
+
+  Select Core Applications <TEST ACCOUNT> Option: <strong>ADT Manager Menu</strong>
+
+
+  CPT codes and descriptions are copyright 2016 by the American Medical
+  Association (AMA).  All Rights Reserved.  CPT is a registered trademark of the
+  American Medical Association.
+
+  Press any key to continue<strong>&lt;enter&gt;</strong>
+
+
+            ADT Outputs Menu ...
+            Bed Control Menu ...
+            Beneficiary Travel Menu ...
+            Contract Nursing Home RUG Menu ...
+            Eligibility Inquiry for Patient Billing
+            MAS Code Sheet Manager Menu ...
+            Patient Inquiry
+            PTF Menu ...
+            Registration Menu ...
+            RUG-II Menu ...
+
+  Select ADT Manager Menu <TEST ACCOUNT> Option: <strong>Registration Menu</strong>
+
+
+      DA     Disposition an Application
+      EN     Patient Enrollment
+      PHH    Purple Heart Request History
+      PHS    Purple Heart Status Report
+             Add/Edit/Delete Catastrophic Disability
+             Collateral Patient Register
+             Combat Vet Status Report
+             Delete a Registration
+             Disposition Log Edit
+             Edit Inconsistent Data for a Patient
+             Eligibility Inquiry for Patient Billing
+             Eligibility Verification
+             Load/Edit Patient Data
+             Means Test User Menu ...
+             Patient Inquiry
+             Preregistration Menu ...
+             Print Patient Wristband
+             Pseudo SSN Report (Patient)
+             Register a Patient
+             Report - All Address Change with Rx
+             Report - All Address Changes
+             Report - All Patients flagged with a Bad Address
+
+                 Press 'RETURN' to continue, '^' to stop:<strong>&lt;enter&gt;</strong>
+             Unsupported CV End Dates Report
+             View Patient Address
+             View Registration Data
+  
+  Select Registration Menu <TEST ACCOUNT> Option: <strong>Register a Patient</strong>
+
+	Select PATIENT NAME: <strong>MOUSE,MINNIE</strong>
+		 ARE YOU ADDING 'MOUSE,MINNIE' AS A NEW PATIENT (THE 2ND)? No// <strong>Y</strong> (Yes)
+		 PATIENT SEX: <strong>F</strong> FEMALE
+		 PATIENT DATE OF BIRTH: <strong>11/11/47</strong>  (NOV 11, 1947)
+		 PATIENT SOCIAL SECURITY NUMBER: <strong>P</strong>  505111148P
+		 PATIENT PSEUDO SSN REASON: <strong>N</strong> NO SSN ASSIGNED
+		 PATIENT TYPE: <strong>N</strong>
+			 1   NEWBORN OF VETERAN
+			 2   NON-VETERAN (OTHER)
+			 3   NSC VETERAN
+	CHOOSE 1-3: <strong>2</strong>  NON-VETERAN (OTHER)
+		 PATIENT VETERAN (Y/N)?: <strong>N</strong> NO
+		 PATIENT SERVICE CONNECTED?: <strong>N</strong> NO
+		 PATIENT MULTIPLE BIRTH INDICATOR:<strong>&lt;enter&gt;</strong>
+
+		 ...searching for potential duplicates..
+
+		 The following patients have been identified as potential duplicates:
+
+			 MOUSE,MICKEY      11-11-47    505111147P **Pseudo SSN**     NO     NON-VETE
+	RAN (OTHER)
+
+		 Do you still want to add 'MOUSE,MINNIE' as a new patient? No// <strong>Y</strong>  (Yes)
+
+		 ...adding new patient...new patient added
+
+	Patient name components--
+	FAMILY (LAST) NAME: MOUSE//<strong>&lt;enter&gt;</strong>
+	GIVEN (FIRST) NAME: MINNIE//<strong>&lt;enter&gt;</strong>
+	MIDDLE NAME:<strong>&lt;enter&gt;</strong>
+	PREFIX:<strong>&lt;enter&gt;</strong>
+	SUFFIX:<strong>&lt;enter&gt;</strong>
+	DEGREE:<strong>&lt;enter&gt;</strong>
+	Press ENTER to continue<strong>&lt;enter&gt;</strong>
+
+	Please verify or update the following information:<strong>&lt;enter&gt;</strong>
+
+	MOTHER'S MAIDEN NAME:<strong>&lt;enter&gt;</strong>
+	PLACE OF BIRTH [CITY]:<strong>&lt;enter&gt;</strong>
+	PLACE OF BIRTH [STATE]:<strong>&lt;enter&gt;</strong>
+	Select ALIAS:<strong>&lt;enter&gt;</strong>
+
+	Attempting to connect to the Master Patient Index in Austin...
+	If no SSN or inexact DOB or common name, this request
+	may take some time, please be patient...
+
+
+	Could not connect to MPI or Timed Out, assigning local ICN (if not already assig
+	ned)...<strong>&lt;enter&gt;</strong>
+
+	MOUSE,MINNIE                            505-11-1148P             NOV 11,1947
+	=============================================================================
+	 Address: STREET ADDRESS UNKNOWN        Temporary: NO TEMPORARY ADDRESS
+					 UNK. CITY/STATE
+
+		County: UNSPECIFIED                     From/To: NOT APPLICABLE
+		 Phone: UNSPECIFIED                       Phone: NOT APPLICABLE
+		Office: UNSPECIFIED
+			Cell: UNSPECIFIED
+		E-mail: UNSPECIFIED
+	Bad Addr:
+
+	 Confidential Address:                      Confidential Address Categories:
+					 NO CONFIDENTIAL ADDRESS
+	 From/To: NOT APPLICABLE
+
+			POS: UNSPECIFIED                      Claim #: UNSPECIFIED
+		Relig: UNSPECIFIED                          Sex: FEMALE
+		 Race: UNANSWERED                     Ethnicity: UNANSWERED
+	Type &lt;Enter&gt; to continue or '^' to exit: <strong>^</strong></code></div>
+
+Now, if you run CPRS again, you will see a patient, and you can select them:
+
+  .. figure::
+     images/InitializeVistA/CPRSPatientSelection2.png
+     :align: center
+     :alt: Patient Selection
+
+and then you will see the cover sheet:
+
+  .. figure::
+     images/InitializeVistA/CPRSCoverSheet.png
+     :align: center
+     :alt: Cover Sheet
+
+There is little you can do because most of VistA is not set-up. But you can now get
+an idea of what CPRS is like. The most important step is to at least create one clinic.
+You can do that in the SDBUILD menu. Doing this will unlock most of CPRS for you.
+
+Next Steps
+----------
+* Set-up MAS Parameters
+* Set-up Wards and Beds
+* Set-up Clinics
+* Install a Drug File, or create one from Scratch
+* Set-up Outpatient Pharmacy
+* Set-up Inpatient Pharmacy
+* Set-up Lab Package for Chemistry and Hematology
+
 Stopping VistA
 --------------
 To stop TaskMan, use ``D STOP^ZTMKU`` and answer ``YES`` to stopping the submanagers.
