@@ -1147,10 +1147,15 @@ Setup your Institution
 VistA has a very complex structure to deal with the question of: in what hospital are you signed in right now?
 The answer determines the value of the all important variable ``DUZ(2)`` and the API ``SITE^VASITE()``.
 
-There are four files that are important in that regard: INSTITUTION (#4), STATION NUMBER (TIME SENSITIVE) (#389.9),
-KERNEL SYSTEM PARAMETERS (#8989.3), and the MEDICAL CENTER DIVISION file (#40.8). We will add our Hopstial to
-the INSTITUTION file first, with the station number 999. Then we will make sure that the STATION NUMBER file says
-999; and then will will point the KERNEL SYSTEM PARAMETERS and MEDICAL CENTER DIVISION to our new Hospital.
+There are five files that are important in that regard: INSTITUTION (#4),
+STATION NUMBER (TIME SENSITIVE) (#389.9), KERNEL SYSTEM PARAMETERS (#8989.3),
+MEDICAL CENTER DIVISION file (#40.8), and MASTER PATIENT INDEX (LOCAL NUMBERS)
+(984.1). We will add our Hopstial to the INSTITUTION file first, with the
+station number 999. Then we will make sure that the STATION NUMBER file says
+999; and then will will point the KERNEL SYSTEM PARAMETERS and MEDICAL CENTER
+DIVISION to our new Hospital. In MASTER PATIENT INDEX, we tell it our station
+number and the range of numbers for our Integration Control Numbers (ICNs), the
+number used to identify patients across systems.
 
 Bt default, FOIA VistA comes with station number 050, and the institution is called SOFTWARE SERVICE. We can't
 leave that alone because VistA malfunctions with station numbers are are just 2 digits long (050 becomes 50 in
@@ -1335,6 +1340,29 @@ Next, the MEDICAL CENTER DIVISION file:
 
     Select MEDICAL CENTER DIVISION NAME:<strong>&lt;enter&gt;</strong></code></div>
 
+Next, the MASTER PATIENT INDEX file:
+
+.. raw:: html
+
+  <div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES
+
+  INPUT TO WHAT FILE: MASTER PATIENT INDEX (LOCAL NUMBERS)// <strong>MASTER PATIENT INDEX</strong>
+
+  EDIT WHICH FIELD: ALL//
+
+  Select MASTER PATIENT INDEX (LOCAL NUMBERS) SITE ID NUMBER: <strong>`1</strong>  740
+  SITE ID NUMBER: 740// <strong>999</strong>
+  LAST NUMBER USED: 500000000// <strong>9990000000</strong>
+  CHECK SUM FOR LAST NUMBER USED: 217407// <strong>@</strong>
+  SURE YOU WANT TO DELETE? <strong>Y</strong>  (Yes)
+  NEXT NUMBER TO USE: 500000001// <strong>9990000001</strong>
+  CHECK SUM FOR NEXT: 075322// <strong>@</strong>
+  SURE YOU WANT TO DELETE? <strong>Y</strong>  (Yes)
+
+
+  Select MASTER PATIENT INDEX (LOCAL NUMBERS) SITE ID NUMBER:<strong>&lt;enter&gt;</strong></code></div>
+
+    
 At this point, we are ready to check our work. First, we need to know the internal entry
 number (IEN) of the institution we just created:
 
@@ -2018,7 +2046,13 @@ the ``CPRS,USER`` will be able to sign on and interact with the GUI.
 Downloading CPRS and Running It
 -------------------------------
 The next part is laborious and tedious: finding the correct vesion of CPRS to run on
-your FOIA instance. The first thing is that you need to go into Fileman, and find
+your FOIA instance. 
+
+*NB: If you have been following on a Linux or Mac machine so far, you need to switch
+to Windows or use Wine 1.8 or higher to run CPRS. Earlier versions of Wine had an
+unimplemented function in comctl32.dll that prevented CPRS from running.*
+
+The first thing is that you need to go into Fileman, and find
 out what the version of CPRS you need to use is:
 
 .. raw:: html
@@ -2038,34 +2072,104 @@ out what the version of CPRS you need to use is:
     Another one: <strong>^</strong></code></div>
 
 Okay. So we need ``1.0.30.75``. So we navigate here: http://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/,
-and from there, try to guess which version we need. From my version string, it looks like we need version 30. There are two
-version 30's; so I guess I should choose the latter one.
+and from there, try to guess which version we need. From my version string, it looks like we need version 30. There are three
+version 30's; so I guess I should choose the latest one.
 
 At this point, we need to look for a .zip file. Looking through the list, I see
 
-* MHA_501_116_scrubbed.zip
-* OR_30_350_scrubbed.zip
-* OR_30_350_SRC_scrubbed.zip
-* VITL5_P28_scrubbed.zip
-* XU_8_0_P641_scrubbed.zip
+* OR_30_423_scrubbed.zip
+* OR_30_423_SRC_scrubbed.zip
 
-The one most likely to contain the CPRS exe is OR_30_350_scrubbed.zip; SRC_scrubbed.zip is the CPRS source code, which also
-may contain a compiled version.
+The one most likely to contain the CPRS exe is OR_30_423_scrubbed.zip;
+SRC_scrubbed.zip is the CPRS source code, which also may contain a compiled
+version.
 
-*Please please note that this is what I see when I write this at the end of 2016; what you see in the future will
-certainly be different.*
+*Please please note that this is what I see when I write this at the end of
+2016; what you see in the future will certainly be different.*
 
-So I download OR_30_350_scrubbed.zip, and open it. There is a CPRSChart.exe in that one. But what version?
+So I download OR_30_423_scrubbed.zip, and open it. There is a CPRSChart.exe in
+that one. But what version?
 
-We can try running it, but you will get an error right away saying that 'borlndmm.dll' is needed.
+We can find that out by right clicking on the exe, choosing properties, and
+then choosing the 4th tab. Over there, you will see the version number. Make
+sure that that's the right version number compared with what you have.
 
-You can find 'borlndmm.dll' in the source code download: http://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/CPRS%20VERSION%2030b/OR_30_350_SRC_scrubbed.zip
+  .. figure::
+     images/InitializeVistA/right_click_on_cprs.png
+     :align: center
+     :alt: Right Click on CPRS
 
-Unzip that, and copy borlndmm.dll to the same directory that CPRS is located in.
+  .. figure::
+     images/InitializeVistA/CPRSPropertiestab0.png
+     :align: center
+     :alt: First Tab
 
-Now, try to run CPRS again. You will see the version on the splash screen: in my case, it's ``1.0.30.72``.
+  .. figure::
+     images/InitializeVistA/CPRSPropertiestab3.png
+     :align: center
+     :alt: Fourth Tab
 
-Okay. I am stuck!
+If you have the right version, we can try running it, but you will get an 
+error right away saying that 'borlndmm.dll' is needed.
+
+You can find 'borlndmm.dll' in the source code download referenced above (the
+zip file that contains SRC in the name) in the CPRS-Chart folder. Copy that file to the folder
+where the CPRSChart.exe is located at.
+
+Now, try to run CPRS again. You will get this splash screen:
+
+  .. figure::
+     images/InitializeVistA/CPRS_Splash_Screen.png
+     :align: center
+     :alt: Splash Screen
+
+and the "ConnectTo" dialog:
+
+  .. figure::
+     images/InitializeVistA/CPRSConnectTo.png
+     :align: center
+     :alt: Connect To
+
+Click on "New" and fill it in with the ip address of the server and the port number the RPC listener is listening at:
+
+  .. figure::
+     images/InitializeVistA/CPRSAddServer.png
+     :align: center
+     :alt: Add Server
+
+Now, after you click ok, you will see this:
+
+  .. figure::
+     images/InitializeVistA/CPRSConnectTo2.png
+     :align: center
+     :alt: Connect To
+
+Click OK. You will see that CPRS connects, and display the access and verify screen:
+
+  .. figure::
+     images/InitializeVistA/VISTASign-on.png
+     :align: center
+     :alt: Sign On
+
+Now, put in the access and verify codes. If you followed along, this would be CPRS1234 and USR.1234.
+
+Once you sign-in, since you are signing in for the first time, you will be asked to change your verify code:
+
+  .. figure::
+     images/InitializeVistA/CVC.png
+     :align: center
+     :alt: Sign On
+
+Go ahead and change it (no screen shot shown) and then click OK. It will
+confirm that it changed, and then you will see the patient selection screen.
+
+  .. figure::
+     images/InitializeVistA/CPRSPatientSelection.png
+     :align: center
+     :alt: Patient Selection
+
+You should be happy when you reach this point; except that a medical records
+system is useless without patients.
 
 Stopping VistA
 --------------
