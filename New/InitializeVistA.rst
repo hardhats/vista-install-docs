@@ -126,6 +126,7 @@ There are a few confusing conventions that outsiders don't understand right away
 * ``????`` In the menu system, display help for current menu.
 * ``<enter>`` key is the main navigation key in VistA. Typing it after an entry enters that entry; typing when nothing is entered will move you forward or up, depending on the context.
 * ``Select <item>`` Whenever you see select, you can select or add an item; after that, you can edit it.
+* ``Spacebar <enter>`` Most of the time, VistA remembers the last entry you made for a particular field. To make the same entry again, do spacebar enter.
 
 Begin to Set Up the VistA System
 ================================
@@ -541,8 +542,13 @@ First we add the entry to the ``DOMAIN`` file through FileMan.
       NETWORK ADDRESS (MAILMAN HOST): <strong>FORUM.OSEHRA.ORG</strong>
       OUT OF SERVICE: <strong>&lt;enter&gt;</strong>
       TEXT:
+      (on GT.M)
       1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/GTM</strong>
       2><strong>C TCPCHAN-SOCKET25/GTM</strong>
+      3><strong>&lt;enter&gt;</strong>
+      (on Cache)
+      1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/IP-MAILMAN</strong>
+      2><strong>C TCPCHAN-SOCKET25/CACHE/NT</strong>
       3><strong>&lt;enter&gt;</strong>
     EDIT Option: <strong>^</strong>
       TRANSMISSION SCRIPT NOTES:
@@ -567,9 +573,15 @@ First we add the entry to the ``DOMAIN`` file through FileMan.
       NETWORK ADDRESS (MAILMAN HOST): <strong>FORUM.OSEHRA.ORG</strong>
       OUT OF SERVICE: <strong>&lt;enter&gt;</strong>
       TEXT:
+      (on GT.M)
       1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/GTM</strong>
       2><strong>C TCPCHAN-SOCKET25/GTM</strong>
       3><strong>&lt;enter&gt;</strong>
+      (on Cache)
+      1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/IP-MAILMAN</strong>
+      2><strong>C TCPCHAN-SOCKET25/CACHE/NT</strong>
+      3><strong>&lt;enter&gt;</strong>
+
     EDIT Option: ^
       TRANSMISSION SCRIPT NOTES:
       1><strong>&lt;enter&gt;</strong>

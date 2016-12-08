@@ -19,7 +19,7 @@
 <h1 id="creating-an-empty-gt.m-database-suitable-for-vista">Creating an Empty GT.M Database suitable for VistA</h1>
 <p>Create a directory where you will place your environment. These two steps need to be done as a superuser. The directory name or location doesn't matter. In this case, it's <code>foia201608</code> under <code>/var/db</code>. Second step changes the ownership to your user name and your user group.</p>
 <div class="code"><code>$ <strong>sudo mkdir -p /var/db/foia201608</strong>
-$ <strong>sudo chown $USER. /var/db/foia201608</strong> or <strong>sudo chown $USER:$USER /var/db/foia201608</strong> on BSD variants.
+$ <strong><strong>sudo chown $USER:$USER /var/db/foia201608</strong>.
 $ <strong>cd /var/db/foia201608</strong></code></div>
 <p>Then create folders to hold your routines, globals, journals, and objects. The convention in the VistA community is to call these folders r g j and o. While it's easier to say routines globals journals and objects, I do not want to break with convention.</p>
 <div class="code"><code>$ <strong>mkdir r g j o</strong></code></div>
@@ -109,7 +109,7 @@ change -segment DEFAULT -file="$vista_home/g/mumps.dat" -access_method=BG -alloc
 ! TEMPGBL unlike the others will be memory mapped to the RAM to allow instant
 ! access.
 ! Since it's located in RAM, global_buffer_count does not apply to it.
-add    -segment TEMPGBL -file="$vista_home/g/tempgbl.dat" -access_method=MM -allocation=10000   -block_size=4096 -lock_space=1000 !-extension_count=2560
+add    -segment TEMPGBL -file="$vista_home/g/tempgbl.dat" -access_method=MM -allocation=10000   -block_size=4096 -lock_space=1000 -extension_count=2560
 
 ! Each global node can be 1024 bytes long; subscripts can be combined to be 512 bytes long
 ! You will need to increase this for RPMS
@@ -137,131 +137,161 @@ exit</code></div>
 <div class="code"><code>$ <strong>mumps -run ^GDE < g/db.gde |& tee g/db.gde.out</strong></code></div>
 <p>A successful invocation will show you this output on the screen and saved into g/db.gde.out as well.</p>
 <div class="code"><code>
-                                        *** TEMPLATES ***
-                                                                         Std      Inst
-                                            Def     Rec   Key Null       Null     Freeze   Qdb      Epoch
-Region                                     Coll    Size  Size Subs       Coll Jnl on Error Rndwn    Taper
------------------------------------------------------------------------------------------------------------
-<default>                                     0     256    64 NEVER      N    N   DISABLED DISABLED ENABLED
-
-Segment          Active              Acc Typ Block      Alloc Exten Options
-------------------------------------------------------------------------------
-<default>          *                 BG  DYN  1024        100   100 GLOB =1024
-                                                                    LOCK = 40
-                                                                    RES  =   0
-                                                                    ENCR = OFF
-                                                                    MSLT =1024
-                                                                    DALL=YES
-<default>                            MM  DYN  1024        100   100 DEFER
-                                                                    LOCK = 40
-                                                                    MSLT =1024
-                                                                    DALL=YES
-
-        *** NAMES ***
-Global                             Region
-------------------------------------------------------------------------------
-*                                  DEFAULT
-BMXTMP                             TEMPGBL
-HLTMP                              TEMPGBL
-TMP                                TEMPGBL
-UTILITY                            TEMPGBL
-VPRHTTP                            TEMPGBL
-XTMP                               TEMPGBL
-XUTL                               TEMPGBL
-ZZ*                                TEMPGBL
-
-                               *** REGIONS ***
-                                                                                               Std      Inst
-                                Dynamic                          Def      Rec   Key Null       Null     Freeze   Qdb      Epoch
-Region                          Segment                         Coll     Size  Size Subs       Coll Jnl on Error Rndwn    Taper
-----------------------------------------------------------------------------------------------------------------------------------
-DEFAULT                         DEFAULT                            0    16384  1019 NEVER      Y    N   DISABLED DISABLED ENABLED
-TEMPGBL                         TEMPGBL                            0    16384  1019 NEVER      Y    N   DISABLED DISABLED ENABLED
-
-                               *** SEGMENTS ***
-Segment                         File (def ext: .dat)Acc Typ Block      Alloc Exten Options
--------------------------------------------------------------------------------------------
-DEFAULT                         $vista_home/g/mumps.dat
-                                                    BG  DYN  4096    1048576   100 GLOB=8192
-                                                                                   LOCK=1000
-                                                                                   RES =   0
-                                                                                   ENCR=OFF
-                                                                                   MSLT=1024
-                                                                                   DALL=YES
-TEMPGBL                         $vista_home/g/tempgbl.dat
-                                                    MM  DYN  4096      10000   100 DEFER
-                                                                                   LOCK=1000
-                                                                                   RES =   0
-                                                                                   ENCR=OFF
-                                                                                   MSLT=1024
-                                                                                   DALL=YES
-
-                                 *** MAP ***
-  -  -  -  -  -  -  -  -  -  - Names -  -  - -  -  -  -  -  -  -
-From                            Up to                            Region / Segment / File(def ext: .dat)
---------------------------------------------------------------------------------------------------------------------------
-%                               BMXTMP                           REG = DEFAULT
-                                                                 SEG = DEFAULT
-                                                                 FILE = $vista_home/g/mumps.dat
-BMXTMP                          BMXTMP0                          REG = TEMPGBL
-                                                                 SEG = TEMPGBL
-                                                                 FILE = $vista_home/g/tempgbl.dat
-BMXTMP0                         HLTMP                            REG = DEFAULT
-                                                                 SEG = DEFAULT
-                                                                 FILE = $vista_home/g/mumps.dat
-HLTMP                           HLTMP0                           REG = TEMPGBL
-                                                                 SEG = TEMPGBL
-                                                                 FILE = $vista_home/g/tempgbl.dat
-HLTMP0                          TMP                              REG = DEFAULT
-                                                                 SEG = DEFAULT
-                                                                 FILE = $vista_home/g/mumps.dat
-TMP                             TMP0                             REG = TEMPGBL
-                                                                 SEG = TEMPGBL
-                                                                 FILE = $vista_home/g/tempgbl.dat
-TMP0                            UTILITY                          REG = DEFAULT
-                                                                 SEG = DEFAULT
-                                                                 FILE = $vista_home/g/mumps.dat
-UTILITY                         UTILITY0                         REG = TEMPGBL
-                                                                 SEG = TEMPGBL
-                                                                 FILE = $vista_home/g/tempgbl.dat
-UTILITY0                        VPRHTTP                          REG = DEFAULT
-                                                                 SEG = DEFAULT
-                                                                 FILE = $vista_home/g/mumps.dat
-VPRHTTP                         VPRHTTP0                         REG = TEMPGBL
-                                                                 SEG = TEMPGBL
-                                                                 FILE = $vista_home/g/tempgbl.dat
-VPRHTTP0                        XTMP                             REG = DEFAULT
-                                                                 SEG = DEFAULT
-                                                                 FILE = $vista_home/g/mumps.dat
-XTMP                            XTMP0                            REG = TEMPGBL
-                                                                 SEG = TEMPGBL
-                                                                 FILE = $vista_home/g/tempgbl.dat
-XTMP0                           XUTL                             REG = DEFAULT
-                                                                 SEG = DEFAULT
-                                                                 FILE = $vista_home/g/mumps.dat
-XUTL                            XUTL0                            REG = TEMPGBL
-                                                                 SEG = TEMPGBL
-                                                                 FILE = $vista_home/g/tempgbl.dat
-XUTL0                           ZZ                               REG = DEFAULT
-                                                                 SEG = DEFAULT
-                                                                 FILE = $vista_home/g/mumps.dat
-ZZ                              Za                               REG = TEMPGBL
-                                                                 SEG = TEMPGBL
-                                                                 FILE = $vista_home/g/tempgbl.dat
-Za                              ...                              REG = DEFAULT
-                                                                 SEG = DEFAULT
-                                                                 FILE = $vista_home/g/mumps.dat
-LOCAL LOCKS                                                      REG = DEFAULT
-                                                                 SEG = DEFAULT
-                                                                 FILE = $vista_home/g/mumps.dat
-GDE> 
-GDE> 
-GDE> 
-%GDE-I-VERIFY, Verification OK
-
-%GDE-I-GDCREATE, Creating Global Directory file 
-    /var/db/foia201608/g/mumps.gld
-</code></div>
+<dl>
+<dt>%GDE-I-GDUSEDEFS, Using defaults for Global Directory</dt>
+<dd><p>/var/db/foia0616/g/mumps.gld</p>
+</dd>
+</dl>
+<p>GDE&gt;</p>
+<blockquote>
+<dl>
+<dt><strong>* TEMPLATES</strong>*</dt>
+<dd><p>Std Inst</p>
+</dd>
+</dl>
+<blockquote>
+<p>Def Rec Key Null Null Freeze Qdb Epoch</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<h2 id="region-coll-size-size-subs-coll-jnl-on-error-rndwn-taper">Region Coll Size Size Subs Coll Jnl on Error Rndwn Taper</h2>
+<p>&lt;default&gt; 0 256 64 NEVER N N DISABLED DISABLED ENABLED</p>
+<h2 id="segment-active-acc-typ-block-alloc-exten-options">Segment Active Acc Typ Block Alloc Exten Options</h2>
+<dl>
+<dt>&lt;default&gt; * BG DYN 1024 100 100 GLOB =1024</dt>
+<dd><p>LOCK = 40 RES = 0 ENCR = OFF MSLT =1024 DALL=YES</p>
+</dd>
+<dt>&lt;default&gt; MM DYN 1024 100 100 DEFER</dt>
+<dd><p>LOCK = 40 MSLT =1024 DALL=YES</p>
+</dd>
+</dl>
+<blockquote>
+<p><strong>* NAMES</strong>*</p>
+</blockquote>
+<h2 id="global-region">Global Region</h2>
+<p>* DEFAULT BMXTMP TEMPGBL HLTMP TEMPGBL TMP TEMPGBL UTILITY TEMPGBL VPRHTTP TEMPGBL XTMP TEMPGBL XUTL TEMPGBL ZZ* TEMPGBL</p>
+<blockquote>
+<dl>
+<dt><strong>* REGIONS</strong>*</dt>
+<dd><p>Std Inst</p>
+</dd>
+</dl>
+<blockquote>
+<p>Dynamic Def Rec Key Null Null Freeze Qdb Epoch</p>
+</blockquote>
+</blockquote>
+<h2 id="region-segment-coll-size-size-subs-coll-jnl-on-error-rndwn-taper">Region Segment Coll Size Size Subs Coll Jnl on Error Rndwn Taper</h2>
+<p>DEFAULT DEFAULT 0 1024 512 NEVER Y N DISABLED DISABLED ENABLED TEMPGBL TEMPGBL 0 1024 512 NEVER Y N DISABLED DISABLED ENABLED</p>
+<blockquote>
+<p><strong>* SEGMENTS</strong>*</p>
+</blockquote>
+<h2 id="segment-file-def-ext-.datacc-typ-block-alloc-exten-options">Segment File (def ext: .dat)Acc Typ Block Alloc Exten Options</h2>
+<dl>
+<dt>DEFAULT $vista_home/g/mumps.dat</dt>
+<dd><dl>
+<dt>BG DYN 4096 1048576 25600 GLOB=8192</dt>
+<dd><p>LOCK=1000 RES = 0 ENCR=OFF MSLT=1024 DALL=YES</p>
+</dd>
+</dl>
+</dd>
+<dt>TEMPGBL $vista_home/g/tempgbl.dat</dt>
+<dd><dl>
+<dt>MM DYN 4096 10000 2560 DEFER</dt>
+<dd><p>LOCK=1000 RES = 0 ENCR=OFF MSLT=1024 DALL=YES</p>
+</dd>
+</dl>
+</dd>
+<dt><strong>* MAP</strong>*</dt>
+<dd><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li><ul>
+<li>Names - - - - - - - - - -</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+</dd>
+</dl>
+<h2 id="from-up-to-region-segment-filedef-ext-.dat">From Up to Region / Segment / File(def ext: .dat)</h2>
+<dl>
+<dt>% BMXTMP REG = DEFAULT</dt>
+<dd><p>SEG = DEFAULT FILE = $vista_home/g/mumps.dat</p>
+</dd>
+<dt>BMXTMP BMXTMP0 REG = TEMPGBL</dt>
+<dd><p>SEG = TEMPGBL FILE = $vista_home/g/tempgbl.dat</p>
+</dd>
+<dt>BMXTMP0 HLTMP REG = DEFAULT</dt>
+<dd><p>SEG = DEFAULT FILE = $vista_home/g/mumps.dat</p>
+</dd>
+<dt>HLTMP HLTMP0 REG = TEMPGBL</dt>
+<dd><p>SEG = TEMPGBL FILE = $vista_home/g/tempgbl.dat</p>
+</dd>
+<dt>HLTMP0 TMP REG = DEFAULT</dt>
+<dd><p>SEG = DEFAULT FILE = $vista_home/g/mumps.dat</p>
+</dd>
+<dt>TMP TMP0 REG = TEMPGBL</dt>
+<dd><p>SEG = TEMPGBL FILE = $vista_home/g/tempgbl.dat</p>
+</dd>
+<dt>TMP0 UTILITY REG = DEFAULT</dt>
+<dd><p>SEG = DEFAULT FILE = $vista_home/g/mumps.dat</p>
+</dd>
+<dt>UTILITY UTILITY0 REG = TEMPGBL</dt>
+<dd><p>SEG = TEMPGBL FILE = $vista_home/g/tempgbl.dat</p>
+</dd>
+<dt>UTILITY0 VPRHTTP REG = DEFAULT</dt>
+<dd><p>SEG = DEFAULT FILE = $vista_home/g/mumps.dat</p>
+</dd>
+<dt>VPRHTTP VPRHTTP0 REG = TEMPGBL</dt>
+<dd><p>SEG = TEMPGBL FILE = $vista_home/g/tempgbl.dat</p>
+</dd>
+<dt>VPRHTTP0 XTMP REG = DEFAULT</dt>
+<dd><p>SEG = DEFAULT FILE = $vista_home/g/mumps.dat</p>
+</dd>
+<dt>XTMP XTMP0 REG = TEMPGBL</dt>
+<dd><p>SEG = TEMPGBL FILE = $vista_home/g/tempgbl.dat</p>
+</dd>
+<dt>XTMP0 XUTL REG = DEFAULT</dt>
+<dd><p>SEG = DEFAULT FILE = $vista_home/g/mumps.dat</p>
+</dd>
+<dt>XUTL XUTL0 REG = TEMPGBL</dt>
+<dd><p>SEG = TEMPGBL FILE = $vista_home/g/tempgbl.dat</p>
+</dd>
+<dt>XUTL0 ZZ REG = DEFAULT</dt>
+<dd><p>SEG = DEFAULT FILE = $vista_home/g/mumps.dat</p>
+</dd>
+<dt>ZZ Za REG = TEMPGBL</dt>
+<dd><p>SEG = TEMPGBL FILE = $vista_home/g/tempgbl.dat</p>
+</dd>
+<dt>Za ... REG = DEFAULT</dt>
+<dd><p>SEG = DEFAULT FILE = $vista_home/g/mumps.dat</p>
+</dd>
+<dt>LOCAL LOCKS REG = DEFAULT</dt>
+<dd><p>SEG = DEFAULT FILE = $vista_home/g/mumps.dat</p>
+</dd>
+</dl>
+</blockquote>
+<p>GDE&gt; GDE&gt; GDE&gt; %GDE-I-VERIFY, Verification OK</p>
+<dl>
+<dt>%GDE-I-GDCREATE, Creating Global Directory file</dt>
+<dd><p>/var/db/foia0616/g/mumps.gld</p>
+</dd>
+</dl>
+<blockquote>
+<p>&lt;/code&gt;&lt;/div&gt;</p>
+</blockquote>
 <p>If you fail, you will see something similar to the following at the end of the output:</p>
 <div class="code"><code>%GDE-I-VERIFY, Verification FAILED
 

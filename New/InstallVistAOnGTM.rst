@@ -26,7 +26,7 @@ user name and your user group.
 .. raw:: html
     
     <div class="code"><code>$ <strong>sudo mkdir -p /var/db/foia201608</strong>
-    $ <strong>sudo chown $USER. /var/db/foia201608</strong> or <strong>sudo chown $USER:$USER /var/db/foia201608</strong> on BSD variants.
+    $ <strong><strong>sudo chown $USER:$USER /var/db/foia201608</strong>.
     $ <strong>cd /var/db/foia201608</strong></code></div>
 
 Then create folders to hold your routines, globals, journals, and objects. The

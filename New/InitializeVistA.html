@@ -102,6 +102,7 @@ D Q^DI ; Do starting from Label Q in Routine DI. Q^DI is how to enter Fileman.</
 <li><code>????</code> In the menu system, display help for current menu.</li>
 <li><code>&lt;enter&gt;</code> key is the main navigation key in VistA. Typing it after an entry enters that entry; typing when nothing is entered will move you forward or up, depending on the context.</li>
 <li><code>Select &lt;item&gt;</code> Whenever you see select, you can select or add an item; after that, you can edit it.</li>
+<li><code>Spacebar &lt;enter&gt;</code> Most of the time, VistA remembers the last entry you made for a particular field. To make the same entry again, do spacebar enter.</li>
 </ul>
 <h1 id="begin-to-set-up-the-vista-system">Begin to Set Up the VistA System</h1>
 <h2 id="before-you-start">Before you Start</h2>
@@ -437,8 +438,13 @@ Select TRANSMISSION SCRIPT: <strong>MAIN</strong>
   NETWORK ADDRESS (MAILMAN HOST): <strong>FORUM.OSEHRA.ORG</strong>
   OUT OF SERVICE: <strong>&lt;enter&gt;</strong>
   TEXT:
+  (on GT.M)
   1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/GTM</strong>
   2><strong>C TCPCHAN-SOCKET25/GTM</strong>
+  3><strong>&lt;enter&gt;</strong>
+  (on Cache)
+  1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/IP-MAILMAN</strong>
+  2><strong>C TCPCHAN-SOCKET25/CACHE/NT</strong>
   3><strong>&lt;enter&gt;</strong>
 EDIT Option: <strong>^</strong>
   TRANSMISSION SCRIPT NOTES:
@@ -463,9 +469,15 @@ Select TRANSMISSION SCRIPT: <strong>MAIN</strong>
   NETWORK ADDRESS (MAILMAN HOST): <strong>FORUM.OSEHRA.ORG</strong>
   OUT OF SERVICE: <strong>&lt;enter&gt;</strong>
   TEXT:
+  (on GT.M)
   1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/GTM</strong>
   2><strong>C TCPCHAN-SOCKET25/GTM</strong>
   3><strong>&lt;enter&gt;</strong>
+  (on Cache)
+  1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/IP-MAILMAN</strong>
+  2><strong>C TCPCHAN-SOCKET25/CACHE/NT</strong>
+  3><strong>&lt;enter&gt;</strong>
+
 EDIT Option: ^
   TRANSMISSION SCRIPT NOTES:
   1><strong>&lt;enter&gt;</strong>
