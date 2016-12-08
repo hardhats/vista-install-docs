@@ -1,6 +1,16 @@
 VistA Initialization
 ====================
 
+Authors: Sam Habiel
+
+License: 
+
+.. image:: https://i.creativecommons.org/l/by/4.0/80x15.png 
+   :target: http://creativecommons.org/licenses/by/4.0/ 
+
+Attributions: Original instructions by Fil Beza and Nancy Anthracite; this set has been updated
+by Sam Habiel. Last updated in December 2016.
+
 If you have reached this point, it means that you have finished `Install Cache
 <./InstallCache.html>`_; or `Install GT.M <./InstallGTM.html>`_ and `Install VistA on GT.M
 <./InstallVistAOnGTM.html>`_.
@@ -312,7 +322,7 @@ The one that comes in FOIA looks like this:
 You need to select it and change the settings as follows:
 
 * NAME = HFS
-* $I  = /tmp/hfs.dat or /dev/shm/hfs.dat or d:\hfs\, depending on your operating system (All Unices has /tmp/; only Linux has /dev/shm; last one is an example on Windows)
+* $I  = /tmp/hfs.dat or /dev/shm/hfs.dat or d:\\hfs\\, depending on your operating system (All Unices has /tmp/; only Linux has /dev/shm; last one is an example on Windows)
 * ASK DEVICE = YES
 * ASK PARAMETERS = @ (Delete it)
 * LOCATION OF TERMINAL = Host File Server

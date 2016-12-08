@@ -1,6 +1,13 @@
 Download and Install GT.M
 =========================
 
+Authors: KS Bhaskar
+
+License: 
+
+.. image:: https://i.creativecommons.org/l/by/4.0/80x15.png 
+   :target: http://creativecommons.org/licenses/by/4.0/ 
+   
 The instructions are taken from the `GT.M Acculturation Workshop 
 <https://sourceforge.net/projects/fis-gtm/files/GT.M%20Acculturation%20Workshop/>`_.  They have been only slightly modified.
 

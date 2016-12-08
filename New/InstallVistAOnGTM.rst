@@ -1,6 +1,13 @@
 Download VistA for GT.M
 =======================
 
+Authors: Sam Habiel
+
+License: 
+
+.. image:: https://i.creativecommons.org/l/by/4.0/80x15.png 
+   :target: http://creativecommons.org/licenses/by/4.0/ 
+
 A Mumps database (like VistA) is a series of routines and globals (a global
 in Mumps really means a file on disk). To load VistA into GT.M, you need to
 obtain the these from the CACHE.DAT distribued by the VA. Efforts are
