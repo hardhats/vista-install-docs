@@ -9,12 +9,8 @@ body {
   max-width: 800px;
   padding: 16px;
   background: #e0e0e0;
-  white-space: pre-wrap;
-  /*
-  overflow-wrap: break-word;
-  word-wrap: break-word;
-  word-break: break-all;
-  */
+  white-space: pre;
+  overflow-x: scroll;
 }
 
 code {

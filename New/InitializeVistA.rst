@@ -1,6 +1,16 @@
 VistA Initialization
 ====================
 
+Authors: Sam Habiel
+
+License: 
+
+.. image:: https://i.creativecommons.org/l/by/4.0/80x15.png 
+   :target: http://creativecommons.org/licenses/by/4.0/ 
+
+Attributions: Original instructions by Fil Beza and Nancy Anthracite; this set has been updated
+by Sam Habiel. Last updated in December 2016.
+
 If you have reached this point, it means that you have finished `Install Cache
 <./InstallCache.html>`_; or `Install GT.M <./InstallGTM.html>`_ and `Install VistA on GT.M
 <./InstallVistAOnGTM.html>`_.
@@ -126,6 +136,7 @@ There are a few confusing conventions that outsiders don't understand right away
 * ``????`` In the menu system, display help for current menu.
 * ``<enter>`` key is the main navigation key in VistA. Typing it after an entry enters that entry; typing when nothing is entered will move you forward or up, depending on the context.
 * ``Select <item>`` Whenever you see select, you can select or add an item; after that, you can edit it.
+* ``Spacebar <enter>`` Most of the time, VistA remembers the last entry you made for a particular field. To make the same entry again, do spacebar enter.
 
 Begin to Set Up the VistA System
 ================================
@@ -313,7 +324,7 @@ The one that comes in FOIA looks like this:
 You need to select it and change the settings as follows:
 
 * NAME = HFS
-* $I  = /tmp/hfs.dat or /dev/shm/hfs.dat or d:\hfs\, depending on your operating system (All Unices has /tmp/; only Linux has /dev/shm; last one is an example on Windows)
+* $I  = /tmp/hfs.dat or /dev/shm/hfs.dat or d:\\hfs\\, depending on your operating system (All Unices has /tmp/; only Linux has /dev/shm; last one is an example on Windows)
 * ASK DEVICE = YES
 * ASK PARAMETERS = @ (Delete it)
 * LOCATION OF TERMINAL = Host File Server
@@ -543,8 +554,13 @@ First we add the entry to the ``DOMAIN`` file through Fileman.
       NETWORK ADDRESS (MAILMAN HOST): <strong>FORUM.OSEHRA.ORG</strong>
       OUT OF SERVICE: <strong>&lt;enter&gt;</strong>
       TEXT:
+      (on GT.M)
       1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/GTM</strong>
       2><strong>C TCPCHAN-SOCKET25/GTM</strong>
+      3><strong>&lt;enter&gt;</strong>
+      (on Cache)
+      1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/IP-MAILMAN</strong>
+      2><strong>C TCPCHAN-SOCKET25/CACHE/NT</strong>
       3><strong>&lt;enter&gt;</strong>
     EDIT Option: <strong>^</strong>
       TRANSMISSION SCRIPT NOTES:
@@ -569,9 +585,15 @@ First we add the entry to the ``DOMAIN`` file through Fileman.
       NETWORK ADDRESS (MAILMAN HOST): <strong>FORUM.OSEHRA.ORG</strong>
       OUT OF SERVICE: <strong>&lt;enter&gt;</strong>
       TEXT:
+      (on GT.M)
       1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/GTM</strong>
       2><strong>C TCPCHAN-SOCKET25/GTM</strong>
       3><strong>&lt;enter&gt;</strong>
+      (on Cache)
+      1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/IP-MAILMAN</strong>
+      2><strong>C TCPCHAN-SOCKET25/CACHE/NT</strong>
+      3><strong>&lt;enter&gt;</strong>
+
     EDIT Option: ^
       TRANSMISSION SCRIPT NOTES:
       1><strong>&lt;enter&gt;</strong>
@@ -1149,10 +1171,15 @@ Setup your Institution
 VistA has a very complex structure to deal with the question of: in what hospital are you signed in right now?
 The answer determines the value of the all important variable ``DUZ(2)`` and the API ``SITE^VASITE()``.
 
-There are four files that are important in that regard: INSTITUTION (#4), STATION NUMBER (TIME SENSITIVE) (#389.9),
-KERNEL SYSTEM PARAMETERS (#8989.3), and the MEDICAL CENTER DIVISION file (#40.8). We will add our hospital to
-the INSTITUTION file first, with the station number 999. Then we will make sure that the STATION NUMBER file says
-999; and then will will point the KERNEL SYSTEM PARAMETERS and MEDICAL CENTER DIVISION to our new Hospital.
+There are five files that are important in that regard: INSTITUTION (#4),
+STATION NUMBER (TIME SENSITIVE) (#389.9), KERNEL SYSTEM PARAMETERS (#8989.3),
+MEDICAL CENTER DIVISION file (#40.8), and MASTER PATIENT INDEX (LOCAL NUMBERS)
+(984.1). We will add our Hopstial to the INSTITUTION file first, with the
+station number 999. Then we will make sure that the STATION NUMBER file says
+999; and then will will point the KERNEL SYSTEM PARAMETERS and MEDICAL CENTER
+DIVISION to our new Hospital. In MASTER PATIENT INDEX, we tell it our station
+number and the range of numbers for our Integration Control Numbers (ICNs), the
+number used to identify patients across systems.
 
 By default, FOIA VistA comes with station number 050, and the institution is called SOFTWARE SERVICE. We can't
 leave that alone because VistA malfunctions with station numbers are are just 2 digits long (050 becomes 50 in
@@ -1337,6 +1364,29 @@ Next, the MEDICAL CENTER DIVISION file:
 
     Select MEDICAL CENTER DIVISION NAME:<strong>&lt;enter&gt;</strong></code></div>
 
+Next, the MASTER PATIENT INDEX file:
+
+.. raw:: html
+
+  <div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES
+
+  INPUT TO WHAT FILE: MASTER PATIENT INDEX (LOCAL NUMBERS)// <strong>MASTER PATIENT INDEX</strong>
+
+  EDIT WHICH FIELD: ALL//
+
+  Select MASTER PATIENT INDEX (LOCAL NUMBERS) SITE ID NUMBER: <strong>`1</strong>  740
+  SITE ID NUMBER: 740// <strong>999</strong>
+  LAST NUMBER USED: 500000000// <strong>9990000000</strong>
+  CHECK SUM FOR LAST NUMBER USED: 217407// <strong>@</strong>
+  SURE YOU WANT TO DELETE? <strong>Y</strong>  (Yes)
+  NEXT NUMBER TO USE: 500000001// <strong>9990000001</strong>
+  CHECK SUM FOR NEXT: 075322// <strong>@</strong>
+  SURE YOU WANT TO DELETE? <strong>Y</strong>  (Yes)
+
+
+  Select MASTER PATIENT INDEX (LOCAL NUMBERS) SITE ID NUMBER:<strong>&lt;enter&gt;</strong></code></div>
+
+    
 At this point, we are ready to check our work. First, we need to know the internal entry
 number (IEN) of the institution we just created:
 
@@ -2019,8 +2069,14 @@ the ``CPRS,USER`` will be able to sign on and interact with the GUI.
 
 Downloading CPRS and Running It
 -------------------------------
-The next part is laborious and tedious: finding the correct version of CPRS to run on
-your FOIA instance. The first thing is that you need to go into Fileman, and find
+The next part is laborious and tedious: finding the correct vesion of CPRS to run on
+your FOIA instance. 
+
+*NB: If you have been following on a Linux or Mac machine so far, you need to switch
+to Windows or use Wine 1.8 or higher to run CPRS. Earlier versions of Wine had an
+unimplemented function in comctl32.dll that prevented CPRS from running.*
+
+The first thing is that you need to go into Fileman, and find
 out what the version of CPRS you need to use is:
 
 .. raw:: html
@@ -2040,34 +2096,333 @@ out what the version of CPRS you need to use is:
     Another one: <strong>^</strong></code></div>
 
 Okay. So we need ``1.0.30.75``. So we navigate here: http://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/,
-and from there, try to guess which version we need. From my version string, it looks like we need version 30. There are two
-version 30's; so I guess I should choose the latter one.
+and from there, try to guess which version we need. From my version string, it looks like we need version 30. There are three
+version 30's; so I guess I should choose the latest one.
 
 At this point, we need to look for a .zip file. Looking through the list, I see
 
-* MHA_501_116_scrubbed.zip
-* OR_30_350_scrubbed.zip
-* OR_30_350_SRC_scrubbed.zip
-* VITL5_P28_scrubbed.zip
-* XU_8_0_P641_scrubbed.zip
+* OR_30_423_scrubbed.zip
+* OR_30_423_SRC_scrubbed.zip
 
-The one most likely to contain the CPRS exe is OR_30_350_scrubbed.zip; SRC_scrubbed.zip is the CPRS source code, which also
-may contain a compiled version.
+The one most likely to contain the CPRS exe is OR_30_423_scrubbed.zip;
+SRC_scrubbed.zip is the CPRS source code, which also may contain a compiled
+version.
 
-*Please please note that this is what I see when I write this at the end of 2016; what you see in the future will
-certainly be different.*
+*Please please note that this is what I see when I write this at the end of
+2016; what you see in the future will certainly be different.*
 
-So I download OR_30_350_scrubbed.zip, and open it. There is a CPRSChart.exe in that one. But what version?
+So I download OR_30_423_scrubbed.zip, and open it. There is a CPRSChart.exe in
+that one. But what version?
 
-We can try running it, but you will get an error right away saying that 'borlndmm.dll' is needed.
+We can find that out by right clicking on the exe, choosing properties, and
+then choosing the 4th tab. Over there, you will see the version number. Make
+sure that that's the right version number compared with what you have.
 
-You can find 'borlndmm.dll' in the source code download: http://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/CPRS%20VERSION%2030b/OR_30_350_SRC_scrubbed.zip
+  .. figure::
+     images/InitializeVistA/right_click_on_cprs.png
+     :align: center
+     :alt: Right Click on CPRS
 
-Unzip that, and copy borlndmm.dll to the same directory that CPRS is located in.
+  .. figure::
+     images/InitializeVistA/CPRSPropertiestab0.png
+     :align: center
+     :alt: First Tab
 
-Now, try to run CPRS again. You will see the version on the splash screen: in my case, it's ``1.0.30.72``.
+  .. figure::
+     images/InitializeVistA/CPRSPropertiestab3.png
+     :align: center
+     :alt: Fourth Tab
 
-Okay. I am stuck!
+If you have the right version, we can try running it, but you will get an 
+error right away saying that 'borlndmm.dll' is needed.
+
+You can find 'borlndmm.dll' in the source code download referenced above (the
+zip file that contains SRC in the name) in the CPRS-Chart folder. Copy that file to the folder
+where the CPRSChart.exe is located at.
+
+Now, try to run CPRS again. You will get this splash screen:
+
+  .. figure::
+     images/InitializeVistA/CPRS_Splash_Screen.png
+     :align: center
+     :alt: Splash Screen
+
+and the "ConnectTo" dialog:
+
+  .. figure::
+     images/InitializeVistA/CPRSConnectTo.png
+     :align: center
+     :alt: Connect To
+
+Click on "New" and fill it in with the ip address of the server and the port number the RPC listener is listening at:
+
+  .. figure::
+     images/InitializeVistA/CPRSAddServer.png
+     :align: center
+     :alt: Add Server
+
+Now, after you click ok, you will see this:
+
+  .. figure::
+     images/InitializeVistA/CPRSConnectTo2.png
+     :align: center
+     :alt: Connect To
+
+Click OK. You will see that CPRS connects, and display the access and verify screen:
+
+  .. figure::
+     images/InitializeVistA/VISTASign-on.png
+     :align: center
+     :alt: Sign On
+
+Now, put in the access and verify codes. If you followed along, this would be CPRS1234 and USR.1234.
+
+Once you sign-in, since you are signing in for the first time, you will be asked to change your verify code:
+
+  .. figure::
+     images/InitializeVistA/CVC.png
+     :align: center
+     :alt: Sign On
+
+Go ahead and change it (no screen shot shown) and then click OK. It will
+confirm that it changed, and then you will see the patient selection screen.
+
+  .. figure::
+     images/InitializeVistA/CPRSPatientSelection.png
+     :align: center
+     :alt: Patient Selection
+
+You should be happy when you reach this point; except that a medical records
+system is useless without patients.
+
+Registering your First Patient
+------------------------------
+Let's register a patient. Login using the CPRS User we just set-up.
+
+    NB: On GT.M, patient registration will crash, as it tries to use Cache Specific Code.
+    If you want to register the patient on GT.M, change entry point PATIENT^MPIFXMLP to
+    ZPATIENT; and change line 25 of DGRPD, to remove the errant space:
+    
+    ``N DGSKIP S DGSKIP=$S(DGFORGN:"!,?42,""From/To: """,1:"?42, ""From/To: """)``
+
+    to
+
+    ``N DGSKIP S DGSKIP=$S(DGFORGN:"!,?42,""From/To: """,1:"?42,""From/To: """)``
+
+    Make sure to exit GT.M using HALT or Ctrl-D so that the changes will "take".
+    (There are smarter ways of doing this, but this is the easiest for beginners.)
+    
+
+    
+
+.. raw:: html
+    
+  <div class="code"><pre>><strong>$ mumps -r ^ZU</strong>
+  This is my test system.
+
+  Volume set: ROU:Macintosh  UCI: VAH  Device: /dev/ttys001
+
+  ACCESS CODE: <strong>*****************</strong> (Access Code;Verify Code)
+
+  Good afternoon CPRS,USER
+       You last signed on today at 16:36
+
+
+     DENT   Dental ...
+     EN     Engineering Main Menu ...
+     FEE    Fee Basis Main Menu ...
+     FH     Dietetic Administration ...
+     GECO   Miscellaneous Code Sheet Manager Menu ...
+     GECS   Generic Code Sheet Menu ...
+     GMRA   Adverse Reaction Tracking ...
+     IB     Integrated Billing Master Menu ...
+     MCAR   Medicine Menu ...
+     NU     Nursing System Manager's Menu ...
+     PDX    Patient Data Exchange ...
+     PROS   Prosthetic Official's Menu ...
+     PRPF   Patient Funds (INTEGRATED) System ...
+     RA     Rad/Nuc Med Total System Menu ...
+     ROES   Remote Order/Entry System ASPS Menu ...
+     RT     Record Tracking Total System Menu ...
+     SR     Surgery Menu ...
+     SW     Information Management Systems (SWIMS) ...
+     TIU    TIU Maintenance Menu ...
+     VMAS   Volunteer Timekeeping Activity ...
+     VOL    Volunteer Master Menu ...
+     YSM    MHS Manager ...
+
+             Press 'RETURN' to continue, '^' to stop: <strong>&lt;enter&gt;</strong>
+     YSU    Mental Health ...
+            ADT Manager Menu ...
+            CPRS Manager Menu ...
+            CPRS Menu
+            Employee Menu ...
+            Finance AR Manager Menu ...
+            Health Summary Coordinator's Menu ...
+            Health Summary Enhanced Menu ...
+            Health Summary Menu ...
+            IV Menu ...
+            Library Management ...
+            National Drug File Menu ...
+            Outpatient Pharmacy Manager ...
+            Payroll Main Menu ...
+            Payroll Supervisor Menu ...
+            Scheduling Manager's Menu ...
+            Serials Control ...
+            Unit Dose Medications ...
+
+  Select Core Applications <TEST ACCOUNT> Option: <strong>ADT Manager Menu</strong>
+
+
+  CPT codes and descriptions are copyright 2016 by the American Medical
+  Association (AMA).  All Rights Reserved.  CPT is a registered trademark of the
+  American Medical Association.
+
+  Press any key to continue<strong>&lt;enter&gt;</strong>
+
+
+            ADT Outputs Menu ...
+            Bed Control Menu ...
+            Beneficiary Travel Menu ...
+            Contract Nursing Home RUG Menu ...
+            Eligibility Inquiry for Patient Billing
+            MAS Code Sheet Manager Menu ...
+            Patient Inquiry
+            PTF Menu ...
+            Registration Menu ...
+            RUG-II Menu ...
+
+  Select ADT Manager Menu <TEST ACCOUNT> Option: <strong>Registration Menu</strong>
+
+
+      DA     Disposition an Application
+      EN     Patient Enrollment
+      PHH    Purple Heart Request History
+      PHS    Purple Heart Status Report
+             Add/Edit/Delete Catastrophic Disability
+             Collateral Patient Register
+             Combat Vet Status Report
+             Delete a Registration
+             Disposition Log Edit
+             Edit Inconsistent Data for a Patient
+             Eligibility Inquiry for Patient Billing
+             Eligibility Verification
+             Load/Edit Patient Data
+             Means Test User Menu ...
+             Patient Inquiry
+             Preregistration Menu ...
+             Print Patient Wristband
+             Pseudo SSN Report (Patient)
+             Register a Patient
+             Report - All Address Change with Rx
+             Report - All Address Changes
+             Report - All Patients flagged with a Bad Address
+
+                 Press 'RETURN' to continue, '^' to stop:<strong>&lt;enter&gt;</strong>
+             Unsupported CV End Dates Report
+             View Patient Address
+             View Registration Data
+  
+  Select Registration Menu <TEST ACCOUNT> Option: <strong>Register a Patient</strong>
+
+	Select PATIENT NAME: <strong>MOUSE,MINNIE</strong>
+		 ARE YOU ADDING 'MOUSE,MINNIE' AS A NEW PATIENT (THE 2ND)? No// <strong>Y</strong> (Yes)
+		 PATIENT SEX: <strong>F</strong> FEMALE
+		 PATIENT DATE OF BIRTH: <strong>11/11/47</strong>  (NOV 11, 1947)
+		 PATIENT SOCIAL SECURITY NUMBER: <strong>P</strong>  505111148P
+		 PATIENT PSEUDO SSN REASON: <strong>N</strong> NO SSN ASSIGNED
+		 PATIENT TYPE: <strong>N</strong>
+			 1   NEWBORN OF VETERAN
+			 2   NON-VETERAN (OTHER)
+			 3   NSC VETERAN
+	CHOOSE 1-3: <strong>2</strong>  NON-VETERAN (OTHER)
+		 PATIENT VETERAN (Y/N)?: <strong>N</strong> NO
+		 PATIENT SERVICE CONNECTED?: <strong>N</strong> NO
+		 PATIENT MULTIPLE BIRTH INDICATOR:<strong>&lt;enter&gt;</strong>
+
+		 ...searching for potential duplicates..
+
+		 The following patients have been identified as potential duplicates:
+
+			 MOUSE,MICKEY      11-11-47    505111147P **Pseudo SSN**     NO     NON-VETE
+	RAN (OTHER)
+
+		 Do you still want to add 'MOUSE,MINNIE' as a new patient? No// <strong>Y</strong>  (Yes)
+
+		 ...adding new patient...new patient added
+
+	Patient name components--
+	FAMILY (LAST) NAME: MOUSE//<strong>&lt;enter&gt;</strong>
+	GIVEN (FIRST) NAME: MINNIE//<strong>&lt;enter&gt;</strong>
+	MIDDLE NAME:<strong>&lt;enter&gt;</strong>
+	PREFIX:<strong>&lt;enter&gt;</strong>
+	SUFFIX:<strong>&lt;enter&gt;</strong>
+	DEGREE:<strong>&lt;enter&gt;</strong>
+	Press ENTER to continue<strong>&lt;enter&gt;</strong>
+
+	Please verify or update the following information:<strong>&lt;enter&gt;</strong>
+
+	MOTHER'S MAIDEN NAME:<strong>&lt;enter&gt;</strong>
+	PLACE OF BIRTH [CITY]:<strong>&lt;enter&gt;</strong>
+	PLACE OF BIRTH [STATE]:<strong>&lt;enter&gt;</strong>
+	Select ALIAS:<strong>&lt;enter&gt;</strong>
+
+	Attempting to connect to the Master Patient Index in Austin...
+	If no SSN or inexact DOB or common name, this request
+	may take some time, please be patient...
+
+
+	Could not connect to MPI or Timed Out, assigning local ICN (if not already assig
+	ned)...<strong>&lt;enter&gt;</strong>
+
+	MOUSE,MINNIE                            505-11-1148P             NOV 11,1947
+	=============================================================================
+	 Address: STREET ADDRESS UNKNOWN        Temporary: NO TEMPORARY ADDRESS
+					 UNK. CITY/STATE
+
+		County: UNSPECIFIED                     From/To: NOT APPLICABLE
+		 Phone: UNSPECIFIED                       Phone: NOT APPLICABLE
+		Office: UNSPECIFIED
+			Cell: UNSPECIFIED
+		E-mail: UNSPECIFIED
+	Bad Addr:
+
+	 Confidential Address:                      Confidential Address Categories:
+					 NO CONFIDENTIAL ADDRESS
+	 From/To: NOT APPLICABLE
+
+			POS: UNSPECIFIED                      Claim #: UNSPECIFIED
+		Relig: UNSPECIFIED                          Sex: FEMALE
+		 Race: UNANSWERED                     Ethnicity: UNANSWERED
+	Type &lt;Enter&gt; to continue or '^' to exit: <strong>^</strong></code></div>
+
+Now, if you run CPRS again, you will see a patient, and you can select them:
+
+  .. figure::
+     images/InitializeVistA/CPRSPatientSelection2.png
+     :align: center
+     :alt: Patient Selection
+
+and then you will see the cover sheet:
+
+  .. figure::
+     images/InitializeVistA/CPRSCoverSheet.png
+     :align: center
+     :alt: Cover Sheet
+
+There is little you can do because most of VistA is not set-up. But you can now get
+an idea of what CPRS is like. The most important step is to at least create one clinic.
+You can do that in the SDBUILD menu. Doing this will unlock most of CPRS for you.
+
+Next Steps
+----------
+* Set-up MAS Parameters
+* Set-up Wards and Beds
+* Set-up Clinics
+* Install a Drug File, or create one from Scratch
+* Set-up Outpatient Pharmacy
+* Set-up Inpatient Pharmacy
+* Set-up Lab Package for Chemistry and Hematology
 
 Stopping VistA
 --------------

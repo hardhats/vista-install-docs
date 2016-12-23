@@ -1,6 +1,13 @@
 Installing Caché
 =================
 
+Authors: Joseph Snyder, Sam Habiel
+
+License: 
+
+.. image:: https://i.creativecommons.org/l/by/4.0/80x15.png 
+   :target: http://creativecommons.org/licenses/by/4.0/ 
+
 The following instructions were adapted from Nancy Anthracite\'s document
 entitled `InstallingVistAWithSingleUserVersionCache5.2`_, which was created
 to guide a user through installing InterSystems Caché onto a Windows operating
