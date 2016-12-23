@@ -3,7 +3,7 @@ Download VistA for GT.M
 
 A Mumps database (like VistA) is a series of routines and globals (a global
 in Mumps really means a file on disk). To load VistA into GT.M, you need to
-obtain the these from the CACHE.DAT distribued by the VA. Efforts are
+obtain the these from the CACHE.DAT distributed by the VA. Efforts are
 underway to lobby the VA to distribute the FOIA instance as a set of globals
 and routines; rather than in a proprietary format.
 
@@ -87,7 +87,7 @@ environment variables from the shell. Here's the file, which I called ``env.vist
     # Allow relink of routine even if it is on the stack
     export gtm_link="RECURSIVE"
     
-    # Adjust QUIT behavior to accomodate Cache bug/feature of 
+    # Adjust QUIT behavior to accommodate Cache bug/feature of 
     # C style function/procedure unification rather than M/Pascal style 
     # function/procedure dichotomy
     export gtm_zquit_anyway=1
@@ -366,10 +366,10 @@ Loading VistA Into the GT.M Database we just Created
 ----------------------------------------------------
 I said we will use FOIA VistA. Make sure that git is installed on your machine,
 and then run the following command (this command may take up to 1 hour to
-run, based on your internet connection).
+run, based on your Internet connection).
 
 .. raw:: html
-    
+   
     <div class="code"><code>$ <strong>git clone -b foia --single-branch --depth=1 https://github.com/OSEHRA/VistA-M.git</strong></code></div>
 
 Next we need to copy the routines to VistA (takes about 30 seconds). There are
@@ -383,7 +383,7 @@ Next we need to load the globals. We use the versatile ``mupip load`` command
 for that. Note that mupip load wants quotes sent down from the shell for any
 paths that contain spaces; and these do. Again, we tee our output because there
 is so much of it and because we need to visually inspect that everything got
-loaded.
+loaded. This takes time; from 10 minutes up to 30 minutes.
 
 .. raw:: html
     

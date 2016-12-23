@@ -94,7 +94,7 @@ to your routines directory: https://github.com/shabiel/Kernel-GTM. Here's how to
 
 Note to Cache Users
 -------------------
-The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA but don't try to run the RPC broker. A "friend" wasted so much of my time because he had an evaulation version and couldn't start the RPC broker. You may need to restart Cache repeatedly as it sometimes "forgets" that you logged off.
+The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA but don't try to run the RPC broker. A "friend" wasted so much of my time because he had an evaluation version and couldn't start the RPC broker. You may need to restart Cache repeatedly as it sometimes "forgets" that you logged off.
 
 Commands and what they mean (a short M primer)
 ----------------------------------------------
@@ -142,6 +142,8 @@ You need to either invent or be given a few pieces of data:
 * What's the maximum number of processes that you will allow at once on a VistA system? Today (2016), commodity hardware (a good laptop, for example), can handle up to 200 concurrent processes. I usually set my test instances with a maximum of 30 processes, which is the number I use below.
 * What's your DNS Server? If you don't know, just use 8.8.8.8.
 
+Some of the configuration items below are taken from a system that may have had these entries previously created. If what you see on your screen doesn't exactly match what you see here, you can reply to Fileman with "Y" when adding a new entry; and skip past the fields that are indented by pressing ``<enter>``. What matters in the end is that the final entry matches what is typed here.
+
 Device Configuration
 --------------------
 The very first thing we want to do is to set-up 4 devices: NULL, CONSOLE, VIRTUAL, and HFS.
@@ -164,7 +166,7 @@ operating system provides a different console device:
 
 The way set up devices is to edit the DEVICE file in Fileman. Fileman is the Database 
 Management System for VistA; unlike most databases in the market, it provides a user
-interface as well, albiet a text-based one.
+interface as well, albeit a text-based one.
 
 To get into Fileman, you need to set your user (DUZ) to .5, and then go in.
 
@@ -317,7 +319,7 @@ You need to select it and change the settings as follows:
 * LOCATION OF TERMINAL = Host File Server
 * ASK HOST FILE = YES
 * ASK HFS I/O OPERATION = @ (Delete it)
-* OPEN PARAMETERS: "WNS" for Cache, (newversion) for GT.M (note quotes on Cache and their abcense on GT.M)
+* OPEN PARAMETERS: "WNS" for Cache, (newversion) for GT.M (note quotes on Cache and their absence on GT.M)
 * SUBYTPE: P-HFS/80/99999
 * TYPE: HOST FILE SERVER
 
@@ -379,7 +381,7 @@ causes a catch 22 problem. The text scrape below is for GT.M; Cache follows.
     Routine:   ZTRDEL Loaded, Saved as  %ZTRDEL
     Routine:   ZTMOVE Loaded, Saved as  %ZTMOVE
     Routine:    ZTBKC Loaded, Saved as   %ZTBKC
-    Want to rename the FileMan routines: No// <strong>Y</strong>
+    Want to rename the Fileman routines: No// <strong>Y</strong>
     Routine:     DIDT Loaded, Saved as      %DT
     Routine:    DIDTC Loaded, Saved as     %DTC
     Routine:    DIRCR Loaded, Saved as     %RCR
@@ -406,15 +408,15 @@ On Cache, you will see different prompts.
 Fileman
 -------
 
-Initialize FileMan to set your domain name and number and Operating System (GT.M shown below).
+Initialize Fileman to set your domain name and number and Operating System (GT.M shown below).
 
 .. raw:: html
     
     <div class="code"><code>><strong>D ^DINIT</strong>
     
-    VA FileMan V.22.2
+    VA Fileman V.22.2
     
-    Initialize VA FileMan now?  NO// <strong>Y</strong>
+    Initialize VA Fileman now?  NO// <strong>Y</strong>
     
     SITE NAME: DEMO.OSEHRA.ORG// <strong>&lt;enter&gt;</strong>
     
@@ -439,7 +441,7 @@ Initialize FileMan to set your domain name and number and Operating System (GT.M
    
     TYPE OF MUMPS SYSTEM YOU ARE USING: GT.M(UNIX)// <strong>&lt;enter&gt;</strong>
 
-    Now loading other FileMan files--please
+    Now loading other Fileman files--please
     wait........................................................................
 
     The following files have been installed:
@@ -505,13 +507,13 @@ Next, a domain should be set up for the VistA instance.  A domain name is
 typically used to uniquely identify an instance on a network.  The parent domain
 is the domain responsible for routing your traffic to the outside world. The
 Q-PATCH domain is only necessary for developers wishing to use OSEHRA Forum. 
-First we add the entry to the ``DOMAIN`` file through FileMan.
+First we add the entry to the ``DOMAIN`` file through Fileman.
 
 .. raw:: html
     
     <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
     
-    VA FileMan 22.0
+    VA Fileman 22.0
     
     Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
     
@@ -581,13 +583,13 @@ First we add the entry to the ``DOMAIN`` file through FileMan.
     ></code></div>
 
 The next step is to find the IEN of the instance domain. This can be done
-by inquiring about the entry using FileMan and printing the Record Number:
+by inquiring about the entry using Fileman and printing the Record Number:
 
 .. raw:: html
     
     <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
     
-    VA FileMan 22.2
+    VA Fileman 22.2
     
     Select OPTION: <strong>5</strong>  INQUIRE TO FILE ENTRIES
     
@@ -605,7 +607,7 @@ by inquiring about the entry using FileMan and printing the Record Number:
     ></code></div>
 
 
-Then we propogate that entry to the ``Kernel System Parameters`` and
+Then we propagate that entry to the ``Kernel System Parameters`` and
 ``RPC Broker Site Parameters`` files.  The value that is being set should
 be the same as the ``NUMBER`` value from the above result.
 
@@ -639,7 +641,7 @@ System is christened using menu option XMCHIRS with FORUM.OSEHRA.ORG as the pare
              * * * *  WARNING  * * * *
     
     You are about to change the domain name of this facility
-    in the MailMan Site Parameters file.
+    in the Mailman Site Parameters file.
     
     Currently, this facility is named: FOIA.DOMAIN.EXT
     
@@ -656,7 +658,7 @@ System is christened using menu option XMCHIRS with FORUM.OSEHRA.ORG as the pare
     FORUM.OSEHRA.ORG has been initialized as your 'parent' domain.
     (Forum is usually the parent domain, unless this is a subordinate domain.)
     
-    You may edit the MailMan Site Parameter file to change your parent domain.
+    You may edit the Mailman Site Parameter file to change your parent domain.
     
     We will not initialize your transmission scripts.
     
@@ -667,7 +669,7 @@ System is christened using menu option XMCHIRS with FORUM.OSEHRA.ORG as the pare
 
 Set-up Taskman
 --------------
-Taskman is the VistA subsystem that is repsonsible for running processes in
+Taskman is the VistA subsystem that is responsible for running processes in
 the background.
 
 The first step is to find the box volume pair for the local machine.
@@ -705,7 +707,7 @@ and we will reuse some setup by writing over the name of the first entry that
 is already in the VistA system.  The first entry, the entry with an IEN of 1,
 can be selected by entering ```1``.
 
-Then we rename the first Box-Volume pair in the ``TaskMan Site Parameters``
+Then we rename the first Box-Volume pair in the ``Taskman Site Parameters``
 file to match what was found above.
 
 For this demonstration instance, the Volume Set will be ``ROU``, as per the 
@@ -842,7 +844,7 @@ as well:
 
 Back to Taskman
 ---------------
-At this point, we are ready to go back to getting taskman to run. We will now run ``^ZTMCHK`` which checks our work and makes sure we didn't royally screw up.
+At this point, we are ready to go back to getting Taskman to run. We will now run ``^ZTMCHK`` which checks our work and makes sure we didn't royally screw up.
 
 .. raw:: html
     
@@ -871,13 +873,13 @@ At this point, we are ready to go back to getting taskman to run. We will now ru
          Operating System:  GT.M (Unix)
          Volume Set:  ROU
          Cpu-volume Pair:  ROU:Macintosh
-         TaskMan Files UCI and Volume Set:  VAH,ROU
+         Taskman Files UCI and Volume Set:  VAH,ROU
 
          Log Tasks?  
          Submanager Retention Time: 0
          Min Submanager Count: 1
          Taskman Hang Between New Jobs: 0
-         TaskMan running as a type: GENERAL
+         Taskman running as a type: GENERAL
 
          Logons Inhibited?:  N
          Taskman Job Limit:  24
@@ -1030,7 +1032,7 @@ There are actually just two more steps:
 * Run ``DO ^ZTMB`` to start Taskman. *NOTE THAT IS THIS THE ONLY WAY TO START TASKMAN!* Restarting Taskman means that data control structure from the old system will be assumed to be correct. Don't do it!
 * Run ``DO ^ZTMON`` to confirm that everything is running.
 
-You should see this (press enter serveral times to update the screen; it should take at least 1 second to start); to exit, type ``^``.
+You should see this (press enter several times to update the screen; it should take at least 1 second to start); to exit, type ``^``.
 
 .. raw:: html
 
@@ -1148,11 +1150,11 @@ VistA has a very complex structure to deal with the question of: in what hospita
 The answer determines the value of the all important variable ``DUZ(2)`` and the API ``SITE^VASITE()``.
 
 There are four files that are important in that regard: INSTITUTION (#4), STATION NUMBER (TIME SENSITIVE) (#389.9),
-KERNEL SYSTEM PARAMETERS (#8989.3), and the MEDICAL CENTER DIVISION file (#40.8). We will add our Hopstial to
+KERNEL SYSTEM PARAMETERS (#8989.3), and the MEDICAL CENTER DIVISION file (#40.8). We will add our hospital to
 the INSTITUTION file first, with the station number 999. Then we will make sure that the STATION NUMBER file says
 999; and then will will point the KERNEL SYSTEM PARAMETERS and MEDICAL CENTER DIVISION to our new Hospital.
 
-Bt default, FOIA VistA comes with station number 050, and the institution is called SOFTWARE SERVICE. We can't
+By default, FOIA VistA comes with station number 050, and the institution is called SOFTWARE SERVICE. We can't
 leave that alone because VistA malfunctions with station numbers are are just 2 digits long (050 becomes 50 in
 code).
 
@@ -1173,7 +1175,7 @@ the coding system multiple.
     <div class="code"><code>><strong>S DUZ=.5,XUMF=1 D Q^DI</strong>
 
 
-    VA FileMan 22.2
+    VA Fileman 22.2
 
 
     Select OPTION: <strong>ENTER OR EDIT FILE ENTRIES</strong> 
@@ -1383,14 +1385,14 @@ Setup RPC Broker
 ----------------
 Next, we set-up a port that CPRS can connect to. What CPRS connects to is the Remote Procedure Calls Broker,
 and it connects using Remote Procedures. The next step is to edit entries in the RPC Broker Site Parameters
-file. The RPC Broker steps will set up information that references both the the Port that the listener will
+file. The RPC Broker steps will set up information that references both the Port that the listener will
 listen on and the Box Volume pair of the instance.
 
 .. raw:: html
     
     <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
     
-    VA FileMan 22.0
+    VA Fileman 22.0
     
     Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
     
@@ -1463,7 +1465,7 @@ Back to business: To check that the RPC Broker is REALLY working, run ``DO ^XWBT
     Success, response: accept</code></div>
 
 Our response was "Success". You may get "Fail" if you don't succeed. If that happens, I have
-written a page on troubleshooting the Broker in VistAPedia: http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting.
+written a page on troubleshooting the Broker in Vistapedia: http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting.
 
 To stop the broker, ``do ^XUP``, and then choose ``XWB LISTENER STOP ALL``:
 
@@ -1500,7 +1502,7 @@ Once you click connect, you will see the sign-in dialog: That means that the bro
    :align: center
    :alt: Broker Log-in
 
-Note: Because of the the `infamous XUSRB1.m problem <https://groups.google.com/forum/#!msg/hardhats/tmuguZ1GK7k/at_0i82n-zgJ>`_,
+Note: Because of the `infamous XUSRB1.m problem <https://groups.google.com/forum/#!msg/hardhats/tmuguZ1GK7k/at_0i82n-zgJ>`_,
 you won't be able to log-on right now. But you should be able to using CPRS.
 
 
@@ -1542,7 +1544,7 @@ one of those sliding doors which doesn't have keys. A key to a door (ahem, menu)
 doors beyond the first door. If you lock the first door, you can keep the doors below it open. When we ran
 ``DO ^XUP``, what we really did was that we went into the menu system.
 
-Keys are also checked by runtime code in order to give priviliges when performing certain operations. It's
+Keys are also checked by runtime code in order to give privileges when performing certain operations. It's
 a very common practice in VistA for all users to have access to something, but only the holders of specific
 keys can perform certain actions. For example, all Lab users have "LRLAB"; but only those credentialed as
 Lab Technicians will have "LRVERIFY" to release the result.
@@ -1553,11 +1555,11 @@ which is analogous to a City Portal. Once you say who you are (ACCESS CODE) and 
 you enter the City (XUCORE) and you can only enter the building for which you have the key.
 
 What we do below is a couple of things: We give ourselves the Fileman Access Code (different from ACCESS CODE)
-of "@", which gives you the equivalent of root priviliges in Fileman. Next, we give ourselves the keys
+of "@", which gives you the equivalent of root privileges in Fileman. Next, we give ourselves the keys
 ``XUMGR`` (let's you add users and manipulate tasks); ``XUPROG`` (let's you edit users [don't ask me why--I have
 no clue why they put that key there], and install Software); ``XUPROGMODE`` (let's you enter programmer mode);
 ``XMMGR`` (let's you manage mailman), ``XUSPF200`` (let's you add users without requiring an SSN).
-By the way, priviliged users can be given the ability to add new users
+By the way, privileged users can be given the ability to add new users
 and assign and take away keys using a mechanism called delegation. I won't cover that here.
 
 .. raw:: html
@@ -1747,7 +1749,7 @@ I recommend making these other changes:
 Mail a Message
 --------------
 Now send a message using Postmaster to your DUZ number. From Direct Mode, type ``S DUZ=.5 D ^XUP``. You will get the
-response SETTING UP PROGRAMMER ENVIROMENT then TERMINAL TYPE SET TO: (your
+response SETTING UP PROGRAMMER ENVIRONMENT then TERMINAL TYPE SET TO: (your
 default) and Select OPTION NAME:. You will need to respond: ``XMUSER``. At Select
 Mailman Menu Option: type ``S`` (for send). At Subject: enter your subject, such
 as Test, and then hit enter. You will then be prompted You may enter the text
@@ -1755,13 +1757,13 @@ of the message and you will be offered the line number 1> where you can type
 your message, such as the infamous Hello world. Next will be line 2> and if you
 are done, just hit enter and at EDIT Option: you can do the same. At Send mail
 to: POSTMASTER// enter the initials you used for your DUZ which were probably
-DBA for System Manager. You will then be told when MailMan was last used, which
+DBA for System Manager. You will then be told when Mailman was last used, which
 is probably NEVER. Hit enter at And Send to: and you should receive the message
 Select Message option: Transmit now// at which you hit enter and will hopefully
 receive the message Sending [1] Sent. Type ``^`` to exit.
 
 Now see if you received it. Log on using ``D ^ZU``. At the Systems Manager
-prompt, type ``MAILMAN MENU``. Then at the Select MailMan Menu Option: type ``NEW``
+prompt, type ``MAILMAN MENU``. Then at the Select Mailman Menu Option: type ``NEW``
 Messages and Responses. Read the mail.
 
 .. figure::
@@ -1848,9 +1850,9 @@ sign into CPRS.
     SEX: <strong>F</strong>  FEMALE
     NPI: <strong>&lt;enter&gt;</strong></code></div>
 
-Once in the ScreenMan form, you will need to set the necessary
+Once in the Screenman form, you will need to set the necessary
 information mentioned above. Four pieces of information are able to be set
-on the first page of the ScreenMan form.  The arrows are for emphasis to
+on the first page of the Screenman form.  The arrows are for emphasis to
 highlight where information needs to be entered and will not show up in the
 terminal window.
 
@@ -1962,7 +1964,7 @@ and enter an effective date of yesterday, ``T-1`` is the notation to use.
     
     COMMAND:                                       Press <PF1>H for help</code></div>
 
-Once that is done, save and exit the ScreenMan form via the COMMAND box and
+Once that is done, save and exit the Screenman form via the COMMAND box and
 then answer the final questions regarding access letters, security keys
 and mail groups. For security keys, there are two we need to add: ORES and PROVIDER.
 
@@ -2017,7 +2019,7 @@ the ``CPRS,USER`` will be able to sign on and interact with the GUI.
 
 Downloading CPRS and Running It
 -------------------------------
-The next part is laborious and tedious: finding the correct vesion of CPRS to run on
+The next part is laborious and tedious: finding the correct version of CPRS to run on
 your FOIA instance. The first thing is that you need to go into Fileman, and find
 out what the version of CPRS you need to use is:
 
@@ -2026,7 +2028,7 @@ out what the version of CPRS you need to use is:
     <div class="code"><code>><strong>S DUZ=1 D Q^DI</strong>
 
 
-    VA FileMan 22.2
+    VA Fileman 22.2
 
 
     Select OPTION: <strong>INQUIRE TO FILE ENTRIES</strong>  
@@ -2069,7 +2071,7 @@ Okay. I am stuck!
 
 Stopping VistA
 --------------
-To stop TaskMan, use ``D STOP^ZTMKU`` and answer ``YES`` to stopping the submanagers.
+To stop Taskman, use ``D STOP^ZTMKU`` and answer ``YES`` to stopping the submanagers.
 
 To stop Broker, use ``D STOP^XWBTCP(<port no>)``.
 

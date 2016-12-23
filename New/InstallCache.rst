@@ -135,7 +135,7 @@ contain the VistA routines and globals. In reality, the folder can be anywhere o
    :align: center
    :alt:  mgr folder prior to creation of VistA folder
 
-As an example, the folder has been given the name \"VistA.\" While the choice of name has no bearing on the installation, the testing code requires that the Namespace chosen below in matches the folder name created in this step.
+As an example, the folder has been given the name \"VistA.\" 
 
 .. figure::
    images/InstallCache/MgrFldrVistA.png
@@ -423,7 +423,7 @@ directory that has been set up in Caché for VistA.  If you followed the above, 
 
 All that is left is to restart the Caché instance.  Right-click on the
 grayed-out Caché Cube and click \"Start Caché\".  A status window will pop up
-to signifiy the instance is starting up.
+to signify the instance is starting up.
 
 .. figure:: images/InstallCache/StartupStatus.png
    :align: center
