@@ -117,7 +117,7 @@ environment variables from the shell. Here's the file, which I called `env.vista
     export gtm_boolean=1
     
     # $SYSTEM Output to use to identify the box the system is running on
-    export gtm_sysid="foia.2016.08.memphis.smh101.com"
+    export gtm_sysid="foia.2016.08"
     
     # This is for journaling. Don't turn this on yet.
     #if [ -f j/mumps.mjl ]

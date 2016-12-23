@@ -18,7 +18,7 @@
 <p>The following instructions were adapted from Nancy Anthracite's document entitled <a href="http://opensourcevista.net:8888/NancysVistAServer/InstallingVistAWithSingleUserVersionCache5.2.doc">InstallingVistAWithSingleUserVersionCache5.2</a>, which was created to guide a user through installing InterSystems Caché onto a Windows operating system. The instructions were using an older version of Caché; this uses the Caché 2015 version and the and shows the updated Management Portal interface.</p>
 <p>Trial versions of the Caché installer can be downloaded from</p>
 <blockquote>
-<p><a href="http://download.intersystems.com/download/register.csp" class="uri">http://download.intersystems.com/download/register.csp</a>.</p>
+<p><a href="http://download.intersystems.com/download/register.csp">http://download.intersystems.com/download/register.csp</a>.</p>
 </blockquote>
 <p>This installation guide uses Caché 2011.1, it should also apply for Cache 2013 to 2016. If you already have a Caché installation and are looking to install VistA as an additional database, you do not have to re-install Caché. Please use your existing installation and pick up the instructions at the point where the folder is created within the mgr folder.</p>
 <h1 id="download-and-install-caché-on-microsoft-windows">Download and Install Caché on Microsoft Windows</h1>
@@ -73,11 +73,11 @@
 <figure>
 <img src="images/InstallCache/MgrFldr.png" />
 </figure>
-<p>As an example, the folder has been given the name &quot;VistA.&quot; While the choice of name has no bearing on the installation, the testing code requires that the Namespace chosen below in matches the folder name created in this step.</p>
+<p>As an example, the folder has been given the name &quot;VistA.&quot;</p>
 <figure>
 <img src="images/InstallCache/MgrFldrVistA.png" />
 </figure>
-<p>At this point we are ready to stand up the VistA instance. Right click on the Caché cube and select Management Portal of Caché. On macOS and on Linux, the URL is <a href="http://localhost:57772/csp/sys/UtilHome.csp" class="uri">http://localhost:57772/csp/sys/UtilHome.csp</a>.</p>
+<p>At this point we are ready to stand up the VistA instance. Right click on the Caché cube and select Management Portal of Caché. On macOS and on Linux, the URL is <a href="http://localhost:57772/csp/sys/UtilHome.csp">http://localhost:57772/csp/sys/UtilHome.csp</a>.</p>
 <figure>
 <img src="images/InstallCache/MenuSysMgt.png" />
 </figure>
@@ -132,13 +132,13 @@
 </figure>
 <p>First set the Global Database location to the VistA database name, and for the Global Name enter &quot;%Z*&quot;. This will map all globals that start with &quot;%Z&quot; to be specific to the VistA namespace. Click OK and the wizard will exit and display the new mapping in the window. Repeat this for %ut and %Serenj*</p>
 <p>Repeat this for the following, but with different settings: The global database location is &quot;CACHETEMP&quot;, and the Global Names are the following:</p>
-<table style="width:14%;">
+<table>
 <colgroup>
 <col style="width: 13%" />
 </colgroup>
 <tbody>
 <tr class="odd">
-<td><p>HLTMP</p>
+<td style="text-align: left;"><p>HLTMP</p>
 <p>TMP</p>
 <p>UTILITY</p>
 <p>XTMP</p>
@@ -164,13 +164,13 @@
 <img src="images/InstallCache/SetRoutineMapping.png" />
 </figure>
 <p>There are 8 other mappings that need to be entered in the same manner -</p>
-<table style="width:11%;">
+<table>
 <colgroup>
 <col style="width: 11%" />
 </colgroup>
 <tbody>
 <tr class="odd">
-<td><p>%DTC</p>
+<td style="text-align: left;"><p>%DTC</p>
 <p>%RCR</p>
 <p>%XUCI</p>
 <p>%Z*</p>
@@ -203,7 +203,7 @@
 <img src="images/InstallCache/TelnetServiceEnabled.png" />
 </figure>
 <h1 id="install-cache.dat">Install CACHE.DAT</h1>
-<p>Download the CACHE.DAT from <a href="http://foia-vista.osehra.org/DBA_VistA_FOIA_System_Files/" class="uri">http://foia-vista.osehra.org/DBA_VistA_FOIA_System_Files/</a>.</p>
+<p>Download the CACHE.DAT from <a href="http://foia-vista.osehra.org/DBA_VistA_FOIA_System_Files/">http://foia-vista.osehra.org/DBA_VistA_FOIA_System_Files/</a>.</p>
 <p>The first step in installing the CACHE.DAT is to stop the Caché instance so that the instance will not clobber a process during the copy.</p>
 <p>Right click on the Caché Cube in the taskbar</p>
 <figure>
@@ -223,7 +223,7 @@
 </figure>
 <p>On macOS and Linux, you should run <code>ccontrol list</code> to find your instance name, and then <code>ccontrol stop &lt;instance name&gt;</code>.</p>
 <p>At this point, you can take your downloaded CACHE.DAT and copy it into the directory that has been set up in Caché for VistA. If you followed the above, it will be &quot;C:/Intersystems/TryCache/mgr/VistA&quot;. Your directory will differ for macOS and Linux.</p>
-<p>All that is left is to restart the Caché instance. Right-click on the grayed-out Caché Cube and click &quot;Start Caché&quot;. A status window will pop up to signifiy the instance is starting up.</p>
+<p>All that is left is to restart the Caché instance. Right-click on the grayed-out Caché Cube and click &quot;Start Caché&quot;. A status window will pop up to signify the instance is starting up.</p>
 <figure>
 <img src="images/InstallCache/StartupStatus.png" />
 </figure>

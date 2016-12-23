@@ -8,41 +8,23 @@
   <link href="stylesheets/normalize.css" rel="stylesheet">
   <link href="stylesheets/main.css" rel="stylesheet">
   <style type="text/css">
-div.sourceCode { overflow-x: auto; }
 table.sourceCode, tr.sourceCode, td.lineNumbers, td.sourceCode {
   margin: 0; padding: 0; vertical-align: baseline; border: none; }
 table.sourceCode { width: 100%; line-height: 100%; }
 td.lineNumbers { text-align: right; padding-right: 4px; padding-left: 4px; color: #aaaaaa; border-right: 1px solid #aaaaaa; }
 td.sourceCode { padding-left: 5px; }
-code > span.kw { color: #007020; font-weight: bold; } /* Keyword */
-code > span.dt { color: #902000; } /* DataType */
-code > span.dv { color: #40a070; } /* DecVal */
-code > span.bn { color: #40a070; } /* BaseN */
-code > span.fl { color: #40a070; } /* Float */
-code > span.ch { color: #4070a0; } /* Char */
-code > span.st { color: #4070a0; } /* String */
-code > span.co { color: #60a0b0; font-style: italic; } /* Comment */
-code > span.ot { color: #007020; } /* Other */
-code > span.al { color: #ff0000; font-weight: bold; } /* Alert */
-code > span.fu { color: #06287e; } /* Function */
-code > span.er { color: #ff0000; font-weight: bold; } /* Error */
-code > span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-code > span.cn { color: #880000; } /* Constant */
-code > span.sc { color: #4070a0; } /* SpecialChar */
-code > span.vs { color: #4070a0; } /* VerbatimString */
-code > span.ss { color: #bb6688; } /* SpecialString */
-code > span.im { } /* Import */
-code > span.va { color: #19177c; } /* Variable */
-code > span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
-code > span.op { color: #666666; } /* Operator */
-code > span.bu { } /* BuiltIn */
-code > span.ex { } /* Extension */
-code > span.pp { color: #bc7a00; } /* Preprocessor */
-code > span.at { color: #7d9029; } /* Attribute */
-code > span.do { color: #ba2121; font-style: italic; } /* Documentation */
-code > span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
-code > span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
-code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code > span.kw { color: #007020; font-weight: bold; }
+code > span.dt { color: #902000; }
+code > span.dv { color: #40a070; }
+code > span.bn { color: #40a070; }
+code > span.fl { color: #40a070; }
+code > span.ch { color: #4070a0; }
+code > span.st { color: #4070a0; }
+code > span.co { color: #60a0b0; font-style: italic; }
+code > span.ot { color: #007020; }
+code > span.al { color: #ff0000; font-weight: bold; }
+code > span.fu { color: #06287e; }
+code > span.er { color: #ff0000; font-weight: bold; }
   </style>
 </head>
 <body>
@@ -57,11 +39,11 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>To connect to VISTA and start configuring it, you need a terminal emulator. Make sure that your terminal emulator emulates VT-100, VT-220, VT-320 or VT-52. By default, most terminal emulators do that already. You specifically cannot use the rxvt terminal emulator though.</p>
 <p>If you modified your $TERM, you need to make sure it's either <code>xterm</code> or <code>ansi</code>. Others generally will work, but I am sure of these two.</p>
 <p>To get into Direct Mode using Cache, on Windows you need to right click on the Cache Cube and choose Terminal. If you have a licensed version of Cache, you can also use Telnet to connect to the Terminal. Please note that while you can use Windows Telnet, it does not emulate VT-200 series terminals properly, so you may have some issues. If you want to use Telnet, I recommend downloading PuTTY or TeraTerm.</p>
-<p>PuTTY: <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/" class="uri">http://www.chiark.greenend.org.uk/~sgtatham/putty/</a>.</p>
-<p>TeraTerm: <a href="https://ttssh2.osdn.jp/index.html.en" class="uri">https://ttssh2.osdn.jp/index.html.en</a>.</p>
-<p>If you use PuTTY, change the function key bindings so that they behave like VT-100+. See here: <a href="https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys" class="uri">https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys</a>.</p>
-<p>On a Mac, Terminal is a fully featured terminal emulator. You may wish to tell it via System Preferences that you want your function keys to send Function commands, rather than dimming your screen or muting your volume. Otherwise, you have to use FN all the time to override the function keys (<a href="https://support.apple.com/en-us/HT204436" class="uri">https://support.apple.com/en-us/HT204436</a>).</p>
-<p>On Linux, you can use any Terminal Emulator program, with the exception of rxvt. You can actually even use PuTTY on Linux. F1 may be bound to do help. You need to unmap that in the Terminal application. (<a href="http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal" class="uri">http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal</a>).</p>
+<p>PuTTY: <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">http://www.chiark.greenend.org.uk/~sgtatham/putty/</a>.</p>
+<p>TeraTerm: <a href="https://ttssh2.osdn.jp/index.html.en">https://ttssh2.osdn.jp/index.html.en</a>.</p>
+<p>If you use PuTTY, change the function key bindings so that they behave like VT-100+. See here: <a href="https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys">https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys</a>.</p>
+<p>On a Mac, Terminal is a fully featured terminal emulator. You may wish to tell it via System Preferences that you want your function keys to send Function commands, rather than dimming your screen or muting your volume. Otherwise, you have to use FN all the time to override the function keys (<a href="https://support.apple.com/en-us/HT204436">https://support.apple.com/en-us/HT204436</a>).</p>
+<p>On Linux, you can use any Terminal Emulator program, with the exception of rxvt. You can actually even use PuTTY on Linux. F1 may be bound to do help. You need to unmap that in the Terminal application. (<a href="http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal">http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal</a>).</p>
 <p>If a VistA system was installed by you or somebody else on the &quot;Cloud&quot;, almost certainly you will need to use SSH (Secure Shell) to log-in. If you use Telnet, there are some existential questions you have to ask yourself. SSH is a protocol written in the mid-90's to replace Telnet. It's the standard of connecting to other computers on the Cloud. Nobody can see the traffic inside of SSH; where as Telnet is just plain text. The ssh client comes installed by default in all Unices; on Windows, you can use PuTTY or TeraTerm.</p>
 <p>After you open your terminal emulator, do the following:</p>
 <p>If you need to connect to a remote server first where your VistA is hosted, do that first.</p>
@@ -78,20 +60,20 @@ NAMESPACE// <strong>VISTA</strong></code></div>
 <h2 id="note-to-gt.m-users">Note to GT.M Users</h2>
 <p>Due to the fact that Cache does not enforce the M standard as strictly, many illegal instructions have found themselves into VistA code. In addition, neither Cache nor GT.M is fully M95 standards compliant. As a result, there is always the game of making sure what we write supports both systems. For these reasons, the hardhats community maintains fixes for these routines and when possible sends the fixes back to the VA. In the future, the OSEHRA repositories will contain the fixes so that end users don't have to download the code and fix it themselves.</p>
 <p>The WorldVistA Distrubution of VistA is GT.M compatible; you don't need any fixes for it; but the below provides a lot more functionality.</p>
-<p>If you downloaded vxVistA or FOIA VistA, you need to copy the routines from this repository to your routines directory: <a href="https://github.com/shabiel/Kernel-GTM" class="uri">https://github.com/shabiel/Kernel-GTM</a>. Here's how to do it:</p>
-<div class="sourceCode"><pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="fu">git</span> clone https://github.com/shabiel/Kernel-GTM <span class="kw">&amp;&amp;</span> <span class="bu">cd</span> Kernel-GTM
-$ <span class="fu">cp</span> -v <span class="va">$(</span><span class="fu">git</span> diff --name-only 29bc19..a7565b -- Kernel/Routines<span class="va">)</span> /var/db/foia201611-gtm/r/</code></pre></div>
+<p>If you downloaded vxVistA or FOIA VistA, you need to copy the routines from this repository to your routines directory: <a href="https://github.com/shabiel/Kernel-GTM">https://github.com/shabiel/Kernel-GTM</a>. Here's how to do it:</p>
+<pre class="sourceCode bash"><code class="sourceCode bash">$ <span class="kw">git</span> clone https://github.com/shabiel/Kernel-GTM <span class="kw">&amp;&amp;</span> <span class="kw">cd</span> Kernel-GTM
+$ <span class="kw">cp</span> -v <span class="ot">$(</span><span class="kw">git</span> diff --name-only 29bc19..a7565b -- Kernel/Routines<span class="ot">)</span> /var/db/foia201611-gtm/r/</code></pre>
 <h2 id="note-to-cache-users">Note to Cache Users</h2>
-<p>The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA but don't try to run the RPC broker. A &quot;friend&quot; wasted so much of my time because he had an evaulation version and couldn't start the RPC broker. You may need to restart Cache repeatedly as it sometimes &quot;forgets&quot; that you logged off.</p>
+<p>The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA but don't try to run the RPC broker. A &quot;friend&quot; wasted so much of my time because he had an evaluation version and couldn't start the RPC broker. You may need to restart Cache repeatedly as it sometimes &quot;forgets&quot; that you logged off.</p>
 <h2 id="commands-and-what-they-mean-a-short-m-primer">Commands and what they mean (a short M primer)</h2>
 <p>In the excerpts below, you will enter Mumps (M) commands into direct mode. Here are a few interesting ones:</p>
-<div class="sourceCode"><pre class="sourceCode M"><code class="sourceCode matlab">S DUZ=<span class="fl">.5</span> ; S is a shortcut for SET, DUZ means user number; <span class="fl">.5</span> is a user that is always present on VistA systems.
+<pre class="sourceCode M"><code>S DUZ=.5 ; S is a shortcut for SET, DUZ means user number; .5 is a user that is always present on VistA systems.
 
 D ^XUP ; D is a shortcut for DO, ^XUP is the name of the routine. ^XUP is the programmer mode menu runner.
 
 ; A semicolon, like in GAS assembly, is the comment character. M, like C, was written to replace assembly.
 
-D Q^DI ; Do starting from Label Q in Routine DI. Q^DI is how to enter Fileman.</code></pre></div>
+D Q^DI ; Do starting from Label Q in Routine DI. Q^DI is how to enter Fileman.</code></pre>
 <h2 id="vista-text-mode-conventions">VistA Text Mode Conventions</h2>
 <p>There are a few confusing conventions that outsiders don't understand right away. Here they are:</p>
 <ul>
@@ -121,6 +103,7 @@ D Q^DI ; Do starting from Label Q in Routine DI. Q^DI is how to enter Fileman.</
 <li>What's the maximum number of processes that you will allow at once on a VistA system? Today (2016), commodity hardware (a good laptop, for example), can handle up to 200 concurrent processes. I usually set my test instances with a maximum of 30 processes, which is the number I use below.</li>
 <li>What's your DNS Server? If you don't know, just use 8.8.8.8.</li>
 </ul>
+<p>Some of the configuration items below are taken from a system that may have had these entries previously created. If what you see on your screen doesn't exactly match what you see here, you can reply to Fileman with &quot;Y&quot; when adding a new entry; and skip past the fields that are indented by pressing <code>&lt;enter&gt;</code>. What matters in the end is that the final entry matches what is typed here.</p>
 <h2 id="device-configuration">Device Configuration</h2>
 <p>The very first thing we want to do is to set-up 4 devices: NULL, CONSOLE, VIRTUAL, and HFS. (known historically as TELNET due to what often accessed it). The NULL device corresponds to a place where we dump data we don't want; that's <code>/dev/null</code> on all Unices; <code>//./nul</code> on Windows. The NULL device is also known as the &quot;BIT BUCKET&quot;, for obvious reasons.</p>
 <p>CONSOLE stands for the device the terminal presents itself as if directly connected to a computer. These days, no computer has real console devices. Linux still has an emulated console device: <code>/dev/tty</code>. Cache Terminal presents a console device called <code>|TRM|</code>.</p>
@@ -131,7 +114,7 @@ D Q^DI ; Do starting from Label Q in Routine DI. Q^DI is how to enter Fileman.</
 <li>Cygwin: <code>/dev/cons</code> (GT.M)</li>
 <li>Cache Telnet: <code>|TNT|</code> (Cache/Windows ONLY)</li>
 </ul>
-<p>The way set up devices is to edit the DEVICE file in Fileman. Fileman is the Database Management System for VistA; unlike most databases in the market, it provides a user interface as well, albiet a text-based one.</p>
+<p>The way set up devices is to edit the DEVICE file in Fileman. Fileman is the Database Management System for VistA; unlike most databases in the market, it provides a user interface as well, albeit a text-based one.</p>
 <p>To get into Fileman, you need to set your user (DUZ) to .5, and then go in.</p>
 <h3 id="null-device">NULL Device</h3>
 <p>There should only be one device named &quot;NULL&quot;. Unfortunately, there are three NULLs of various flavors in the FOIA; we need to make sure there is only one. Follow the following. We rename the nulls we don't want, and we delete a synonym.</p>
@@ -252,7 +235,7 @@ SUBTYPE: P-OTHER                      TYPE: HOST FILE SERVER</code></pre>
 <li>LOCATION OF TERMINAL = Host File Server</li>
 <li>ASK HOST FILE = YES</li>
 <li>ASK HFS I/O OPERATION = @ (Delete it)</li>
-<li>OPEN PARAMETERS: &quot;WNS&quot; for Cache, (newversion) for GT.M (note quotes on Cache and their abcense on GT.M)</li>
+<li>OPEN PARAMETERS: &quot;WNS&quot; for Cache, (newversion) for GT.M (note quotes on Cache and their absence on GT.M)</li>
 <li>SUBYTPE: P-HFS/80/99999</li>
 <li>TYPE: HOST FILE SERVER</li>
 </ul>
@@ -307,7 +290,7 @@ Routine:  ZTLOAD3 Loaded, Saved as %ZTLOAD3
 Routine:   ZTRDEL Loaded, Saved as  %ZTRDEL
 Routine:   ZTMOVE Loaded, Saved as  %ZTMOVE
 Routine:    ZTBKC Loaded, Saved as   %ZTBKC
-Want to rename the FileMan routines: No// <strong>Y</strong>
+Want to rename the Fileman routines: No// <strong>Y</strong>
 Routine:     DIDT Loaded, Saved as      %DT
 Routine:    DIDTC Loaded, Saved as     %DTC
 Routine:    DIRCR Loaded, Saved as     %RCR
@@ -325,12 +308,12 @@ PRODUCTION (SIGN-ON) NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
 
 NAME OF THIS CONFIGURATION: VISTA// <strong>&lt;enter&gt;</strong></code></div>
 <h2 id="fileman">Fileman</h2>
-<p>Initialize FileMan to set your domain name and number and Operating System (GT.M shown below).</p>
+<p>Initialize Fileman to set your domain name and number and Operating System (GT.M shown below).</p>
 <div class="code"><code>><strong>D ^DINIT</strong>
 
-VA FileMan V.22.2
+VA Fileman V.22.2
 
-Initialize VA FileMan now?  NO// <strong>Y</strong>
+Initialize VA Fileman now?  NO// <strong>Y</strong>
 
 SITE NAME: DEMO.OSEHRA.ORG// <strong>&lt;enter&gt;</strong>
 
@@ -355,7 +338,7 @@ TYPE OF MUMPS SYSTEM YOU ARE USING: GT.M(UNIX)// <strong>?</strong>
 
 TYPE OF MUMPS SYSTEM YOU ARE USING: GT.M(UNIX)// <strong>&lt;enter&gt;</strong>
 
-Now loading other FileMan files--please
+Now loading other Fileman files--please
 wait........................................................................
 
 The following files have been installed:
@@ -409,10 +392,10 @@ This routine will rename the correct routine to ZU for you.
 Rename ZUGTM to ZU, OK? No// <strong>Y</strong>
 Routine ZUGTM was renamed to ZU</code></div>
 <h2 id="instance-domain-parent-domain-and-q-patch-domain">Instance Domain, Parent Domain, and Q-PATCH domain</h2>
-<p>Next, a domain should be set up for the VistA instance. A domain name is typically used to uniquely identify an instance on a network. The parent domain is the domain responsible for routing your traffic to the outside world. The Q-PATCH domain is only necessary for developers wishing to use OSEHRA Forum. First we add the entry to the <code>DOMAIN</code> file through FileMan.</p>
+<p>Next, a domain should be set up for the VistA instance. A domain name is typically used to uniquely identify an instance on a network. The parent domain is the domain responsible for routing your traffic to the outside world. The Q-PATCH domain is only necessary for developers wishing to use OSEHRA Forum. First we add the entry to the <code>DOMAIN</code> file through Fileman.</p>
 <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
 
-VA FileMan 22.0
+VA Fileman 22.0
 
 Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
 
@@ -491,10 +474,10 @@ Select DOMAIN NAME: <strong>&lt;enter&gt;</strong>
 
 Select OPTION: <strong>&lt;enter&gt;</strong>
 ></code></div>
-<p>The next step is to find the IEN of the instance domain. This can be done by inquiring about the entry using FileMan and printing the Record Number:</p>
+<p>The next step is to find the IEN of the instance domain. This can be done by inquiring about the entry using Fileman and printing the Record Number:</p>
 <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
 
-VA FileMan 22.2
+VA Fileman 22.2
 
 Select OPTION: <strong>5</strong>  INQUIRE TO FILE ENTRIES
 
@@ -510,7 +493,7 @@ Select DOMAIN NAME: <strong>&lt;enter&gt;</strong>
 
 Select OPTION: <strong>&lt;enter&gt;</strong>
 ></code></div>
-<p>Then we propogate that entry to the <code>Kernel System Parameters</code> and <code>RPC Broker Site Parameters</code> files. The value that is being set should be the same as the <code>NUMBER</code> value from the above result.</p>
+<p>Then we propagate that entry to the <code>Kernel System Parameters</code> and <code>RPC Broker Site Parameters</code> files. The value that is being set should be the same as the <code>NUMBER</code> value from the above result.</p>
 <div class="code"><code>><strong>S $P(^XWB(8994.1,1,0),"^")=76</strong>
 ><strong>S $P(^XTV(8989.3,1,0),"^")=76</strong></code></div>
 <p>Re-index the files after making this change.</p>
@@ -530,7 +513,7 @@ Christen a domain
          * * * *  WARNING  * * * *
 
 You are about to change the domain name of this facility
-in the MailMan Site Parameters file.
+in the Mailman Site Parameters file.
 
 Currently, this facility is named: FOIA.DOMAIN.EXT
 
@@ -547,7 +530,7 @@ TIME ZONE: EST// <strong>PST</strong>       PACIFIC STANDARD
 FORUM.OSEHRA.ORG has been initialized as your 'parent' domain.
 (Forum is usually the parent domain, unless this is a subordinate domain.)
 
-You may edit the MailMan Site Parameter file to change your parent domain.
+You may edit the Mailman Site Parameter file to change your parent domain.
 
 We will not initialize your transmission scripts.
 
@@ -556,7 +539,7 @@ site passwords to the MINIENGINE script, and the 'Edit a script' option
 to edit any domain scripts that you choose to.
 ></code></div>
 <h2 id="set-up-taskman">Set-up Taskman</h2>
-<p>Taskman is the VistA subsystem that is repsonsible for running processes in the background.</p>
+<p>Taskman is the VistA subsystem that is responsible for running processes in the background.</p>
 <p>The first step is to find the box volume pair for the local machine.</p>
 <div class="code"><code>><strong>D GETENV^%ZOSV W Y</strong></code></div>
 <p>which will print out a message with four parts separated by <code>^</code> that could look something like (Cache):</p>
@@ -567,7 +550,7 @@ to edit any domain scripts that you choose to.
 <p><code>UCI^VOL^NODE^VOLUME:BOX</code></p>
 <p>The fourth piece, the VOLUME:BOX pair, is referred to as the &quot;BOX VOLUME pair&quot;. The first component of the Box Volume pair is the Volume Set, which is used to determine where the VistA system will be able to find the routines. The second component Box, which references the system that the instance is on. In a Caché system, it would be the name of the Caché instance while on GT.M, it should reference the hostname of the machine.</p>
 <p>The Volume Set result needs to be altered in the <code>VOLUME SET</code> file, and we will reuse some setup by writing over the name of the first entry that is already in the VistA system. The first entry, the entry with an IEN of 1, can be selected by entering <code>`1</code>.</p>
-<p>Then we rename the first Box-Volume pair in the <code>TaskMan Site Parameters</code> file to match what was found above.</p>
+<p>Then we rename the first Box-Volume pair in the <code>Taskman Site Parameters</code> file to match what was found above.</p>
 <p>For this demonstration instance, the Volume Set will be <code>ROU</code>, as per the output above.</p>
 <div class="code"><code>&gt;<strong>D Q^DI</strong>
 
@@ -686,7 +669,7 @@ PRIMARY HFS DIRECTORY: /tmp/// <strong>&lt;enter&gt;</strong>
 
 Select KERNEL SYSTEM PARAMETERS DOMAIN NAME:</code></div>
 <h2 id="back-to-taskman">Back to Taskman</h2>
-<p>At this point, we are ready to go back to getting taskman to run. We will now run <code>^ZTMCHK</code> which checks our work and makes sure we didn't royally screw up.</p>
+<p>At this point, we are ready to go back to getting Taskman to run. We will now run <code>^ZTMCHK</code> which checks our work and makes sure we didn't royally screw up.</p>
 <div class="code"><code>><strong>D ^ZTMCHK</strong>
 Checking Task Manager's Environment.
 
@@ -712,13 +695,13 @@ Here is the information that Taskman is using:
      Operating System:  GT.M (Unix)
      Volume Set:  ROU
      Cpu-volume Pair:  ROU:Macintosh
-     TaskMan Files UCI and Volume Set:  VAH,ROU
+     Taskman Files UCI and Volume Set:  VAH,ROU
 
      Log Tasks?  
      Submanager Retention Time: 0
      Min Submanager Count: 1
      Taskman Hang Between New Jobs: 0
-     TaskMan running as a type: GENERAL
+     Taskman running as a type: GENERAL
 
      Logons Inhibited?:  N
      Taskman Job Limit:  24
@@ -727,7 +710,7 @@ Here is the information that Taskman is using:
 
 End of listing.  Press RETURN to continue:</code></div>
 <p>If ANY of the fields in the last screen are empty except &quot;Log Tasks?&quot;, you made a mistake. Double check your work.</p>
-<p>Next we need to initialize the recurring and start-up tasks that VistA will run. The set of tasks you want your system to run with is very variable; you can see my page here for guidance: <a href="http://www.vistapedia.com/index.php/Taskman_Recurring_Tasks" class="uri">http://www.vistapedia.com/index.php/Taskman_Recurring_Tasks</a>. We will set-up these base tasks on your VistA system, which every VistA system ought to have:</p>
+<p>Next we need to initialize the recurring and start-up tasks that VistA will run. The set of tasks you want your system to run with is very variable; you can see my page here for guidance: <a href="http://www.vistapedia.com/index.php/Taskman_Recurring_Tasks">http://www.vistapedia.com/index.php/Taskman_Recurring_Tasks</a>. We will set-up these base tasks on your VistA system, which every VistA system ought to have:</p>
 <p>Start-up Jobs:</p>
 <ul>
 <li>XWB LISTENER STARTER (Starts RPC Broker)</li>
@@ -858,7 +841,7 @@ SPECIAL QUEUEING: <strong>&lt;enter&gt;</strong></code></div>
 <li>Run <code>DO ^ZTMB</code> to start Taskman. <em>NOTE THAT IS THIS THE ONLY WAY TO START TASKMAN!</em> Restarting Taskman means that data control structure from the old system will be assumed to be correct. Don't do it!</li>
 <li>Run <code>DO ^ZTMON</code> to confirm that everything is running.</li>
 </ul>
-<p>You should see this (press enter serveral times to update the screen; it should take at least 1 second to start); to exit, type <code>^</code>.</p>
+<p>You should see this (press enter several times to update the screen; it should take at least 1 second to start); to exit, type <code>^</code>.</p>
 <div class="code"><code>><strong>D ^ZTMB,^ZTMON</strong>
 
 Checking Taskman.   Current $H=64252,53277  (Nov 30, 2016@14:47:57)
@@ -954,13 +937,13 @@ Total 5 users.</code></div>
 <h2 id="setup-your-institution">Setup your Institution</h2>
 <p>VistA has a very complex structure to deal with the question of: in what hospital are you signed in right now? The answer determines the value of the all important variable <code>DUZ(2)</code> and the API <code>SITE^VASITE()</code>.</p>
 <p>There are five files that are important in that regard: INSTITUTION (#4), STATION NUMBER (TIME SENSITIVE) (#389.9), KERNEL SYSTEM PARAMETERS (#8989.3), MEDICAL CENTER DIVISION file (#40.8), and MASTER PATIENT INDEX (LOCAL NUMBERS) (984.1). We will add our Hopstial to the INSTITUTION file first, with the station number 999. Then we will make sure that the STATION NUMBER file says 999; and then will will point the KERNEL SYSTEM PARAMETERS and MEDICAL CENTER DIVISION to our new Hospital. In MASTER PATIENT INDEX, we tell it our station number and the range of numbers for our Integration Control Numbers (ICNs), the number used to identify patients across systems.</p>
-<p>Bt default, FOIA VistA comes with station number 050, and the institution is called SOFTWARE SERVICE. We can't leave that alone because VistA malfunctions with station numbers are are just 2 digits long (050 becomes 50 in code).</p>
+<p>By default, FOIA VistA comes with station number 050, and the institution is called SOFTWARE SERVICE. We can't leave that alone because VistA malfunctions with station numbers are are just 2 digits long (050 becomes 50 in code).</p>
 <p>The INSITUTION file is protected from editing by requiring the variable XUMF to be defined. That tells us that inside of the VA, the file is updated by something called Standard Terminology Services (STS), which works by sending VistA mail messages of what to update, and VistA creates the entry based on that mail message. Normally when you see that, you should stay the hell out of the file: it's standardized and should not be tampered with. However, people outside of the VA have no other way to run VistA without updating this file.</p>
 <p>We enter Fileman after setting the XUMF variable. Note that in the US, we are supposed to fill the NPI variable, and Fileman won't let me go further without filling it; but I was able to jump forward to avoid answering it. Also, note that we have to fill the STATION NUMBER entry twice, once in the field named so, and another time in the coding system multiple.</p>
 <div class="code"><code>><strong>S DUZ=.5,XUMF=1 D Q^DI</strong>
 
 
-VA FileMan 22.2
+VA Fileman 22.2
 
 
 Select OPTION: <strong>ENTER OR EDIT FILE ENTRIES</strong> 
@@ -1158,10 +1141,10 @@ Select OPTION NAME: <strong>&lt;enter&gt;</strong>
 2957^PALM DESERT HOSPITAL^999</code></div>
 <p>As you can see, our DUZ(2) matches our site number, and $$SITE^VASITE() gives us the correct site number and station number.</p>
 <h2 id="setup-rpc-broker">Setup RPC Broker</h2>
-<p>Next, we set-up a port that CPRS can connect to. What CPRS connects to is the Remote Procedure Calls Broker, and it connects using Remote Procedures. The next step is to edit entries in the RPC Broker Site Parameters file. The RPC Broker steps will set up information that references both the the Port that the listener will listen on and the Box Volume pair of the instance.</p>
+<p>Next, we set-up a port that CPRS can connect to. What CPRS connects to is the Remote Procedure Calls Broker, and it connects using Remote Procedures. The next step is to edit entries in the RPC Broker Site Parameters file. The RPC Broker steps will set up information that references both the Port that the listener will listen on and the Box Volume pair of the instance.</p>
 <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
 
-VA FileMan 22.0
+VA Fileman 22.0
 
 Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
 
@@ -1214,7 +1197,7 @@ IP ADDRESS: <strong>127.0.0.1</strong>
 PORT: <strong>9000</strong>
 
 Success, response: accept</code></div>
-<p>Our response was &quot;Success&quot;. You may get &quot;Fail&quot; if you don't succeed. If that happens, I have written a page on troubleshooting the Broker in VistAPedia: <a href="http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting" class="uri">http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting</a>.</p>
+<p>Our response was &quot;Success&quot;. You may get &quot;Fail&quot; if you don't succeed. If that happens, I have written a page on troubleshooting the Broker in Vistapedia: <a href="http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting">http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting</a>.</p>
 <p>To stop the broker, <code>do ^XUP</code>, and then choose <code>XWB LISTENER STOP ALL</code>:</p>
 <div class="code"><code>><strong>D ^XUP</strong>
 Setting up programmer environment
@@ -1235,7 +1218,7 @@ Stop All RPC Broker Listeners</code></div>
 <figure>
 <img src="images/InitializeVistA/pic37.png" />
 </figure>
-<p>Note: Because of the the <a href="https://groups.google.com/forum/#!msg/hardhats/tmuguZ1GK7k/at_0i82n-zgJ">infamous XUSRB1.m problem</a>, you won't be able to log-on right now. But you should be able to using CPRS.</p>
+<p>Note: Because of the <a href="https://groups.google.com/forum/#!msg/hardhats/tmuguZ1GK7k/at_0i82n-zgJ">infamous XUSRB1.m problem</a>, you won't be able to log-on right now. But you should be able to using CPRS.</p>
 <h2 id="set-yourself-up-as-the-system-manager">Set Yourself Up as the System Manager</h2>
 <p>This is a super user who will have elevated privileges. You can add other users such as Physicians, Pharmacists, etc. later. Set up the System Manager user with minimal information. We will add more information later. By convention, the super user has a DUZ of 1. So far we have been using the DUZ of .5. We have to use it one last time to make the system manager. Your access code is really your username. I set it up as SM1234, but you can put whatever you like. Go back into Fileman using <code>S DUZ=.5 D Q^DI</code>:</p>
 <div class="code"><code>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
@@ -1258,9 +1241,14 @@ The user will have to enter a new one the next time they sign-on.
 Select NEW PERSON NAME: <strong>&lt;enter&gt;</strong></code></div>
 <p>Next give your user privileges appropriate for a system manager. This brings us to VistA's security system.</p>
 <p>VistA menu tree is built just like the Windows Registry: Folders (known as menus) which contain other folders or actual items which you can run. Each menu is like a door: it has a &quot;key&quot; which locks it; or it could be one of those sliding doors which doesn't have keys. A key to a door (ahem, menu) protects all the subsequent doors beyond the first door. If you lock the first door, you can keep the doors below it open. When we ran <code>DO ^XUP</code>, what we really did was that we went into the menu system.</p>
-<p>Keys are also checked by runtime code in order to give priviliges when performing certain operations. It's a very common practice in VistA for all users to have access to something, but only the holders of specific keys can perform certain actions. For example, all Lab users have &quot;LRLAB&quot;; but only those credentialed as Lab Technicians will have &quot;LRVERIFY&quot; to release the result.</p>
+<p>Keys are also checked by runtime code in order to give privileges when performing certain operations. It's a very common practice in VistA for all users to have access to something, but only the holders of specific keys can perform certain actions. For example, all Lab users have &quot;LRLAB&quot;; but only those credentialed as Lab Technicians will have &quot;LRVERIFY&quot; to release the result.</p>
 <p>Let's enlarge our analogy a bit: Users of the VistA system can be assigned a specific door to enter into: This is known as their PRIMARY MENU. A prevalent practice is to give everybody the PRIMARY MENU of <code>XUCORE</code>, which is analogous to a City Portal. Once you say who you are (ACCESS CODE) and your password (VERIFY CODE), you enter the City (XUCORE) and you can only enter the building for which you have the key.</p>
-<p>What we do below is a couple of things: We give ourselves the Fileman Access Code (different from ACCESS CODE) of &quot;@&quot;, which gives you the equivalent of root priviliges in Fileman. Next, we give ourselves the keys <code>XUMGR</code> (let's you add users and manipulate tasks); <code>XUPROG</code> (let's you edit users [don't ask me why--I have no clue why they put that key there], and install Software); <code>XUPROGMODE</code> (let's you enter programmer mode); <code>XMMGR</code> (let's you manage mailman), <code>XUSPF200</code> (let's you add users without requiring an SSN). By the way, priviliged users can be given the ability to add new users and assign and take away keys using a mechanism called delegation. I won't cover that here.</p>
+<p>What we do below is a couple of things: We give ourselves the Fileman Access Code (different from ACCESS CODE) of <script type="text/javascript">
+<!--
+h='&#34;';a='&#64;';n='&#34;';e=n+a+h;
+document.write('<a h'+'ref'+'="ma'+'ilto'+':'+e+'">'+'&quot;@&quot;'+'<\/'+'a'+'>');
+// -->
+</script><noscript>&#34;&#64;&#34;&#32;&#40;&#34;&#32;&#x61;&#116;&#32;&#34;&#x29;</noscript>, which gives you the equivalent of root privileges in Fileman. Next, we give ourselves the keys <code>XUMGR</code> (let's you add users and manipulate tasks); <code>XUPROG</code> (let's you edit users [don't ask me why--I have no clue why they put that key there], and install Software); <code>XUPROGMODE</code> (let's you enter programmer mode); <code>XMMGR</code> (let's you manage mailman), <code>XUSPF200</code> (let's you add users without requiring an SSN). By the way, privileged users can be given the ability to add new users and assign and take away keys using a mechanism called delegation. I won't cover that here.</p>
 <div class="code"><code>><strong>S DUZ=1</strong>
 ><strong>S $P(^VA(200,DUZ,0),"^",4)="@"</strong>
 ><strong>D ^XUP</strong>
@@ -1338,7 +1326,7 @@ Select NEW PERSON NAME: <strong>MANAGER,SYSTEM</strong>    SM</code></div>
 <img src="images/InitializeVistA/pic25.gif" />
 </figure>
 <p>Type &quot;N&quot;EXT PAGE at COMMAND: to go to page 2 to update the TIMED READ field and other fields you wish to update. For DEFAULT TIMED-READ (SECONDS): if you change it to 3600 you will be allow an hour before being automatically signed off. It makes it easier to work when you are learning and setting things up. And for God's sake, please make sure that your Preferred Editor is <code>SCREEN EDITOR - VA FILEMAN</code>, otherwise you can only edit a line of text at a time.</p>
-<p>Press &lt;PF1&gt; refers to notations for use of Vista on Terminals. For example, the original VT-320 keyboard had additional character sets and keys which include Find, Select, Insert, Remove, Previous Screen, Next Screen, an arrow cluster and F1 to F20. With Terminal Emulators, the Keys are &quot;mapped&quot;, which means when you push a given key it acts as the key would in a terminal. For instance, F1, F2, F3 and F4 are equivalent to the PF1, PF2, PF3 and PF4 keys on the terminal keyboard and Page Up and Page Down on the computer keyboard correspond to Previous Screen and Next Screen. Also there is lots of information about terminal if you are interested at <a href="http://www.vt100.net" class="uri">http://www.vt100.net</a>. Also, the very beginning of this document tells you what are the recommended terminal emulators to use.</p>
+<p>Press &lt;PF1&gt; refers to notations for use of Vista on Terminals. For example, the original VT-320 keyboard had additional character sets and keys which include Find, Select, Insert, Remove, Previous Screen, Next Screen, an arrow cluster and F1 to F20. With Terminal Emulators, the Keys are &quot;mapped&quot;, which means when you push a given key it acts as the key would in a terminal. For instance, F1, F2, F3 and F4 are equivalent to the PF1, PF2, PF3 and PF4 keys on the terminal keyboard and Page Up and Page Down on the computer keyboard correspond to Previous Screen and Next Screen. Also there is lots of information about terminal if you are interested at <a href="http://www.vt100.net">http://www.vt100.net</a>. Also, the very beginning of this document tells you what are the recommended terminal emulators to use.</p>
 <figure>
 <img src="images/InitializeVistA/pic26.gif" />
 </figure>
@@ -1385,8 +1373,8 @@ Select Systems Manager Menu <TEST ACCOUNT> Option:</code></div>
 <img src="images/InitializeVistA/pic27.gif" />
 </figure>
 <h2 id="mail-a-message">Mail a Message</h2>
-<p>Now send a message using Postmaster to your DUZ number. From Direct Mode, type <code>S DUZ=.5 D ^XUP</code>. You will get the response SETTING UP PROGRAMMER ENVIROMENT then TERMINAL TYPE SET TO: (your default) and Select OPTION NAME:. You will need to respond: <code>XMUSER</code>. At Select Mailman Menu Option: type <code>S</code> (for send). At Subject: enter your subject, such as Test, and then hit enter. You will then be prompted You may enter the text of the message and you will be offered the line number 1&gt; where you can type your message, such as the infamous Hello world. Next will be line 2&gt; and if you are done, just hit enter and at EDIT Option: you can do the same. At Send mail to: POSTMASTER// enter the initials you used for your DUZ which were probably DBA for System Manager. You will then be told when MailMan was last used, which is probably NEVER. Hit enter at And Send to: and you should receive the message Select Message option: Transmit now// at which you hit enter and will hopefully receive the message Sending [1] Sent. Type <code>^</code> to exit.</p>
-<p>Now see if you received it. Log on using <code>D ^ZU</code>. At the Systems Manager prompt, type <code>MAILMAN MENU</code>. Then at the Select MailMan Menu Option: type <code>NEW</code> Messages and Responses. Read the mail.</p>
+<p>Now send a message using Postmaster to your DUZ number. From Direct Mode, type <code>S DUZ=.5 D ^XUP</code>. You will get the response SETTING UP PROGRAMMER ENVIRONMENT then TERMINAL TYPE SET TO: (your default) and Select OPTION NAME:. You will need to respond: <code>XMUSER</code>. At Select Mailman Menu Option: type <code>S</code> (for send). At Subject: enter your subject, such as Test, and then hit enter. You will then be prompted You may enter the text of the message and you will be offered the line number 1&gt; where you can type your message, such as the infamous Hello world. Next will be line 2&gt; and if you are done, just hit enter and at EDIT Option: you can do the same. At Send mail to: POSTMASTER// enter the initials you used for your DUZ which were probably DBA for System Manager. You will then be told when Mailman was last used, which is probably NEVER. Hit enter at And Send to: and you should receive the message Select Message option: Transmit now// at which you hit enter and will hopefully receive the message Sending [1] Sent. Type <code>^</code> to exit.</p>
+<p>Now see if you received it. Log on using <code>D ^ZU</code>. At the Systems Manager prompt, type <code>MAILMAN MENU</code>. Then at the Select Mailman Menu Option: type <code>NEW</code> Messages and Responses. Read the mail.</p>
 <figure>
 <img src="images/InitializeVistA/pic32.gif" />
 </figure>
@@ -1456,7 +1444,7 @@ INITIAL: <strong>UC</strong>
 SSN: <strong>&lt;enter&gt;</strong>
 SEX: <strong>F</strong>  FEMALE
 NPI: <strong>&lt;enter&gt;</strong></code></div>
-<p>Once in the ScreenMan form, you will need to set the necessary information mentioned above. Four pieces of information are able to be set on the first page of the ScreenMan form. The arrows are for emphasis to highlight where information needs to be entered and will not show up in the terminal window.</p>
+<p>Once in the Screenman form, you will need to set the necessary information mentioned above. Four pieces of information are able to be set on the first page of the Screenman form. The arrows are for emphasis to highlight where information needs to be entered and will not show up in the terminal window.</p>
 <p>To add an access or verify codes, you need to first answer <code>Y</code> to the <code>Want to edit ...</code> questions, it will then prompt you to change the codes. Remember to give the user both an access and veify codes; otherwise, they won't be able to log-in.</p>
 <p>Fill in as follows:</p>
 <ul>
@@ -1539,7 +1527,7 @@ _______________________________________________________________________________
 
 
 COMMAND:                                       Press <PF1>H for help</code></div>
-<p>Once that is done, save and exit the ScreenMan form via the COMMAND box and then answer the final questions regarding access letters, security keys and mail groups. For security keys, there are two we need to add: ORES and PROVIDER.</p>
+<p>Once that is done, save and exit the Screenman form via the COMMAND box and then answer the final questions regarding access letters, security keys and mail groups. For security keys, there are two we need to add: ORES and PROVIDER.</p>
 <div class="code"><code>Exit     Save     Next Page     Refresh
 
 Enter a command or '^' followed by a caption to jump to a specific field.
@@ -1591,7 +1579,7 @@ Select User Management <TEST ACCOUNT> Option: <strong>^&lt;enter&gt;</strong>
 <div class="code"><code>><strong>S DUZ=1 D Q^DI</strong>
 
 
-VA FileMan 22.2
+VA Fileman 22.2
 
 
 Select OPTION: <strong>INQUIRE TO FILE ENTRIES</strong>  
@@ -1879,7 +1867,7 @@ Select Registration Menu <TEST ACCOUNT> Option: <strong>Register a Patient</stro
 <li>Set-up Lab Package for Chemistry and Hematology</li>
 </ul>
 <h2 id="stopping-vista">Stopping VistA</h2>
-<p>To stop TaskMan, use <code>D STOP^ZTMKU</code> and answer <code>YES</code> to stopping the submanagers.</p>
+<p>To stop Taskman, use <code>D STOP^ZTMKU</code> and answer <code>YES</code> to stopping the submanagers.</p>
 <p>To stop Broker, use <code>D STOP^XWBTCP(&lt;port no&gt;)</code>.</p>
 <p>To stop mailman, use <code>D STOP^XMKPL</code> and answer <code>YES</code> to stop it.</p>
 </body>
