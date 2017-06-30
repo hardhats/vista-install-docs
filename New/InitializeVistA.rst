@@ -9,7 +9,7 @@ License:
    :target: http://creativecommons.org/licenses/by/4.0/ 
 
 Attributions: Original instructions by Fil Beza and Nancy Anthracite; this set has been updated
-by Sam Habiel. Last updated in December 2016.
+by Sam Habiel. Last updated in June 2017.
 
 If you have reached this point, it means that you have finished `Install Cache
 <./InstallCache.html>`_; or `Install GT.M <./InstallGTM.html>`_ and `Install VistA on GT.M
@@ -99,8 +99,8 @@ to your routines directory: https://github.com/shabiel/Kernel-GTM. Here's how to
 
 .. code-block:: bash
 
-    $ git clone https://github.com/shabiel/Kernel-GTM && cd Kernel-GTM
-    $ cp -v $(git diff --name-only 29bc19..a7565b -- Kernel/Routines) /var/db/foia201611-gtm/r/
+    $ wget https://github.com/shabiel/Kernel-GTM/releases/download/XU-8.0-10001/virgin_install.zip
+    $ unzip virgin_install.zip -d /path/to/database/r/
 
 Note to Cache Users
 -------------------
