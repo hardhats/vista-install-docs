@@ -117,15 +117,8 @@ environment variables from the shell. Here's the file, which I called `env.vista
     export gtm_boolean=1
     
     # $SYSTEM Output to use to identify the box the system is running on
-    export gtm_sysid="foia.2016.08"
+    export gtm_sysid="foia.2016.08"</code></div>
     
-    # This is for journaling. Don't turn this on yet.
-    #if [ -f j/mumps.mjl ]
-    #then
-    #    $gtm_dist/mupip journal -recover -backward j/mumps.mjl
-    #fi
-    #$gtm_dist/mupip set -journal="enable,on,before,f=j/mumps.mjl" -region DEFAULT</code></div>
-
 Once this is done, source the file using ``$ . env.vista``. Then test that
 what you did works by running ``$ mumps -dir``. You should see this:
 
@@ -380,20 +373,33 @@ that on your own.
 
 Loading VistA Into the GT.M Database we just Created
 ----------------------------------------------------
-I said we will use FOIA VistA. Make sure that git is installed on your machine,
-and then run the following command (this command may take up to 1 hour to
-run, based on your Internet connection).
+I said we will use FOIA VistA. Make sure that wget is installed on your
+machine, and then get the code (takes 3-30 minutes depending on your internet
+connection). First switch to a working directory (such as /tmp/) and run this:
 
 .. raw:: html
    
-    <div class="code"><code>$ <strong>git clone -b foia --single-branch --depth=1 https://github.com/OSEHRA/VistA-M.git</strong></code></div>
+    <div class="code"><code>$ <strong>wget https://github.com/OSEHRA/VistA-M/archive/foia.zip</strong></code></div>
+
+If you want WorldVistA or vxVistA instead, you can get them from
+https://github.com/glilly/wvehr2-dewdrop/archive/master.zip or
+https://github.com/OSEHRA/vxVistA-M/archive/master.zip respectively.
+
+Now unzip it:
+
+.. raw:: html
+   
+    <div class="code"><code>$ <strong>unzip foia.zip</strong></code></div>
+
+Everything gets unzipped in the folder `VistA-M-foia/`, so you need to use that
+folder as the first argument of the find commands below.
 
 Next we need to copy the routines to VistA (takes about 30 seconds). There are
 quotes around the ``{}`` because the paths contain spaces.
 
 .. raw:: html
     
-    <div class="code"><code>$ <strong>find VistA-M -name '*.m' -exec cp "{}" r/ \;</strong></code></div>
+    <div class="code"><code>$ <strong>find VistA-M-foia/ -name '*.m' -exec cp "{}" r/ \;</strong></code></div>
 
 Next we need to load the globals. We use the versatile ``mupip load`` command
 for that. Note that mupip load wants quotes sent down from the shell for any
@@ -403,7 +409,7 @@ loaded. This takes time; from 10 minutes up to 30 minutes.
 
 .. raw:: html
     
-    <div class="code"><code>$ <strong>find VistA-M -name '*.zwr' -exec echo {} \; -exec mupip load \"{}\" \; |& tee g/foia201608-load.log</strong></code></div>
+    <div class="code"><code>$ <strong>find VistA-M-foia -name '*.zwr' -exec echo {} \; -exec mupip load \"{}\" \; |& tee g/foia201608-load.log</strong></code></div>
 
 Verify that none of the globals failed to import.
 
@@ -440,24 +446,149 @@ After we are done with this, we will repeat our smoke test with %GD and %RD.
 At this point we are done loading VistA. It's time to enable journaling on
 all the regions we want. That can be a separate script, but I put it with my
 env script so that everything can be in one place and I only have to source
-one file to activate my VistA instance. Add this to the end. This recovers
-the database if it was journaled and then enables journaling.
+one file to activate my VistA instance. On a production VistA instance, you
+would create an initd or systemd script to do this rather than put it into the
+environment script.
+
+Here's the environment script example first. This is good for demo/dev databases.
+Add this to the end. This recovers the database if it was journaled and then
+enables journaling. File here: `vista.journaling<./vista.journaling>`_
 
 .. raw:: html
     
     <div class="code"><code># This is journaling.
-    if [ -f {vista_home}/j/mumps.mjl ]; then
+    if [ -f ${vista_home}/j/mumps.mjl ]; then
+      if (( $(lsof -t ${vista_home}/g/mumps.dat | wc -l) == 0 )); then
         $gtm_dist/mupip journal -recover -backward ${vista_home}/j/mumps.mjl
+      fi
     fi
-    
+
     if (( $(find ${vista_home}/j -name '*_*' -mtime +3 -print | wc -l) > 0 )); then
         echo "Deleting old journals"
         find ${vista_home}/j -name '*_*' -mtime +3 -print -delete
     fi
-    
-    $gtm_dist/mupip set -journal="enable,on,before,f={vista_home}/j/mumps.mjl" -region DEFAULT</code></div>
+
+    if (( $(lsof -t ${vista_home}/g/mumps.dat | wc -l) == 0 )); then
+      $gtm_dist/mupip set -journal="enable,on,before,f=${vista_home}/j/mumps.mjl" -region DEFAULT
+    fi</code></div>
 
 Source the env.vista script again to enable journaling.
+
+If you would rather create an init script, here's an example to copy. This
+provides much more functionality than journaling--it's the kind of thing you
+would have on a production instance.
+
+NB: You need to put a valid value for vista_instance and the user also needs
+to be valid (here vistauser). File here: `vista.initd<./vista.initd>`_
+
+.. raw:: html
+
+  <div class="code"><code>#!/usr/bin/env bash
+  #---------------------------------------------------------------------------
+  # Copyright 2011-2012 The Open Source Electronic Health Record Agent
+  #
+  # Licensed under the Apache License, Version 2.0 (the "License");
+  # you may not use this file except in compliance with the License.
+  # You may obtain a copy of the License at
+  #
+  #     http://www.apache.org/licenses/LICENSE-2.0
+  #
+  # Unless required by applicable law or agreed to in writing, software
+  # distributed under the License is distributed on an "AS IS" BASIS,
+  # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  # See the License for the specific language governing permissions and
+  # limitations under the License.
+  #---------------------------------------------------------------------------
+
+  # init script for VistA
+  # Modifications by SMH for VistA
+
+  # Debian LSB info
+  ### BEGIN INIT INFO
+  # Provides:          foiavista
+  # Required-Start:    $remote_fs $syslog
+  # Required-Stop:     $remote_fs $syslog
+  # Default-Start:     2 3 4 5
+  # Default-Stop:      0 1 6
+  # Short-Description: Start VistA services at boot time
+  # Description:       Starts/Stops VistA instances in a sane way.
+  ### END INIT INFO
+
+
+  # Start VistA
+  vista_instance="/path/to/your/vista"
+  start() {
+    source ${vista_instance}/env.vista
+    su - vistauser -c "source ${vista_instance}/env.vista &&
+      if [ -f ${vista_home}/j/mumps.mjl ]; then
+        echo \"Recovering old journals...\"
+        mupip journal -recover -backward ${vista_home}/j/mumps.mjl
+      fi"
+
+    if (( $(find ${vista_home}/j -name '*_*' -mtime +3 -print | wc -l) > 0 )); then
+      echo "Deleting old journals..."
+      find ${vista_home}/j -name '*_*' -mtime +3 -print -delete
+    fi
+
+    su - vistauser -c "source ${vista_instance}/env.vista; mupip rundown -region '*'" 
+    su - vistauser -c "source ${vista_instance}/env.vista; mupip set -journal=\"enable,on,before,f=${vista_home}/j/mumps.mjl\" -region DEFAULT"
+    su - vistauser -c "source ${vista_instance}/env.vista; mumps -run %XCMD 'J ZISTCP^XWBTCPM1(9210)'" 
+    su - vistauser -c "source ${vista_instance}/env.vista; mumps -run ZTMB"
+    su - vistauser -c "source ${vista_instance}/env.vista; mumps -run %XCMD 'J START^XOBVLL(8000)'"
+  }
+
+  # Stop VistA
+  stop() {
+      su - vistauser -c "source ${vista_instance}/env.vista; mumps -run %XCMD 'S U=\"^\" D STOP^ZTMKU' << EOF
+  Y
+  Y
+  Y
+  EOF"
+      # Wait for TaskMan to stop
+      echo "Waiting for TaskMan to stop (30 sec)"
+      sleep 30
+
+      echo "Stopping any remaining M processes nicely"
+      su - vistauser -c ". ${vista_instance}/env.vista && pgrep mumps | xargs --max-args=1 mupip stop"
+      sleep 2
+      
+      processes=$(pgrep mumps)
+      if [ ! -z "${processes}" ] ; then
+        echo "M process are being shutdown forcefully!"
+        pkill -9 mumps
+      fi
+      rm -fv /tmp/gtm_*
+  }
+
+  case "$1" in
+      start)
+          start
+          ;;
+      stop)
+          stop
+          ;;
+      restart)
+          stop
+          start
+          ;;
+      *)
+          echo "Usage: $0 {start|stop|restart}"
+          ;;
+  esac</code></div>
+
+You have to save this script in /etc/init.d/, and make it execuatble and owned
+by root, and add it the correct run levels for the Linux kernel. On Ubuntu,
+this would look like this. You need to be root (or sudo) to perform these
+steps:
+
+.. raw:: html
+
+    <div class="code"><code>$ <strong>cd /etc/init.d/</strong>
+    $ <strong>edit vista.initd</strong> # create the file here. Skip if done.
+    $ <strong>chown root:root vista.initd</strong>
+    $ <strong>chmod +x vista.initd</strong>
+    $ <strong>update-rc.d vista.initd defaults</strong>
+    $ <strong>update-rc.d vista.initd enable</strong></code></div>
 
 The next step is not necessary if you don't plan to have users log-in. You should
 pre-compile the routines on GT.M so they do not have to be compiled at runtime.

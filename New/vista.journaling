@@ -1,0 +1,15 @@
+# This is journaling.
+if [ -f ${vista_home}/j/mumps.mjl ]; then
+  if (( $(lsof -t ${vista_home}/g/mumps.dat | wc -l) == 0 )); then
+    $gtm_dist/mupip journal -recover -backward ${vista_home}/j/mumps.mjl
+  fi
+fi
+
+if (( $(find ${vista_home}/j -name '*_*' -mtime +3 -print | wc -l) > 0 )); then
+    echo "Deleting old journals"
+    find ${vista_home}/j -name '*_*' -mtime +3 -print -delete
+fi
+
+if (( $(lsof -t ${vista_home}/g/mumps.dat | wc -l) == 0 )); then
+  $gtm_dist/mupip set -journal="enable,on,before,f=${vista_home}/j/mumps.mjl" -region DEFAULT
+fi
