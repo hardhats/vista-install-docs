@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #---------------------------------------------------------------------------
-# Copyright 2011-2012 The Open Source Electronic Health Record Agent
+# Copyright 2011-2017 The Open Source Electronic Health Record Agent
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,7 +16,6 @@
 #---------------------------------------------------------------------------
 
 # init script for VistA
-# Modifications by SMH for VistA
 
 # Debian LSB info
 ### BEGIN INIT INFO
@@ -27,12 +26,15 @@
 # Default-Stop:      0 1 6
 # Short-Description: Start VistA services at boot time
 # Description:       Starts/Stops VistA instances in a sane way.
+#                    Includes starting TaskMan.
 ### END INIT INFO
 
 
 # Start VistA
 vista_instance="/path/to/vista/instance"
 start() {
+    # If a database is shutdown cleanly there shouldn't be anything in the
+    # journals to replay, so we can run this without worry
   source ${vista_instance}/env.vista
   su - vistauser -c "source ${vista_instance}/env.vista &&
     if [ -f ${vista_home}/j/mumps.mjl ]; then
@@ -45,11 +47,21 @@ start() {
     find ${vista_home}/j -name '*_*' -mtime +3 -print -delete
   fi
 
+  # Rundown readonly GT.M/YDB databases
+  for f in $gtm_dist/*.dat; do $gtm_dist/mupip rundown -f $f; done
+
+  # Delete temp and then recreate
+  echo "Deleting and recreating temp region"
+  rm -vf $basedir/g/tempgbl.dat
+  su - vistauser -c "source ${vista_instance}/env.vista && $gtm_dist/mupip create -region=TEMPGBL"
+
+  
   su - vistauser -c "source ${vista_instance}/env.vista; mupip rundown -region '*'" 
   su - vistauser -c "source ${vista_instance}/env.vista; mupip set -journal=\"enable,on,before,f=${vista_home}/j/mumps.mjl\" -region DEFAULT"
-  su - vistauser -c "source ${vista_instance}/env.vista; mumps -run %XCMD 'J ZISTCP^XWBTCPM1(9210)'" 
+
+  echo "Starting TaskMan"
   su - vistauser -c "source ${vista_instance}/env.vista; mumps -run ZTMB"
-  su - vistauser -c "source ${vista_instance}/env.vista; mumps -run %XCMD 'J START^XOBVLL(8000)'"
+
 }
 
 # Stop VistA
