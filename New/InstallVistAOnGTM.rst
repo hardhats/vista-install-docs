@@ -1,5 +1,5 @@
-Download VistA for GT.M
-=======================
+Install VistA on GT.M or YottaDB
+================================
 
 Authors: Sam Habiel
 
@@ -9,7 +9,7 @@ License:
    :target: http://creativecommons.org/licenses/by/4.0/ 
 
 A Mumps database (like VistA) is a series of routines and globals (a global
-in Mumps really means a file on disk). To load VistA into GT.M, you need to
+in Mumps really means a file on disk). To load VistA into GT.M/YottaDB, you need to
 obtain the these from the CACHE.DAT distributed by the VA. Efforts are
 underway to lobby the VA to distribute the FOIA instance as a set of globals
 and routines; rather than in a proprietary format.
@@ -23,8 +23,14 @@ In our example, for setting up a VistA Database, we will use FOIA VistA.
 
 Before downloading VistA, we will start by creating an empty database.
 
-Creating an Empty GT.M Database suitable for VistA
---------------------------------------------------
+Creating an Empty GT.M/YottaDB Database suitable for VistA
+----------------------------------------------------------
+Traditionally, production instances of VistA are hosted under their own
+username and group. You can create a new username and group and use that for
+running your VistA; or if you are just testing, use your own non-root username.
+DO NOT RUN AS ROOT. Places in which you need to run as root are indicated by
+the presence of ``sudo``.
+
 Create a directory where you will place your environment. These two steps need
 to be done as a superuser. The directory name or location doesn't matter. In this case,
 it's ``foia201608`` under ``/var/db``. Second step changes the ownership to your
@@ -60,64 +66,72 @@ Two parenthetical remarks:
     written just expecting a single routine list.
 
 At this point, we need to create an environment file that we will need to
-source in order to tell GT.M where are our routines and globals are. The reason
-we need to do this is simple: GT.M bases its operations almost entirely on
-environment variables from the shell. Here's the file, which I called `env.vista<./env.vista>`_.
+source in order to tell GT.M/YottaDB where are our routines and globals are. The reason
+we need to do this is simple: GT.M/YottaDB bases its operations almost entirely on
+environment variables from the shell. All values between || need to be replaced. 
+Here's the file, which I called `env.vista<./env.vista>`_.
 
 .. raw:: html
     
-    <div class="code"><code> # This is just a variable so I don't have to type the same thing
+    <div class="code"><code> 
+    # This is just a variable so I don't have to type the same thing
     # over and over again.
-    export vista_home="/var/db/{your directory name}"
-    
+    export vista_home="|your directory name|"
+
     # This will set the prompt. This can be anything you want.
     # I make it something meaningful to let me know which environment I am on.
-    export gtm_prompt="YOUR INSTANCE NAME>"
-    
+    export gtm_prompt="|YOUR INSTANCE NAME|"
+
     # Intial Value of error trap upon VistA start-up
     #export gtm_etrap='W !,"ERROR IN STARTUP",!! D ^%ZTER HALT' # for production environments
     export gtm_etrap='B'             # for development environments
-    
-    # The location of the global directory. A global directory tells GT.M in
+
+    # The location of the global directory. A global directory tells GT.M/YottaDB in
     # which database file we will locate a global
     export gtmgbldir="${vista_home}/g/mumps.gld"
-    
-    # The location of where GT.M was installed. 
-    # You may need to adjust this based on where you installed it
-    export gtm_dist="/usr/lib/fis-gtm/current/"     
-    
+
+    # The location of where GT.M/YottaDB was installed. 
+    export gtm_dist="|fill this in|"     
+
     # Where the routines are. 
-    # If you run 32 bit GT.M, you need to remove libgtmutil.so
+    # If you run 32 bit GT.M/YottaDB, you need to remove /libgtmutil.so
     # On older versions of GT.M (&lt;6.2), the * isn't recognized.
     # There should be no reason for you to run 32-bit GT.M these days.
     export gtmroutines="${vista_home}/o*(${vista_home}/r) $gtm_dist/libgtmutil.so"
-    
+
     # Allow relink of routine even if it is on the stack
     export gtm_link="RECURSIVE"
-    
-    # Adjust QUIT behavior to accommodate Cache bug/feature of 
+
+    # Adjust QUIT behavior to accommodate  bug/feature of 
     # C style function/procedure unification rather than M/Pascal style 
     # function/procedure dichotomy
     export gtm_zquit_anyway=1
-    
+
     # Run this routine when a process is asked to interrogate itself
     # using mupip intrpt
     export gtm_zinterrupt='I $$JOBEXAM^ZU($ZPOS)'
-    
-    # GT.M has non-standard default behavior for null subscripts for local
+
+    # GT.M/YottaDB has non-standard default behavior for null subscripts for local
     # variables. Make it standard
     export gtm_lct_stdnull=1
-    
-    # Add GT.M to the path if not already there.
+    export gtm_lvnullsubs=2
+
+    # Add GT.M/YottaDB to the path if not already there.
     [[ ":$PATH:" != *":${gtm_dist}"* ]] && export PATH="${PATH}:${gtm_dist}"
-    
-    # GT.M should not short-cut $SELECT and binary boolean operators
+
+    # GT.M/YottaDB should not short-cut $SELECT and binary boolean operators
     # A default optimization.
     export gtm_side_effects=1
     export gtm_boolean=1
-    
+
     # $SYSTEM Output to use to identify the box the system is running on
-    export gtm_sysid="foia.2016.08"</code></div>
+    export gtm_sysid="|fill this in|"
+
+    # For debugging: set the default value of $ZSTEP
+    export gtm_zstep='n oldio s oldio=$i u 0 w $t(@$zpos),! b  u oldio'
+
+    # For QEWD if installed (See http://qewdjs.com/)
+    export GTMCI=""</code></div>
     
 Once this is done, source the file using ``$ . env.vista``. Then test that
 what you did works by running ``$ mumps -dir``. You should see this:
@@ -130,7 +144,7 @@ Type Control-D or "HALT" to get out.
 
 Now we need to create the database. You can create a default database by just
 running ``mupip create``, but rather than do that, we need to write some code
-to tell GT.M to change its default database for VistA. I will create a file 
+to tell GT.M/YottaDB to change its default database for VistA. I will create a file 
 called `g/db.gde<./db.gde>`_.
 
 .. raw:: html
@@ -145,6 +159,7 @@ called `g/db.gde<./db.gde>`_.
     ! -> Here, it extends by 100MB each time.
     ! Global buffer count is how many buffers of size block_size should stay in
     ! -> RAM to cache the data read and written to disk. This set-up uses about 33MB in RAM.
+    ! -> On a production environment, this is one of the variables you typically increase.
     change -segment DEFAULT -file="$vista_home/g/mumps.dat" -access_method=BG -allocation=1048576  -block_size=4096 -lock_space=1000 -global_buffer_count=8192 -extension_count=25600
     
     ! Ditto pretty much, except this is smaller. Note that we create a new segment
@@ -169,6 +184,7 @@ called `g/db.gde<./db.gde>`_.
     add    -name    BMXTMP  -region=TEMPGBL
     add    -name    XUTL    -region=TEMPGBL
     add    -name    VPRHTTP -region=TEMPGBL
+    add    -name    KMPTMP  -region=TEMPGBL
     add    -name    ZZ*     -region=TEMPGBL
     
     ! show all for verification
@@ -371,7 +387,7 @@ report errors with ``shmget()``. If you see that when you are trying to run ^%GD
 you need to increase your shared memory limits. I will leave you to google
 that on your own.
 
-Loading VistA Into the GT.M Database we just Created
+Loading VistA Into the GT.M/YottaDB Database we just Created
 ----------------------------------------------------
 I said we will use FOIA VistA. Make sure that wget is installed on your
 machine, and then get the code (takes 3-30 minutes depending on your internet
@@ -420,6 +436,15 @@ Verify that none of the globals failed to import.
 If you get an output that isn't zero, you need to visually inspect what
 happened.
 
+NB: If you have a machine with multiple cores, you can speed up the loading
+with something like this (replace number after P variable with number of cores,
+here 4)
+
+.. raw:: html
+    
+    <div class="code"><code>$ <strong>find VistA-M-foia -name '*.zwr' -print0 | xargs -0 -I{} -n 1 -P 4 mupip load \"{}\" |& tee g/foia201608-load.log</strong></code></div>
+
+
 After we are done with this, we will repeat our smoke test with %GD and %RD.
 
 .. raw:: html
@@ -443,16 +468,9 @@ After we are done with this, we will repeat our smoke test with %GD and %RD.
     ...
     Total of 35547 routines.</code></div>
 
-At this point we are done loading VistA. It's time to enable journaling on
-all the regions we want. That can be a separate script, but I put it with my
-env script so that everything can be in one place and I only have to source
-one file to activate my VistA instance. On a production VistA instance, you
-would create an initd or systemd script to do this rather than put it into the
-environment script.
-
-Here's the environment script example first. This is good for demo/dev databases.
-Add this to the end. This recovers the database if it was journaled and then
-enables journaling. File here: `vista.journaling<./vista.journaling>`_
+At this point we are done loading VistA. It's time to enable journaling on all
+the regions we want. Following script recovers the database if it was journaled
+and then enables journaling. File here: `vista.journaling<./vista.journaling>`_
 
 .. raw:: html
     
@@ -472,7 +490,7 @@ enables journaling. File here: `vista.journaling<./vista.journaling>`_
       $gtm_dist/mupip set -journal="enable,on,before,f=${vista_home}/j/mumps.mjl" -region DEFAULT
     fi</code></div>
 
-Source the env.vista script again to enable journaling.
+Source this file to enable journaling.
 
 If you would rather create an init script, here's an example to copy. This
 provides much more functionality than journaling--it's the kind of thing you
@@ -484,97 +502,108 @@ to be valid (here vistauser). File here: `vista.initd<./vista.initd>`_
 .. raw:: html
 
   <div class="code"><code>#!/usr/bin/env bash
-  #---------------------------------------------------------------------------
-  # Copyright 2011-2012 The Open Source Electronic Health Record Agent
-  #
-  # Licensed under the Apache License, Version 2.0 (the "License");
-  # you may not use this file except in compliance with the License.
-  # You may obtain a copy of the License at
-  #
-  #     http://www.apache.org/licenses/LICENSE-2.0
-  #
-  # Unless required by applicable law or agreed to in writing, software
-  # distributed under the License is distributed on an "AS IS" BASIS,
-  # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  # See the License for the specific language governing permissions and
-  # limitations under the License.
-  #---------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
+    # Copyright 2011-2017 The Open Source Electronic Health Record Agent
+    #
+    # Licensed under the Apache License, Version 2.0 (the "License");
+    # you may not use this file except in compliance with the License.
+    # You may obtain a copy of the License at
+    #
+    #     http://www.apache.org/licenses/LICENSE-2.0
+    #
+    # Unless required by applicable law or agreed to in writing, software
+    # distributed under the License is distributed on an "AS IS" BASIS,
+    # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    # See the License for the specific language governing permissions and
+    # limitations under the License.
+    #---------------------------------------------------------------------------
 
-  # init script for VistA
-  # Modifications by SMH for VistA
+    # init script for VistA
 
-  # Debian LSB info
-  ### BEGIN INIT INFO
-  # Provides:          foiavista
-  # Required-Start:    $remote_fs $syslog
-  # Required-Stop:     $remote_fs $syslog
-  # Default-Start:     2 3 4 5
-  # Default-Stop:      0 1 6
-  # Short-Description: Start VistA services at boot time
-  # Description:       Starts/Stops VistA instances in a sane way.
-  ### END INIT INFO
+    # Debian LSB info
+    ### BEGIN INIT INFO
+    # Provides:          foiavista
+    # Required-Start:    $remote_fs $syslog
+    # Required-Stop:     $remote_fs $syslog
+    # Default-Start:     2 3 4 5
+    # Default-Stop:      0 1 6
+    # Short-Description: Start VistA services at boot time
+    # Description:       Starts/Stops VistA instances in a sane way.
+    #                    Includes starting TaskMan.
+    ### END INIT INFO
 
 
-  # Start VistA
-  vista_instance="/path/to/your/vista"
-  start() {
-    source ${vista_instance}/env.vista
-    su - vistauser -c "source ${vista_instance}/env.vista &&
-      if [ -f ${vista_home}/j/mumps.mjl ]; then
-        echo \"Recovering old journals...\"
-        mupip journal -recover -backward ${vista_home}/j/mumps.mjl
-      fi"
+    # Start VistA
+    vista_instance="|/path/to/vista/instance|"
+    start() {
+        # If a database is shutdown cleanly there shouldn't be anything in the
+        # journals to replay, so we can run this without worry
+      source ${vista_instance}/env.vista
+      su - vistauser -c "source ${vista_instance}/env.vista &&
+        if [ -f ${vista_home}/j/mumps.mjl ]; then
+          echo \"Recovering old journals...\"
+          mupip journal -recover -backward ${vista_home}/j/mumps.mjl
+        fi"
 
-    if (( $(find ${vista_home}/j -name '*_*' -mtime +3 -print | wc -l) > 0 )); then
-      echo "Deleting old journals..."
-      find ${vista_home}/j -name '*_*' -mtime +3 -print -delete
-    fi
-
-    su - vistauser -c "source ${vista_instance}/env.vista; mupip rundown -region '*'" 
-    su - vistauser -c "source ${vista_instance}/env.vista; mupip set -journal=\"enable,on,before,f=${vista_home}/j/mumps.mjl\" -region DEFAULT"
-    su - vistauser -c "source ${vista_instance}/env.vista; mumps -run %XCMD 'J ZISTCP^XWBTCPM1(9210)'" 
-    su - vistauser -c "source ${vista_instance}/env.vista; mumps -run ZTMB"
-    su - vistauser -c "source ${vista_instance}/env.vista; mumps -run %XCMD 'J START^XOBVLL(8000)'"
-  }
-
-  # Stop VistA
-  stop() {
-      su - vistauser -c "source ${vista_instance}/env.vista; mumps -run %XCMD 'S U=\"^\" D STOP^ZTMKU' << EOF
-  Y
-  Y
-  Y
-  EOF"
-      # Wait for TaskMan to stop
-      echo "Waiting for TaskMan to stop (30 sec)"
-      sleep 30
-
-      echo "Stopping any remaining M processes nicely"
-      su - vistauser -c ". ${vista_instance}/env.vista && pgrep mumps | xargs --max-args=1 mupip stop"
-      sleep 2
-      
-      processes=$(pgrep mumps)
-      if [ ! -z "${processes}" ] ; then
-        echo "M process are being shutdown forcefully!"
-        pkill -9 mumps
+      if (( $(find ${vista_home}/j -name '*_*' -mtime +3 -print | wc -l) > 0 )); then
+        echo "Deleting old journals..."
+        find ${vista_home}/j -name '*_*' -mtime +3 -print -delete
       fi
-      rm -fv /tmp/gtm_*
-  }
 
-  case "$1" in
-      start)
-          start
-          ;;
-      stop)
-          stop
-          ;;
-      restart)
-          stop
-          start
-          ;;
-      *)
-          echo "Usage: $0 {start|stop|restart}"
-          ;;
-  esac</code></div>
+      # Rundown readonly GT.M/YDB databases
+      for f in $gtm_dist/*.dat; do $gtm_dist/mupip rundown -f $f; done
+
+      # Delete temp and then recreate
+      echo "Deleting and recreating temp region"
+      rm -vf $basedir/g/tempgbl.dat
+      su - vistauser -c "source ${vista_instance}/env.vista && $gtm_dist/mupip create -region=TEMPGBL"
+
+      su - vistauser -c "source ${vista_instance}/env.vista; mupip rundown -region '*'" 
+      su - vistauser -c "source ${vista_instance}/env.vista; mupip set -journal=\"enable,on,before,f=${vista_home}/j/mumps.mjl\" -region DEFAULT"
+
+      echo "Starting TaskMan"
+      su - vistauser -c "source ${vista_instance}/env.vista; mumps -run ZTMB"
+
+    }
+
+    # Stop VistA
+    stop() {
+        su - vistauser -c "source ${vista_instance}/env.vista; mumps -run %XCMD 'S U=\"^\" D STOP^ZTMKU' << EOF
+    Y
+    Y
+    Y
+    EOF"
+        # Wait for TaskMan to stop
+        echo "Waiting for TaskMan to stop (2 sec)"
+        sleep 2
+
+        echo "Stopping any remaining M processes nicely"
+        su - vistauser -c ". ${vista_instance}/env.vista && pgrep mumps | xargs --max-args=1 mupip stop"
+        sleep 2
+
+        processes=$(pgrep mumps)
+        if [ ! -z "${processes}" ] ; then
+          echo "M process are being shutdown forcefully!"
+          pkill -9 mumps
+        fi
+        rm -fv /tmp/gtm_*
+    }
+
+    case "$1" in
+        start)
+            start
+            ;;
+        stop)
+            stop
+            ;;
+        restart)
+            stop
+            start
+            ;;
+        *)
+            echo "Usage: $0 {start|stop|restart}"
+            ;;
+    esac</code></div>
 
 You have to save this script in /etc/init.d/, and make it execuatble and owned
 by root, and add it the correct run levels for the Linux kernel. On Ubuntu,
@@ -591,7 +620,9 @@ steps:
     $ <strong>update-rc.d vista.initd enable</strong></code></div>
 
 The next step is not necessary if you don't plan to have users log-in. You should
-pre-compile the routines on GT.M so they do not have to be compiled at runtime.
+pre-compile the routines on GT.M/YottaDB so they do not have to be compiled at runtime.
+You can speed this up with xargs if you have multiple cores (left as an
+exercise to the reader).
 
 .. raw:: html
 
