@@ -8,6 +8,7 @@
 ! -> Here, it extends by 100MB each time.
 ! Global buffer count is how many buffers of size block_size should stay in
 ! -> RAM to cache the data read and written to disk. This set-up uses about 33MB in RAM.
+! -> On a production environment, this is one of the variables you typically increase.
 change -segment DEFAULT -file="$vista_home/g/mumps.dat" -access_method=BG -allocation=1048576  -block_size=4096 -lock_space=1000 -global_buffer_count=8192 -extension_count=25600
 
 ! Ditto pretty much, except this is smaller. Note that we create a new segment
@@ -32,6 +33,7 @@ add    -name    XTMP    -region=TEMPGBL
 add    -name    BMXTMP  -region=TEMPGBL
 add    -name    XUTL    -region=TEMPGBL
 add    -name    VPRHTTP -region=TEMPGBL
+add    -name    KMPTMP  -region=TEMPGBL
 add    -name    ZZ*     -region=TEMPGBL
 
 ! show all for verification
