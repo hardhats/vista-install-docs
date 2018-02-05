@@ -4,20 +4,26 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Download and Install GT.M</title>
+  <title>Install GT.M or YottaDB</title>
   <link href="stylesheets/normalize.css" rel="stylesheet">
   <link href="stylesheets/main.css" rel="stylesheet">
 </head>
 <body>
 <header>
-<h1 class="title">Download and Install GT.M</h1>
+<h1 class="title">Install GT.M or YottaDB</h1>
 </header>
-<p>Authors: KS Bhaskar</p>
-<p>License: GNU Free Documentation License, Version 1.3 or any later (<a href="http://www.gnu.org/licenses/fdl.txt">http://www.gnu.org/licenses/fdl.txt</a>).</p>
+<p>Authors: KS Bhaskar, Sam Habiel</p>
+<p>License: GNU Free Documentation License, Version 1.3 or any later (<a href="http://www.gnu.org/licenses/fdl.txt" class="uri">http://www.gnu.org/licenses/fdl.txt</a>).</p>
 <p>The instructions are taken from the <a href="https://sourceforge.net/projects/fis-gtm/files/GT.M%20Acculturation%20Workshop/">GT.M Acculturation Workshop</a>. They have been only slightly modified.</p>
-<h1 id="using-the-package-manager">Using the Package Manager</h1>
+<h1 id="quick-introduction">Quick Introduction</h1>
+<p>GT.M came around first; YottaDB is a fork of GT.M. For VistA, you can use either one. GT.M has been around longer; and as such there are more ways to install it than there is for YottaDB.</p>
+<h1 id="using-the-installation-script-yottadb">Using the Installation Script (YottaDB)</h1>
+<p>Follow the instructions at <a href="https://yottadb.com/product/get-started/" class="uri">https://yottadb.com/product/get-started/</a>. After the last step, pay attention to see where the installer says YottaDB got installed. Mine says:</p>
+<pre><code>YottaDB version r1.10 installed successfully at /usr/local/lib/yottadb/r110</code></pre>
+<p>You need to remember the location for the variable $gtm_dist in the next section.</p>
+<h1 id="using-the-package-manager-gt.m">Using the Package Manager (GT.M)</h1>
 <p>If you are using Ubuntu Linux 14.04 LTS or later; or Debian Jessie, Testing, or Unstable; or other Linux distributions that may already have GT.M packages accessed using their normal package managers, you may be able to install GT.M using the package manager, e.g., as root/via sudo, <code>apt install fis-gtm</code>.</p>
-<h1 id="using-the-installation-script">Using the Installation Script</h1>
+<h1 id="using-the-installation-script-gt.m">Using the Installation Script (GT.M)</h1>
 <p>The installation script, gtminstall, is downloads and installs the current GT.M release. From <a href="http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer">http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer</a>, download the latest version of the GT.M installer (currently version 0.13) into a temporary directory, either using a browser, or a program such as wget, and execute it.</p>
 <p>Depending on your network configuration the wget command may need environment variables to be set to go through proxy servers, and the sudo command may require the -E option to pass your shell environment to root process invoked by the sudo.</p>
 <div class="code"><code>$ <strong>mkdir /tmp/tmp</strong>
@@ -34,7 +40,7 @@ total 12
 dr-xr-xr-x 5 root root 8192 Nov 13 10:57 V6.2-000_x86_64
 /tmp/tmp$ <strong>cd</strong>
 $</code></div>
-<h1 id="traditional-technique">Traditional Technique</h1>
+<h1 id="traditional-technique-gt.m">Traditional Technique (GT.M)</h1>
 <p>First download GT.M for 64-bit GNU/Linux on the x86_64 platform from Source Forge. These instructions are based on V6.2-000; you can use it or any more recent GT.M release. Download it to a temporary directory, e.g., /tmp, with the wget program:</p>
 <div class="code"><code>$ <strong>wget -P /tmp http://sourceforge.net/projects/fis-gtm/files/GT.M-amd64-Linux/V6.2-000/gtm_V62000_linux_x8664_pro.tar.gz</strong></code></div>
 <p>Then create a temporary directory and unpack the contents of the tarball into it. If you installed GT.M using the gtminstall technique, you should already have a /tmp/tmp directory.</p>
@@ -93,6 +99,6 @@ removed from this directory? (y or n) <strong>y</strong>
 /tmp/tmp$ cd
 /tmp/tmp$</code></div>
 <p>GT.M is now installed and operational.</p>
-<p>At this point, you are ready to continue to <a href="./InstallVistAOnGTM.html">Install VistA on GT.M</a>.</p>
+<p>At this point, you are ready to continue to <a href="./InstallVistAOnGTM.html">Install VistA on GT.M/YottaDB</a>.</p>
 </body>
 </html>
