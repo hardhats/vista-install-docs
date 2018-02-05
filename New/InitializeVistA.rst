@@ -9,11 +9,17 @@ License:
    :target: http://creativecommons.org/licenses/by/4.0/ 
 
 Attributions: Original instructions by Fil Beza and Nancy Anthracite; this set has been updated
-by Sam Habiel. Last updated in June 2017.
+by Sam Habiel. Last updated in February 2018.
 
 If you have reached this point, it means that you have finished `Install Cache
-<./InstallCache.html>`_; or `Install GT.M <./InstallGTM.html>`_ and `Install VistA on GT.M
+<./InstallCache.html>`_; or `Install GT.M/YottaDB <./InstallGTM.html>`_ and `Install VistA on GT.M/YottaDB
 <./InstallVistAOnGTM.html>`_.
+
+GT.M/YottaDB Note
+-----------------
+YottaDB is a fork of GT.M. In VistA, everything that says GT.M will work
+equally well for YottaDB. When running ``^ZTMGRSET`` or ``^DINIT``, choose
+GT.M on Unix for YottaDB.
 
 Getting into the Direct Mode (aka) Programmer Mode
 --------------------------------------------------
@@ -58,7 +64,7 @@ If you need to connect to a remote server first where your VistA is hosted, do t
 On Cache on Linux or Mac, you need to run ``ccontrol list`` to find your instance name, and then
 run ``csession <instance name>``.
 
-On GT.M, you need to source your environement file (if you followed this guide, it should be in
+On GT.M/YottaDB, you need to source your environement file (if you followed this guide, it should be in
 /var/db/<name> as env.vista). To source, type ``. /var/db/<name>/env.vista``. The dot is all
 by itself. Then type ``mumps -dir`` to go into direct mode.
 
@@ -82,16 +88,16 @@ If you are in Cache, you need to switch namespaces. (If you don't remember, type
     
     NAMESPACE// <strong>VISTA</strong></code></div>
 
-Note to GT.M Users
+Note to GT.M/YottaDB Users
 ------------------
 Due to the fact that Cache does not enforce the M standard as strictly, many illegal instructions
-have found themselves into VistA code. In addition, neither Cache nor GT.M is fully M95 standards
+have found themselves into VistA code. In addition, neither Cache nor GT.M/YottaDB is fully M95 standards
 compliant. As a result, there is always the game of making sure what we write supports both systems.
 For these reasons, the hardhats community maintains fixes for these routines
 and when possible sends the fixes back to the VA. In the future, the OSEHRA repositories
 will contain the fixes so that end users don't have to download the code and fix it themselves.
 
-The WorldVistA Distrubution of VistA is GT.M compatible; you don't need any fixes for it; but the
+The WorldVistA Distrubution of VistA is GT.M/YottaDB compatible; you don't need any fixes for it; but the
 below provides a lot more functionality.
 
 If you downloaded vxVistA or FOIA VistA, you need to copy the routines from this repository
@@ -148,7 +154,7 @@ You need to either invent or be given a few pieces of data:
 * What's your station number? If you use VISTA or RPMS deployed by VA, IHS, or an external vendor; they will assign you your station number. Otherwise, pick a number from 130 to 199; or 971 to 999. These numbers are not used by the VA in VistA. In this guide, we will use 999.
 * What's your domain name? If you have a domain, use it; otherwise, invent one like ``WWW.HABIEL.NAME``.
 * What's your parent domain? If you are not part of VA or IHS, you can use OSEHRA Forum: ``FORUM.OSEHRA.ORG``.
-* You need to know if you are running on Cache vs GT.M; and what operating system you are running on. If you followed this guide from the very beginning, you would certainly know; but day to day users of VistA have no idea actually what it is running on.
+* You need to know if you are running on Cache vs GT.M/YottaDB; and what operating system you are running on. If you followed this guide from the very beginning, you would certainly know; but day to day users of VistA have no idea actually what it is running on.
 * You need to decide what port number you will have VistA listen on for the RPC Broker. By convention, it's either 9000, 9200, or 9211.
 * What's the maximum number of processes that you will allow at once on a VistA system? Today (2016), commodity hardware (a good laptop, for example), can handle up to 200 concurrent processes. I usually set my test instances with a maximum of 30 processes, which is the number I use below.
 * What's your DNS Server? If you don't know, just use 8.8.8.8.
@@ -170,9 +176,9 @@ presents a console device called ``|TRM|``.
 VIRTUAL stands for all connections from Virtual Emulators. Unfortunately every different
 operating system provides a different console device:
 
-* Linux: ``/dev/pts`` (Use with both Cache and GT.M)
+* Linux: ``/dev/pts`` (Use with both Cache and GT.M/YottaDB)
 * macOS: ``/dev/ttys`` (ditto)
-* Cygwin: ``/dev/cons`` (GT.M)
+* Cygwin: ``/dev/cons`` (GT.M [no YottaDB port for Cygwin exists])
 * Cache Telnet: ``|TNT|`` (Cache/Windows ONLY)
 
 The way set up devices is to edit the DEVICE file in Fileman. Fileman is the Database 
@@ -245,7 +251,7 @@ for the system. All Unices have ``/dev/null``; Windows is ``//./nul``.
 
 CONSOLE Device
 **************
-If you use Cache on Windows or Linux; or GT.M, you should be *theoretically* set; however,
+If you use Cache on Windows or Linux; or GT.M/YottaDB, you should be *theoretically* set; however,
 the FOIA set-up is incomplete or overspecified. I would prefer to select an entry and make
 sure it's properly specified:
 
@@ -330,7 +336,7 @@ You need to select it and change the settings as follows:
 * LOCATION OF TERMINAL = Host File Server
 * ASK HOST FILE = YES
 * ASK HFS I/O OPERATION = @ (Delete it)
-* OPEN PARAMETERS: "WNS" for Cache, (newversion) for GT.M (note quotes on Cache and their absence on GT.M)
+* OPEN PARAMETERS: "WNS" for Cache, (newversion) for GT.M/YottaDB (note quotes on Cache and their absence on GT.M/YottaDB)
 * SUBYTPE: P-HFS/80/99999
 * TYPE: HOST FILE SERVER
 
@@ -339,7 +345,7 @@ ZTMGRSET
 The routine ZTMGRSET defines VistA global variables and saves system wide M 
 routines that are M and OS specific. We need to kill ^%ZOSF to make sure we don't have
 old answers here; and sometimes having ^%ZOSF when you have just switched M implementations
-causes a catch 22 problem. The text scrape below is for GT.M; Cache follows.
+causes a catch 22 problem. The text scrape below is for GT.M/YottaDB; Cache follows.
 
 .. raw:: html
     
@@ -419,7 +425,7 @@ On Cache, you will see different prompts.
 Fileman
 -------
 
-Initialize Fileman to set your domain name and number and Operating System (GT.M shown below).
+Initialize Fileman to set your domain name and number and Operating System (GT.M/YottaDB shown below).
 
 .. raw:: html
     
@@ -501,7 +507,7 @@ Initialize Fileman to set your domain name and number and Operating System (GT.M
 ZUSET
 -----
 Also run D ^ZUSET to choose the correct version of ZU, the key login routine 
-for the roll and scroll portions of VistA (GT.M shown).
+for the roll and scroll portions of VistA (GT.M/YottaDB shown).
 
 .. raw:: html
     
@@ -554,7 +560,7 @@ First we add the entry to the ``DOMAIN`` file through Fileman.
       NETWORK ADDRESS (MAILMAN HOST): <strong>FORUM.OSEHRA.ORG</strong>
       OUT OF SERVICE: <strong>&lt;enter&gt;</strong>
       TEXT:
-      (on GT.M)
+      (on GT.M/YottaDB)
       1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/GTM</strong>
       2><strong>C TCPCHAN-SOCKET25/GTM</strong>
       3><strong>&lt;enter&gt;</strong>
@@ -585,7 +591,7 @@ First we add the entry to the ``DOMAIN`` file through Fileman.
       NETWORK ADDRESS (MAILMAN HOST): <strong>FORUM.OSEHRA.ORG</strong>
       OUT OF SERVICE: <strong>&lt;enter&gt;</strong>
       TEXT:
-      (on GT.M)
+      (on GT.M/YottaDB)
       1><strong>O H="FORUM.OSEHRA.ORG",P=TCP/GTM</strong>
       2><strong>C TCPCHAN-SOCKET25/GTM</strong>
       3><strong>&lt;enter&gt;</strong>
@@ -707,7 +713,7 @@ look something like (Cache):
     
     <div class="code"><code>VISTA^VISTA^palaven^VISTA:CACHE</code></div>
 
-or (GT.M)
+or (GT.M/YottaDB)
 
 .. raw:: html
 
@@ -721,7 +727,7 @@ The fourth piece, the VOLUME:BOX pair, is referred to as the "BOX VOLUME pair".
 The first component of the Box Volume pair is the Volume Set, which is used to
 determine where the VistA system will be able to find the routines. The second
 component Box, which references the system that the instance is on. In a Caché
-system, it would be the name of the Caché instance while on GT.M, it should
+system, it would be the name of the Caché instance while on GT.M/YottaDB, it should
 reference the hostname of the machine.
 
 The Volume Set result needs to be altered in the ``VOLUME SET`` file,
@@ -1082,7 +1088,7 @@ You should see this (press enter several times to update the screen; it should t
     Checking Sub-Managers:
          On node ROU:Macintosh there is  1 free Sub-Manager(s). Status: Run</code></div>
 
-On CACHE, you can run ``D THIS^%SS`` to find out what started; on GT.M, you should have a ZSY which does the same thing. If ZSY isn't present on your instance, you can do something similar to this until you find a ZSY:
+On CACHE, you can run ``D THIS^%SS`` to find out what started; on GT.M/YottaDB, you should have a ZSY which does the same thing. If ZSY isn't present on your instance, you can do something similar to this until you find a ZSY:
 
 Cache:
 
@@ -1117,7 +1123,7 @@ Cache:
        85441  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser</code></div>
 
 
-GT.M:
+GT.M/YottaDB:
 
 ``DO ^ZSY``.
 
@@ -1144,7 +1150,7 @@ GT.M:
 
     Total 5 users.</code></div>
 
-If you don't have ^ZSY on GT.M, try this: it does what ZSY does:
+If you don't have ^ZSY on GT.M/YottaDB, try this: it does what ZSY does:
 
 .. raw:: html
 
@@ -2199,8 +2205,8 @@ Registering your First Patient
 ------------------------------
 Let's register a patient. Login using the CPRS User we just set-up.
 
-    NB: On GT.M, patient registration will crash, as it tries to use Cache Specific Code.
-    If you want to register the patient on GT.M, change entry point PATIENT^MPIFXMLP to
+    NB: On GT.M/YottaDB, patient registration will crash, as it tries to use Cache Specific Code.
+    If you want to register the patient on GT.M/YottaDB, change entry point PATIENT^MPIFXMLP to
     ZPATIENT; and change line 25 of DGRPD, to remove the errant space:
     
     ``N DGSKIP S DGSKIP=$S(DGFORGN:"!,?42,""From/To: """,1:"?42, ""From/To: """)``
@@ -2209,7 +2215,7 @@ Let's register a patient. Login using the CPRS User we just set-up.
 
     ``N DGSKIP S DGSKIP=$S(DGFORGN:"!,?42,""From/To: """,1:"?42,""From/To: """)``
 
-    Make sure to exit GT.M using HALT or Ctrl-D so that the changes will "take".
+    Make sure to exit GT.M/YottaDB using HALT or Ctrl-D so that the changes will "take".
     (There are smarter ways of doing this, but this is the easiest for beginners.)
     
 
