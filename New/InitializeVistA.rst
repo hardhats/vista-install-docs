@@ -8,65 +8,40 @@ License:
 .. image:: https://i.creativecommons.org/l/by/4.0/80x15.png 
    :target: http://creativecommons.org/licenses/by/4.0/ 
 
-Attributions: Original instructions by Fil Beza and Nancy Anthracite; this set has been updated
-by Sam Habiel. Last updated in February 2018.
+Attributions: Original instructions by Fil Beza and Nancy Anthracite; this set has been updated by Sam Habiel. Last updated in February 2018.
 
-If you have reached this point, it means that you have finished `Install Cache
-<./InstallCache.html>`_; or `Install GT.M/YottaDB <./InstallGTM.html>`_ and `Install VistA on GT.M/YottaDB
-<./InstallVistAOnGTM.html>`_.
+If you have reached this point, it means that you have finished `Install Cache <./InstallCache.html>`_; or `Install GT.M/YottaDB <./InstallGTM.html>`_ and `Install VistA on GT.M/YottaDB <./InstallVistAOnGTM.html>`_.
 
 GT.M/YottaDB Note
 -----------------
-YottaDB is a fork of GT.M. In VistA, everything that says GT.M will work
-equally well for YottaDB. When running ``^ZTMGRSET`` or ``^DINIT``, choose
-GT.M on Unix for YottaDB.
+YottaDB is a fork of GT.M. In VistA, everything that says GT.M will work equally well for YottaDB. When running ``^ZTMGRSET`` or ``^DINIT``, choose GT.M on Unix for YottaDB.
 
-Getting into the Direct Mode (aka) Programmer Mode
+Getting into the Direct Mode (AKA Programmer Mode)
 --------------------------------------------------
-Before there were `REPLs <https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop>`_,
-Mumps always has had something called Direct Mode, which is a simplified REPL. It's also
-known as Programmer Mode. Normally, end users are not allowed to access Programmer Mode, as
-it is essentially like running as root on a Unix System.
+Before there were `REPLs <https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop>`_, Mumps always has had something called Direct Mode, also known as Programmer Mode, which is a simplified REPL. Normally, end users are not allowed to access Programmer Mode as it is essentially like running as root on a Unix System.
 
-To connect to VISTA and start configuring it, you need a terminal emulator. Make sure that
-your terminal emulator emulates VT-100, VT-220, VT-320 or VT-52. By default, most terminal emulators
-do that already. You specifically cannot use the rxvt terminal emulator though.
+To connect to VISTA and start configuring it, you need a terminal emulator that emulates VT-100, VT-220, VT-320 or VT-52. By default, most terminal emulators do that already, but you cannot use the rxvt terminal emulator.
 
-If you modified your $TERM, you need to make sure it's either ``xterm`` or ``ansi``. Others generally
-will work, but I am sure of these two.
+If you modified your $TERM, you need to make sure it's either ``xterm`` or ``ansi``. Others generally will work, but I am sure of these two.
 
-To get into Direct Mode using Cache, on Windows you need to right click on the Cache Cube and
-choose Terminal. If you have a licensed version of Cache, you can also use Telnet to connect
-to the Terminal. Please note that while you can use Windows Telnet, it does not emulate VT-200
-series terminals properly, so you may have some issues. If you want to use Telnet, I recommend downloading
-PuTTY or TeraTerm. 
+To get into Direct Mode using Cache, on Windows you need to right click on the Cache Cube and choose Terminal. If you have a licensed version of Cache, you can also use Telnet to connect to the Terminal. Please note that Windows Telnet does not emulate VT-200 series terminals properly, so you may have some issues with it. If you want to use Telnet, I recommend downloading PuTTY (http://www.chiark.greenend.org.uk/~sgtatham/putty/) or TeraTerm (https://ttssh2.osdn.jp/index.html.en).
 
-PuTTY: http://www.chiark.greenend.org.uk/~sgtatham/putty/.
+If you use PuTTY, change the function key bindings so that they behave like VT-100+. See here: https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys.
 
-TeraTerm: https://ttssh2.osdn.jp/index.html.en.
+On a Mac, Terminal is a fully featured terminal emulator. You may wish to use System Preferences to configure the function keys to send Function commands, rather than dimming your screen or muting your volume. Otherwise, you have to use FN all the time to override the function keys (https://support.apple.com/en-us/HT204436).
 
-If you use PuTTY, change the function key bindings so that they behave like
-VT-100+. See here: https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys.
+On Linux, you can use any Terminal Emulator program with the exception of rxvt. You can actually even use PuTTY on Linux, but F1 may be bound to do help. You need to unmap that in the Terminal application (http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal).
 
-On a Mac, Terminal is a fully featured terminal emulator. You may wish to tell it via System Preferences that you want your function keys to send Function commands, rather than dimming your screen or muting your volume. Otherwise, you have to use FN all the time to override the function keys (https://support.apple.com/en-us/HT204436).
-
-On Linux, you can use any Terminal Emulator program, with the exception of rxvt. You can actually even use PuTTY on Linux.
-F1 may be bound to do help. You need to unmap that in the Terminal application. 
-(http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal).
-
-If a VistA system was installed by you or somebody else on the "Cloud", almost certainly you will need to use SSH (Secure Shell) to log-in.  If you use Telnet, there are some existential questions you have to ask yourself. SSH is a protocol written in the mid-90's to replace Telnet. It's the standard of connecting to other computers on the Cloud. Nobody can see the traffic inside of SSH; where as Telnet is just plain text.  The ssh client comes installed by default in all Unices; on
+If a VistA system was installed by you or somebody else in the "Cloud", you will almost certainly need to use Secure Shell (SSH) to log in.  If you use Telnet, there are some existential questions you have to ask yourself. SSH is a protocol written in the mid-90s to replace Telnet. It's the standard of connecting to other computers on the Cloud. Nobody can see the traffic inside of SSH, whereas Telnet is just plain text.  The ssh client comes installed by default in all Unices; on
 Windows, you can use PuTTY or TeraTerm.
 
 After you open your terminal emulator, do the following:
 
-If you need to connect to a remote server first where your VistA is hosted, do that first.
+If your VistA is hosted on a remote server, connect to that first.
 
-On Cache on Linux or Mac, you need to run ``ccontrol list`` to find your instance name, and then
-run ``csession <instance name>``.
+On Cache on Linux or Mac, you need to run ``ccontrol list`` to find your instance name, and then run ``csession <instance name>``.
 
-On GT.M/YottaDB, you need to source your environement file (if you followed this guide, it should be in
-/var/db/<name> as env.vista). To source, type ``. /var/db/<name>/env.vista``. The dot is all
-by itself. Then type ``mumps -dir`` to go into direct mode.
+On GT.M/YottaDB, you need to source your environment file. If you followed this guide, it should be in /var/db/<name> as env.vista. To source, type ``. /var/db/<name>/env.vista`` (The dot is all by itself, followed by a space). Then type ``mumps -dir`` to go into direct mode.
 
 You will see something like this:
 
@@ -89,19 +64,12 @@ If you are in Cache, you need to switch namespaces. (If you don't remember, type
     NAMESPACE// <strong>VISTA</strong></code></div>
 
 Note to GT.M/YottaDB Users
-------------------
-Due to the fact that Cache does not enforce the M standard as strictly, many illegal instructions
-have found themselves into VistA code. In addition, neither Cache nor GT.M/YottaDB is fully M95 standards
-compliant. As a result, there is always the game of making sure what we write supports both systems.
-For these reasons, the hardhats community maintains fixes for these routines
-and when possible sends the fixes back to the VA. In the future, the OSEHRA repositories
-will contain the fixes so that end users don't have to download the code and fix it themselves.
+--------------------------
+Due to the fact that Cache does not enforce the M standard as strictly, many illegal instructions have been incorporated into VistA code. In addition, neither Cache nor GT.M/YottaDB is fully M95 standards compliant. As a result, ensuring that new code supports both systems is something of a game. For these reasons, the hardhats community maintains fixes for these routines and, when possible, sends the fixes back to the VA. In the future, the OSEHRA repositories will contain the fixes so that end users don't have to download the code and fix it themselves.
 
-The WorldVistA Distrubution of VistA is GT.M/YottaDB compatible; you don't need any fixes for it; but the
-below provides a lot more functionality.
+The WorldVistA distribution of VistA is GT.M/YottaDB compatible; you don't need any fixes for it, but the following provides a lot more functionality.
 
-If you downloaded vxVistA or FOIA VistA, you need to copy the routines from this repository
-to your routines directory: https://github.com/shabiel/Kernel-GTM. Here's how to do it:
+If you downloaded vxVistA or FOIA VistA, you need to copy the routines from this repository to your routines directory: https://github.com/shabiel/Kernel-GTM. Here's how to do it:
 
 .. code-block:: bash
 
@@ -110,12 +78,11 @@ to your routines directory: https://github.com/shabiel/Kernel-GTM. Here's how to
 
 Note to Cache Users
 -------------------
-The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA but don't try to run the RPC broker. A "friend" wasted so much of my time because he had an evaluation version and couldn't start the RPC broker. You may need to restart Cache repeatedly as it sometimes "forgets" that you logged off.
+The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA, but don't try to run the RPC broker. A "friend" wasted a lot of my time because he had an evaluation version and couldn't start the RPC broker. You may also need to restart Cache repeatedly, as it sometimes "forgets" that you logged off.
 
 Commands and what they mean (a short M primer)
 ----------------------------------------------
-In the excerpts below, you will enter Mumps (M) commands into direct mode. Here are a few
-interesting ones:
+In the excerpts below, you will enter Mumps (M) commands into direct mode. Here are a few interesting ones:
 
 .. code-block:: M
 
@@ -132,10 +99,11 @@ VistA Text Mode Conventions
 There are a few confusing conventions that outsiders don't understand right away. Here they are:
 
 * ``//`` means that the preceding text is the default. If you press enter, you will accept it.
-* ``Replace`` means that the existing text is long and you can edit it. Typing ``...`` means that you will replace the entire thing; ``END`` appends to the end. You can also use ``...`` to signify a range between two elements in the existing text. You can also enter a unique segment of the text, press enter, and at the with prompt put in what you want to replace that bit of text with. If you don't type anything in, it deletes that part of the text.
+* ``Replace`` means that the existing text is long and you can edit it. Typing ``...`` means that you will replace the entire thing;
+* ``END`` appends to the end. You can also use ``...`` to signify a range between two elements in the existing text. You can also enter a unique segment of the text, press enter, and at the with prompt put in what you want to replace that bit of text with. If you don't type anything in, it deletes that part of the text.
 * ``@`` deletes an item.
 * ``^`` usually lets you quit what you are in the middle of.
-* ``^FIELD NAME`` lets you jump to a field while editing other fields. You may be blocked depending on what the programmer decides you are allowed to do.
+* ``^FIELD NAME`` lets you jump to a field while editing other fields. You may be blocked, depending on what the programmer decided to allow.
 * ``?`` Short Help. Typically it tells you that you need to type a number or text.
 * ``??`` More Help. Should tell you what the field you are filling does. In the menu system, show all menus with what security keys they need.
 * ``???`` In the menu system, display help for each immediate submenu.
