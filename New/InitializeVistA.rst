@@ -8,65 +8,40 @@ License:
 .. image:: https://i.creativecommons.org/l/by/4.0/80x15.png 
    :target: http://creativecommons.org/licenses/by/4.0/ 
 
-Attributions: Original instructions by Fil Beza and Nancy Anthracite; this set has been updated
-by Sam Habiel. Last updated in February 2018.
+Attributions: Original instructions by Fil Beza and Nancy Anthracite; this set has been updated by Sam Habiel. Last updated in February 2018.
 
-If you have reached this point, it means that you have finished `Install Cache
-<./InstallCache.html>`_; or `Install GT.M/YottaDB <./InstallGTM.html>`_ and `Install VistA on GT.M/YottaDB
-<./InstallVistAOnGTM.html>`_.
+If you have reached this point, it means that you have finished `Install Cache <./InstallCache.html>`_; or `Install GT.M/YottaDB <./InstallGTM.html>`_ and `Install VistA on GT.M/YottaDB <./InstallVistAOnGTM.html>`_.
 
 GT.M/YottaDB Note
 -----------------
-YottaDB is a fork of GT.M. In VistA, everything that says GT.M will work
-equally well for YottaDB. When running ``^ZTMGRSET`` or ``^DINIT``, choose
-GT.M on Unix for YottaDB.
+YottaDB is a fork of GT.M. In VistA, everything that says GT.M will work equally well for YottaDB. When running ``^ZTMGRSET`` or ``^DINIT``, choose GT.M on Unix for YottaDB.
 
-Getting into the Direct Mode (aka) Programmer Mode
+Getting into the Direct Mode (AKA Programmer Mode)
 --------------------------------------------------
-Before there were `REPLs <https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop>`_,
-Mumps always has had something called Direct Mode, which is a simplified REPL. It's also
-known as Programmer Mode. Normally, end users are not allowed to access Programmer Mode, as
-it is essentially like running as root on a Unix System.
+Before there were `REPLs <https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop>`_, Mumps always has had something called Direct Mode, also known as Programmer Mode, which is a simplified REPL. Normally, end users are not allowed to access Programmer Mode as it is essentially like running as root on a Unix System.
 
-To connect to VISTA and start configuring it, you need a terminal emulator. Make sure that
-your terminal emulator emulates VT-100, VT-220, VT-320 or VT-52. By default, most terminal emulators
-do that already. You specifically cannot use the rxvt terminal emulator though.
+To connect to VISTA and start configuring it, you need a terminal emulator that emulates VT-100, VT-220, VT-320 or VT-52. By default, most terminal emulators do that already, but you cannot use the rxvt terminal emulator.
 
-If you modified your $TERM, you need to make sure it's either ``xterm`` or ``ansi``. Others generally
-will work, but I am sure of these two.
+If you modified your $TERM, you need to make sure it's either ``xterm`` or ``ansi``. Others generally will work, but I am sure of these two.
 
-To get into Direct Mode using Cache, on Windows you need to right click on the Cache Cube and
-choose Terminal. If you have a licensed version of Cache, you can also use Telnet to connect
-to the Terminal. Please note that while you can use Windows Telnet, it does not emulate VT-200
-series terminals properly, so you may have some issues. If you want to use Telnet, I recommend downloading
-PuTTY or TeraTerm. 
+To get into Direct Mode using Cache, on Windows you need to right click on the Cache Cube and choose Terminal. If you have a licensed version of Cache, you can also use Telnet to connect to the Terminal. Please note that Windows Telnet does not emulate VT-200 series terminals properly, so you may have some issues with it. If you want to use Telnet, I recommend downloading PuTTY (http://www.chiark.greenend.org.uk/~sgtatham/putty/) or TeraTerm (https://ttssh2.osdn.jp/index.html.en).
 
-PuTTY: http://www.chiark.greenend.org.uk/~sgtatham/putty/.
+If you use PuTTY, change the function key bindings so that they behave like VT-100+. See here: https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys.
 
-TeraTerm: https://ttssh2.osdn.jp/index.html.en.
+On a Mac, Terminal is a fully featured terminal emulator. You may wish to use System Preferences to configure the function keys to send Function commands, rather than dimming your screen or muting your volume. Otherwise, you have to use FN all the time to override the function keys (https://support.apple.com/en-us/HT204436).
 
-If you use PuTTY, change the function key bindings so that they behave like
-VT-100+. See here: https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys.
+On Linux, you can use any Terminal Emulator program with the exception of rxvt. You can actually even use PuTTY on Linux, but F1 may be bound to do help. You need to unmap that in the Terminal application (http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal).
 
-On a Mac, Terminal is a fully featured terminal emulator. You may wish to tell it via System Preferences that you want your function keys to send Function commands, rather than dimming your screen or muting your volume. Otherwise, you have to use FN all the time to override the function keys (https://support.apple.com/en-us/HT204436).
-
-On Linux, you can use any Terminal Emulator program, with the exception of rxvt. You can actually even use PuTTY on Linux.
-F1 may be bound to do help. You need to unmap that in the Terminal application. 
-(http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal).
-
-If a VistA system was installed by you or somebody else on the "Cloud", almost certainly you will need to use SSH (Secure Shell) to log-in.  If you use Telnet, there are some existential questions you have to ask yourself. SSH is a protocol written in the mid-90's to replace Telnet. It's the standard of connecting to other computers on the Cloud. Nobody can see the traffic inside of SSH; where as Telnet is just plain text.  The ssh client comes installed by default in all Unices; on
+If a VistA system was installed by you or somebody else in the "Cloud", you will almost certainly need to use Secure Shell (SSH) to log in.  If you use Telnet, there are some existential questions you have to ask yourself. SSH is a protocol written in the mid-90s to replace Telnet. It's the standard of connecting to other computers on the Cloud. Nobody can see the traffic inside of SSH, whereas Telnet is just plain text.  The ssh client comes installed by default in all Unices; on
 Windows, you can use PuTTY or TeraTerm.
 
 After you open your terminal emulator, do the following:
 
-If you need to connect to a remote server first where your VistA is hosted, do that first.
+If your VistA is hosted on a remote server, connect to that first.
 
-On Cache on Linux or Mac, you need to run ``ccontrol list`` to find your instance name, and then
-run ``csession <instance name>``.
+On Cache on Linux or Mac, you need to run ``ccontrol list`` to find your instance name, and then run ``csession <instance name>``.
 
-On GT.M/YottaDB, you need to source your environement file (if you followed this guide, it should be in
-/var/db/<name> as env.vista). To source, type ``. /var/db/<name>/env.vista``. The dot is all
-by itself. Then type ``mumps -dir`` to go into direct mode.
+On GT.M/YottaDB, you need to source your environment file. If you followed this guide, it should be in /var/db/<name> as env.vista. To source, type ``. /var/db/<name>/env.vista`` (The dot is all by itself, followed by a space). Then type ``mumps -dir`` to go into direct mode.
 
 You will see something like this:
 
@@ -89,19 +64,12 @@ If you are in Cache, you need to switch namespaces. (If you don't remember, type
     NAMESPACE// <strong>VISTA</strong></code></div>
 
 Note to GT.M/YottaDB Users
-------------------
-Due to the fact that Cache does not enforce the M standard as strictly, many illegal instructions
-have found themselves into VistA code. In addition, neither Cache nor GT.M/YottaDB is fully M95 standards
-compliant. As a result, there is always the game of making sure what we write supports both systems.
-For these reasons, the hardhats community maintains fixes for these routines
-and when possible sends the fixes back to the VA. In the future, the OSEHRA repositories
-will contain the fixes so that end users don't have to download the code and fix it themselves.
+--------------------------
+Due to the fact that Cache does not enforce the M standard as strictly, many illegal instructions have been incorporated into VistA code. In addition, neither Cache nor GT.M/YottaDB is fully M95 standards compliant. As a result, ensuring that new code supports both systems is something of a game. For these reasons, the hardhats community maintains fixes for these routines and, when possible, sends the fixes back to the VA. In the future, the OSEHRA repositories will contain the fixes so that end users don't have to download the code and fix it themselves.
 
-The WorldVistA Distrubution of VistA is GT.M/YottaDB compatible; you don't need any fixes for it; but the
-below provides a lot more functionality.
+The WorldVistA distribution of VistA is GT.M/YottaDB compatible; you don't need any fixes for it, but the following provides a lot more functionality.
 
-If you downloaded vxVistA or FOIA VistA, you need to copy the routines from this repository
-to your routines directory: https://github.com/shabiel/Kernel-GTM. Here's how to do it:
+If you downloaded vxVistA or FOIA VistA, you need to copy the routines from this repository to your routines directory: https://github.com/shabiel/Kernel-GTM. Here's how to do it:
 
 .. code-block:: bash
 
@@ -110,12 +78,11 @@ to your routines directory: https://github.com/shabiel/Kernel-GTM. Here's how to
 
 Note to Cache Users
 -------------------
-The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA but don't try to run the RPC broker. A "friend" wasted so much of my time because he had an evaluation version and couldn't start the RPC broker. You may need to restart Cache repeatedly as it sometimes "forgets" that you logged off.
+The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA, but don't try to run the RPC broker. A "friend" wasted a lot of my time because he had an evaluation version and couldn't start the RPC broker. You may also need to restart Cache repeatedly, as it sometimes "forgets" that you logged off.
 
 Commands and what they mean (a short M primer)
 ----------------------------------------------
-In the excerpts below, you will enter Mumps (M) commands into direct mode. Here are a few
-interesting ones:
+In the excerpts below, you will enter Mumps (M) commands into direct mode. Here are a few interesting ones:
 
 .. code-block:: M
 
@@ -132,10 +99,11 @@ VistA Text Mode Conventions
 There are a few confusing conventions that outsiders don't understand right away. Here they are:
 
 * ``//`` means that the preceding text is the default. If you press enter, you will accept it.
-* ``Replace`` means that the existing text is long and you can edit it. Typing ``...`` means that you will replace the entire thing; ``END`` appends to the end. You can also use ``...`` to signify a range between two elements in the existing text. You can also enter a unique segment of the text, press enter, and at the with prompt put in what you want to replace that bit of text with. If you don't type anything in, it deletes that part of the text.
+* ``Replace`` means that the existing text is long and you can edit it. Typing ``...`` means that you will replace the entire thing;
+* ``END`` appends to the end. You can also use ``...`` to signify a range between two elements in the existing text. You can also enter a unique segment of the text, press enter, and at the with prompt put in what you want to replace that bit of text with. If you don't type anything in, it deletes that part of the text.
 * ``@`` deletes an item.
 * ``^`` usually lets you quit what you are in the middle of.
-* ``^FIELD NAME`` lets you jump to a field while editing other fields. You may be blocked depending on what the programmer decides you are allowed to do.
+* ``^FIELD NAME`` lets you jump to a field while editing other fields. You may be blocked, depending on what the programmer decided to allow.
 * ``?`` Short Help. Typically it tells you that you need to type a number or text.
 * ``??`` More Help. Should tell you what the field you are filling does. In the menu system, show all menus with what security keys they need.
 * ``???`` In the menu system, display help for each immediate submenu.
@@ -154,8 +122,8 @@ You need to either invent or be given a few pieces of data:
 * What's your station number? If you use VISTA or RPMS deployed by VA, IHS, or an external vendor; they will assign you your station number. Otherwise, pick a number from 130 to 199; or 971 to 999. These numbers are not used by the VA in VistA. In this guide, we will use 999.
 * What's your domain name? If you have a domain, use it; otherwise, invent one like ``WWW.HABIEL.NAME``.
 * What's your parent domain? If you are not part of VA or IHS, you can use OSEHRA Forum: ``FORUM.OSEHRA.ORG``.
-* You need to know if you are running on Cache vs GT.M/YottaDB; and what operating system you are running on. If you followed this guide from the very beginning, you would certainly know; but day to day users of VistA have no idea actually what it is running on.
-* You need to decide what port number you will have VistA listen on for the RPC Broker. By convention, it's either 9000, 9200, or 9211.
+* Are you running on Cache vs GT.M/YottaDB; and what operating system you are running on? If you followed this guide from the very beginning, you would certainly know; but day to day users of VistA have no idea actually what it is running on.
+* What port number will you have VistA listen on for the RPC Broker? By convention, it's either 9000, 9200, or 9211.
 * What's the maximum number of processes that you will allow at once on a VistA system? Today (2016), commodity hardware (a good laptop, for example), can handle up to 200 concurrent processes. I usually set my test instances with a maximum of 30 processes, which is the number I use below.
 * What's your DNS Server? If you don't know, just use 8.8.8.8.
 
@@ -163,35 +131,22 @@ Some of the configuration items below are taken from a system that may have had 
 
 Device Configuration
 --------------------
-The very first thing we want to do is to set-up 4 devices: NULL, CONSOLE, VIRTUAL, and HFS.
-(known historically as TELNET due to what often accessed it). The NULL device corresponds
-to a place where we dump data we don't want; that's ``/dev/null`` on all Unices; ``//./nul``
-on Windows. The NULL device is also known as the "BIT BUCKET", for obvious reasons.
+The very first thing we want to do is to set-up 4 devices: NULL, CONSOLE, VIRTUAL, and HFS (historically known as TELNET, due to usual access assignments). The NULL device corresponds to a place where we dump data we don't want; that's ``/dev/null`` on all Unices; ``//./nul`` on Windows. The NULL device is also known as the "BIT BUCKET", for obvious reasons.
 
-CONSOLE stands for the device the terminal presents itself as if directly connected to
-a computer. These days, no computer has real console devices. 
-Linux still has an emulated console device: ``/dev/tty``. Cache Terminal
-presents a console device called ``|TRM|``.
+CONSOLE stands for the device the terminal presents itself as if directly connected to a computer. These days, no computer has real console devices. Linux still has an emulated console device: ``/dev/tty``. Cache Terminal presents a console device called ``|TRM|``.
 
-VIRTUAL stands for all connections from Virtual Emulators. Unfortunately every different
-operating system provides a different console device:
+VIRTUAL stands for all connections from Virtual Emulators. Unfortunately every different operating system provides a different console device:
 
 * Linux: ``/dev/pts`` (Use with both Cache and GT.M/YottaDB)
 * macOS: ``/dev/ttys`` (ditto)
 * Cygwin: ``/dev/cons`` (GT.M [no YottaDB port for Cygwin exists])
 * Cache Telnet: ``|TNT|`` (Cache/Windows ONLY)
 
-The way set up devices is to edit the DEVICE file in Fileman. Fileman is the Database 
-Management System for VistA; unlike most databases in the market, it provides a user
-interface as well, albeit a text-based one.
-
-To get into Fileman, you need to set your user (DUZ) to .5, and then go in.
+The way set up devices is to edit the DEVICE file in Fileman, the Database Management System for VistA. Unlike most databases in the market, it provides a user interface as well, albeit a text-based one. To get into Fileman, you need to set your user (DUZ) to .5, and then go in.
 
 NULL Device
 ***********
-There should only be one device named "NULL". Unfortunately, there are three NULLs of
-various flavors in the FOIA; we need to make sure there is only one. Follow the following.
-We rename the nulls we don't want, and we delete a synonym.
+There should only be one device named "NULL". Unfortunately, there are three NULLs of various flavors in the FOIA; we need to make sure there is only one. The following procedure allows you to rename the nulls we don't want, and then delete a synonym.
 
 
 .. raw:: html
@@ -234,8 +189,7 @@ We rename the nulls we don't want, and we delete a synonym.
     
     Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
 
-At this point, we need to make sure that $I (short for $IO) for the device is correct
-for the system. All Unices have ``/dev/null``; Windows is ``//./nul``.
+At this point, we need to make sure that $I (short for $IO) for the device is correct for the system. All Unices have ``/dev/null``; Windows is ``//./nul``.
 
 .. raw:: html
 
@@ -251,11 +205,9 @@ for the system. All Unices have ``/dev/null``; Windows is ``//./nul``.
 
 CONSOLE Device
 **************
-If you use Cache on Windows or Linux; or GT.M/YottaDB, you should be *theoretically* set; however,
-the FOIA set-up is incomplete or overspecified. I would prefer to select an entry and make
-sure it's properly specified:
+If you use Cache on Windows or Linux; or GT.M/YottaDB, you should be set *theoretically*. However, the FOIA set-up is incomplete or overspecified. I would prefer to select an entry and make sure it's properly specified:
 
-You need to fill these fields as follows; and no others:
+You need to fill these fields *and no others*, as follows:
 
 * NAME = CONSOLE
 * $I = /dev/tty on Linux; |TRM| on Cache/Windows.
@@ -302,8 +254,7 @@ Here's an example:
 
 VIRTUAL Device
 **************
-The FOIA only comes with Linux Virtual Terminal. As before, here's what you need
-to fill it out. 
+The FOIA only comes with Linux Virtual Terminal. As before, here's what you need to fill it out. 
 
 * NAME = VIRTUAL TERMINAL
 * $I = /dev/pts on Linux; /dev/ttys on macOS; /dev/cons on Cygwin; |TNT| on Cache/Windows.
@@ -314,9 +265,7 @@ to fill it out.
 
 HFS Device
 **********
-The HFS device is necessary because KIDS (the installation system used by VISTA) uses it
-to open files on the operating system. (Technically, it only uses the Open Parameters field.)
-The one that comes in FOIA looks like this:
+The HFS device is necessary because KIDS (the installation system used by VISTA) uses it to open files on the operating system. (Technically, it only uses the Open Parameters field.) The one that comes in FOIA looks like this:
 
 .. code-block::
 
@@ -342,10 +291,7 @@ You need to select it and change the settings as follows:
 
 ZTMGRSET
 --------
-The routine ZTMGRSET defines VistA global variables and saves system wide M 
-routines that are M and OS specific. We need to kill ^%ZOSF to make sure we don't have
-old answers here; and sometimes having ^%ZOSF when you have just switched M implementations
-causes a catch 22 problem. The text scrape below is for GT.M/YottaDB; Cache follows.
+The routine ZTMGRSET defines VistA global variables and saves system wide M routines that are M and OS specific. We need to kill ^%ZOSF to make sure we don't have old answers here; and sometimes having ^%ZOSF when you have just switched M implementations causes a catch 22 problem. The text scrape below is for GT.M/YottaDB; the one for Cache follows it.
 
 .. raw:: html
     
@@ -506,8 +452,7 @@ Initialize Fileman to set your domain name and number and Operating System (GT.M
 
 ZUSET
 -----
-Also run D ^ZUSET to choose the correct version of ZU, the key login routine 
-for the roll and scroll portions of VistA (GT.M/YottaDB shown).
+Also run D ^ZUSET to choose the correct version of ZU, the key login routine for the roll and scroll portions of VistA (GT.M/YottaDB shown).
 
 .. raw:: html
     
@@ -520,11 +465,7 @@ for the roll and scroll portions of VistA (GT.M/YottaDB shown).
 
 Instance Domain, Parent Domain, and Q-PATCH domain
 --------------------------------------------------
-Next, a domain should be set up for the VistA instance.  A domain name is
-typically used to uniquely identify an instance on a network.  The parent domain
-is the domain responsible for routing your traffic to the outside world. The
-Q-PATCH domain is only necessary for developers wishing to use OSEHRA Forum. 
-First we add the entry to the ``DOMAIN`` file through Fileman.
+Next, a domain should be set up for the VistA instance.  A domain name is typically used to uniquely identify an instance on a network.  The parent domain is the domain responsible for routing your traffic to the outside world. The Q-PATCH domain is only necessary for developers wishing to use OSEHRA Forum. First we add the entry to the ``DOMAIN`` file through Fileman.
 
 .. raw:: html
     
@@ -610,8 +551,7 @@ First we add the entry to the ``DOMAIN`` file through Fileman.
     Select OPTION: <strong>&lt;enter&gt;</strong>
     ></code></div>
 
-The next step is to find the IEN of the instance domain. This can be done
-by inquiring about the entry using Fileman and printing the Record Number:
+The next step is to find the IEN of the instance domain. This can be done by inquiring about the entry using Fileman and printing the Record Number:
 
 .. raw:: html
     
@@ -635,9 +575,7 @@ by inquiring about the entry using Fileman and printing the Record Number:
     ></code></div>
 
 
-Then we propagate that entry to the ``Kernel System Parameters`` and
-``RPC Broker Site Parameters`` files.  The value that is being set should
-be the same as the ``NUMBER`` value from the above result.
+Then we propagate that entry to the ``Kernel System Parameters`` and ``RPC Broker Site Parameters`` files. The value that is being set should be the same as the ``NUMBER`` value from the above result.
 
 .. raw:: html
     
@@ -697,8 +635,7 @@ System is christened using menu option XMCHIRS with FORUM.OSEHRA.ORG as the pare
 
 Set-up Taskman
 --------------
-Taskman is the VistA subsystem that is responsible for running processes in
-the background.
+Taskman is the VistA subsystem that is responsible for running processes in the background.
 
 The first step is to find the box volume pair for the local machine.
 
@@ -706,8 +643,7 @@ The first step is to find the box volume pair for the local machine.
     
     <div class="code"><code>><strong>D GETENV^%ZOSV W Y</strong></code></div>
 
-which will print out a message with four parts separated by ``^`` that could
-look something like (Cache):
+which will print out a message with four parts separated by ``^`` that could look something like (Cache):
 
 .. raw:: html
     
@@ -723,23 +659,13 @@ The four pieces of the string are:
 
 ``UCI^VOL^NODE^VOLUME:BOX``
 
-The fourth piece, the VOLUME:BOX pair, is referred to as the "BOX VOLUME pair".
-The first component of the Box Volume pair is the Volume Set, which is used to
-determine where the VistA system will be able to find the routines. The second
-component Box, which references the system that the instance is on. In a Caché
-system, it would be the name of the Caché instance while on GT.M/YottaDB, it should
-reference the hostname of the machine.
+The fourth piece, the VOLUME:BOX pair, is referred to as the "BOX VOLUME pair". The first component of the Box Volume pair is the Volume Set, which is used to define the location of routines for the VistA system. The second component, Box, references the system where the instance is found. In a Caché system, it would be the name of the Caché instance; while on GT.M/YottaDB, it should reference the hostname of the machine.
 
-The Volume Set result needs to be altered in the ``VOLUME SET`` file,
-and we will reuse some setup by writing over the name of the first entry that
-is already in the VistA system.  The first entry, the entry with an IEN of 1,
-can be selected by entering ```1``.
+The Volume Set result needs to be altered in the ``VOLUME SET`` file, and we will reuse some setup by writing over the name of the first entry that is already in the VistA system.  The first entry, the entry with an IEN of 1, can be selected by entering ```1``.
 
-Then we rename the first Box-Volume pair in the ``Taskman Site Parameters``
-file to match what was found above.
+Then we rename the first Box-Volume pair in the ``Taskman Site Parameters`` file to match what was found above.
 
-For this demonstration instance, the Volume Set will be ``ROU``, as per the 
-output above. 
+For this demonstration instance, the Volume Set will be ``ROU``, as per the output above. 
 
 .. raw:: html
     
@@ -769,7 +695,7 @@ output above.
     
     Select VOLUME SET: <strong>&lt;enter&gt;</strong></code></div>
    
-The next step is there to tell Taskman what the parameters are to run itself:
+The next step sets the Taskman parameters:
 
 .. raw:: html
     
@@ -807,9 +733,7 @@ The next step is there to tell Taskman what the parameters are to run itself:
 
 Kernel Set-Up
 -------------
-We are not done with setting Taskman up yet; but our next stop is the Kernel System Parameters file.
-We need to fix the Volume multiple there; but since we are there, we will fix several other items
-as well:
+We are not done with setting Taskman up yet; but we need to fix the Volume multiple and several other items our in the Kernel System Parameters file first:
 
 * AGENCY CODE = EHR (We are not running this inside of the VA)
 * VOLUME SET:VOLUME SET = ROU
@@ -872,7 +796,7 @@ as well:
 
 Back to Taskman
 ---------------
-At this point, we are ready to go back to getting Taskman to run. We will now run ``^ZTMCHK`` which checks our work and makes sure we didn't royally screw up.
+At this point, we are ready to go back to getting Taskman to run. We will now run ``^ZTMCHK`` which checks our work and makes sure we didn't screw up royally.
 
 .. raw:: html
     
@@ -916,9 +840,9 @@ At this point, we are ready to go back to getting Taskman to run. We will now ru
 
     End of listing.  Press RETURN to continue:</code></div>
 
-If ANY of the fields in the last screen are empty except "Log Tasks?", you made a mistake. Double check your work.
+If ANY of the fields in the last screen are empty, except "Log Tasks?", you made a mistake. Double check your work.
 
-Next we need to initialize the recurring and start-up tasks that VistA will run.  The set of tasks you want your system to run with is very variable; you can see my page here for guidance: http://www.vistapedia.com/index.php/Taskman_Recurring_Tasks. We will set-up these base tasks on your VistA system, which every VistA system ought to have:
+Next we need to initialize the recurring and start-up tasks that VistA will run.  The set of tasks you want your system to run with is very variable; you can see this page for guidance: http://www.vistapedia.com/index.php/Taskman_Recurring_Tasks. We will set these base tasks, which every VistA system ought to have, up on your VistA system:
 
 Start-up Jobs:
 
@@ -938,9 +862,9 @@ Nightly Jobs:
 * XUERTRP AUTO CLEAN (Cleans the error trap after 7 days)
 * XUTM QCLEAN (Clean Task file from completed tasks if the task didn't delete itself after it ran)
 
-Beyond these tasks, what tasks you want to run depends on what's important to you. If you write notes, you will want TIU tasks; if you use Drug Accountability, you will want PSA tasks, etc.
+Beyond these tasks, which tasks you run depends on what's important to you: if you write notes, you will want TIU tasks; if you use Drug Accountability, you will want PSA tasks; etc.
 
-FOIA VistA comes with a lot of junk; so I advise starting from a clean slate. Be careful with the next few commands: they should never be run on an existing system, otherwise they may delete patient data:
+FOIA VistA comes with a lot of junk, so I advise starting from a clean slate. Be careful with the next few commands: they should never be run on an existing system, otherwise they may delete patient data:
 
 .. raw:: html
     
@@ -1060,7 +984,7 @@ There are actually just two more steps:
 * Run ``DO ^ZTMB`` to start Taskman. *NOTE THAT IS THIS THE ONLY WAY TO START TASKMAN!* Restarting Taskman means that data control structure from the old system will be assumed to be correct. Don't do it!
 * Run ``DO ^ZTMON`` to confirm that everything is running.
 
-You should see this (press enter several times to update the screen; it should take at least 1 second to start); to exit, type ``^``.
+You should see this (press enter several times to update the screen, it should take at least 1 second to start); to exit, type ``^``.
 
 .. raw:: html
 
@@ -1088,7 +1012,7 @@ You should see this (press enter several times to update the screen; it should t
     Checking Sub-Managers:
          On node ROU:Macintosh there is  1 free Sub-Manager(s). Status: Run</code></div>
 
-On CACHE, you can run ``D THIS^%SS`` to find out what started; on GT.M/YottaDB, you should have a ZSY which does the same thing. If ZSY isn't present on your instance, you can do something similar to this until you find a ZSY:
+On CACHE, you can run ``D THIS^%SS`` to find out what started; on GT.M/YottaDB, you should have a ZSY which does the same thing. If ZSY isn't present on your instance, you can do something similar to the following until you find a ZSY:
 
 Cache:
 
@@ -1174,34 +1098,15 @@ If you don't have ^ZSY on GT.M/YottaDB, try this: it does what ZSY does:
 
 Setup your Institution
 ----------------------
-VistA has a very complex structure to deal with the question of: in what hospital are you signed in right now?
-The answer determines the value of the all important variable ``DUZ(2)`` and the API ``SITE^VASITE()``.
+VistA has a very complex structure to deal with the question of: in what hospital are you signed in right now? The answer determines the value of the all important variable ``DUZ(2)`` and the API ``SITE^VASITE()``.
 
-There are five files that are important in that regard: INSTITUTION (#4),
-STATION NUMBER (TIME SENSITIVE) (#389.9), KERNEL SYSTEM PARAMETERS (#8989.3),
-MEDICAL CENTER DIVISION file (#40.8), and MASTER PATIENT INDEX (LOCAL NUMBERS)
-(984.1). We will add our Hopstial to the INSTITUTION file first, with the
-station number 999. Then we will make sure that the STATION NUMBER file says
-999; and then will will point the KERNEL SYSTEM PARAMETERS and MEDICAL CENTER
-DIVISION to our new Hospital. In MASTER PATIENT INDEX, we tell it our station
-number and the range of numbers for our Integration Control Numbers (ICNs), the
-number used to identify patients across systems.
+There are five files that are important in that regard: INSTITUTION (#4), STATION NUMBER (TIME SENSITIVE) (#389.9), KERNEL SYSTEM PARAMETERS (#8989.3), MEDICAL CENTER DIVISION file (#40.8), and MASTER PATIENT INDEX (LOCAL NUMBERS) (984.1). We will add our Hospital to the INSTITUTION file first, with the station number 999. Then we will make sure that the STATION NUMBER file says 999; and then will will point the KERNEL SYSTEM PARAMETERS and MEDICAL CENTER DIVISION to our new Hospital. In MASTER PATIENT INDEX, we tell it our station number and the range of numbers for our Integration Control Numbers (ICNs), the number used to identify patients across systems.
 
-By default, FOIA VistA comes with station number 050, and the institution is called SOFTWARE SERVICE. We can't
-leave that alone because VistA malfunctions with station numbers are are just 2 digits long (050 becomes 50 in
-code).
+By default, FOIA VistA comes with station number 050, and the institution is called SOFTWARE SERVICE. We can't leave that alone because VistA malfunctions with station numbers are are just 2 digits long (050 becomes 50 in code).
 
-The INSITUTION file is protected from editing by requiring the variable XUMF to be defined. That tells us
-that inside of the VA, the file is updated by something called Standard Terminology Services (STS), which
-works by sending VistA mail messages of what to update, and VistA creates the entry based on that mail
-message. Normally when you see that, you should stay the hell out of the file: it's standardized and should
-not be tampered with. However, people outside of the VA have no other way to run VistA without updating this
-file.
+The INSITUTION file is protected from editing by requiring the variable XUMF to be defined. That tells us that inside of the VA, the file is updated by something called Standard Terminology Services (STS), which works by sending VistA mail messages of what to update, and VistA creates the entry based on that mail message. Normally when you see that, you should stay the hell out of the file: it's standardized and should not be tampered with. However, people outside of the VA have no other way to run VistA without updating this file.
 
-We enter Fileman after setting the XUMF variable. Note that in the US, we are supposed to fill the NPI variable,
-and Fileman won't let me go further without filling it; but I was able to jump forward to avoid answering it.
-Also, note that we have to fill the STATION NUMBER entry twice, once in the field named so, and another time in
-the coding system multiple.
+We enter Fileman after setting the XUMF variable. Note that in the US, we are supposed to fill the NPI variable, and Fileman won't let me go further without filling it; but I was able to jump forward to avoid answering it. Also, note that we have to fill the STATION NUMBER entry twice, once in the field named so, and another time in the coding system multiple.
 
 .. raw:: html
 
@@ -1284,8 +1189,7 @@ the coding system multiple.
 
     Select INSTITUTION NAME: <strong>&lt;enter&gt;</strong></code></div>
 
-Next, we will tackle the STATION NUMBER file. We technically can create an new entry; 
-but I would just rather reuse the existing entry, which I do by typing ```1``. 
+Next, we will tackle the STATION NUMBER file. We technically can create an new entry, but I would just rather reuse the existing entry, which I do by typing ```1``. 
 
 .. raw:: html
 
@@ -1393,8 +1297,7 @@ Next, the MASTER PATIENT INDEX file:
   Select MASTER PATIENT INDEX (LOCAL NUMBERS) SITE ID NUMBER:<strong>&lt;enter&gt;</strong></code></div>
 
     
-At this point, we are ready to check our work. First, we need to know the internal entry
-number (IEN) of the institution we just created:
+At this point, we are ready to check our work. First, we need to know the internal entry number (IEN) of the institution we just created:
 
 .. raw:: html
 
@@ -1415,8 +1318,7 @@ number (IEN) of the institution we just created:
 
     2957</code></div>
 
-Okay, let's kill our symbol table (the table that keeps our current variables),
-log-in, and then run ``$$SITE^VASITE``.
+Okay, let's kill our symbol table (the table that keeps our current variables), log-in, and then run ``$$SITE^VASITE``.
 
 .. raw:: html
 
@@ -1433,16 +1335,12 @@ log-in, and then run ``$$SITE^VASITE``.
     ><strong>W $$SITE^VASITE()</strong>
     2957^PALM DESERT HOSPITAL^999</code></div>
 
-As you can see, our DUZ(2) matches our site number, and $$SITE^VASITE() gives us the
-correct site number and station number.
+As you can see, our DUZ(2) matches our site number, and $$SITE^VASITE() gives us the correct site number and station number.
 
 
 Setup RPC Broker
 ----------------
-Next, we set-up a port that CPRS can connect to. What CPRS connects to is the Remote Procedure Calls Broker,
-and it connects using Remote Procedures. The next step is to edit entries in the RPC Broker Site Parameters
-file. The RPC Broker steps will set up information that references both the Port that the listener will
-listen on and the Box Volume pair of the instance.
+Next, we set-up a port for CPRS to connect. CPRS connects to the Remote Procedure Calls Broker, and it connects using Remote Procedures. The next step is to edit entries in the RPC Broker Site Parameters file. The RPC Broker steps will set up information that references both the Port that the listener will listen on and the Box Volume pair of the instance.
 
 .. raw:: html
     
@@ -1492,11 +1390,9 @@ Now, start the listener:
               Task: RPC Broker Listener START on VAH-ROU:Macintosh, port 9000
               has been queued as task 32372</code></div>
 
-Finally, we need to check that the broker started. While many people use ^%SS or ^ZSY to find
-that out, I prefer OS level tools that show me the port is active. 
+Finally, we need to check that the broker started. While you may use ^%SS or ^ZSY to find that out, I prefer OS level tools that show me that the port is active.
 
-On Mac or Linux, you can run ``lsof -iTCP -sTCP:LISTEN -P``; on Linux, ``netstat -tnlp``. On
-Windows (including Cygwin), ``netstat -aon | find /i "listening"``. Here's an example output on a Mac:
+On Mac or Linux, you can run ``lsof -iTCP -sTCP:LISTEN -P``; on Linux, ``netstat -tnlp``; on Windows (including Cygwin), ``netstat -aon | find /i "listening"``. Here's an example output on a Mac:
 
 .. raw:: html
     
@@ -1504,9 +1400,7 @@ Windows (including Cygwin), ``netstat -aon | find /i "listening"``. Here's an ex
     COMMAND   PID USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
     mumps   85939  sam    6u  IPv6 0x5ee953ac0e7fceab      0t0  TCP \*:9000 (LISTEN)</code></div>
 
-If you shut down your system, and then use bring it back up, starting Taskman
-using ``^ZTMB`` will start your broker, as we set it up previously as one of the
-startup tasks.
+If you shut down your system and then bring it back up, starting Taskman using ``^ZTMB`` will start your broker, as we set it up as one of the startup tasks.
 
 Back to business: To check that the RPC Broker is REALLY working, run ``DO ^XWBTCPMT``.
 
@@ -1520,8 +1414,7 @@ Back to business: To check that the RPC Broker is REALLY working, run ``DO ^XWBT
 
     Success, response: accept</code></div>
 
-Our response was "Success". You may get "Fail" if you don't succeed. If that happens, I have
-written a page on troubleshooting the Broker in Vistapedia: http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting.
+Our response was "Success".  If you don't succeed, you may get "Fail". If that happens, refer to this page on troubleshooting the Broker in Vistapedia: http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting.
 
 To stop the broker, ``do ^XUP``, and then choose ``XWB LISTENER STOP ALL``:
 
