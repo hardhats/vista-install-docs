@@ -369,8 +369,8 @@ should have these mappings in the end:
 +-------+
 
 After the final mapping is set, click OK to be sent back to the Routine Mapping
-page. You should now see the eight mappings listed on the page. Click on the
-Save Changes button.
+page. You should now see the seven mappings listed on the page. Click on the
+Save Changes button (following screen shot is an example but is NOT ACCURATE).
 
 .. figure::
    images/InstallCache/SaveRoutineMapping.png
