@@ -268,8 +268,8 @@ configuration wizard.
    :alt:  Setting the Global Mappings.
 
 First set the Global Database location to the VistA database name, and for the
-Global Name enter \"%Z*\". This will map all globals that start with \"%Z\" to
-be specific to the VistA namespace. Click OK and the wizard will exit and
+Global Name enter \"%Z*\". This will map all globals that start with \"%Z\"
+away from the %SYS namespace to the VistA namespace. Click OK and the wizard will exit and
 display the new mapping in the window. Repeat this for %ut and %Serenj*
 
 Repeat this for the following, but with different settings: The global database
@@ -289,6 +289,28 @@ location is "CACHETEMP", and the Global Names are the following:
 
 This is necessary to do to speed the performance of any temporary globals which
 are very frequently used. The CACHETEMP database is memory mapped for speed.
+
+In the end, you should have these mappings set-up:
+
++---------+-------------------+
+| Global  | Mapped Location   |
++=========+===================+ 
+| %Z*     | <VISTA DB NAMESPACE> |
++---------+----------------------+
+| %ut     | <VISTA DB NAMESPACE> |
++---------+----------------------+
+| %Serenj*| <VISTA DB NAMESPACE> |
++---------+-----------+
+| HLTMP   | CACHETEMP |
++---------+-----------+
+| TMP     | CACHETEMP |
++---------+-----------+
+| UTILITY | CACHETEMP |
++---------+-----------+
+| XTMP    | CACHETEMP |
++---------+-----------+
+| XUTL    | CACHETEMP |
++---------+-----------+
 
 Be sure to click on Save Changes before navigating back to the Namespaces page.
 This is what you will see. (Your database name may differ.)
@@ -317,7 +339,7 @@ Mapping button to bring up the routine mapping wizard.
    :alt:  Adding new Routine Mappings.
 
 Again select the database location that corresponds to the VistA database, enter
-\"%DT\" into the Routine name, and click Apply. This adds the first namespace
+\"%DT*\" into the Routine name, and click Apply. This adds the first namespace
 mapping to the VistA database.
 
 .. figure::
@@ -325,10 +347,11 @@ mapping to the VistA database.
    :align: center
    :alt:  Entering the first routine mapping.
 
-There are 8 other mappings that need to be entered in the same manner -
+There are 7 other mappings that need to be entered in the same manner. You
+should have these mappings in the end:
 
 +-------+
-| %DTC  |
+| %DT*  |
 |       |
 | %RCR  |
 |       |
@@ -346,7 +369,7 @@ There are 8 other mappings that need to be entered in the same manner -
 +-------+
 
 After the final mapping is set, click OK to be sent back to the Routine Mapping
-page. You should now see the nine mappings listed on the page. Click on the
+page. You should now see the eight mappings listed on the page. Click on the
 Save Changes button.
 
 .. figure::
