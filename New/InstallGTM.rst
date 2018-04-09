@@ -5,32 +5,26 @@ Authors: KS Bhaskar, Sam Habiel
 
 License: GNU Free Documentation License, Version 1.3 or any later (http://www.gnu.org/licenses/fdl.txt).
  
-The instructions are taken from the `GT.M Acculturation Workshop 
-<https://sourceforge.net/projects/fis-gtm/files/GT.M%20Acculturation%20Workshop/>`_.  They have been only slightly modified.
+These instructions are a slightly modified version from the `GT.M Acculturation Workshop <https://sourceforge.net/projects/fis-gtm/files/GT.M%20Acculturation%20Workshop/>`_.
 
 Quick Introduction
 ------------------
-GT.M came around first; YottaDB is a fork of GT.M. For VistA, you can use
-either one. GT.M has been around longer; and as such there are more ways to
-install it than there is for YottaDB.
+There are more ways to install GT.M than there are for YottaDB, since YottaDB is a fork of GT.M. Either one can be used for VistA implementation.
 
 Using the Installation Script (YottaDB)
 ---------------------------------------
-Follow the instructions at https://yottadb.com/product/get-started/. After the
-last step, pay attention to see where the installer says YottaDB got installed.
-Mine says: 
+Follow the instructions at https://yottadb.com/product/get-started/. Note the location where YottaDB was installed, presented after the last step. As an example, mine said: 
 
 ::
 
     YottaDB version r1.10 installed successfully at /usr/local/lib/yottadb/r110
 
-You need to remember the location for the variable $gtm_dist in the next
-section.
+This location will be entered for the variable $gtm_dist in the next section.
 
 Using the Package Manager (GT.M)
 --------------------------------
 
-If you are using Ubuntu Linux 14.04 LTS or later; or Debian Jessie, Testing, or Unstable; or other Linux distributions that may already have GT.M packages accessed using their normal package managers, you may be able to install GT.M using the package manager, e.g., as root/via sudo, ``apt install fis-gtm``.
+If you are using Ubuntu Linux 14.04 LTS or later; Debian Jessie, Testing, or Unstable; or other Linux distributions that may already have GT.M packages accessed using their normal package managers, you may be able to install GT.M using the package manager, e.g., as root/via sudo, ``apt install fis-gtm``.
 
 Using the Installation Script (GT.M)
 ------------------------------------
