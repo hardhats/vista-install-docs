@@ -59,6 +59,7 @@ These instructions are based on V6.2-000; you can use it or any more recent GT.M
     
     <div class="code"><code>$ <strong>wget -P /tmp http://sourceforge.net/projects/fis-gtm/files/GT.M-amd64-Linux/V6.2-000/gtm_V62000_linux_x8664_pro.tar.gz</strong></code></div>
 
+
 Then create another temporary directory and unpack the contents of the tarball into it. If you installed GT.M using the gtminstall technique, you should already have a /tmp/tmp directory.
 
 .. raw:: html
@@ -67,6 +68,7 @@ Then create another temporary directory and unpack the contents of the tarball i
     $ <strong>cd /tmp/tmp</strong>
     /tmp/tmp$ <strong>tar zxf ../gtm_V62000_linux_x8664_pro.tar.gz</strong>
     /tmp/tmp$</code></div> 
+
 
 Finally, install GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. Note this MUST be done as root.
 
@@ -121,5 +123,6 @@ Finally, install GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. Note this MUST be don
     removed from this directory? (y or n) <strong>y</strong>
     /tmp/tmp$ cd
     /tmp/tmp$</code></div>
+
 
 GT.M is now installed and operational and you are ready to continue to `Install VistA on GT.M/YottaDB <./InstallVistAOnGTM.html>`_.
