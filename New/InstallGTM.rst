@@ -29,9 +29,9 @@ If you are using Ubuntu Linux 14.04 LTS or later; Debian Jessie, Testing, or Uns
 Using the Installation Script (GT.M)
 ------------------------------------
 
-The installation script, gtminstall, is downloads and installs the current GT.M release. From http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer, download the latest version of the GT.M installer (currently version 0.13) into a temporary directory, either using a browser, or a program such as wget, and execute it.
+Download the installation script, gtminstall, to install the current GT.M release. Download and execute the latest version of the GT.M installer (currently version 0.13) from http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer into a temporary directory, using either a browser or a program such as wget.
 
-Depending on your network configuration the wget command may need environment variables to be set to go through proxy servers, and the sudo command may require the -E option to pass your shell environment to root process invoked by the sudo.
+Note: depending on your network configuration, the wget command may need environment variables to be set to go through proxy servers, and the sudo command may require the -E option to pass your shell environment to the root process invoked by the sudo.
 
 .. raw:: html
     
@@ -53,18 +53,13 @@ Depending on your network configuration the wget command may need environment va
 
 Traditional Technique (GT.M)
 ----------------------------
-First download GT.M for 64-bit GNU/Linux on the x86_64 platform from Source 
-Forge. These instructions are based on V6.2-000; you can use it or any more 
-recent GT.M release. Download it to a temporary directory, e.g., /tmp, with the 
-wget program:
+These instructions are based on V6.2-000; you can use it or any more recent GT.M release. Download GT.M for 64-bit GNU/Linux on the x86_64 platform from SourceForge to a temporary directory, e.g., /tmp, with the wget program:
 
 .. raw:: html
     
     <div class="code"><code>$ <strong>wget -P /tmp http://sourceforge.net/projects/fis-gtm/files/GT.M-amd64-Linux/V6.2-000/gtm_V62000_linux_x8664_pro.tar.gz</strong></code></div>
 
-Then create a temporary directory and unpack the contents of the tarball into 
-it. If you installed GT.M using the gtminstall technique, you should already 
-have a /tmp/tmp directory.
+Then create another temporary directory and unpack the contents of the tarball into it. If you installed GT.M using the gtminstall technique, you should already have a /tmp/tmp directory.
 
 .. raw:: html
     
@@ -73,7 +68,7 @@ have a /tmp/tmp directory.
     /tmp/tmp$ <strong>tar zxf ../gtm_V62000_linux_x8664_pro.tar.gz</strong>
     /tmp/tmp$</code></div> 
 
-Then install GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. Note that this must be done as root.
+Finally, install GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. Note this MUST be done as root.
 
 .. raw:: html
     
@@ -127,8 +122,4 @@ Then install GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. Note that this must be do
     /tmp/tmp$ cd
     /tmp/tmp$</code></div>
 
-GT.M is now installed and operational.
-
-
-At this point, you are ready to continue to `Install VistA on GT.M/YottaDB
-<./InstallVistAOnGTM.html>`_.
+GT.M is now installed and operational and you are ready to continue to `Install VistA on GT.M/YottaDB <./InstallVistAOnGTM.html>`_.
