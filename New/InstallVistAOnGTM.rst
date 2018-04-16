@@ -8,16 +8,9 @@ License:
 .. image:: https://i.creativecommons.org/l/by/4.0/80x15.png 
    :target: http://creativecommons.org/licenses/by/4.0/ 
 
-A Mumps database (like VistA) is a series of routines and globals (a global
-in Mumps really means a file on disk). To load VistA into GT.M/YottaDB, you need to
-obtain the these from the CACHE.DAT distributed by the VA. Efforts are
-underway to lobby the VA to distribute the FOIA instance as a set of globals
-and routines; rather than in a proprietary format.
+A Mumps database (like VistA) is a series of routines and globals (a global in Mumps really means a file on disk). To load VistA into GT.M/YottaDB, you need to obtain the these from the CACHE.DAT distributed by the VA. Efforts are underway to lobby the VA to distribute the FOIA instance as a set of globals and routines; rather than in a proprietary format.
 
-Since the establishment of OSEHRA, each update monthly update of FOIA is
-exported as routines and globals in zwrite format at `Github <https://github.com/OSEHRA/VistA-M>`_.
-In addition, DSS vxVistA can be obtained from `this repository <https://github.com/OSEHRA/vxVistA-M>`_
-and WorldVistA can be obtained from `this repository <https://github.com/glilly/wvehr2-dewdrop>`_.
+Since the establishment of OSEHRA, each update monthly update of FOIA is exported as routines and globals in zwrite format at `Github <https://github.com/OSEHRA/VistA-M>`_. In addition, DSS vxVistA can be obtained from `this repository <https://github.com/OSEHRA/vxVistA-M>`_ and WorldVistA can be obtained from `this repository <https://github.com/glilly/wvehr2-dewdrop>`_.
 
 In our example, for setting up a VistA Database, we will use FOIA VistA.
 
