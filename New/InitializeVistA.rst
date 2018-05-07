@@ -2313,11 +2313,13 @@ There is little you can do because most of VistA is not set-up. But you can now 
 an idea of what CPRS is like. The most important step is to at least create one clinic.
 You can do that in the SDBUILD menu. Doing this will unlock most of CPRS for you.
 
+You can learn more about using CPRS from here: https://www.vehu.va.gov/cprs_training.cfm.
+
 Next Steps
 ----------
-* Set-up MAS Parameters
-* Set-up Wards and Beds
-* Set-up Clinics
+* `Set-up Clinics <./SetupClinics.html>`_
+* Set-up MAS Parameters (Part 1 of setting up a hospital)
+* Set-up Wards and Beds (Part 2 of setting up a hospital)
 * Install a Drug File, or create one from Scratch
 * Set-up Outpatient Pharmacy
 * Set-up Inpatient Pharmacy

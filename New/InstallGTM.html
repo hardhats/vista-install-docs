@@ -14,18 +14,18 @@
 </header>
 <p>Authors: KS Bhaskar, Sam Habiel</p>
 <p>License: GNU Free Documentation License, Version 1.3 or any later (<a href="http://www.gnu.org/licenses/fdl.txt" class="uri">http://www.gnu.org/licenses/fdl.txt</a>).</p>
-<p>The instructions are taken from the <a href="https://sourceforge.net/projects/fis-gtm/files/GT.M%20Acculturation%20Workshop/">GT.M Acculturation Workshop</a>. They have been only slightly modified.</p>
+<p>These instructions are a slightly modified version from the <a href="https://sourceforge.net/projects/fis-gtm/files/GT.M%20Acculturation%20Workshop/">GT.M Acculturation Workshop</a>.</p>
 <h1 id="quick-introduction">Quick Introduction</h1>
-<p>GT.M came around first; YottaDB is a fork of GT.M. For VistA, you can use either one. GT.M has been around longer; and as such there are more ways to install it than there is for YottaDB.</p>
+<p>There are more ways to install GT.M than there are for YottaDB, since YottaDB is a fork of GT.M. Either one can be used for VistA implementation.</p>
 <h1 id="using-the-installation-script-yottadb">Using the Installation Script (YottaDB)</h1>
-<p>Follow the instructions at <a href="https://yottadb.com/product/get-started/" class="uri">https://yottadb.com/product/get-started/</a>. After the last step, pay attention to see where the installer says YottaDB got installed. Mine says:</p>
+<p>Follow the instructions at <a href="https://yottadb.com/product/get-started/" class="uri">https://yottadb.com/product/get-started/</a>. Note the location where YottaDB was installed, presented after the last step. As an example, mine said:</p>
 <pre><code>YottaDB version r1.10 installed successfully at /usr/local/lib/yottadb/r110</code></pre>
-<p>You need to remember the location for the variable $gtm_dist in the next section.</p>
+<p>This location will be entered for the variable $gtm_dist in the next section.</p>
 <h1 id="using-the-package-manager-gt.m">Using the Package Manager (GT.M)</h1>
-<p>If you are using Ubuntu Linux 14.04 LTS or later; or Debian Jessie, Testing, or Unstable; or other Linux distributions that may already have GT.M packages accessed using their normal package managers, you may be able to install GT.M using the package manager, e.g., as root/via sudo, <code>apt install fis-gtm</code>.</p>
+<p>If you are using Ubuntu Linux 14.04 LTS or later; Debian Jessie, Testing, or Unstable; or other Linux distributions that may already have GT.M packages accessed using their normal package managers, you may be able to install GT.M using the package manager, e.g., as root/via sudo, <code>apt install fis-gtm</code>.</p>
 <h1 id="using-the-installation-script-gt.m">Using the Installation Script (GT.M)</h1>
-<p>The installation script, gtminstall, is downloads and installs the current GT.M release. From <a href="http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer">http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer</a>, download the latest version of the GT.M installer (currently version 0.13) into a temporary directory, either using a browser, or a program such as wget, and execute it.</p>
-<p>Depending on your network configuration the wget command may need environment variables to be set to go through proxy servers, and the sudo command may require the -E option to pass your shell environment to root process invoked by the sudo.</p>
+<p>Download the installation script, gtminstall, to install the current GT.M release. Download and execute the latest version of the GT.M installer (currently version 0.13) from <a href="http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer">http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer</a> into a temporary directory, using either a browser or a program such as wget.</p>
+<p>Note: depending on your network configuration, the wget command may need environment variables to be set to go through proxy servers, and the sudo command may require the -E option to pass your shell environment to the root process invoked by the sudo.</p>
 <div class="code"><code>$ <strong>mkdir /tmp/tmp</strong>
 $ <strong>cd /tmp/tmp</strong>
 /tmp/tmp$ <strong>wget http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer/v0.13/gtminstall</strong>
@@ -41,14 +41,14 @@ dr-xr-xr-x 5 root root 8192 Nov 13 10:57 V6.2-000_x86_64
 /tmp/tmp$ <strong>cd</strong>
 $</code></div>
 <h1 id="traditional-technique-gt.m">Traditional Technique (GT.M)</h1>
-<p>First download GT.M for 64-bit GNU/Linux on the x86_64 platform from Source Forge. These instructions are based on V6.2-000; you can use it or any more recent GT.M release. Download it to a temporary directory, e.g., /tmp, with the wget program:</p>
+<p>These instructions are based on V6.2-000; you can use it or any more recent GT.M release. Download GT.M for 64-bit GNU/Linux on the x86_64 platform from SourceForge to a temporary directory, e.g., /tmp, with the wget program:</p>
 <div class="code"><code>$ <strong>wget -P /tmp http://sourceforge.net/projects/fis-gtm/files/GT.M-amd64-Linux/V6.2-000/gtm_V62000_linux_x8664_pro.tar.gz</strong></code></div>
-<p>Then create a temporary directory and unpack the contents of the tarball into it. If you installed GT.M using the gtminstall technique, you should already have a /tmp/tmp directory.</p>
+<p>Then create another temporary directory and unpack the contents of the tarball into it. If you installed GT.M using the gtminstall technique, you should already have a /tmp/tmp directory.</p>
 <div class="code"><code>$ <strong>mkdir /tmp/tmp</strong>
 $ <strong>cd /tmp/tmp</strong>
 /tmp/tmp$ <strong>tar zxf ../gtm_V62000_linux_x8664_pro.tar.gz</strong>
 /tmp/tmp$</code></div> 
-<p>Then install GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. Note that this must be done as root.</p>
+<p>Finally, install GT.M in /usr/lib/fis-gtm/V6.2-000_x86_64. Note this MUST be done as root.</p>
 <div class="code"><code>/tmp/tmp$ <strong>sudo ./configure</strong>
 [sudo] password for gtmuser: 
 
@@ -98,7 +98,6 @@ Installation completed. Would you like all the temporary files
 removed from this directory? (y or n) <strong>y</strong>
 /tmp/tmp$ cd
 /tmp/tmp$</code></div>
-<p>GT.M is now installed and operational.</p>
-<p>At this point, you are ready to continue to <a href="./InstallVistAOnGTM.html">Install VistA on GT.M/YottaDB</a>.</p>
+<p>GT.M is now installed and operational and you are ready to continue to <a href="./InstallVistAOnGTM.html">Install VistA on GT.M/YottaDB</a>.</p>
 </body>
 </html>

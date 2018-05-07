@@ -15,7 +15,7 @@
 <p>Authors: Sam Habiel</p>
 <p>License:</p>
 <p><a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="image" /></a></p>
-<p>A Mumps database (like VistA) is a series of routines and globals (a global in Mumps really means a file on disk). To load VistA into GT.M, you need to obtain the these from the CACHE.DAT distributed by the VA. Efforts are underway to lobby the VA to distribute the FOIA instance as a set of globals and routines; rather than in a proprietary format.</p>
+<p>A Mumps database (like VistA) is a series of routines and globals (a global in Mumps really means a file on disk). To load VistA into GT.M/YottaDB, you need to obtain the these from the CACHE.DAT distributed by the VA. Efforts are underway to lobby the VA to distribute the FOIA instance as a set of globals and routines; rather than in a proprietary format.</p>
 <p>Since the establishment of OSEHRA, each update monthly update of FOIA is exported as routines and globals in zwrite format at <a href="https://github.com/OSEHRA/VistA-M">Github</a>. In addition, DSS vxVistA can be obtained from <a href="https://github.com/OSEHRA/vxVistA-M">this repository</a> and WorldVistA can be obtained from <a href="https://github.com/glilly/wvehr2-dewdrop">this repository</a>.</p>
 <p>In our example, for setting up a VistA Database, we will use FOIA VistA.</p>
 <p>Before downloading VistA, we will start by creating an empty database.</p>
@@ -46,7 +46,7 @@ export gtm_prompt="|YOUR INSTANCE NAME|"
 #export gtm_etrap='W !,"ERROR IN STARTUP",!! D ^%ZTER HALT' # for production environments
 export gtm_etrap='B'             # for development environments
 
-# The location of the global directory. A global directory tells GT.M in
+# The location of the global directory. A global directory tells GT.M/YottaDB in
 # which database file we will locate a global
 export gtmgbldir="${vista_home}/g/mumps.gld"
 
@@ -71,15 +71,15 @@ export gtm_zquit_anyway=1
 # using mupip intrpt
 export gtm_zinterrupt='I $$JOBEXAM^ZU($ZPOS)'
 
-# GT.M has non-standard default behavior for null subscripts for local
+# GT.M/YottaDB has non-standard default behavior for null subscripts for local
 # variables. Make it standard
 export gtm_lct_stdnull=1
 export gtm_lvnullsubs=2
 
-# Add GT.M to the path if not already there.
+# Add GT.M/YottaDB to the path if not already there.
 [[ ":$PATH:" != *":${gtm_dist}"* ]] && export PATH="${PATH}:${gtm_dist}"
 
-# GT.M should not short-cut $SELECT and binary boolean operators
+# GT.M/YottaDB should not short-cut $SELECT and binary boolean operators
 # A default optimization.
 export gtm_side_effects=1
 export gtm_boolean=1
@@ -304,8 +304,7 @@ Total of 0 routines.
 
 Routine: <strong>&lt;enter&gt;</strong></code></div>
 <p>It's common with all Unix software relying on POSIX/SysV Shared Memory to report errors with <code>shmget()</code>. If you see that when you are trying to run ^%GD, you need to increase your shared memory limits. I will leave you to google that on your own.</p>
-<h1 id="loading-vista-into-the-gt.m-database-we-just-created">Loading VistA Into the GT.M Database we just Created</h1>
-<p>I said we will use FOIA VistA. Make sure that wget is installed on your machine, and then get the code (takes 3-30 minutes depending on your internet connection). First switch to a working directory (such as /tmp/) and run this:</p>
+<p>Loading VistA Into the GT.M/YottaDB Database we just Created ----------------------------------------------------I said we will use FOIA VistA. Make sure that wget is installed on your machine, and then get the code (takes 3-30 minutes depending on your internet connection). First switch to a working directory (such as /tmp/) and run this:</p>
 <div class="code"><code>$ <strong>wget https://github.com/OSEHRA/VistA-M/archive/foia.zip</strong></code></div>
 <p>If you want WorldVistA or vxVistA instead, you can get them from <a href="https://github.com/glilly/wvehr2-dewdrop/archive/master.zip" class="uri">https://github.com/glilly/wvehr2-dewdrop/archive/master.zip</a> or <a href="https://github.com/OSEHRA/vxVistA-M/archive/master.zip" class="uri">https://github.com/OSEHRA/vxVistA-M/archive/master.zip</a> respectively.</p>
 <p>Now unzip it:</p>
@@ -468,7 +467,7 @@ $ <strong>chown root:root vista.initd</strong>
 $ <strong>chmod +x vista.initd</strong>
 $ <strong>update-rc.d vista.initd defaults</strong>
 $ <strong>update-rc.d vista.initd enable</strong></code></div>
-<p>The next step is not necessary if you don't plan to have users log-in. You should pre-compile the routines on GT.M so they do not have to be compiled at runtime. You can speed this up with xargs if you have multiple cores (left as an exercise to the reader).</p>
+<p>The next step is not necessary if you don't plan to have users log-in. You should pre-compile the routines on GT.M/YottaDB so they do not have to be compiled at runtime. You can speed this up with xargs if you have multiple cores (left as an exercise to the reader).</p>
 <div class="code"><code>$ cd o
 $ for r in ../r/*.m; do mumps $r; done 2>&1 | tee ../compile_all.log
 </code></div>
