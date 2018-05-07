@@ -29,7 +29,23 @@ You will see the following:
    :alt: Select Visit
 
 We have users populated; but we do not have any clinics to choose for a visit
-location. In order for us to create a new clinic, we need to log-in as a
+location. 
+
+Before we get started, we need to define what "clinic" means. It's not a
+physical building; nor it is a specific room or wing in a hospital. It really
+stands for an administrive unit in a specific speciality at which patients can
+be scheduled for appointments. "Clinic" in English also means the entire
+building in which these specialties are housed; but that's not what it means in VistA.
+
+Examples of VistA Clinics:
+
+* Cardiology Clinic
+* Dr. Boson's Clinic (single physician clinic)
+* Dermatology Clinic
+* Immunization Update Clinic
+* Public Nurse Visits Clinic
+
+In order for us to create a new clinic, we need to log-in as a
 system manager into the "roll and scroll" and set-up a new clinic. To get to
 the menu, you need to go from:
 
