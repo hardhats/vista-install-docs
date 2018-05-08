@@ -1081,20 +1081,13 @@ If you don't have ^ZSY on GT.M/YottaDB, try this: it does what ZSY does:
     <div class="code"><code>><strong>K ^XUTL("XUSYS")</strong>
     ><strong>zsy "kill -SIGUSR1 $(lsof -t ${vista_home}/g/mumps.dat)"</strong>
 
-    ><strong>zwrite ^XUTL("XUSYS",:,"INTERRUPT")</strong>
-    ^XUTL("XUSYS",81732,"INTERRUPT")="+1^GTM$DMOD"
-    ^XUTL("XUSYS",81826,"INTERRUPT")="IDLE+3^%ZTM"
-    ^XUTL("XUSYS",81842,"INTERRUPT")="LOOP+7^HLCSLM"
-    ^XUTL("XUSYS",81847,"INTERRUPT")="GO+26^XMKPLQ"
-    ^XUTL("XUSYS",81928,"INTERRUPT")="GO+12^XMTDT"
-    ^XUTL("XUSYS",81932,"INTERRUPT")="STARTIN+28^HLCSIN"
-    ^XUTL("XUSYS",81936,"INTERRUPT")="LOOP+2^HLCSMM1"
-    ^XUTL("XUSYS",81940,"INTERRUPT")="PAUSE+1^HLUOPTF2"
-    ^XUTL("XUSYS",81944,"INTERRUPT")="STARTOUT+17^HLCSOUT"
-    ^XUTL("XUSYS",81948,"INTERRUPT")="LOOP+2^HLCSMM1"
-    ^XUTL("XUSYS",81954,"INTERRUPT")="LOOP+2^HLCSMM1"
-    ^XUTL("XUSYS",81970,"INTERRUPT")="PAUSE+1^HLUOPTF2"
-    ^XUTL("XUSYS",81974,"INTERRUPT")="GO+28^XMTDL"</code></div>
+    ><strong>zwrite ^XUTL("XUSYS",:,"JE","INTERRUPT")</strong>
+    ^XUTL("XUSYS",1565,"JE","INTERRUPT")="IDLE+3^%ZTM"
+    ^XUTL("XUSYS",2236,"JE","INTERRUPT")="GO+26^XMKPLQ"
+    ^XUTL("XUSYS",2667,"JE","INTERRUPT")="GO+12^XMTDT"
+    ^XUTL("XUSYS",9259,"JE","INTERRUPT")="+1^GTM$DMOD"
+    ^XUTL("XUSYS",18658,"JE","INTERRUPT")="GETTASK+3^%ZTMS1"
+    </code></div>
 
 Setup your Institution
 ----------------------
