@@ -966,20 +966,13 @@ Total 5 users.</code></div>
 <div class="code"><code>><strong>K ^XUTL("XUSYS")</strong>
 ><strong>zsy "kill -SIGUSR1 $(lsof -t ${vista_home}/g/mumps.dat)"</strong>
 
-><strong>zwrite ^XUTL("XUSYS",:,"INTERRUPT")</strong>
-^XUTL("XUSYS",81732,"INTERRUPT")="+1^GTM$DMOD"
-^XUTL("XUSYS",81826,"INTERRUPT")="IDLE+3^%ZTM"
-^XUTL("XUSYS",81842,"INTERRUPT")="LOOP+7^HLCSLM"
-^XUTL("XUSYS",81847,"INTERRUPT")="GO+26^XMKPLQ"
-^XUTL("XUSYS",81928,"INTERRUPT")="GO+12^XMTDT"
-^XUTL("XUSYS",81932,"INTERRUPT")="STARTIN+28^HLCSIN"
-^XUTL("XUSYS",81936,"INTERRUPT")="LOOP+2^HLCSMM1"
-^XUTL("XUSYS",81940,"INTERRUPT")="PAUSE+1^HLUOPTF2"
-^XUTL("XUSYS",81944,"INTERRUPT")="STARTOUT+17^HLCSOUT"
-^XUTL("XUSYS",81948,"INTERRUPT")="LOOP+2^HLCSMM1"
-^XUTL("XUSYS",81954,"INTERRUPT")="LOOP+2^HLCSMM1"
-^XUTL("XUSYS",81970,"INTERRUPT")="PAUSE+1^HLUOPTF2"
-^XUTL("XUSYS",81974,"INTERRUPT")="GO+28^XMTDL"</code></div>
+><strong>zwrite ^XUTL("XUSYS",:,"JE","INTERRUPT")</strong>
+^XUTL("XUSYS",1565,"JE","INTERRUPT")="IDLE+3^%ZTM"
+^XUTL("XUSYS",2236,"JE","INTERRUPT")="GO+26^XMKPLQ"
+^XUTL("XUSYS",2667,"JE","INTERRUPT")="GO+12^XMTDT"
+^XUTL("XUSYS",9259,"JE","INTERRUPT")="+1^GTM$DMOD"
+^XUTL("XUSYS",18658,"JE","INTERRUPT")="GETTASK+3^%ZTMS1"
+</code></div>
 <h2 id="setup-your-institution">Setup your Institution</h2>
 <p>VistA has a very complex structure to deal with the question of: in what hospital are you signed in right now? The answer determines the value of the all important variable <code>DUZ(2)</code> and the API <code>SITE^VASITE()</code>.</p>
 <p>There are five files that are important in that regard: INSTITUTION (#4), STATION NUMBER (TIME SENSITIVE) (#389.9), KERNEL SYSTEM PARAMETERS (#8989.3), MEDICAL CENTER DIVISION file (#40.8), and MASTER PATIENT INDEX (LOCAL NUMBERS) (984.1). We will add our Hospital to the INSTITUTION file first, with the station number 999. Then we will make sure that the STATION NUMBER file says 999; and then will will point the KERNEL SYSTEM PARAMETERS and MEDICAL CENTER DIVISION to our new Hospital. In MASTER PATIENT INDEX, we tell it our station number and the range of numbers for our Integration Control Numbers (ICNs), the number used to identify patients across systems.</p>
