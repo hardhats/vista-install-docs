@@ -2042,8 +2042,9 @@ If you have the right version, we can try running it, but you will get an
 error right away saying that 'borlndmm.dll' is needed.
 
 You can find 'borlndmm.dll' in the source code download referenced above (the
-zip file that contains SRC in the name) in the CPRS-Chart folder. Copy that file to the folder
-where the CPRSChart.exe is located at.
+zip file that contains SRC in the name) in the CPRS-Chart folder. While I am updating
+these instructions, I found that the 'borlndmm.dll' was actually with CPRSChart.exe.
+Copy that file to the folder where the CPRSChart.exe is located at.
 
 Now, try to run CPRS again. You will get this splash screen:
 
@@ -2052,26 +2053,38 @@ Now, try to run CPRS again. You will get this splash screen:
      :align: center
      :alt: Splash Screen
 
-and the "ConnectTo" dialog:
+But then, you may see this:
 
   .. figure::
-     images/InitializeVistA/CPRSConnectTo.png
+     images/InitializeVistA/connection_timeout.png
      :align: center
-     :alt: Connect To
+     :alt: Timeout
 
-Click on "New" and fill it in with the ip address of the server and the port number the RPC listener is listening at:
+What you have to do is to invoke CPRS with 3 parameters in order to tell it where and how to connect.
+
+* s=<ip address or DNS server name>
+* p=<port>
+* ccow=disable
+
+The way to do that on Microsoft Windows for end users is to create a shortcut and modify the target.
+Therefore, here's what you need to do: right click on CPRS, and choose "Create Shortcut". You will
+see a shortcut icon right in the same window. Something that looks like this:
 
   .. figure::
-     images/InitializeVistA/CPRSAddServer.png
+     images/InitializeVistA/shorcut_icon.png
      :align: center
-     :alt: Add Server
+     :alt: Shortcut Icon
 
-Now, after you click ok, you will see this:
+Right-click on that, and then click (i.e. left click) on properties. You will see the following:
 
   .. figure::
-     images/InitializeVistA/CPRSConnectTo2.png
+     images/InitializeVistA/shortcut_properties.png
      :align: center
-     :alt: Connect To
+     :alt: Shortcut Properties
+
+In the target field, append the s, p, and ccow as described above. Here is mine::
+
+     C:\Users\Hp\Desktop\FOIACPRS31a.exe s=192.168.1.181 p=9000 ccow=disable
 
 Click OK. You will see that CPRS connects, and display the access and verify screen:
 
@@ -2115,10 +2128,7 @@ Let's register a patient. Login using the CPRS User we just set-up.
     ``N DGSKIP S DGSKIP=$S(DGFORGN:"!,?42,""From/To: """,1:"?42,""From/To: """)``
 
     Make sure to exit GT.M/YottaDB using HALT or Ctrl-D so that the changes will "take".
-    (There are smarter ways of doing this, but this is the easiest for beginners.)
-    
-
-    
+    (There are smarter ways of doing this, but this is the easiest for beginners.)    
 
 .. raw:: html
     
