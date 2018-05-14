@@ -73,7 +73,7 @@ If you downloaded vxVistA or FOIA VistA, you need to copy the routines from this
 
 .. code-block:: bash
 
-    $ wget https://github.com/shabiel/Kernel-GTM/releases/download/XU-8.0-10001/virgin_install.zip
+    $ wget https://github.com/shabiel/Kernel-GTM/releases/download/XU-8.0-10002/virgin_install.zip
     $ unzip virgin_install.zip -d /path/to/database/r/
 
 Note to Cache Users
@@ -129,9 +129,183 @@ You need to either invent or be given a few pieces of data:
 
 Some of the configuration items below are taken from a system that may have had these entries previously created. If what you see on your screen doesn't exactly match what you see here, you can reply to Fileman with "Y" when adding a new entry; and skip past the fields that are indented by pressing ``<enter>``. What matters in the end is that the final entry matches what is typed here.
 
+ZTMGRSET
+--------
+The routine ZTMGRSET defines VistA global variables and saves system wide M routines that are M and OS specific. We need to kill ^%ZOSF to make sure we don't have old answers here; and sometimes having ^%ZOSF when you have just switched M implementations causes a catch 22 problem. The text scrape below is for GT.M/YottaDB; the one for Cache follows it.
+
+.. raw:: html
+    
+    <div class="code"><code>><strong>K ^%ZOSF</strong>
+    
+    ><strong>D ^ZTMGRSET</strong>
+    
+    
+    ZTMGRSET Version 8.0 Patch level **34,36,69,94,121,127,136,191,275,355,446,584**
+    HELLO! I exist to assist you in correctly initializing the current account.
+    Which MUMPS system should I install?
+    
+    1 = VAX DSM(V6), VAX DSM(V7)
+    2 = MSM-PC/PLUS, MSM for NT or UNIX
+    3 = Cache (VMS, NT, Linux), OpenM-NT
+    4 = 
+    5 = 
+    6 = 
+    7 = GT.M (VMS)
+    8 = GT.M (Unix)
+    System: <strong>8</strong>
+    
+    I will now rename a group of routines specific to your operating system.
+    Routine:  ZOSVGUX Loaded, Saved as    %ZOSV
+    
+    Routine:  ZIS4GTM Loaded, Saved as    %ZIS4
+    Routine:  ZISFGTM Loaded, Saved as    %ZISF
+    Routine:  ZISHGTM Loaded, Saved as    %ZISH
+    Routine:  XUCIGTM Loaded, Saved as    %XUCI
+    Routine: ZOSV2GTM Loaded, Saved as   %ZOSV2
+    Routine:  ZISTCPS Loaded, Saved as %ZISTCPS
+    
+    NAME OF MANAGER'S UCI,VOLUME SET: VAH,ROU//
+    The value of PRODUCTION will be used in the GETENV api.
+    PRODUCTION (SIGN-ON) UCI,VOLUME SET: VAH,ROU//
+    The VOLUME name must match the one in PRODUCTION.
+    NAME OF VOLUME SET: ROU//
+    The temp directory for the system: '/tmp/'// <strong>&lt;enter&gt;</strong>
+    ^%ZOSF setup
+    
+    
+    Now to load routines common to all systems.
+    Routine:   ZTLOAD Loaded, Saved as  %ZTLOAD
+    Routine:  ZTLOAD1 Loaded, Saved as %ZTLOAD1
+    Routine:  ZTLOAD2 Loaded, Saved as %ZTLOAD2
+    Routine:  ZTLOAD3 Loaded, Saved as %ZTLOAD3
+    
+    ...
+    
+    Routine:   ZTRDEL Loaded, Saved as  %ZTRDEL
+    Routine:   ZTMOVE Loaded, Saved as  %ZTMOVE
+    Routine:    ZTBKC Loaded, Saved as   %ZTBKC
+    Want to rename the Fileman routines: No// <strong>Y</strong>
+    Routine:     DIDT Loaded, Saved as      %DT
+    Routine:    DIDTC Loaded, Saved as     %DTC
+    Routine:    DIRCR Loaded, Saved as     %RCR
+    Setting ^%ZIS('C')
+    
+    Now, I will check your % globals...........
+     
+    ALL DONE
+    ></code></div>
+
+On Caché
+********
+
+On Cache, you will see different prompts.
+
+.. raw:: html
+    
+    <div class="code"><code>NAME OF MANAGER'S NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
+    
+    PRODUCTION (SIGN-ON) NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
+    
+    NAME OF THIS CONFIGURATION: VISTA// <strong>&lt;enter&gt;</strong></code></div>
+
+Fileman
+-------
+
+Initialize Fileman to set your domain name and number and Operating System (GT.M/YottaDB shown below).
+
+.. raw:: html
+    
+    <div class="code"><code>><strong>D ^DINIT</strong>
+    
+    VA Fileman V.22.2
+    
+    Initialize VA Fileman now?  NO// <strong>Y</strong>
+    
+		SITE NAME: PLA.ISC-WASH.DOMAIN.EXT// <strong>DEMO.OSEHRA.ORG</strong>
+    
+    SITE NUMBER: 122000// <strong>999</strong>
+    
+    Now loading MUMPS Operating System File
+    
+    Do you want to change the MUMPS OPERATING SYSTEM File? NO//....
+    
+    Now loading DIALOG and LANGUAGE Files.......................................
+    
+    TYPE OF MUMPS SYSTEM YOU ARE USING: CACHE/OpenM// <strong>?</strong>
+        Answer with MUMPS OPERATING SYSTEM NAME
+       Choose from:
+       CACHE/OpenM   
+       DSM for OpenVMS   
+       DTM-PC   
+       GT.M(UNIX)   
+       GT.M(VAX)   
+       MSM   
+       OTHER   
+   
+    TYPE OF MUMPS SYSTEM YOU ARE USING: CACHE/OpenM// <strong>GT.M(UNIX)</strong>
+
+    Now loading other Fileman files--please
+    wait........................................................................
+
+    The following files have been installed:
+       .11     INDEX
+       .2      DESTINATION
+       .31     KEY
+       
+       ...
+       
+      1.5219   SQLI_FOREIGN_KEY
+      1.52191  SQLI_ERROR_TEXT
+      1.52192  SQLI_ERROR_LOG
+      
+      
+    Re-indexing entries in the DIALOG file..........................
+    
+    Compiling all forms ...
+    
+       DICATT                          (#.001)
+       DIPTED                          (#.1001)
+       DIKC EDIT                       (#.1101)
+       
+       ...
+       
+       SPNLP MS FM1                    (#45)
+       SPNE ENTER/EDIT SYNONYM         (#46)
+       LREPI                           (#47)
+
+    File #80 does not contain a field #3.
+    THE FORM "LREPI" COULD NOT BE COMPILED.
+
+       ENPR MS                         (#48)
+       ENPR ALL                        (#49)
+       ENPR PRELIM                     (#50)
+       
+       ...
+       
+       PXRM TAXONOMY EDIT              (#125)
+       PXRM TAXONOMY CHANGE LOG        (#126)
+       PXRM DIALOG TAXONOMY EDIT       (#127)
+       
+       
+    INITIALIZATION COMPLETED IN 4 SECONDS.
+    ></code></div>
+
+ZUSET
+-----
+Also run D ^ZUSET to choose the correct version of ZU, the key login routine for the roll and scroll portions of VistA (GT.M/YottaDB shown).
+
+.. raw:: html
+    
+    <div class="code"><code><strong>D ^ZUSET</strong>
+    
+    This routine will rename the correct routine to ZU for you.
+    
+    Rename ZUGTM to ZU, OK? No// <strong>Y</strong>
+    Routine ZUGTM was renamed to ZU</code></div>
+
 Device Configuration
 --------------------
-The very first thing we want to do is to set-up 4 devices: NULL, CONSOLE, VIRTUAL, and HFS (historically known as TELNET, due to usual access assignments). The NULL device corresponds to a place where we dump data we don't want; that's ``/dev/null`` on all Unices; ``//./nul`` on Windows. The NULL device is also known as the "BIT BUCKET", for obvious reasons.
+Next is to set-up 4 devices: NULL, CONSOLE, VIRTUAL, and HFS (historically known as TELNET, due to usual access assignments). The NULL device corresponds to a place where we dump data we don't want; that's ``/dev/null`` on all Unices; ``//./nul`` on Windows. The NULL device is also known as the "BIT BUCKET", for obvious reasons.
 
 CONSOLE stands for the device the terminal presents itself as if directly connected to a computer. These days, no computer has real console devices. Linux still has an emulated console device: ``/dev/tty``. Cache Terminal presents a console device called ``|TRM|``.
 
@@ -158,7 +332,7 @@ There should only be one device named "NULL". Unfortunately, there are three NUL
     
     Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
     
-    Input to what File: DEVICE// <strong>&lt;enter&gt;</strong>    (53 entries)
+    Input to what File: <strong>DEVICE</strong>    (53 entries)
     EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
     
     Select DEVICE NAME: <strong>NULL</strong>
@@ -257,7 +431,7 @@ VIRTUAL Device
 The FOIA only comes with Linux Virtual Terminal. As before, here's what you need to fill it out. 
 
 * NAME = VIRTUAL TERMINAL
-* $I = /dev/pts on Linux; /dev/ttys on macOS; /dev/cons on Cygwin; |TNT| on Cache/Windows.
+* $I = /dev/pts on Linux; /dev/ttys on macOS; /dev/pty0 on Cygwin; |TNT| on Cache/Windows.
 * LOCATION OF TERMINAL = Virtual Terminal
 * TYPE = VIRTUAL TERMINAL
 * SUBTYPE = C-VT220
@@ -289,179 +463,6 @@ You need to select it and change the settings as follows:
 * SUBYTPE: P-HFS/80/99999
 * TYPE: HOST FILE SERVER
 
-ZTMGRSET
---------
-The routine ZTMGRSET defines VistA global variables and saves system wide M routines that are M and OS specific. We need to kill ^%ZOSF to make sure we don't have old answers here; and sometimes having ^%ZOSF when you have just switched M implementations causes a catch 22 problem. The text scrape below is for GT.M/YottaDB; the one for Cache follows it.
-
-.. raw:: html
-    
-    <div class="code"><code>><strong>K ^%ZOSF</strong>
-    
-    ><strong>D ^ZTMGRSET</strong>
-    
-    
-    ZTMGRSET Version 8.0 Patch level **34,36,69,94,121,127,136,191,275,355,446,584**
-    HELLO! I exist to assist you in correctly initializing the current account.
-    Which MUMPS system should I install?
-    
-    1 = VAX DSM(V6), VAX DSM(V7)
-    2 = MSM-PC/PLUS, MSM for NT or UNIX
-    3 = Cache (VMS, NT, Linux), OpenM-NT
-    4 = 
-    5 = 
-    6 = 
-    7 = GT.M (VMS)
-    8 = GT.M (Unix)
-    System: <strong>8</strong>
-    
-    I will now rename a group of routines specific to your operating system.
-    Routine:  ZOSVGUX Loaded, Saved as    %ZOSV
-    
-    Routine:  ZIS4GTM Loaded, Saved as    %ZIS4
-    Routine:  ZISFGTM Loaded, Saved as    %ZISF
-    Routine:  ZISHGTM Loaded, Saved as    %ZISH
-    Routine:  XUCIGTM Loaded, Saved as    %XUCI
-    Routine: ZOSV2GTM Loaded, Saved as   %ZOSV2
-    Routine:  ZISTCPS Loaded, Saved as %ZISTCPS
-    
-    NAME OF MANAGER'S UCI,VOLUME SET: VAH,ROU//
-    The value of PRODUCTION will be used in the GETENV api.
-    PRODUCTION (SIGN-ON) UCI,VOLUME SET: VAH,ROU//
-    The VOLUME name must match the one in PRODUCTION.
-    NAME OF VOLUME SET: ROU//
-    The temp directory for the system: '/tmp/'// <strong>&lt;enter&gt;</strong>
-    ^%ZOSF setup
-    
-    
-    Now to load routines common to all systems.
-    Routine:   ZTLOAD Loaded, Saved as  %ZTLOAD
-    Routine:  ZTLOAD1 Loaded, Saved as %ZTLOAD1
-    Routine:  ZTLOAD2 Loaded, Saved as %ZTLOAD2
-    Routine:  ZTLOAD3 Loaded, Saved as %ZTLOAD3
-    
-    ...
-    
-    Routine:   ZTRDEL Loaded, Saved as  %ZTRDEL
-    Routine:   ZTMOVE Loaded, Saved as  %ZTMOVE
-    Routine:    ZTBKC Loaded, Saved as   %ZTBKC
-    Want to rename the Fileman routines: No// <strong>Y</strong>
-    Routine:     DIDT Loaded, Saved as      %DT
-    Routine:    DIDTC Loaded, Saved as     %DTC
-    Routine:    DIRCR Loaded, Saved as     %RCR
-    Setting ^%ZIS('C')
-    
-    Now, I will check your % globals...........
-     
-    ALL DONE
-    ></code></div>
-
-On Caché
-********
-
-On Cache, you will see different prompts.
-
-.. raw:: html
-    
-    <div class="code"><code>NAME OF MANAGER'S NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
-    
-    PRODUCTION (SIGN-ON) NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
-    
-    NAME OF THIS CONFIGURATION: VISTA// <strong>&lt;enter&gt;</strong></code></div>
-
-Fileman
--------
-
-Initialize Fileman to set your domain name and number and Operating System (GT.M/YottaDB shown below).
-
-.. raw:: html
-    
-    <div class="code"><code>><strong>D ^DINIT</strong>
-    
-    VA Fileman V.22.2
-    
-    Initialize VA Fileman now?  NO// <strong>Y</strong>
-    
-    SITE NAME: DEMO.OSEHRA.ORG// <strong>&lt;enter&gt;</strong>
-    
-    SITE NUMBER: 999// <strong>&lt;enter&gt;</strong>
-    
-    Now loading MUMPS Operating System File
-    
-    Do you want to change the MUMPS OPERATING SYSTEM File? NO//....
-    
-    Now loading DIALOG and LANGUAGE Files.......................................
-    
-    TYPE OF MUMPS SYSTEM YOU ARE USING: GT.M(UNIX)// <strong>?</strong>
-        Answer with MUMPS OPERATING SYSTEM NAME
-       Choose from:
-       CACHE/OpenM   
-       DSM for OpenVMS   
-       DTM-PC   
-       GT.M(UNIX)   
-       GT.M(VAX)   
-       MSM   
-       OTHER   
-   
-    TYPE OF MUMPS SYSTEM YOU ARE USING: GT.M(UNIX)// <strong>&lt;enter&gt;</strong>
-
-    Now loading other Fileman files--please
-    wait........................................................................
-
-    The following files have been installed:
-       .11     INDEX
-       .2      DESTINATION
-       .31     KEY
-       
-       ...
-       
-      1.5219   SQLI_FOREIGN_KEY
-      1.52191  SQLI_ERROR_TEXT
-      1.52192  SQLI_ERROR_LOG
-      
-      
-    Re-indexing entries in the DIALOG file..........................
-    
-    Compiling all forms ...
-    
-       DICATT                          (#.001)
-       DIPTED                          (#.1001)
-       DIKC EDIT                       (#.1101)
-       
-       ...
-       
-       SPNLP MS FM1                    (#45)
-       SPNE ENTER/EDIT SYNONYM         (#46)
-       LREPI                           (#47)
-
-    File #80 does not contain a field #3.
-    THE FORM "LREPI" COULD NOT BE COMPILED.
-
-       ENPR MS                         (#48)
-       ENPR ALL                        (#49)
-       ENPR PRELIM                     (#50)
-       
-       ...
-       
-       PXRM TAXONOMY EDIT              (#125)
-       PXRM TAXONOMY CHANGE LOG        (#126)
-       PXRM DIALOG TAXONOMY EDIT       (#127)
-       
-       
-    INITIALIZATION COMPLETED IN 4 SECONDS.
-    ></code></div>
-
-ZUSET
------
-Also run D ^ZUSET to choose the correct version of ZU, the key login routine for the roll and scroll portions of VistA (GT.M/YottaDB shown).
-
-.. raw:: html
-    
-    <div class="code"><code><strong>D ^ZUSET</strong>
-    
-    This routine will rename the correct routine to ZU for you.
-    
-    Rename ZUGTM to ZU, OK? No// <strong>Y</strong>
-    Routine ZUGTM was renamed to ZU</code></div>
 
 Instance Domain, Parent Domain, and Q-PATCH domain
 --------------------------------------------------
@@ -484,8 +485,9 @@ Next, a domain should be set up for the VistA instance.  A domain name is typica
     FLAGS: <strong>^</strong>
     
     Select DOMAIN NAME: <strong>Q-PATCH.OSEHRA.ORG</strong>
+		  Are you adding 'Q-PATCH.OSEHRA.ORG' as a new DOMAIN (the 96TH)? No// <strong>Y</strong>  (Yes)
     NAME: Q-PATCH.OSEHRA.ORG// <strong>&lt;enter&gt;</strong>
-    FLAGS: Q// <strong>&lt;enter&gt;</strong>
+    FLAGS: <strong>Q</strong>
     SECURITY KEY: <strong>&lt;enter&gt;</strong>
     VALIDATION NUMBER: <strong>&lt;enter&gt;</strong>
     NEW VALIDATION NUMBER: <strong>&lt;enter&gt;</strong>
@@ -516,6 +518,7 @@ Next, a domain should be set up for the VistA instance.  A domain name is typica
     
     Select DOMAIN NAME: <strong>FORUM.OSEHRA.ORG</strong>
     NAME: FORUM.OSEHRA.ORG// <strong>&lt;enter&gt;</strong>
+		  Are you adding 'FORUM.OSEHRA.ORG' as a new DOMAIN (the 97TH)? No// <strong>Y</strong>  (Yes)
     FLAGS: <strong>Q</strong>
     SECURITY KEY: <strong>&lt;enter&gt;</strong>
     VALIDATION NUMBER: <strong>&lt;enter&gt;</strong>
@@ -878,7 +881,7 @@ Next add the tasks outlined above to OPTION SCHEDULING (#19.2). The startup entr
     <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
     Select OPTION:    <strong>ENTER OR EDIT FILE ENTRIES</strong>
 
-    Input to what File: OPTION SCHEDULING// <strong>&lt;enter&gt;</strong> (0 entries)
+    Input to what File: KERNEL SYSTEM PARAMETERS// <strong>OPTION SCHEDULING</strong> (0 entries)
     EDIT WHICH FIELD: ALL// <strong>.01</strong>  NAME
     THEN EDIT FIELD: <strong>2</strong>  QUEUED TO RUN AT WHAT TIME
     THEN EDIT FIELD: <strong>6</strong>  RESCHEDULING FREQUENCY
@@ -1235,7 +1238,7 @@ Next, the KERNEL SYSTEM PARAMETERS file:
     THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
 
 
-    Select KERNEL SYSTEM PARAMETERS DOMAIN NAME: <strong>`1</strong>  FOIA.DOMAIN.EXT
+    Select KERNEL SYSTEM PARAMETERS DOMAIN NAME: <strong>`1</strong>  DEMO.OSEHRA.ORG
     DEFAULT INSTITUTION: SOFTWARE SERVICE// <strong>PALM DES</strong>
          1   PALM DESERT CBOC      CA  CBOC      605GC  
          2   PALM DESERT HOSPITAL    CA          999  
@@ -1531,8 +1534,6 @@ and assign and take away keys using a mechanism called delegation. I won't cover
     
     Another key: <strong>XMMGR</strong>
 
-    Another key: <strong>XMMGR</strong>
-    
     Another key: <strong>XUSPF200</strong>
     
     Another key:
@@ -1586,6 +1587,19 @@ you won't be able to log in.
     Edit an Existing User
     Select NEW PERSON NAME: <strong>MANAGER,SYSTEM</strong>    SM</code></div>
 
+Before we go into details of the next screen, let's talk about the <PF1> key.
+Press <PF1> refers to notations for use of Vista on Terminals. For example, the
+original VT-320 keyboard had additional character sets and keys which include
+Find, Select, Insert, Remove, Previous Screen, Next Screen, an arrow cluster
+and F1 to F20. With Terminal Emulators, the Keys are "mapped", which means when
+you push a given key it acts as the key would in a terminal. For instance, F1,
+F2, F3 and F4 are equivalent to the PF1, PF2, PF3 and PF4 keys on the terminal
+keyboard and Page Up and Page Down on the computer keyboard correspond to
+Previous Screen and Next Screen.  Also there is lots of information about
+terminals if you are interested at http://www.vt100.net. Also, the very
+beginning of this document tells you what are the recommended terminal
+emulators to use.
+
 Now you will be presented with a screen with multiple options. You can navigate
 the screen with the TAB key. For navigation help, use your keyboard arrows to
 move down to the command line and hold down either the Num Lock key (which is
@@ -1595,7 +1609,11 @@ the command line and the change you made will be saved. At a minimum, assign
 EVE as the PRIMARY MENU and enter IRM (it's the only choice) as
 SERVICE/SECTION. If you plan to use CPRS, enter OR CPRS GUI CHART as a
 SECONDARY MENU OPTION. Enter other data as you deem appropriate. If DISUSER or
-Termination Reason is set, use the '@' to delete both of them.
+Termination Reason is set, use the '@' to delete both of them. To avoid problems
+down the road with a division that you didn't set-up, delete the DIVISION (tab
+to it, then enter, then @) that you see in the screen (unlike the screenshot
+below). No division means that the user will default to the main division, PALM
+DESERT HOSPITAL, which we already previously set-up.
 
 .. figure::
    images/InitializeVistA/pic25.gif
@@ -1609,16 +1627,6 @@ off. It makes it easier to work when you are learning and setting things up.
 And for God's sake, please make sure that your Preferred Editor is ``SCREEN EDITOR -
 VA FILEMAN``, otherwise you can only edit a line of text at a time.
 
-Press <PF1> refers to notations for use of Vista on Terminals. For example, the
-original VT-320 keyboard had additional character sets and keys which include
-Find, Select, Insert, Remove, Previous Screen, Next Screen, an arrow cluster
-and F1 to F20. With Terminal Emulators, the Keys are "mapped", which means when you push a
-given key it acts as the key would in a terminal. For instance, F1, F2, F3 and
-F4 are equivalent to the PF1, PF2, PF3 and PF4 keys on the terminal keyboard
-and Page Up and Page Down on the computer keyboard correspond to Previous
-Screen and Next Screen.  Also there is lots of information about terminal if 
-you are interested at http://www.vt100.net. Also, the very beginning of this
-document tells you what are the recommended terminal emulators to use.
 
 .. figure::
    images/InitializeVistA/pic26.gif
@@ -1679,34 +1687,41 @@ characteristics. You can navigate the screen with the ``TAB`` key. For DEFAULT
 TIMED-READ (SECONDS): change it to ``3600`` to allow an hour before being
 automatically signed off, or whatever you choose.
 
-I recommend making these other changes:
-
-* DEFAULT MULTIPLE SIGN-ON = YES
+I *strongly* recommend setting ``DEFAULT MULTIPLE SIGN-ON`` to YES.
 
 .. figure::
    images/InitializeVistA/pic27.gif
    :align: center
    :alt: Kernel Parameters
 
+Now you can exit this screen. Press <PF1>/<F1>-S and <PF1>/<F1>-E; and then press
+enter 4 times. You will be dumped back to your operating system. (Exit from the
+front door ``^ZU`` dumps you all the way out from VistA. Type ``mumps -dir`` on GT.M
+or ``csession <INSTANCE> -U <NAMESPACE>`` to get back into direct mode for the next
+step.
+
 Mail a Message
 --------------
-Now send a message using Postmaster to your DUZ number. From Direct Mode, type ``S DUZ=.5 D ^XUP``. You will get the
-response SETTING UP PROGRAMMER ENVIRONMENT then TERMINAL TYPE SET TO: (your
-default) and Select OPTION NAME:. You will need to respond: ``XMUSER``. At Select
-Mailman Menu Option: type ``S`` (for send). At Subject: enter your subject, such
-as Test, and then hit enter. You will then be prompted You may enter the text
-of the message and you will be offered the line number 1> where you can type
-your message, such as the infamous Hello world. Next will be line 2> and if you
-are done, just hit enter and at EDIT Option: you can do the same. At Send mail
-to: POSTMASTER// enter the initials you used for your DUZ which were probably
-DBA for System Manager. You will then be told when Mailman was last used, which
-is probably NEVER. Hit enter at And Send to: and you should receive the message
-Select Message option: Transmit now// at which you hit enter and will hopefully
-receive the message Sending [1] Sent. Type ``^`` to exit.
+Now send a message using Postmaster to your DUZ number. From Direct Mode, type
+``S DUZ=.5 D ^XUP``. You will get the response SETTING UP PROGRAMMER
+ENVIRONMENT then TERMINAL TYPE SET TO: (your default) and Select OPTION NAME:.
+You will need to respond: ``XMUSER``. At Select Mailman Menu Option: type ``S``
+(for send). At Subject: enter your subject, such as Test, and then hit enter.
+You will then be prompted You may enter the text of the message and you will be
+offered the line number 1> where you can type your message, such as the
+infamous Hello world. Next will be line 2> and if you are done, just hit enter
+and at EDIT Option: you can do the same. At Send mail to: POSTMASTER// enter
+the initials you used for your DUZ which were probably DBA for System Manager.
+You will then be told when Mailman was last used, which is probably NEVER. Hit
+enter at And Send to: and you should receive the message Select Message option:
+Transmit now// at which you hit enter and will hopefully receive the message
+Sending [1] Sent. Type ``^`` to exit.
 
 Now see if you received it. Log on using ``D ^ZU``. At the Systems Manager
-prompt, type ``MAILMAN MENU``. Then at the Select Mailman Menu Option: type ``NEW``
-Messages and Responses. Read the mail.
+prompt, type ``MAILMAN MENU``. If you don't see the NEW messages option, it
+means that you need to navigate to the submenu, and type "MAILMAN" again. Then
+at the Select Mailman Menu Option: type ``NEW`` Messages and Responses. Read
+the mail (figure out the steps on your own).
 
 .. figure::
    images/InitializeVistA/pic32.gif
@@ -1735,17 +1750,15 @@ open a Screenman form to complete the task.
 The following steps will add a generic ``CPRS,USER`` person who will be able to
 sign into CPRS.
 
+From the previous mail message example, exiting out of mailman and pressing
+enter a couple of times will get you back to the System Manager Menu ``EVE``. If
+you signed out, go back through the front door using ``mumps -r ZU`` (GTM/YDB) or
+``csession <instance> -U <namespace> ZU``.
+
 .. raw:: html
     
-    <div class="code"><code>><strong>S DUZ=1 D ^XUP</strong>
-    
-    Setting up programmer environment
-    This is a TEST account.
-    
-    Terminal Type set to: C-VT320
-    
-    Select OPTION NAME:  <strong>Systems Manager Menu</strong>
-    
+    <div class="code"><code>
+
             Core Applications ...
             Device Management ...
             Menu Management ...
@@ -1806,7 +1819,7 @@ able to log-in.
 Fill in as follows:
 
 * PRIMARY MENU OPTION = XUCORE
-* SECONDARY MENU OPTIONS = OR CPRS CHART GUI
+* SECONDARY MENU OPTIONS = OR CPRS GUI CHART
 * ACCESS CODE = CPRS1234
 * VERIFY CODE = USR.1234
 * SERVICE/SECTION = IRM
@@ -1839,7 +1852,7 @@ Fill in as follows:
     COMMAND:                                     Press <PF1>H for help    Insert</code></div>
 
 To change to other pages, press the down arrow key or <TAB> until the cursor
-reaches the COMMAND box.  Then type ``N`` or ``Next Page`` and press &lt;enter&gt; to
+reaches the COMMAND box.  Then type ``N`` or ``Next Page`` and press <enter> to
 display the next page.
 
 There is nothing that needs to be set on the second page. On the third page, you MUST
