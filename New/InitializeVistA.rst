@@ -2342,7 +2342,7 @@ You can learn more about using CPRS from here: https://www.vehu.va.gov/cprs_trai
 Next Steps
 ----------
 * `Set-up Clinics <./SetupClinics.html>`_
-* Set-up MAS Parameters (Part 1 of setting up a hospital)
+* `Set-up MAS Parameters <./SetMasParameters.html>`_ (Part 1 of setting up a hospital)
 * Set-up Wards and Beds (Part 2 of setting up a hospital)
 * Install a Drug File, or create one from Scratch
 * Set-up Outpatient Pharmacy
