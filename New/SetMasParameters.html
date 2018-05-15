@@ -20,5 +20,430 @@
 <figure>
 <img src="images/SetMasParameters/patient_selection_dialog.png" class="align-center" />
 </figure>
+<h1 id="introduction-to-the-steps">Introduction to the Steps</h1>
+<ul>
+<li>Set-up Nursing Site Parameters</li>
+<li>Set-up HINQ Parameters file</li>
+<li>Add Services</li>
+<li>MAS Parameter Entry/Edit</li>
+<li>G&amp;L Parameter Edit</li>
+<li>Set-up Treating Specialities</li>
+</ul>
+<p>The first three steps take place in Fileman. The rest of the steps take place in various menus. If you want, you can set-up a real or PDF printer. This is covered extensively at Vistapedia: <a href="http://www.vistapedia.com/index.php/Setting_up_a_VISTA_Printer" class="uri">http://www.vistapedia.com/index.php/Setting_up_a_VISTA_Printer</a>. If you don't set one up, you can just set the printer to <code>NULL</code>.</p>
+<h1 id="nursing-site-parameters">Nursing Site Parameters</h1>
+<p>FOIA comes with a broken file in 213.9. In order to be able to edit it, we have to set it up manually. From direct mode, we do some fixes; and then we go to Fileman to edit it.</p>
+<div class="code"><code>$ <strong>mumps -dir</strong>
+
+FOIA201803><strong>S ^DIC(213.9,1,0)="ONE"</strong>
+
+FOIA201803><strong>S DA=1,DIK="^DIC(213.9," D IX1^DIK</strong>
+
+FOIA201803><strong>D P^DI</strong>
+
+
+VA FileMan 22.2
+
+Identity = <strong>1</strong>  MANAGER,SYSTEM     SM       
+         ...OK? Yes// <strong>&lt;enter&gt;</strong>  (Yes)
+
+
+Select OPTION: <strong>ENTER</strong> OR EDIT FILE ENTRIES  
+
+
+
+Input to what File: NURS PARAMETERS// <strong>NURS PARAMETERS</strong>    (0 entries)
+EDIT WHICH FIELD: ALL// <strong>2</strong>  CNO PRINTER
+THEN EDIT FIELD: 
+
+
+Select NURS PARAMETERS NAME: <strong>`1</strong> ONE
+CNO PRINTER: <strong>NULL</strong>      Bit Bucket (GT.M-Unix)     /dev/null     
+
+
+Select NURS PARAMETERS NAME: 
+
+
+
+
+Select OPTION:</code></div>
+<h1 id="hinq">HINQ</h1>
+<p>HINQ stands for Hospital Inquiry. It's used in the VA to query a central system to verify eligibility. We don't want it; and so we will turn it off. Back to Fileman:</p>
+<div class="code"><code>Input to what File: DVB PARAMETERS// <strong>395</strong>  DVB PARAMETERS
+                                          (0 entries)
+EDIT WHICH FIELD: ALL// <strong>.05</strong>  USE HINQ SCREENS?
+THEN EDIT FIELD: <strong>1</strong>  NETWORK DAY
+THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
+
+
+Select DVB PARAMETERS ONE: <strong>1</strong>
+  Are you adding '1' as a new DVB PARAMETERS (the 1ST)? No// <strong>Y</strong>  (Yes)
+USE HINQ SCREENS?: <strong>N</strong>  NO
+NETWORK DAY: <strong>?</strong>
+Examples of Valid Dates:
+   JAN 20 1957 or 20 JAN 57 or 1/20/57 or 012057  (omitting punctuation)
+   T   (for TODAY),  T+1 (for TOMORROW),  T+2,  T+7, etc.
+   T-1 (for YESTERDAY),  T-3W (for 3 WEEKS AGO), etc.
+If the year is omitted, the computer uses CURRENT YEAR.
+A 2-digit year means no more than 20 years in the future, or 80 years in
+the past.
+
+If the date is omitted, the current date is assumed.
+Follow the date with a time, such as JAN 20@10, T@10AM, 10:30, etc.
+You may enter NOON, MIDNIGHT, or NOW to indicate the time.
+NETWORK DAY: <strong>T</strong>  (MAY 15, 2018)
+
+
+
+Select DVB PARAMETERS ONE: <strong>&lt;enter&gt;</strong></code></div>
+<h1 id="services">SERVICES</h1>
+<p>We now enter a few services into file SERVICE/SECTION:</p>
+<div class="code"><code>Select OPTION: <strong>ENTER</strong> OR EDIT FILE ENTRIES  
+
+
+
+Input to what File: DVB PARAMETERS// <strong>SERVICE/SECTION  </strong>
+                                          (1 entry)
+EDIT WHICH FIELD: ALL// <strong>&lt;enter&gt;</strong>
+
+
+Select SERVICE/SECTION NAME: <strong>MEDICINE</strong>
+  Are you adding 'MEDICINE' as a new SERVICE/SECTION (the 2ND)? No// <strong>Y</strong>  (Yes)
+   SERVICE/SECTION MAIL SYMBOL: <strong>MED</strong>
+   SERVICE/SECTION PARENT SERVICE: <strong>&lt;enter&gt;</strong>
+ABBREVIATION: <strong>MED</strong>
+DESCRIPTION:
+  Edit? NO// <strong>&lt;enter&gt;</strong>
+MAIL SYMBOL: MED// <strong>&lt;enter&gt;</strong>
+PARENT SERVICE: <strong>&lt;enter&gt;</strong>
+TYPE OF SERVICE: <strong>?</strong>
+     Enter C if this is a clinical service, providing direct patient care; if
+     this service is primarily administrative, enter A.
+     Choose from: 
+       C        PATIENT CARE
+       A        ADMINISTRATIVE
+TYPE OF SERVICE: <strong>C</strong>  PATIENT CARE
+CHIEF: <strong>CPRS,USER</strong>       UC       
+Select CHIEF PHONE: <strong>^</strong>
+
+
+Select SERVICE/SECTION NAME: <strong>NURSING</strong>
+  Are you adding 'NURSING' as a new SERVICE/SECTION (the 3RD)? No// <strong>Y</strong>  (Yes)
+   SERVICE/SECTION MAIL SYMBOL: <strong>NUR</strong>
+   SERVICE/SECTION PARENT SERVICE: <strong>MEDI</strong>CINE       MED     
+ABBREVIATION: <strong>NUR</strong>
+DESCRIPTION:
+  Edit? NO// <strong>&lt;enter&gt;</strong>
+MAIL SYMBOL: NUR// <strong>&lt;enter&gt;</strong>
+PARENT SERVICE: MEDICINE// <strong>&lt;enter&gt;</strong>
+TYPE OF SERVICE: <strong>C</strong>  PATIENT CARE
+CHIEF: <strong>CPRS,USER</strong>       UC       
+Select CHIEF PHONE: <strong>^</strong>
+
+
+Select SERVICE/SECTION NAME: <strong>PHARMACY</strong>
+  Are you adding 'PHARMACY' as a new SERVICE/SECTION (the 4TH)? No// <strong>Y</strong>  (Yes)
+   SERVICE/SECTION MAIL SYMBOL: <strong>PHR</strong>
+   SERVICE/SECTION PARENT SERVICE: <strong>MEDI</strong>CINE       MED     
+ABBREVIATION: <strong>PHR</strong>
+DESCRIPTION:
+  Edit? NO// <strong>&lt;enter&gt;</strong>
+MAIL SYMBOL: PHR// <strong>&lt;enter&gt;</strong>
+PARENT SERVICE: MEDICINE// <strong>&lt;enter&gt;</strong>
+TYPE OF SERVICE: <strong>C</strong>  PATIENT CARE
+CHIEF: <strong>CPRS,USER</strong>       UC       
+Select CHIEF PHONE: <strong>^</strong>
+
+Select SERVICE/SECTION NAME: <strong>&lt;enter&gt;</strong>
+
+
+
+
+Select OPTION: <strong>&lt;enter&gt;</strong>
+FOIA201804><strong>HALT</strong></code></div>
+<h1 id="mas-parameter-entryedit">MAS Parameter Entry/Edit</h1>
+<p>From now on, we will enter VistA via the front door (mumps -r ZU or csession &lt;instance&gt; -U &lt;namespace&gt; ZU) and work from there. We will be using the System Manager user we set-up earlier.</p>
+<div class="code"><code>$ mumps -r ZU
+This is my test system.
+
+
+
+Volume set: ROU:saichiko  UCI: VAH  Device: /dev/ttys000
+
+ACCESS CODE: <strong>******</strong>
+VERIFY CODE: <strong>********</strong>
+
+Good afternoon Boss
+     You last signed on today at 14:31
+
+
+          Core Applications ...
+          Device Management ...
+          Menu Management ...
+          Programmer Options ...
+          Operations Management ...
+          Spool Management ...
+          Information Security Officer Menu ...
+          Taskman Management ...
+          User Management ...
+          Application Utilities ...
+          Capacity Planning ...
+          HL7 Main Menu ...
+
+Select Systems Manager Menu <TEST ACCOUNT> Option:</code></div>
+<p>The first thing we will do is allocate the security key <code>DG SUPERVISOR</code> to ourselves. It's needed to let us into the ADT Set-up system:</p>
+<div class="code"><code>Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>Menu</strong> Management
+
+
+          Edit options
+          Key Management ...
+          Secure Menu Delegation ...
+          Restrict Availability of Options
+          Option Access By User
+          List Options by Parents and Use
+          Fix Option File Pointers
+          Help Processor ...
+   OPED   Screen-based Option Editor
+          Display Menus and Options ...
+          Menu Rebuild Menu ...
+          Out-Of-Order Set Management ...
+          See if a User Has Access to a Particular Option
+          Show Users with a Selected primary Menu
+
+Select Menu Management <TEST ACCOUNT> Option: <strong>Key</strong> Management
+
+
+          Allocation of Security Keys
+          De-allocation of Security Keys
+          Enter/Edit of Security Keys
+          All the Keys a User Needs
+          Change user's allocated keys to delegated keys
+          Delegate keys
+          Keys For a Given Menu Tree
+          List users holding a certain key
+          Remove delegated keys
+          Show the keys of a particular user
+
+Select Key Management <TEST ACCOUNT> Option: <strong>Allocation </strong>of Security Keys
+
+Allocate key: <strong>DG SUPERVISOR</strong>
+
+Another key:<strong>&lt;enter&gt;</strong>
+
+Holder of key: <strong>`1</strong>  MANAGER,SYSTEM     SM
+
+Another holder:<strong>&lt;enter&gt;</strong>
+
+You've selected the following keys:
+
+DG SUPERVISOR
+
+You've selected the following holders:
+
+MANAGER,SYSTEM
+
+You are allocating keys.  Do you wish to proceed? YES//<strong>&lt;enter&gt;</strong>
+
+DG SUPERVISOR being assigned to:
+     MANAGER,SYSTEM
+
+        Allocation of Security Keys
+        De-allocation of Security Keys
+        Enter/Edit of Security Keys
+        All the Keys a User Needs
+        Change user's allocated keys to delegated keys
+        Delegate keys
+        Keys For a Given Menu Tree
+        List users holding a certain key
+        Remove delegated keys
+        Show the keys of a particular user
+
+Select Key Management <TEST ACCOUNT> Option: </code></div>
+<p>From here, we exit back to the main menu, navigate to Core Applcations, pick ADT, and so on:</p>
+<div class="code"><code>Select Key Management <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong>
+
+
+          Edit options
+          Key Management ...
+          Secure Menu Delegation ...
+          Restrict Availability of Options
+          Option Access By User
+          List Options by Parents and Use
+          Fix Option File Pointers
+          Help Processor ...
+   OPED   Screen-based Option Editor
+          Display Menus and Options ...
+          Menu Rebuild Menu ...
+          Out-Of-Order Set Management ...
+          See if a User Has Access to a Particular Option
+          Show Users with a Selected primary Menu
+
+Select Menu Management <TEST ACCOUNT> Option: <strong>&lt;enter&gt;</strong>
+
+
+          Core Applications ...
+          Device Management ...
+          Menu Management ...
+          Programmer Options ...
+          Operations Management ...
+          Spool Management ...
+          Information Security Officer Menu ...
+          Taskman Management ...
+          User Management ...
+          Application Utilities ...
+          Capacity Planning ...
+          HL7 Main Menu ...
+
+Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>Core</strong> Applications
+
+
+   DENT   Dental ...
+   EN     Engineering Main Menu ...
+   FEE    Fee Basis Main Menu ...
+   FH     Dietetic Administration ...
+   GECO   Miscellaneous Code Sheet Manager Menu ...
+   GECS   Generic Code Sheet Menu ...
+   GMRA   Adverse Reaction Tracking ...
+   IB     Integrated Billing Master Menu ...
+   MCAR   Medicine Menu ...
+   NU     Nursing System Manager's Menu ...
+   PDX    Patient Data Exchange ...
+   PROS   Prosthetic Official's Menu ...
+   PRPF   Patient Funds (INTEGRATED) System ...
+   RA     Rad/Nuc Med Total System Menu ...
+   ROES   Remote Order/Entry System ASPS Menu ...
+   RT     Record Tracking Total System Menu ...
+   SR     Surgery Menu ...
+   SW     Information Management Systems (SWIMS) ...
+   TIU    TIU Maintenance Menu ...
+   VMAS   Volunteer Timekeeping Activity ...
+   VOL    Volunteer Master Menu ...
+   YSM    MHS Manager ...
+
+               Press 'RETURN' to continue, '^' to stop: <strong>&lt;enter&gt;</strong>
+   YSU    Mental Health ...
+          ADT Manager Menu ...
+          CPRS Manager Menu ...
+          CPRS Menu
+          Employee Menu ...
+          Finance AR Manager Menu ...
+          Health Summary Coordinator's Menu ...
+          Health Summary Enhanced Menu ...
+          Health Summary Menu ...
+          IV Menu ...
+          National Drug File Menu ...
+          Outpatient Pharmacy Manager ...
+          Payroll Main Menu ...
+          Payroll Supervisor Menu ...
+          Scheduling Manager's Menu ...
+          Unit Dose Medications ...
+
+Select Core Applications <TEST ACCOUNT> Option: <strong>ADT</strong> Manager Menu
+
+
+CPT (CPT is a registered trademark of the American Medical Association) codes,
+descriptions and other data are copyright 1966, 1970, 1973, 1977, 1981,
+1983-2017 American Medical Association.  
+
+CPT is commercial technical data developed exclusively at private expense by
+Contractor/Manufacturer American Medical Association, AMA Plaza, 330 N. Wabash
+Ave., Suite 39300, Chicago, IL 60611-5885.  The provisions of this Agreement
+between AMA and VA prevail, including prohibiting creating derivative works and
+providing CPT to any third parties outside of the Facilities.  
+
+Press any key to continue<strong>&lt;enter&gt;</strong>
+
+
+          ADT Outputs Menu ...
+          Bed Control Menu ...
+          Beneficiary Travel Menu ...
+          Contract Nursing Home RUG Menu ...
+          Eligibility Inquiry for Patient Billing
+          MAS Code Sheet Manager Menu ...
+          Meaningful Use Language Statistics
+          Patient Inquiry
+          PTF Menu ...
+          Registration Menu ...
+          RUG-II Menu ...
+          Supervisor ADT Menu ...
+
+Select ADT Manager Menu <TEST ACCOUNT> Option: <strong>Sup</strong>ervisor ADT Menu
+
+
+          ADT System Definition Menu ...
+          Check Routine Integrity
+          Current MAS Release Notes
+          Insurance Company Entry/Edit
+          Military Service Data Inconsistencies Report
+          Patient Type Update
+          Purge Scheduled Admissions
+          Recalculate G&L Cumulative Totals
+          Reimbursable Insurance Primary EC Report
+          RUG Semi-Annual Background Job
+          Sharing Agreement Category Update
+          Show MAS System Status Screen
+          Transmit/Generate Release Comments
+          Unsupported CV End Dates Report
+          View G&L Corrections
+          WWU Enter/Edit for RUG-II
+
+Select Supervisor ADT Menu <TEST ACCOUNT> Option: <strong>ADT</strong> System Definition Menu
+
+
+          Add/Edit Beds
+          Bed Out-of-Service Date Enter/Edit
+          Bulletin Selection
+          Device Selection
+          Edit Bed Control Movement Types
+          Edit Ward Out-of-Service Dates
+          Enter/Edit Transmission Routers File
+          G&L Parameter Edit
+          Gains and Losses Initialization
+          MAS Parameter Entry/Edit
+          Master Demographics Files ...
+          Means Test Threshold Entry/Edit
+          Reasons for Lodging Entry/Edit
+          Template Selection
+          Treating Specialty Set-up
+          Ward Definition Entry/Edit
+
+Select ADT System Definition Menu <TEST ACCOUNT> Option: <strong>MAS Par</strong>ameter Entry/Edit</code></div>
+<p>From here, we will pick <code>MAS Parameter Entry/Edit</code>. You will be greeted by this screen.</p>
+<div class="code"><code>                    PIMS VERSION 5.3 PARAMETER ENTRY/EDIT
+==============================================================================
+[1] Medical Center Name : NONE SPECIFIED                   Affiliated: NO
+    Multidivisional     : NO
+    Nursing Home Wards  : NO                        Domiciliary Wards: NO
+    System Timeout Sec. : 0                        Print PTF Messages: NO
+    Default PTF Printer : NONE SPECIFIED               High Intensity: OFF
+    Consistency Checker : OFF                     Abbreviated Inquiry: NO
+    Auto PTF Messages   : YES                      Show Status Screen: NO
+
+[2] Days to Update Medicaid    : 365         Maintain G&L Corrections: FOREVER
+    Disposition late           : 0-HOURS           Supplemental 10/10: YES
+    Ask HINQ at Registration   : NO           DRUG PROFILE with 10/10: NO
+    HEALTH SUMMARY with 10/10  : NO            Default Health Summary: NONE
+    Ask EMBOSS at Registration : NO               Use Nearest Printer: NO
+    Reg. Template (LOCAL)      : NONE SPECIFIED      Use Temp Address: NO
+    Default Code Sheet Printer : NONE SPECIFIED    Ask Device in Reg.: NO
+    Days to Maintain Sens. Data: Forever         Print Encounter Form: NO
+    Default EF Printer         : NONE SPECIFIED
+    Restrict PATIENT access    : NO
+    Purple Heart Sort          : Descending
+
+    [Pre-Registration]
+    Sort Method                :              Background Job Function:
+    Days Between Calls         :         Days to Maintain Log Entries:
+    Days to Pull Appointments  :                      Run for Weekend: NO
+    Enable My HealtheVet Prompts: NO
+
+[3] Print Wristbands     : NO
+    'AA&lt;96 HOURS' on G&L : NO
+    'AA' on G&L          : NO
+    Combined/Separate G&L: COMBINED
+    10/10 printer        : NOT SPECIFIED
+    DRUG PROFILE printer : NOT SPECIFIED
+    ROUTING SLIP printer : NOT SPECIFIED
+Enter 1-3 to EDIT, or RETURN to QUIT:</code></div>
+<p>To be continued...</p>
 </body>
 </html>
