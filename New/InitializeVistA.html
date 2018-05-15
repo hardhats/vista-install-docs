@@ -1693,12 +1693,14 @@ Another one: <strong>^</strong></code></div>
 <h2 id="registering-your-first-patient">Registering your First Patient</h2>
 <p>Let's register a patient. Login using the CPRS User we just set-up.</p>
 <blockquote>
-<p>NB: On GT.M/YottaDB, patient registration will crash, as it tries to use Cache Specific Code. If you want to register the patient on GT.M/YottaDB, change entry point PATIENT^MPIFXMLP to ZPATIENT; and change line 25 of DGRPD, to remove the errant space:</p>
+<p>NB: On GT.M/YottaDB, patient registration will crash, as it tries to use Cache Specific Code. To fix that, we need to edit some routines. To edit a routine in GT.M/YDB, it's easiest to just edit it on the shell. You will recall that we installed VistA in /var/db/&lt;name&gt;. And we copied all routines into the r directory. edit the code, use an editor (a simple editor to use is nano) and edit the file. For example, to edit MPIFXMLP, enter <code>nano /var/db/&lt;name&gt;/r/MPIFXMLP.m</code>.</p>
+<p>If you want to register the patient on GT.M/YottaDB, edit routine MPIFXMLP, changing the label PATIENT to ZPATIENT</p>
+<p>In routine DGRPD, in line 34 remove the errant space:</p>
 <p><code>N DGSKIP S DGSKIP=$S(DGFORGN:&quot;!,?42,&quot;&quot;From/To: &quot;&quot;&quot;,1:&quot;?42, &quot;&quot;From/To: &quot;&quot;&quot;)</code></p>
 <p>to</p>
 <p><code>N DGSKIP S DGSKIP=$S(DGFORGN:&quot;!,?42,&quot;&quot;From/To: &quot;&quot;&quot;,1:&quot;?42,&quot;&quot;From/To: &quot;&quot;&quot;)</code></p>
-<p>Make sure to exit GT.M/YottaDB using HALT or Ctrl-D so that the changes will &quot;take&quot;. (There are smarter ways of doing this, but this is the easiest for beginners.)</p>
 </blockquote>
+<p>Now we can register the patient.</p>
 <div class="code"><pre>><strong>$ mumps -r ^ZU</strong>
 This is my test system.
 

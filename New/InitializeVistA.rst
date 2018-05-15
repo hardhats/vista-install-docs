@@ -2117,9 +2117,18 @@ Registering your First Patient
 ------------------------------
 Let's register a patient. Login using the CPRS User we just set-up.
 
-    NB: On GT.M/YottaDB, patient registration will crash, as it tries to use Cache Specific Code.
-    If you want to register the patient on GT.M/YottaDB, change entry point PATIENT^MPIFXMLP to
-    ZPATIENT; and change line 25 of DGRPD, to remove the errant space:
+    NB: On GT.M/YottaDB, patient registration will crash, as it tries to use
+    Cache Specific Code.  To fix that, we need to edit some routines. To edit a
+    routine in GT.M/YDB, it's easiest to just edit it on the shell. You will
+    recall that we installed VistA in /var/db/<name>. And we copied all
+    routines into the r directory.  edit the code, use an editor (a simple
+    editor to use is nano) and edit the file. For example, to edit MPIFXMLP,
+    enter ``nano /var/db/<name>/r/MPIFXMLP.m``.  
+    
+    If you want to register the patient on GT.M/YottaDB, edit routine MPIFXMLP, 
+    changing the label PATIENT to ZPATIENT
+    
+    In routine DGRPD, in line 34 remove the errant space:
     
     ``N DGSKIP S DGSKIP=$S(DGFORGN:"!,?42,""From/To: """,1:"?42, ""From/To: """)``
 
@@ -2127,8 +2136,7 @@ Let's register a patient. Login using the CPRS User we just set-up.
 
     ``N DGSKIP S DGSKIP=$S(DGFORGN:"!,?42,""From/To: """,1:"?42,""From/To: """)``
 
-    Make sure to exit GT.M/YottaDB using HALT or Ctrl-D so that the changes will "take".
-    (There are smarter ways of doing this, but this is the easiest for beginners.)    
+Now we can register the patient.
 
 .. raw:: html
     
