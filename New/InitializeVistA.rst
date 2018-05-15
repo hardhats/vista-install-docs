@@ -8,7 +8,7 @@ License:
 .. image:: https://i.creativecommons.org/l/by/4.0/80x15.png 
    :target: http://creativecommons.org/licenses/by/4.0/ 
 
-Attributions: Original instructions by Fil Beza and Nancy Anthracite; this set has been updated by Sam Habiel. Last updated in February 2018.
+Attributions: Original instructions by Fil Beza and Nancy Anthracite; this set has been updated by Sam Habiel. Last updated in May 2018.
 
 If you have reached this point, it means that you have finished `Install Cache <./InstallCache.html>`_; or `Install GT.M/YottaDB <./InstallGTM.html>`_ and `Install VistA on GT.M/YottaDB <./InstallVistAOnGTM.html>`_.
 
