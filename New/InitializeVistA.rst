@@ -436,6 +436,7 @@ The FOIA only comes with Linux Virtual Terminal. As before, here's what you need
 * TYPE = VIRTUAL TERMINAL
 * SUBTYPE = C-VT220
 * SIGN-ON/SYSTEM DEVICE = YES
+* ASK DEVICE = YES
 
 HFS Device
 **********
