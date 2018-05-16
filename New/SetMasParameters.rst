@@ -1,7 +1,6 @@
 Set-up MAS Parameters
 =====================
-
-Authors: Sam Habiel
+Authors: Sam Habiel. Thank you for the transcripts provided by Joanne Brougham for setting up ADT.
 
 License: |license|
 
