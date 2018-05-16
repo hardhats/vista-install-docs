@@ -491,4 +491,44 @@ this screen.
       ROUTING SLIP printer : NOT SPECIFIED
   Enter 1-3 to EDIT, or RETURN to QUIT:</code></div>
 
-To be continued...
+Before editing any of this, we need to talk about all strange abbreviations,
+starting from the top.
+
+* MAS = I don't know. Synonymous with ADT.
+* ADT = Admission/Discharge/Transfer.
+* PIMS = Patient Information Management System. Parent of MAS and ADT.
+* PTF = Patient Treatment File. Records hospital stays for patients.
+* G&L = Gains and Losses of patients in the hospital census.
+* HINQ = Hospital Inquiry (explained above)
+* 10/10 = The paper registration form the VA uses.
+* AA = Authorized Absence; a type of Transfer.
+* ACTION PROFILE or DRUG PROFILE: A listing of drugs for patients which can be
+  renewed by the physician by writing on it. Designed for hybrid environments
+  where physicians don't order medications online.
+
+We will set this up with sensible defaults. From the top, starting with #1. As always,
+remember that if you don't know what a field does, type ? for a short help and ?? for
+long help.
+
+.. raw:: html
+
+  <div class="code"><code>Enter 1-3 to EDIT, or RETURN to QUIT:  <strong>1</strong>
+  MEDICAL CENTER NAME: <strong>`1</strong>  MAIN CAMPUS     999
+  AFFILIATED: <strong>Y</strong>  YES
+  MULTIDIVISION MED CENTER?: <strong>N</strong>  NO
+  NURSING HOME WARDS?: <strong>N</strong>  NO
+  DOMICILIARY WARDS?: <strong>N</strong>  NO
+  SYSTEM TIMEOUT: <strong>900</strong>
+  AUTOMATIC PTF MESSAGES?: <strong>Y</strong>  YES
+  PRINT PTF MESSAGES?: <strong>Y</strong>  YES
+  DEFAULT PTF MESSAGE PRINTER: <strong>BROTHER</strong>      OSEHRA     Brother_HL_6180DW_series <i>Use NULL if you don't have a printer set-up</i>
+  SHOW STATUS SCREEN: <strong>N</strong>  NO
+  USE HIGH INTENSITY ON SCREENS?: <strong>Y</strong>  YES
+  Select EXCLUDE WHICH TERMINAL TYPES?:<strong>&lt;enter&gt;</strong>
+  CONSISTENCY CHECKER ON?: <strong>N</strong>  NO
+  ABBREVIATED PATIENT INQUIRY?: <strong>N</strong> NO</code></div>
+
+Now you will go back to the same starting screen. Choose #2 this time:
+
+
+
