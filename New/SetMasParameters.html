@@ -12,6 +12,17 @@
 <header>
 <h1 class="title">Set-up MAS Parameters</h1>
 </header>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction-to-the-steps">Introduction to the Steps</a></li>
+<li><a href="#nursing-site-parameters">Nursing Site Parameters</a></li>
+<li><a href="#hinq">HINQ</a></li>
+<li><a href="#services">SERVICES</a></li>
+<li><a href="#mas-parameter-entryedit">MAS Parameter Entry/Edit</a></li>
+<li><a href="#gl-parameter-edit">G&amp;L Parameter Edit</a></li>
+<li><a href="#set-up-treating-specialities">Set-up Treating Specialities</a></li>
+</ul>
+</nav>
 <p>Authors: Sam Habiel</p>
 <p>License: <a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="license" /></a></p>
 <p>Last updated in May 2018.</p>
@@ -473,5 +484,274 @@ Select EXCLUDE WHICH TERMINAL TYPES?:<strong>&lt;enter&gt;</strong>
 CONSISTENCY CHECKER ON?: <strong>N</strong>  NO
 ABBREVIATED PATIENT INQUIRY?: <strong>N</strong> NO</code></div>
 <p>Now you will go back to the same starting screen. Choose #2 this time:</p>
+<div class="code"><code>Enter 1-3 to EDIT, or RETURN to QUIT:  <strong>2</strong>
+DAYS TO UPDATE MEDICAID:<strong>&lt;enter&gt;</strong>
+DAYS TO MAINTAIN G&L CORR:<strong>&lt;enter&gt;</strong>
+TIME FOR LATE DISPOSITION: <strong>??</strong> 
+     Enter the number of hours that is allowed to elapse before a disposition
+     is considered to be late, between 0 and 240.
+TIME FOR LATE DISPOSITION: <strong>0</strong> 
+SUPPLEMENTAL 10/10: <strong>??</strong> 
+     Enter 1 if you do NOT want supplemental 10 10 printed with 10 10
+     Choose from:
+       1        DO NOT PRINT WITH 10 10
+       0        PRINT WITH 10 10
+SUPPLEMENTAL 10/10: <strong>0</strong>  PRINT WITH 10 10
+USE HINQ INQUIRY?: <strong>N</strong>   NO
+PRINT DRUG PROFILES WITH 10-10: <strong>N</strong>   NO
+PRINT HEALTH SUMMARY?: <strong>Y</strong>   YES
+DEFAULT HEALTH SUMMARY: <strong>SAMPLE 1</strong> 
+EMBOSSERS ON-LINE: <strong>N</strong>   NO
+USE CLOSEST PRINTER: <strong>N</strong>   NO
+REGISTRATION TEMPLATE (LOCAL):<strong>&lt;enter&gt;</strong>
+USE TEMPORARY ADDRESS: <strong>N</strong>   NO
+DEFAULT CODE SHEET PRINTER: <strong>?</strong> 
+     Enter the device number to print MAS AMIS Code Sheets when generating AMIS
+     segments 334-341, 345&346 and 401-420.
+
+ Answer with DEVICE NAME, or LOCAL SYNONYM, or $I, or VOLUME SET(CPU), or
+     SIGN-ON/SYSTEM DEVICE, or FORM CURRENTLY MOUNTED
+ Do you want the entire DEVICE List? N  (No)
+DEFAULT CODE SHEET PRINTER: <strong>BROTHER</strong>       OSEHRA     Brother_HL_6180DW_series   
+ASK DEVICE IN REGISTRATION: <strong>N</strong>   NO
+DAYS TO MAINTAIN SENSITIVITY: <strong>30</strong> 
+PRINT ENCOUNTER FORM AT REG.: <strong>Y </strong>  YES
+DEFAULT EF PRINTER: <strong>BROTHER</strong>       OSEHRA     Brother_HL_6180DW_series
+RESTRICT PATIENT RECORD ACCESS: <strong>N</strong>   NO
+PRE-REGISTRATION SORT:<strong>&lt;enter&gt;</strong>
+DAYS BETWEEN CALLS:<strong>&lt;enter&gt;</strong>
+BACKGROUND JOB FUNCTION: <strong>?</strong> 
+     Enter the function the background job is to do when run.
+     Choose from:
+       D        DELETE ALL ENTRIES
+       P        DELETE CALLED PATIENTS
+       DA       DELETE ENTRIES AND ADD NEW
+       PA       DELETE CALLED PATIENTS AND ADD NEW
+       AO       ADD NEW ENTRIES ONLY
+       N        NOTHING
+BACKGROUND JOB FUNCTION: <strong>D</strong>   DELETE ALL ENTRIES
+DAYS TO MAINTAIN LOG: <strong>3</strong> 
+DAYS TO PULL APPOINTMENT:<strong>&lt;enter&gt;</strong>
+RUN FOR WEEKEND:<strong>&lt;enter&gt;</strong>
+Select CLINIC EXCLUSION:<strong>&lt;enter&gt;</strong>
+Select ELIGIBILITY EXCLUSION:<strong>&lt;enter&gt;</strong>
+PURPLE HEART SORT:<strong>&lt;enter&gt;</strong>
+Enable My HealtheVet Prompts?: NO//<strong>&lt;enter&gt;</strong></code></div>
+<p>Now, step 3:</p>
+<div class="code"><code>Enter 1-3 to EDIT, or RETURN to QUIT:  <strong>3</strong>
+DISPLAY MEANS TEST REQUIRED: <strong>N</strong>   NO
+DISPLAY MEANS TEST REQ IF GUI: <strong>N</strong>   NO
+PRINT WRISTBANDS: <strong>N</strong>   NO
+PRINT 'AA'<96' ON G&L: <strong>N</strong>   NO
+PRINT 'AA' ON G&L: <strong>N</strong>   NO
+NHCU/DOM/HOSP G&L: <strong>0</strong>   COMBINED
+INSTITUTION FILE POINTER: PALM DESERT HOSPITAL//<strong>&lt;enter&gt;</strong>
+DEFAULT 1010 PRINTER: <strong>BROTHER</strong>       OSEHRA     Brother_HL_6180DW_series
+DEFAULT DRUG PROFILE PRINTER: <strong>BROTHER</strong>       OSEHRA     Brother_HL_6180DW_series 
+DEFAULT ROUTING SLIP PRINTER: <strong>BROTHER</strong>       OSEHRA     Brother_HL_6180DW_series 
+DIVISION PTF PRINTER: <strong>BROTHER</strong>       OSEHRA     Brother_HL_6180DW_series</code></div>
+<h1 id="gl-parameter-edit">G&amp;L Parameter Edit</h1>
+<p>Now, the next step is to exit this menu (just press enter) and you will be back at the menu. On the same menu, find the menu <code>G&amp;L Parameter Edit</code> and follow the prompts (NB: T-1 stands for TODAY less one day; or yesterday. I do that so I can initailze the system to today.)</p>
+<div class="code"><code>Select ADT System Definition Menu <TEST ACCOUNT> Option: <strong>G&L Parameter Edit</strong>
+
+                           ENTER/EDIT G&L PARAMETERS
+===============================================================================
+G&L Initialization Date                    : NOT SPECIFIED
+TSR Initialization Date                    : NOT SPECIFIED
+SSN Format                                 : DISPLAY FORMAT UNSPECIFIED
+Means Test Copay Applicability Display     : NO
+Patient's Treating Specialty (Display)     : NO
+Show Non-Movements on G&L                  : NO
+Recalculate From (Earliest Date to Recalc) : UNSPECIFIED
+Count Vietnam Vets Remaining               : NO
+Count Over 65'S Remaining (patients>65 y/o): NO
+Days to Maintain G&L Corrections           : 0
+===============================================================================
+Do you want to edit these parameters? YES//<strong>&lt;enter&gt;</strong>
+
+G&L INITIALIZATION DATE: <strong>T-1</strong>   (MAY 15, 2018)
+TSR INITIALIZATION DATE: <strong>T-1</strong>   (MAY 15, 2018)
+SSN FORMAT: <strong>L</strong>   LAST FOUR
+MEANS TEST DISPLAY: <strong>N</strong>   NO
+PATIENT'S TREATING SPECIALTY: <strong>?</strong> 
+     Choose from:
+       1        SHOW
+       0        DON'T SHOW
+PATIENT'S TREATING SPECIALTY: <strong>0</strong>   DON'T SHOW
+SHOW NON-MOVEMENTS ON G&L: <strong>N</strong>   NO
+RECALCULATE FROM: <strong>T-1</strong>   (MAY 15, 2018)
+COUNT VIETNAM VETS REMAINING: <strong>0</strong>   NO
+COUNT OVER 65'S REMAINING: <strong>0</strong>   NO
+DAYS TO MAINTAIN G&L CORR: <strong>365</strong></code></div>
+<p>Exit this option now by typing &quot;NO&quot; or &quot;^&quot;.</p>
+<h1 id="set-up-treating-specialities">Set-up Treating Specialities</h1>
+<p>The next step is somewhat necessary but very tedious: You need to decide which specialities you will admit patients for; and deactivate all the other specialties. You can also add new ones. For this example, I will use Cardiology and Dermatology specialties and deactivate the rest (I will only show two deactivations). Please note that in real life you won't have such simple specializations: You may need Cardiology Observation, Cardiology Step-Down, Cardiology ICU, Cardiac Surgery, etc.</p>
+<div class="code"><code>Select ADT System Definition Menu <TEST ACCOUNT> Option: <strong>Treating</strong> Specialty Set-up
+
+Select FACILITY TREATING SPECIALTY NAME: <strong>?</strong> 
+ Answer with FACILITY TREATING SPECIALTY NAME
+ Do you want the entire 41-Entry FACILITY TREATING SPECIALTY List? <strong>Y</strong>   (Yes)
+   Choose from:
+   ANESTHESIOLOGY        ANESTHESIOLOGY
+   BLIND REHAB OBSERVATION        BLIND REHAB OBSERVATION
+   CARDIAC INTENSIVE CARE UNIT        CARDIAC INTENSIVE CARE UNIT
+   CARDIAC SURGERY        CARDIAC SURGERY
+   DOMICILIARY CHV        DOMICILIARY CHV
+   ED OBSERVATION        ED OBSERVATION
+   GRECC-GEM-REHAB        GRECC-GEM-REHAB
+   GRECC-MED        GRECC-MED
+   HOSPICE FOR ACUTE CARE        HOSPICE FOR ACUTE CARE
+   LONG STAY GRECC-NHCU        LONG STAY GRECC-NHCU
+   MEDICAL OBSERVATION        MEDICAL OBSERVATION
+   MEDICAL STEP DOWN        MEDICAL STEP DOWN
+   NEUROLOGY OBSERVATION        NEUROLOGY OBSERVATION
+   NH HOSPICE        NH HOSPICE
+   NH LONG STAY DEMENTIA CARE        NH LONG STAY DEMENTIA CARE
+   NH LONG STAY SKILLED NURSING        NH LONG STAY SKILLED NURSING
+   NH LONG STAY SPINAL CORD INJ        NH LONG STAY SPINAL CORD INJ
+   NH LONG-STAY CONTINUING CARE        NH LONG-STAY CONTINUING CARE
+   NH LONG-STAY MH RECOVERY        NH LONG-STAY MH RECOVERY
+   NH RESPITE CARE (NHCU)        NH RESPITE CARE (NHCU)
+                                   to exit:
+   NH SHORT STAY DEMENTIA CARE        NH SHORT STAY DEMENTIA CARE
+   NH SHORT STAY REHABILITATION        NH SHORT STAY REHABILITATION
+   NH SHORT STAY RESTORATIVE        NH SHORT STAY RESTORATIVE
+   NH SHORT STAY SKILLED NURSING        NH SHORT STAY SKILLED NURSING
+   NH SHORT-STAY CONTINUING CARE        NH SHORT-STAY CONTINUING CARE
+   NH SHORT-STAY MH RECOVERY        NH SHORT-STAY MH RECOVERY
+   PEDIATRICS        PEDIATRICS
+   PM&R TRANSITIONAL REHAB        PM&R TRANSITIONAL REHAB
+   POLYTRAUMA REHAB UNIT        POLYTRAUMA REHAB UNIT
+   PSYCH RESID REHAB PROG        PSYCH RESID REHAB PROG
+   PSYCHIATRIC OBSERVATION        PSYCHIATRIC OBSERVATION
+   PTSD RESID REHAB PROG        PTSD RESID REHAB PROG
+   REHAB MEDICINE OBSERVATION        REHAB MEDICINE OBSERVATION
+   SHORT STAY GRECC-GEM-NHCU        SHORT STAY GRECC-GEM-NHCU
+   SHORT STAY GRECC-NHCU        SHORT STAY GRECC-NHCU
+   SPINAL CORD INJURY OBSERVATION        SPINAL CORD INJURY OBSERVATION
+   SUBSTANCE ABUSE RESID PROG        SUBSTANCE ABUSE RESID PROG
+   SURGICAL OBSERVATION        SURGICAL OBSERVATION
+   SURGICAL STEPDOWN        SURGICAL STEPDOWN
+   TRANSPLANTATION        TRANSPLANTATION
+   VASCULAR        VASCULAR
+
+                                   to exit:<strong>&lt;enter&gt;</strong>
+        You may enter a new FACILITY TREATING SPECIALTY, if you wish
+        NAME MUST BE 3-30 CHARACTERS, NOT NUMERIC OR STARTING WITH
+        PUNCTUATION
+
+Select FACILITY TREATING SPECIALTY NAME: <strong>CARDIOLOGY</strong> 
+  Are you adding 'CARDIOLOGY' as
+    a new FACILITY TREATING SPECIALTY (the 42ND)? No// <strong>Y</strong>   (Yes)
+   FACILITY TREATING SPECIALTY SPECIALTY: <strong>?</strong> 
+     Enter the PTF bedsection associated with this specialty.
+     Allows only active treating specialties.
+ Answer with SPECIALTY NUMBER, or NAME, or PTF CODE
+ Do you want the entire SPECIALTY List? <strong>N</strong>   (No)
+   FACILITY TREATING SPECIALTY SPECIALTY: <strong>CARDIOLOGY</strong> 
+   FACILITY TREATING SPECIALTY ABBREVIATION: <strong>CARD</strong> 
+NAME: CARDIOLOGY//<strong>&lt;enter&gt;</strong>
+Select EFFECTIVE DATE: <strong>T-1 </strong>   MAY 15, 2018
+  Are you adding 'MAY 15, 2018' as a new EFFECTIVE DATE? No// Y  (Yes)
+  ACTIVE?: <strong>Y</strong>   YES
+SPECIALTY: CARDIOLOGY//<strong>&lt;enter&gt;</strong>
+SERVICE: <strong>MEDICINE</strong>        MED
+Select PROVIDERS:<strong>&lt;enter&gt;</strong>
+ABBREVIATION: CARD//<strong>&lt;enter&gt;</strong>
+
+     The information for the CARDIOLOGY treating specialty
+     should be entered by Medical Center Division as of midnight on
+     May 14, 2018 to properly initialize the Treating Specialty Report!
+
+     Following any new entries to or revisions of this data,
+     the G&L MUST BE recalculated back to May 15, 2018.
+
+
+
+    PATIENTS REMAINING: <strong>0</strong> 
+    PASS PATIENTS REMAINING: <strong>0</strong>
+    AA PATIENTS REMAINING: <strong>0</strong>
+    UA PATIENTS REMAINING: <strong>0</strong>
+    ASIH PATIENTS REMAINING: <strong>0</strong>
+  TSR ORDER: <strong>1</strong>
+
+Select FACILITY TREATING SPECIALTY NAME: <strong>DERMATOLOGY</strong>
+  Are you adding 'DERMATOLOGY' as
+    a new FACILITY TREATING SPECIALTY (the 43RD)? No// <strong>Y</strong>  (Yes)
+   FACILITY TREATING SPECIALTY SPECIALTY: <strong>DERMATOLOGY</strong>
+   FACILITY TREATING SPECIALTY ABBREVIATION: <strong>DERM</strong>
+NAME: DERMATOLOGY//<strong>&lt;enter&gt;</strong>
+Select EFFECTIVE DATE: <strong>T-1</strong>    MAY 15, 2018
+  Are you adding 'MAY 15, 2018' as a new EFFECTIVE DATE? No// <strong>Y</strong>  (Yes)
+  ACTIVE?: <strong>Y</strong>  YES
+SPECIALTY: DERMATOLOGY//<strong>&lt;enter&gt;</strong>
+SERVICE: <strong>MEDICINE</strong>       MED
+Select PROVIDERS:<strong>&lt;enter&gt;</strong>
+ABBREVIATION: DERM//<strong>&lt;enter&gt;</strong>
+
+     The information for the DERMATOLOGY treating specialty
+     should be entered by Medical Center Division as of midnight on
+     May 14, 2018 to properly initialize the Treating Specialty Report!
+
+     Following any new entries to or revisions of this data,
+     the G&L MUST BE recalculated back to May 15, 2018.
+
+
+
+    PATIENTS REMAINING: <strong>0</strong>
+    PASS PATIENTS REMAINING: <strong>0</strong>
+    AA PATIENTS REMAINING: <strong>0</strong>
+    UA PATIENTS REMAINING: <strong>0</strong>
+    ASIH PATIENTS REMAINING: <strong>0</strong>
+  TSR ORDER: <strong>2</strong></code></div>
+<p>And now let's do deactivations. Here are two; I won't do any more.</p>
+<div class="code"><code>Select FACILITY TREATING SPECIALTY NAME: <strong>CARD</strong>
+     1   CARDIAC INTENSIVE CARE UNIT       CARDIAC INTENSIVE CARE UNIT
+     2   CARDIAC SURGERY       CARDIAC SURGERY
+     3   CARDIOLOGY       CARDIOLOGY     CARD
+CHOOSE 1-3: <strong>1</strong>  CARDIAC INTENSIVE CARE UNIT     CARDIAC INTENSIVE CARE UNIT
+NAME: CARDIAC INTENSIVE CARE UNIT// <strong>^EFFECTIVE</strong> DATE
+Select EFFECTIVE DATE: OCT 1,2007//<strong>&lt;enter&gt;</strong>
+  EFFECTIVE DATE: OCT 1,2007//<strong>&lt;enter&gt;</strong>
+  ACTIVE?: YES// <strong>N</strong>  NO
+SPECIALTY: CARDIAC INTENSIVE CARE UNIT// <strong>^</strong>
+
+     The information for the CARDIAC INTENSIVE CARE UNIT treating specialty
+     should be entered by Medical Center Division as of midnight on
+     May 14, 2018 to properly initialize the Treating Specialty Report!
+
+     Following any new entries to or revisions of this data,
+     the G&L MUST BE recalculated back to May 15, 2018.
+
+
+
+    PATIENTS REMAINING: <strong>^</strong>
+  TSR ORDER: <strong>^</strong>
+
+Select FACILITY TREATING SPECIALTY NAME: <strong>CARD</strong>
+     1   CARDIAC INTENSIVE CARE UNIT       CARDIAC INTENSIVE CARE UNIT
+     2   CARDIAC SURGERY       CARDIAC SURGERY
+     3   CARDIOLOGY       CARDIOLOGY     CARD
+CHOOSE 1-3: <strong>2</strong>  CARDIAC SURGERY     CARDIAC SURGERY
+NAME: CARDIAC SURGERY// <strong>^EFFECTIVE</strong> DATE
+Select EFFECTIVE DATE: OCT 1,2007//<strong>&lt;enter&gt;</strong>
+  EFFECTIVE DATE: OCT 1,2007//<strong>&lt;enter&gt;</strong>
+  ACTIVE?: YES// <strong>N</strong>  NO
+SPECIALTY: CARDIAC SURGERY// <strong>^</strong>
+
+     The information for the CARDIAC SURGERY treating specialty
+     should be entered by Medical Center Division as of midnight on
+     May 14, 2018 to properly initialize the Treating Specialty Report!
+
+     Following any new entries to or revisions of this data,
+     the G&L MUST BE recalculated back to May 15, 2018.
+
+
+
+    PATIENTS REMAINING: <strong>^</strong>
+  TSR ORDER: <strong>^</strong>
+
+Select FACILITY TREATING SPECIALTY NAME:</code></div>
+<p>This concludes this section. Continue to set-up wards <a href="./WardSetup.html">here</a>.</p>
 </body>
 </html>

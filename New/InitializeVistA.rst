@@ -2344,7 +2344,8 @@ Next Steps
 ----------
 * `Set-up Clinics <./SetupClinics.html>`_
 * `Set-up MAS Parameters <./SetMasParameters.html>`_ (Part 1 of setting up a hospital)
-* Set-up Wards and Beds (Part 2 of setting up a hospital)
+* `Set-up Wards and Beds <./WardSetup.html>`_ (Part 2 of setting up a hospital)
+* Admit Patients to Hospital
 * Install a Drug File, or create one from Scratch
 * Set-up Outpatient Pharmacy
 * Set-up Inpatient Pharmacy
