@@ -17,6 +17,7 @@
 <li><a href="#create-wards">Create Wards</a></li>
 <li><a href="#create-roombeds">Create Room/Beds</a></li>
 <li><a href="#initialize-the-gains-and-losses-system">Initialize the Gains and Losses System</a></li>
+<li><a href="#extra-credit-set-up-bulletins">Extra Credit: Set-up Bulletins</a></li>
 </ul>
 </nav>
 <p>Authors: Sam Habiel. Thank you for the transcripts provided by Joanne Brougham for setting up ADT.</p>
@@ -361,7 +362,7 @@ Request Queued!</code></div>
           RUG-II Menu ...
           Supervisor ADT Menu ...
 
-Select ADT Manager Menu <TEST ACCOUNT> Option: ADT Outputs Menu
+Select ADT Manager Menu <TEST ACCOUNT> Option: <strong>ADT</strong> Outputs Menu
 
 
           10-10 Print
@@ -384,7 +385,86 @@ Select ADT Manager Menu <TEST ACCOUNT> Option: ADT Outputs Menu
           VBC Form for Specific Patient
           Waiting List Output
 
-Select ADT Outputs Menu <TEST ACCOUNT> Option:</code></div>
-<p>To be continued...</p>
+Select ADT Outputs Menu <TEST ACCOUNT> Option: <strong>Gains</strong> and Losses (G&L) Sheet
+
+<<<GAINS & LOSSES SHEET/BED STATUS REPORT/TREATING SPECIALTY REPORT>>>
+
+
+Earliest Date for G&L.....................................MAY 15,2018
+Earliest Date for Treating Specialty Report...............MAY 15,2018
+Earliest Date to Recalculate..............................MAY 15,2018
+SSN Format................................................LAST FOUR OF SSN
+Means Test Copay Applicability............................NOT DISPLAYED
+Patient's Actual Treating Specialty.......................NOT DISPLAYED
+Show Non-Movements on G&L.................................DON'T SHOW
+Store Vietnam Vet's Remaining in CENSUS file..............NO
+Store Patient's over 65 y/o Remaining in CENSUS file......NO
+
+PRINT GAINS AND LOSSES SHEET? Yes// <strong>&lt;enter&gt;</strong>  (Yes)
+
+PRINT BED STATUS REPORT? Yes//  <strong>&lt;enter&gt;</strong> (Yes)
+
+PRINT TREATING SPECIALTY REPORT? Yes//  <strong>&lt;enter&gt;</strong> (Yes)
+
+LAST BED STATUS REPORT TOTALS EXIST FOR MAY 15,2018
+
+LAST TREATING SPECIALTY REPORT TOTALS EXIST FOR MAY 15,2018
+
+PRINT REPORTS FOR WHICH DATE: MAY 16,2018//  <strong>&lt;enter&gt;</strong> (MAY 16, 2018)
+
+SITE: MAIN CAMPUS WHAT WAS THE CENSUS ON MAY 16, 2018? <strong>0</strong>
+CUM PLANNED ADC: <strong>0</strong>
+MONTHLY PLANNED ADC: <strong>0</strong>
+CORRECTIONS TO PREVIOUS G&L'S:
+  Edit? NO//<strong>&lt;enter&gt;</strong>
+
+Note: This output should be printed at a column width of 132.
+
+DEVICE: HOME// <strong>PNG</strong>
+
+ 1 PNG LANDSCAPE   /tmp/
+ 2 PNG PORTRAIT   /tmp/
+Choose 1-2> <strong>1</strong>  PNG LANDSCAPE  /tmp/
+
+Do you want your output QUEUED? No// <strong>&lt;enter&gt;</strong>  (No)</code></div>
+<p>The output looks as follows. I took the liberty of using GhostPCL to convert all the VistA output into PNG images to display on this webpage. The first page is the G&amp;L report, which is empty; 2nd and 3rd are the Bed Status Report, abbreviated as BSR. The 4th page is the Treating Specialty Report, or TSR.</p>
+<figure>
+<img src="images/WardSetup/gnl01.png" alt="G &amp; L Page 1" class="align-left" /><figcaption>G &amp; L Page 1</figcaption>
+</figure>
+<figure>
+<img src="images/WardSetup/gnl02.png" alt="G &amp; L Page 2" class="align-left" /><figcaption>G &amp; L Page 2</figcaption>
+</figure>
+<figure>
+<img src="images/WardSetup/gnl03.png" alt="G &amp; L Page 3" class="align-left" /><figcaption>G &amp; L Page 3</figcaption>
+</figure>
+<figure>
+<img src="images/WardSetup/gnl05.png" alt="G &amp; L Page 4" class="align-left" /><figcaption>G &amp; L Page 4</figcaption>
+</figure>
+<h1 id="extra-credit-set-up-bulletins">Extra Credit: Set-up Bulletins</h1>
+<p>Not covered here, but there is an optional step for you to work on: If you want VistA emails when an event happens, you can set-up mail groups, add yourself to the mail groups, and then attach the mail groups to the bulletins.</p>
+<p>Here's a list of bulletins that you can receive:</p>
+<pre><code>Select ADT System Definition Menu &lt;TEST ACCOUNT&gt; Option: &lt;b&gt;Bulletin Selection&lt;/b&gt;
+This option is used to specify the mailgroup you desire specific types of
+notification to be made to.  The mailgroup can be one created locally or a
+distributed &#39;DG&#39; mailgroup.  If a mailgroup is selected notification concerning
+that specific action will be made in the form of a mailman bulletin.  If no
+notification is desired for a specific action no mailgroup should be specified.
+If you have any questions concerning the purpose of a specific type of
+notification enter a question mark at the applicable prompt.
+
+DEATH GROUP:
+NEW PATIENT GROUP:
+NAME CHANGE GROUP:
+SSN CHANGE GROUP:
+UNVERIFIED ADMIT GROUP:
+INCONSISTENCY EDIT GROUP:
+NON-VETERAN ADMIT GROUP:
+OVERDUE ABSENCES GROUP:
+PATIENT DELETED GROUP:
+SENSITIVE REC ACCESSED GROUP:
+SENSITIVITY REMOVED GROUP:
+AUTO RECALC GROUP:
+MEANS TEST REQUIRED GROUP:
+IRT SHORT FORM LIST GROUP:</code></pre>
 </body>
 </html>

@@ -3,7 +3,7 @@ body {
   max-width: 960px;
 }
 
-.code {
+.code,pre {
   margin: 8px;
   border-radius: 4px;
   max-width: 800px;
@@ -19,4 +19,7 @@ code {
 
 img {
   max-width: 960px;
+	background:transparent;
+	padding:0px;
+	border:1px solid #999999;
 }

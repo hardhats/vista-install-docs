@@ -393,7 +393,7 @@ Now, let's check that everything is in working order. We will print ``Gains and 
             RUG-II Menu ...
             Supervisor ADT Menu ...
 
-  Select ADT Manager Menu <TEST ACCOUNT> Option: ADT Outputs Menu
+  Select ADT Manager Menu <TEST ACCOUNT> Option: <strong>ADT</strong> Outputs Menu
 
 
             10-10 Print
@@ -416,8 +416,111 @@ Now, let's check that everything is in working order. We will print ``Gains and 
             VBC Form for Specific Patient
             Waiting List Output
 
-  Select ADT Outputs Menu <TEST ACCOUNT> Option:</code></div>
+  Select ADT Outputs Menu <TEST ACCOUNT> Option: <strong>Gains</strong> and Losses (G&L) Sheet
 
-To be continued...
+  <<<GAINS & LOSSES SHEET/BED STATUS REPORT/TREATING SPECIALTY REPORT>>>
 
+
+  Earliest Date for G&L.....................................MAY 15,2018
+  Earliest Date for Treating Specialty Report...............MAY 15,2018
+  Earliest Date to Recalculate..............................MAY 15,2018
+  SSN Format................................................LAST FOUR OF SSN
+  Means Test Copay Applicability............................NOT DISPLAYED
+  Patient's Actual Treating Specialty.......................NOT DISPLAYED
+  Show Non-Movements on G&L.................................DON'T SHOW
+  Store Vietnam Vet's Remaining in CENSUS file..............NO
+  Store Patient's over 65 y/o Remaining in CENSUS file......NO
+
+  PRINT GAINS AND LOSSES SHEET? Yes// <strong>&lt;enter&gt;</strong>  (Yes)
+
+  PRINT BED STATUS REPORT? Yes//  <strong>&lt;enter&gt;</strong> (Yes)
+
+  PRINT TREATING SPECIALTY REPORT? Yes//  <strong>&lt;enter&gt;</strong> (Yes)
+
+  LAST BED STATUS REPORT TOTALS EXIST FOR MAY 15,2018
+
+  LAST TREATING SPECIALTY REPORT TOTALS EXIST FOR MAY 15,2018
+
+  PRINT REPORTS FOR WHICH DATE: MAY 16,2018//  <strong>&lt;enter&gt;</strong> (MAY 16, 2018)
+
+  SITE: MAIN CAMPUS WHAT WAS THE CENSUS ON MAY 16, 2018? <strong>0</strong>
+  CUM PLANNED ADC: <strong>0</strong>
+  MONTHLY PLANNED ADC: <strong>0</strong>
+  CORRECTIONS TO PREVIOUS G&L'S:
+    Edit? NO//<strong>&lt;enter&gt;</strong>
+
+  Note: This output should be printed at a column width of 132.
+
+  DEVICE: HOME// <strong>PNG</strong>
+
+   1 PNG LANDSCAPE   /tmp/
+   2 PNG PORTRAIT   /tmp/
+  Choose 1-2> <strong>1</strong>  PNG LANDSCAPE  /tmp/
+
+  Do you want your output QUEUED? No// <strong>&lt;enter&gt;</strong>  (No)</code></div>
+
+The output looks as follows. I took the liberty of using GhostPCL to convert all the VistA
+output into PNG images to display on this webpage. The first page is the G&L report, which
+is empty; 2nd and 3rd are the Bed Status Report, abbreviated as BSR. The 4th page is the 
+Treating Specialty Report, or TSR.
+
+.. figure::
+   images/WardSetup/gnl01.png
+   :align: left
+   :alt: G&L page 1
+	 
+	 G & L Page 1
+
+.. figure::
+   images/WardSetup/gnl02.png
+   :align: left
+   :alt: G&L page 2
+	 
+	 G & L Page 2
+
+.. figure::
+   images/WardSetup/gnl03.png
+   :align: left
+   :alt: G&L page 3
+
+	 G & L Page 3
+
+.. figure::
+   images/WardSetup/gnl05.png
+   :align: left
+   :alt: G&L page 4
+
+	 G & L Page 4
+
+Extra Credit: Set-up Bulletins
+------------------------------
+Not covered here, but there is an optional step for you to work on: If you want VistA emails
+when an event happens, you can set-up mail groups, add yourself to the mail groups, and then
+attach the mail groups to the bulletins.
+
+Here's a list of bulletins that you can receive::
+
+	Select ADT System Definition Menu <TEST ACCOUNT> Option: Bulletin Selection
+	This option is used to specify the mailgroup you desire specific types of
+	notification to be made to.  The mailgroup can be one created locally or a
+	distributed 'DG' mailgroup.  If a mailgroup is selected notification concerning
+	that specific action will be made in the form of a mailman bulletin.  If no
+	notification is desired for a specific action no mailgroup should be specified.
+	If you have any questions concerning the purpose of a specific type of
+	notification enter a question mark at the applicable prompt.
+
+	DEATH GROUP:
+	NEW PATIENT GROUP:
+	NAME CHANGE GROUP:
+	SSN CHANGE GROUP:
+	UNVERIFIED ADMIT GROUP:
+	INCONSISTENCY EDIT GROUP:
+	NON-VETERAN ADMIT GROUP:
+	OVERDUE ABSENCES GROUP:
+	PATIENT DELETED GROUP:
+	SENSITIVE REC ACCESSED GROUP:
+	SENSITIVITY REMOVED GROUP:
+	AUTO RECALC GROUP:
+	MEANS TEST REQUIRED GROUP:
+	IRT SHORT FORM LIST GROUP:
 
