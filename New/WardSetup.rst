@@ -468,29 +468,29 @@ Treating Specialty Report, or TSR.
    images/WardSetup/gnl01.png
    :align: left
    :alt: G&L page 1
-	 
-	 G & L Page 1
+   
+   G & L Page 1
 
 .. figure::
    images/WardSetup/gnl02.png
    :align: left
    :alt: G&L page 2
-	 
-	 G & L Page 2
+   
+   G & L Page 2
 
 .. figure::
    images/WardSetup/gnl03.png
    :align: left
    :alt: G&L page 3
 
-	 G & L Page 3
+   G & L Page 3
 
 .. figure::
    images/WardSetup/gnl05.png
    :align: left
    :alt: G&L page 4
 
-	 G & L Page 4
+   G & L Page 4
 
 Extra Credit: Set-up Bulletins
 ------------------------------
@@ -500,27 +500,92 @@ attach the mail groups to the bulletins.
 
 Here's a list of bulletins that you can receive::
 
-	Select ADT System Definition Menu <TEST ACCOUNT> Option: Bulletin Selection
-	This option is used to specify the mailgroup you desire specific types of
-	notification to be made to.  The mailgroup can be one created locally or a
-	distributed 'DG' mailgroup.  If a mailgroup is selected notification concerning
-	that specific action will be made in the form of a mailman bulletin.  If no
-	notification is desired for a specific action no mailgroup should be specified.
-	If you have any questions concerning the purpose of a specific type of
-	notification enter a question mark at the applicable prompt.
+  Select ADT System Definition Menu <TEST ACCOUNT> Option: Bulletin Selection
+  This option is used to specify the mailgroup you desire specific types of
+  notification to be made to.  The mailgroup can be one created locally or a
+  distributed 'DG' mailgroup.  If a mailgroup is selected notification concerning
+  that specific action will be made in the form of a mailman bulletin.  If no
+  notification is desired for a specific action no mailgroup should be specified.
+  If you have any questions concerning the purpose of a specific type of
+  notification enter a question mark at the applicable prompt.
 
-	DEATH GROUP:
-	NEW PATIENT GROUP:
-	NAME CHANGE GROUP:
-	SSN CHANGE GROUP:
-	UNVERIFIED ADMIT GROUP:
-	INCONSISTENCY EDIT GROUP:
-	NON-VETERAN ADMIT GROUP:
-	OVERDUE ABSENCES GROUP:
-	PATIENT DELETED GROUP:
-	SENSITIVE REC ACCESSED GROUP:
-	SENSITIVITY REMOVED GROUP:
-	AUTO RECALC GROUP:
-	MEANS TEST REQUIRED GROUP:
-	IRT SHORT FORM LIST GROUP:
+  DEATH GROUP:
+  NEW PATIENT GROUP:
+  NAME CHANGE GROUP:
+  SSN CHANGE GROUP:
+  UNVERIFIED ADMIT GROUP:
+  INCONSISTENCY EDIT GROUP:
+  NON-VETERAN ADMIT GROUP:
+  OVERDUE ABSENCES GROUP:
+  PATIENT DELETED GROUP:
+  SENSITIVE REC ACCESSED GROUP:
+  SENSITIVITY REMOVED GROUP:
+  AUTO RECALC GROUP:
+  MEANS TEST REQUIRED GROUP:
+  IRT SHORT FORM LIST GROUP:
 
+Setup Gains and Losses Task in Taskman
+--------------------------------------
+The last step is to make sure that the daily statistics for G&L are recalcuated each
+night for the previous day's admission. The task that needs to be scheduled is called
+``DG G&L RECALCULATION AUTO``. You need to press enter several times until you are
+back up to the System Manager Menu. From there, choose ``Taskman Management`` and then
+``Schedule/Unschedule Options``.
+
+.. raw:: html
+
+  <pre>Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>Taskman Management</strong>
+
+
+            Schedule/Unschedule Options
+            One-time Option Queue
+            Taskman Management Utilities ...
+            List Tasks
+            Dequeue Tasks
+            Requeue Tasks
+            Delete Tasks
+            Print Options that are Scheduled to run
+            Cleanup Task List
+            Print Options Recommended for Queueing
+
+  Select Taskman Management <TEST ACCOUNT> Option: <strong>Sched</strong>ule/Unschedule Options
+
+  Select OPTION to schedule or reschedule: <strong>DG G&L RECALCULATION AUTO</strong>       Auto-re
+  calculation of G&L Statistics
+    Are you adding 'DG G&L RECALCULATION AUTO' as 
+      a new OPTION SCHEDULING (the 13TH)? No// <strong>Y</strong></pre>
+  
+You will a Screenman screen, like the one we used when we added a new user. Fill in the field
+``QUEUED TO RUN AT WHAT TIME`` to ``T+1@0001`` and ``RESCHEDULING FREQUENCY``. The ``TASK ID``
+number will be empty until you go to bottom and type "S" (or F1-S, or click on "Save") to
+save the entry. You can then Exit ("E", F1-E, or click on Exit) to exit back to the menu system.
+
+.. raw:: html
+
+ <pre>                      Edit Option Schedule
+      Option Name: DG G&L RECALCULATION AUTO
+      Menu Text: Auto-recalculation of G&L Statis          TASK ID: 1115
+    __________________________________________________________________________
+
+    QUEUED TO RUN AT WHAT TIME: <strong>T+1@0001</strong>
+
+  DEVICE FOR QUEUED JOB OUTPUT:
+
+   QUEUED TO RUN ON VOLUME SET:
+
+        RESCHEDULING FREQUENCY: <strong>1D</strong>
+
+               TASK PARAMETERS:
+
+              SPECIAL QUEUEING:
+
+  _______________________________________________________________________________
+
+  Exit    Save    Next Page    Refresh    Quit
+
+  Click on one of the above COMMANDs, or on a FIELD
+
+  COMMAND: E                                                        HELP  Insert</pre>
+
+
+Continue on to `Admit Patients <./AdmitPatients.html>`_

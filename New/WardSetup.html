@@ -18,6 +18,7 @@
 <li><a href="#create-roombeds">Create Room/Beds</a></li>
 <li><a href="#initialize-the-gains-and-losses-system">Initialize the Gains and Losses System</a></li>
 <li><a href="#extra-credit-set-up-bulletins">Extra Credit: Set-up Bulletins</a></li>
+<li><a href="#setup-gains-and-losses-task-in-taskman">Setup Gains and Losses Task in Taskman</a></li>
 </ul>
 </nav>
 <p>Authors: Sam Habiel. Thank you for the transcripts provided by Joanne Brougham for setting up ADT.</p>
@@ -466,5 +467,53 @@ SENSITIVITY REMOVED GROUP:
 AUTO RECALC GROUP:
 MEANS TEST REQUIRED GROUP:
 IRT SHORT FORM LIST GROUP:</code></pre>
+<h1 id="setup-gains-and-losses-task-in-taskman">Setup Gains and Losses Task in Taskman</h1>
+<p>The last step is to make sure that the daily statistics for G&amp;L are recalcuated each night for the previous day's admission. The task that needs to be scheduled is called <code>DG G&amp;L RECALCULATION AUTO</code>. You need to press enter several times until you are back up to the System Manager Menu. From there, choose <code>Taskman Management</code> and then <code>Schedule/Unschedule Options</code>.</p>
+<pre>Select Systems Manager Menu <TEST ACCOUNT> Option: <strong>Taskman Management</strong>
+
+
+          Schedule/Unschedule Options
+          One-time Option Queue
+          Taskman Management Utilities ...
+          List Tasks
+          Dequeue Tasks
+          Requeue Tasks
+          Delete Tasks
+          Print Options that are Scheduled to run
+          Cleanup Task List
+          Print Options Recommended for Queueing
+
+Select Taskman Management <TEST ACCOUNT> Option: <strong>Sched</strong>ule/Unschedule Options
+
+Select OPTION to schedule or reschedule: <strong>DG G&L RECALCULATION AUTO</strong>       Auto-re
+calculation of G&L Statistics
+  Are you adding 'DG G&L RECALCULATION AUTO' as 
+    a new OPTION SCHEDULING (the 13TH)? No// <strong>Y</strong></pre>
+<p>You will a Screenman screen, like the one we used when we added a new user. Fill in the field <code>QUEUED TO RUN AT WHAT TIME</code> to <code>T+1@0001</code> and <code>RESCHEDULING FREQUENCY</code>. The <code>TASK ID</code> number will be empty until you go to bottom and type &quot;S&quot; (or F1-S, or click on &quot;Save&quot;) to save the entry. You can then Exit (&quot;E&quot;, F1-E, or click on Exit) to exit back to the menu system.</p>
+<pre>                      Edit Option Schedule
+     Option Name: DG G&L RECALCULATION AUTO
+     Menu Text: Auto-recalculation of G&L Statis          TASK ID: 1115
+   __________________________________________________________________________
+
+   QUEUED TO RUN AT WHAT TIME: <strong>T+1@0001</strong>
+
+ DEVICE FOR QUEUED JOB OUTPUT:
+
+  QUEUED TO RUN ON VOLUME SET:
+
+       RESCHEDULING FREQUENCY: <strong>1D</strong>
+
+              TASK PARAMETERS:
+
+             SPECIAL QUEUEING:
+
+ _______________________________________________________________________________
+
+ Exit    Save    Next Page    Refresh    Quit
+
+ Click on one of the above COMMANDs, or on a FIELD
+
+ COMMAND: E                                                        HELP  Insert</pre>
+<p>Continue on to <a href="./AdmitPatients.html">Admit Patients</a></p>
 </body>
 </html>
