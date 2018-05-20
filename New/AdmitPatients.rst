@@ -23,7 +23,7 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
 
 .. raw:: html
 
-  <pre>Select ADT Manager Menu <TEST ACCOUNT> Option: Bed Control Menu
+  <pre>Select ADT Manager Menu <TEST ACCOUNT> Option: <strong>Bed</strong>  Control Menu
 
 
             Admit a Patient
@@ -43,18 +43,18 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
             Treating Specialty Transfer
             Waiting List Entry/Edit
 
-  Select Bed Control Menu <TEST ACCOUNT> Option: Admit a Patient
+  Select Bed Control Menu <TEST ACCOUNT> Option: <strong>Admit</strong>  a Patient
 
-  Admit PATIENT: DUCK,DAFFY
-     ARE YOU ADDING 'DUCK,DAFFY' AS A NEW PATIENT (THE 2ND)? No// Y  (Yes)
-     PATIENT SEX: M MALE
-     PATIENT DATE OF BIRTH: 11/11/78  (NOV 11, 1978)
-     PATIENT SOCIAL SECURITY NUMBER: P  202111178P
-     PATIENT PSEUDO SSN REASON: N NO SSN ASSIGNED
-     PATIENT TYPE: NON-VETERAN (OTHER)
-     PATIENT VETERAN (Y/N)?: N NO
-     PATIENT SERVICE CONNECTED?: N NO
-     PATIENT MULTIPLE BIRTH INDICATOR: N NO
+  Admit PATIENT: <strong>DUCK,DAFFY</strong> 
+     ARE YOU ADDING 'DUCK,DAFFY' AS A NEW PATIENT (THE 2ND)? No// <strong>Y</strong>   (Yes)
+     PATIENT SEX: <strong>M</strong>  MALE
+     PATIENT DATE OF BIRTH: <strong>11/11/78</strong>   (NOV 11, 1978)
+     PATIENT SOCIAL SECURITY NUMBER: <strong>P</strong>   202111178P
+     PATIENT PSEUDO SSN REASON: <strong>N</strong>  NO SSN ASSIGNED
+     PATIENT TYPE: <strong>NON-VETERAN</strong>  (OTHER)
+     PATIENT VETERAN (Y/N)?: <strong>N</strong>  NO
+     PATIENT SERVICE CONNECTED?: <strong>N</strong>  NO
+     PATIENT MULTIPLE BIRTH INDICATOR: <strong>N</strong>  NO
 
      ...searching for potential duplicates
 
@@ -63,14 +63,14 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
      ...adding new patient...new patient added
 
   Patient name components--
-  FAMILY (LAST) NAME: DUCK//
-  GIVEN (FIRST) NAME: DAFFY//
-  MIDDLE NAME:
-  PREFIX:
-  SUFFIX:
-  DEGREE:
+  FAMILY (LAST) NAME: DUCK//<strong>&lt;enter&gt;</strong>
+  GIVEN (FIRST) NAME: DAFFY//<strong>&lt;enter&gt;</strong>
+  MIDDLE NAME:<strong>&lt;enter&gt;</strong>
+  PREFIX:<strong>&lt;enter&gt;</strong>
+  SUFFIX:<strong>&lt;enter&gt;</strong>
+  DEGREE:<strong>&lt;enter&gt;</strong>
 
-  NEW PATIENT!  WANT TO LOAD 10-10 DATA NOW? Yes// N  (No)
+  NEW PATIENT!  WANT TO LOAD 10-10 DATA NOW? Yes// <strong>N</strong>   (No)
 
   Means Test not required based on available information
 
@@ -79,13 +79,13 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
   Religion    :                          Marital Status :
   Eligibility :  (NOT VERIFIED)
 
-  <C>ontinue, <M>ore, or <Q>uit?  CONTINUE// CONTINUE
+  &lt;C&gt;ontinue, &lt;M&gt;ore, or &lt;Q&gt;uit?  CONTINUE// <strong>&lt;enter&gt;</strong>
 
-  Select ADMISSION DATE:  NOW//   (MAY 17,2018@14:27:36)
+  Select ADMISSION DATE:  NOW//  <strong>&lt;enter&gt;</strong> (MAY 17,2018@14:27:36)
 
-  SURE YOU WANT TO ADD 'MAY 17,2018@14:27:36' AS A NEW ADMISSION DATE? // Y  (Yes)
-  DOES THE PATIENT WISH TO BE EXCLUDED FROM THE FACILITY DIRECTORY?: N  NO
-  ADMITTING REGULATION: ??
+  SURE YOU WANT TO ADD 'MAY 17,2018@14:27:36' AS A NEW ADMISSION DATE? // <strong>Y</strong>   (Yes)
+  DOES THE PATIENT WISH TO BE EXCLUDED FROM THE FACILITY DIRECTORY?: <strong>N</strong>   NO
+  ADMITTING REGULATION: <strong>??</strong> 
      When admitting a patient, you must choose an active ADMITTING REGULATION
      which best describes the category under which this patient is being
      admitted.
@@ -133,7 +133,7 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
      62           VOCATIONAL REHABILITATION         17.80(a)(4)
      63           STATE NH, DOM OR HOSP.            17.1666d
      67           DOMICILIARY CARE                  17.47(e)(1)
-                                     to exit:
+                                     to exit:<strong>&lt;enter&gt;</strong>
      68           COMMUNITY NURSING HOME CARE       17.51
      72           CHAMPVA                           17.54
      73           PRESUMPTION OF SC                 17.35(b)
@@ -141,8 +141,8 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
      75           NON-VA (P&T DISABILITY)           17.50b(a)(1)(iii)
      202          NON-VA FOR FEMALE VET+NEWBORN     17.38
 
-  ADMITTING REGULATION: 4  OBSERVATION & EXAMINATION  17.45
-  TYPE OF ADMISSION: ?
+  ADMITTING REGULATION: <strong>4</strong>   OBSERVATION & EXAMINATION  17.45
+  TYPE OF ADMISSION: <strong>?</strong> 
        Enter the type of movement for this patient on the date/time entered.
        Transaction types must match and only allowable types can be chosen.
    Answer with FACILITY MOVEMENT TYPE NUMBER, or NAME, or PRINT NAME
@@ -157,9 +157,9 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
      7            WAITING LIST     ADMISSION     ACTIVE
      8            PBC     ADMISSION     ACTIVE
 
-  TYPE OF ADMISSION: 1  DIRECT     ADMISSION     ACTIVE
-  DIAGNOSIS [SHORT]: Hates Bugs Bunny!
-  WARD LOCATION: ?
+  TYPE OF ADMISSION: <strong>1</strong>   DIRECT     ADMISSION     ACTIVE
+  DIAGNOSIS [SHORT]: <strong>Hates Bugs Bunny!</strong> 
+  WARD LOCATION: <strong>?</strong> 
           Enter the ward on which the patient was placed.
           Don't allow an inactive ward or one not on bed census
       Answer with WARD LOCATION NAME, or SERVICE, or NSERV, or SYNONYM
@@ -167,8 +167,8 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
      3 EAST
      3 WEST
 
-  WARD LOCATION: 3 WEST
-  ROOM-BED: ?
+  WARD LOCATION: <strong>3 WEST</strong> 
+  ROOM-BED: <strong>?</strong> 
        Enter the ROOM-BED to which this patient is assigned.
        Only those unoccupied beds on ward selected
 
@@ -180,13 +180,13 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
 
   Select from the above listing the bed you wish to assign this patient.
   Enter two question marks for a more detailed list of available beds.
-  ROOM-BED: 301-A
-  FACILITY TREATING SPECIALTY: ?
+  ROOM-BED: <strong>301-A</strong> 
+  FACILITY TREATING SPECIALTY: <strong>?</strong> 
        Enter the TREATING SPECIALTY assigned to this patient with this movement.
        This must be an active treating specialty.
        Allows only active treating specialties.
    Answer with FACILITY TREATING SPECIALTY NAME
-   Do you want the entire FACILITY TREATING SPECIALTY List? Y  (Yes)
+   Do you want the entire FACILITY TREATING SPECIALTY List? <strong>Y</strong>   (Yes)
      Choose from:
      ANESTHESIOLOGY        ANESTHESIOLOGY
      CARDIOLOGY        CARDIOLOGY     CARD
@@ -208,16 +208,16 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
      NH SHORT STAY RESTORATIVE        NH SHORT STAY RESTORATIVE
      NH SHORT STAY SKILLED NURSING        NH SHORT STAY SKILLED NURSING
      NH SHORT-STAY CONTINUING CARE        NH SHORT-STAY CONTINUING CARE
-                                     to exit: ^
+                                     to exit: <strong>^</strong> 
 
-  FACILITY TREATING SPECIALTY: CARDIOLOGY       CARDIOLOGY     CARD
-  PRIMARY PHYSICIAN: CPRS,USER       UC
-  ATTENDING PHYSICIAN: CPRS,USER       UC
+  FACILITY TREATING SPECIALTY: <strong>CARDIOLOGY</strong>        CARDIOLOGY     CARD
+  PRIMARY PHYSICIAN: <strong>CPRS,USER</strong>        UC
+  ATTENDING PHYSICIAN: <strong>CPRS,USER</strong>        UC
   DIAGNOSIS:
   Hates Bugs Bunny!
 
-    Edit? NO//
-  SOURCE OF ADMISSION: ??
+    Edit? NO//<strong>&lt;enter&gt;</strong>
+  SOURCE OF ADMISSION: <strong>??</strong> 
      This field contains the source of admission of the veteran, or
      where he was admitted to the hospital from, i.e. community, other
      facility, etc.
@@ -242,9 +242,8 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
      3A        TRANSFER IN FROM ANOTHER VA HOSPITAL     HOSPITAL
      3B        TRANSFER IN FROM OTH FED HOSP UNDER VA AUSP     HOSPITAL
      3C        TRANS IN FROM ANY OTHER NON-VA HOSP UNDER VA AUSP     HOSPITAL
-     3D        TRANS FROM VAMC TO MILITARY FAC. UNDER VA AUSP     MILITARY HOSPITA
-  L
-                                     to exit:
+     3D        TRANS FROM VAMC TO MILITARY FAC. UNDER VA AUSP     MILITARY HOSPITAL
+                                     to exit:<strong>&lt;enter&gt;</strong>
      3E        TRANS FROM VAH-VAH-CONT HOS SINCE 7/1/86 OR PRIOR     HOSPITAL
      4A        FROM VA HOSPITAL     DOMICILIARY
      4B        FROM VA HOSPITAL ON NON-BED-CARE     DOMICILIARY
@@ -267,7 +266,7 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
      4W        SELF-WALKIN     DOMICILIARY
      4Y        ALL OTHER SOURCES, UNKNOWN OR NO INFO     DOMICILIARY
      5A        VA MEDICAL CENTER     NHCU
-                                     to exit:
+                                     to exit:<strong>&lt;enter&gt;</strong>
      5B        NON-VA HOSPITAL UNDER VA AUSPICES     NHCU
      5C        VA DOMICILLARY     NHCU
      5E        TRANSFER IN FROM ANOTHER VA NHCU     NHCU
@@ -279,11 +278,11 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
      6D        DIRECT ADMISSION FROM ALL OTHER SOURCES     CNH
      7B        DIRECT ADM OF ACTIVE DUTY PERS FROM MILT HOSP     CNH
 
-  SOURCE OF ADMISSION: 1T       OBSERVATION AND EXAMINATION     HOSPITAL
+  SOURCE OF ADMISSION: <strong>1T</strong>        OBSERVATION AND EXAMINATION     HOSPITAL
   Patient Admitted
 
 
-  CONDITION: SERIOUSLY ILL//   SERIOUSLY ILL
+  CONDITION: SERIOUSLY ILL// <strong>&lt;enter&gt;</strong>  SERIOUSLY ILL
 
   **** New Admission Message Transmitted to MIS ****
 
@@ -304,16 +303,16 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
 
   Updating visit status...completed.
   
-  Admit PATIENT: RUNNER,ROAD
-   ARE YOU ADDING 'RUNNER,ROAD' AS A NEW PATIENT (THE 3RD)? No// Y  (Yes)
-   PATIENT SEX: F FEMALE
-   PATIENT DATE OF BIRTH: 11/11/22  (NOV 11, 1922)
-   PATIENT SOCIAL SECURITY NUMBER: P  606111122P
-   PATIENT PSEUDO SSN REASON: N NO SSN ASSIGNED
-   PATIENT TYPE: NON-VETERAN (OTHER)
-   PATIENT VETERAN (Y/N)?: N NO
-   PATIENT SERVICE CONNECTED?: N NO
-   PATIENT MULTIPLE BIRTH INDICATOR: N NO
+  Admit PATIENT: <strong>RUNNER,ROAD</strong> 
+   ARE YOU ADDING 'RUNNER,ROAD' AS A NEW PATIENT (THE 3RD)? No// <strong>Y</strong>   (Yes)
+   PATIENT SEX: <strong>F</strong>  FEMALE
+   PATIENT DATE OF BIRTH: <strong>11/11/22</strong>   (NOV 11, 1922)
+   PATIENT SOCIAL SECURITY NUMBER: <strong>P</strong>   606111122P
+   PATIENT PSEUDO SSN REASON: <strong>N</strong>  NO SSN ASSIGNED
+   PATIENT TYPE: <strong>NON-VETERAN</strong>  (OTHER)
+   PATIENT VETERAN (Y/N)?: <strong>N</strong>  NO
+   PATIENT SERVICE CONNECTED?: <strong>N</strong>  NO
+   PATIENT MULTIPLE BIRTH INDICATOR: <strong>N</strong>  NO
 
    ...searching for potential duplicates
 
@@ -322,14 +321,14 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
    ...adding new patient...new patient added
 
   Patient name components--
-  FAMILY (LAST) NAME: RUNNER//
-  GIVEN (FIRST) NAME: ROAD//
-  MIDDLE NAME:
-  PREFIX:
-  SUFFIX:
-  DEGREE:
+  FAMILY (LAST) NAME: RUNNER//<strong>&lt;enter&gt;</strong>
+  GIVEN (FIRST) NAME: ROAD//<strong>&lt;enter&gt;</strong>
+  MIDDLE NAME:<strong>&lt;enter&gt;</strong>
+  PREFIX:<strong>&lt;enter&gt;</strong>
+  SUFFIX:<strong>&lt;enter&gt;</strong>
+  DEGREE:<strong>&lt;enter&gt;</strong>
 
-  NEW PATIENT!  WANT TO LOAD 10-10 DATA NOW? Yes//   (Yes)
+  NEW PATIENT!  WANT TO LOAD 10-10 DATA NOW? Yes// <strong>&lt;enter&gt;</strong>  (Yes)
                 PATIENT DEMOGRAPHIC DATA, SCREEN <1>
   RUNNER,ROAD;    606-11-1122P                                NON-VETERAN (OTHER)
   ===============================================================================
@@ -352,7 +351,7 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
       Phone: UNANSWERED                       Phone: NOT APPLICABLE
      Office: UNANSWERED                     From/To: NOT APPLICABLE
    Bad Addr:
-  <RET> to CONTINUE, 1-5 or ALL to EDIT, ^N for screen N or '^' to QUIT: ^
+  <RET> to CONTINUE, 1-5 or ALL to EDIT, ^N for screen N or '^' to QUIT: <strong>^</strong> 
 
   CONSISTENCY CHECKER TURNED OFF!!
   Patient is exempt from Copay.
@@ -364,17 +363,17 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
   Religion    :                          Marital Status :
   Eligibility :  (NOT VERIFIED)
 
-  <C>ontinue, <M>ore, or <Q>uit?  CONTINUE// CONTINUE
+  &lt;C&gt;ontinue, &lt;M&gt;ore, or &lt;Q&gt;uit?  CONTINUE// <strong>&lt;enter&gt;</strong>
 
-  Select ADMISSION DATE:  NOW//   (MAY 17,2018@17:03:32)
+  Select ADMISSION DATE:  NOW// <strong>&lt;enter&gt;</strong>  (MAY 17,2018@17:03:32)
 
-  SURE YOU WANT TO ADD 'MAY 17,2018@17:03:32' AS A NEW ADMISSION DATE? // Y  (Yes)
-  DOES THE PATIENT WISH TO BE EXCLUDED FROM THE FACILITY DIRECTORY?: N  NO
-  ADMITTING REGULATION: 4  OBSERVATION & EXAMINATION  17.45
-  TYPE OF ADMISSION: 1  DIRECT     ADMISSION     ACTIVE
-  DIAGNOSIS [SHORT]: TIRED OF RUNNING
-  WARD LOCATION: 3 WEST
-  ROOM-BED: ?
+  SURE YOU WANT TO ADD 'MAY 17,2018@17:03:32' AS A NEW ADMISSION DATE? // <strong>Y</strong>   (Yes)
+  DOES THE PATIENT WISH TO BE EXCLUDED FROM THE FACILITY DIRECTORY?: <strong>N</strong>   NO
+  ADMITTING REGULATION: <strong>4</strong>   OBSERVATION & EXAMINATION  17.45
+  TYPE OF ADMISSION: <strong>1</strong>   DIRECT     ADMISSION     ACTIVE
+  DIAGNOSIS [SHORT]: <strong>TIRED</strong>  OF RUNNING
+  WARD LOCATION: <strong>3 WEST</strong> 
+  ROOM-BED: <strong>?</strong> 
        Enter the ROOM-BED to which this patient is assigned.
        Only those unoccupied beds on ward selected
 
@@ -385,9 +384,9 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
 
   Select from the above listing the bed you wish to assign this patient.
   Enter two question marks for a more detailed list of available beds.
-  ROOM-BED: 303-S
-  FACILITY TREATING SPECIALTY: CARDIOLOGY       CARDIOLOGY     CARD
-  PRIMARY PHYSICIAN:  ??
+  ROOM-BED: <strong>303-S</strong> 
+  FACILITY TREATING SPECIALTY: <strong>CARDIOLOGY</strong>        CARDIOLOGY     CARD
+  PRIMARY PHYSICIAN:  <strong>??</strong> 
        Enter the PROVIDER assigned to this patient with this movement.
        Select active providers only.
 
@@ -395,22 +394,17 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
      Choose from:
      CPRS,USER      CPRS,USER     UC
 
-  PRIMARY PHYSICIAN: CPRS,USER       UC
-  ATTENDING PHYSICIAN:    CPRS,USER     UC
+  PRIMARY PHYSICIAN: <strong>CPRS,USER</strong>        UC
+  ATTENDING PHYSICIAN:    <strong>CPRS,USER</strong>      UC
   DIAGNOSIS:
   TIRED OF RUNNING
 
-    Edit? NO//
-  SOURCE OF ADMISSION: 1T       OBSERVATION AND EXAMINATION     HOSPITAL
+    Edit? NO//<strong>&lt;enter&gt;</strong>
+  SOURCE OF ADMISSION: <strong>1T</strong>        OBSERVATION AND EXAMINATION     HOSPITAL
   Patient Admitted
 
 
-  CONDITION: SERIOUSLY ILL// N??
-       Enter 'S' if this patient is seriouslly ill or '@' to delete.  Enter
-       nothing if the patient is not seriously ill.
-       Choose from:
-         S        SERIOUSLY ILL
-  CONDITION: SERIOUSLY ILL// @
+  CONDITION: SERIOUSLY ILL// <strong>@</strong> 
 
   **** New Admission Message Transmitted to MIS ****
 
@@ -431,16 +425,16 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
 
   Updating visit status...completed.
   
-  Admit PATIENT: COYOTE,WILEY
-   ARE YOU ADDING 'COYOTE,WILEY' AS A NEW PATIENT (THE 4TH)? No// Y  (Yes)
-   PATIENT SEX: M MALE
-   PATIENT DATE OF BIRTH: 11/11/87  (NOV 11, 1987)
-   PATIENT SOCIAL SECURITY NUMBER: P  801111187P
-   PATIENT PSEUDO SSN REASON: N NO SSN ASSIGNED
-   PATIENT TYPE: NON-VETERAN (OTHER)
-   PATIENT VETERAN (Y/N)?: N NO
-   PATIENT SERVICE CONNECTED?: N NO
-   PATIENT MULTIPLE BIRTH INDICATOR: N NO
+  Admit PATIENT: <strong>COYOTE,WILEY</strong> 
+   ARE YOU ADDING 'COYOTE,WILEY' AS A NEW PATIENT (THE 4TH)? No// <strong>Y</strong>   (Yes)
+   PATIENT SEX: <strong>M</strong>  MALE
+   PATIENT DATE OF BIRTH: <strong>11/11/87</strong>   (NOV 11, 1987)
+   PATIENT SOCIAL SECURITY NUMBER: <strong>P</strong>   801111187P
+   PATIENT PSEUDO SSN REASON: <strong>N</strong> NO SSN ASSIGNED
+   PATIENT TYPE: <strong>NON</strong>-VETERAN (OTHER)
+   PATIENT VETERAN (Y/N)?: <strong>N</strong> NO
+   PATIENT SERVICE CONNECTED?: <strong>N</strong> NO
+   PATIENT MULTIPLE BIRTH INDICATOR: <strong>N</strong> NO
 
    ...searching for potential duplicates
 
@@ -449,14 +443,14 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
    ...adding new patient...new patient added
 
   Patient name components--
-  FAMILY (LAST) NAME: COYOTE//
-  GIVEN (FIRST) NAME: WILEY//
-  MIDDLE NAME:
-  PREFIX:
-  SUFFIX:
-  DEGREE:
+  FAMILY (LAST) NAME: COYOTE//<strong>&lt;enter&gt;</strong>
+  GIVEN (FIRST) NAME: WILEY//<strong>&lt;enter&gt;</strong>
+  MIDDLE NAME:<strong>&lt;enter&gt;</strong>
+  PREFIX:<strong>&lt;enter&gt;</strong>
+  SUFFIX:<strong>&lt;enter&gt;</strong>
+  DEGREE:<strong>&lt;enter&gt;</strong>
 
-  NEW PATIENT!  WANT TO LOAD 10-10 DATA NOW? Yes// N  (No)
+  NEW PATIENT!  WANT TO LOAD 10-10 DATA NOW? Yes// <strong>N</strong>   (No)
 
   Means Test not required based on available information
 
@@ -465,17 +459,17 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
   Religion    :                          Marital Status :
   Eligibility :  (NOT VERIFIED)
 
-  <C>ontinue, <M>ore, or <Q>uit?  CONTINUE// CONTINUE
+  &lt;C&gt;ontinue, &lt;M&gt;ore, or &lt;Q&gt;uit?  CONTINUE// <strong>&lt;enter&gt;</strong>
 
-  Select ADMISSION DATE:  NOW//   (MAY 17,2018@17:10:14)
+  Select ADMISSION DATE:  NOW// <strong>&lt;enter&gt;</strong>  (MAY 17,2018@17:10:14)
 
-  SURE YOU WANT TO ADD 'MAY 17,2018@17:10:14' AS A NEW ADMISSION DATE? // Y  (Yes)
-  DOES THE PATIENT WISH TO BE EXCLUDED FROM THE FACILITY DIRECTORY?: N  NO
-  ADMITTING REGULATION: 4  OBSERVATION & EXAMINATION  17.45
-  TYPE OF ADMISSION: 1  DIRECT     ADMISSION     ACTIVE
-  DIAGNOSIS [SHORT]: Burned by Road Runner
-  WARD LOCATION: 3 EAST
-  ROOM-BED: ?
+  SURE YOU WANT TO ADD 'MAY 17,2018@17:10:14' AS A NEW ADMISSION DATE? // <strong>Y</strong>  (Yes)
+  DOES THE PATIENT WISH TO BE EXCLUDED FROM THE FACILITY DIRECTORY?: <strong>N</strong>  NO
+  ADMITTING REGULATION: <strong>4</strong>  OBSERVATION & EXAMINATION  17.45
+  TYPE OF ADMISSION: <strong>1</strong>  DIRECT     ADMISSION     ACTIVE
+  DIAGNOSIS [SHORT]: <strong>Burned by Road Runner</strong> 
+  WARD LOCATION: <strong>3 EAST</strong> 
+  ROOM-BED: <strong>?</strong> 
        Enter the ROOM-BED to which this patient is assigned.
        Only those unoccupied beds on ward selected
 
@@ -487,19 +481,19 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
 
   Select from the above listing the bed you wish to assign this patient.
   Enter two question marks for a more detailed list of available beds.
-  ROOM-BED: 313-S
-  FACILITY TREATING SPECIALTY: DERMATOLOGY       DERMATOLOGY     DERM
-  PRIMARY PHYSICIAN:    CPRS,USER     UC
-  ATTENDING PHYSICIAN:    CPRS,USER     UC
+  ROOM-BED: <strong>313-S</strong> 
+  FACILITY TREATING SPECIALTY: <strong>DERMATOLOGY</strong>        DERMATOLOGY     DERM
+  PRIMARY PHYSICIAN: <strong>&lt;spacebar&gt;&ltenter&gt;</strong>   CPRS,USER     UC
+  ATTENDING PHYSICIAN: <strong>&lt;spacebar&gt;&ltenter&gt;</strong>   CPRS,USER     UC
   DIAGNOSIS:
   Burned by Road Runner
 
-    Edit? NO//
-  SOURCE OF ADMISSION: 1T       OBSERVATION AND EXAMINATION     HOSPITAL
+    Edit? NO//<strong>&lt;enter&gt;</strong>
+  SOURCE OF ADMISSION: <strong>1T</strong>        OBSERVATION AND EXAMINATION     HOSPITAL
   Patient Admitted
 
 
-  CONDITION: SERIOUSLY ILL// @
+  CONDITION: SERIOUSLY ILL// <strong>@</strong> 
 
   **** New Admission Message Transmitted to MIS ****
 
@@ -520,9 +514,12 @@ things somewhat. From the same ADT Manager Menu we visited before, we go to the
 
   Updating visit status...completed.</pre>
 
-CPRS 
+Now, if we open CPRS, we can now see the wards: 
 
 .. figure::
    images/AdmitPatients/patient_selection_with_ward.png
    :align: center
    :alt: Admit Patients
+
+
+
