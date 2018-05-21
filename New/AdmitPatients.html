@@ -17,7 +17,7 @@
 <p>Last updated in May 2018.</p>
 <p>If you have reached this point, it means that you have finished <a href="./WardSetup.html">setting up the wards</a>.</p>
 <p>This is the last step for configuring a hospital. We will admit two patients to cardiology, and one patient to dermatology; and then show the display in CPRS. We will also show the printout of the Gains and Losses report tomorrow after the task we scheduled runs overnight.</p>
-<p>We can register patients at the same time as admitting them; so that simplifies things somewhat. From the same ADT Manager Menu we visited before, we go to the <code>Bed Control Menu</code>. From there, we pick <code>Admit a Patient</code>.</p>
+<p>We can register patients at the same time as admitting them; so that simplifies things somewhat. From the same ADT Manager Menu we visited before, we go to the <code>Bed Control Menu</code>. From there, we pick <code>Admit a Patient</code>. We will explain a few of the prompts later.</p>
 <pre>Select ADT Manager Menu <TEST ACCOUNT> Option: <strong>Bed</strong>  Control Menu
 
 
@@ -512,5 +512,77 @@ Updating visit status...completed.</pre>
 <figure>
 <img src="images/AdmitPatients/patient_selection_with_ward.png" class="align-center" />
 </figure>
+<p>Let's discuss some the prompts:</p>
+<pre>ADMITTING REGULATION: <strong>??</strong> 
+   When admitting a patient, you must choose an active ADMITTING REGULATION
+   which best describes the category under which this patient is being
+   admitted.
+
+
+   Choose from:
+   1            ACTIVE PSYCHOSIS                  17.33
+   4            OBSERVATION & EXAMINATION         17.45
+   5            ACTIVE SERVICE                    17.46(b)
+   8            EMERGENCY FOR PUBLIC              17.46(c)(1)
+   ...</pre>
+<p>That brings up a large amount of items to choose from; these are found in file 43.4. This list is not customizable without some programming.</p>
+<pre>TYPE OF ADMISSION: <strong>?</strong> 
+     Enter the type of movement for this patient on the date/time entered.
+     Transaction types must match and only allowable types can be chosen.
+ Answer with FACILITY MOVEMENT TYPE NUMBER, or NAME, or PRINT NAME
+ Do you want the entire FACILITY MOVEMENT TYPE List? Y  (Yes)
+   Choose from:
+   1            DIRECT     ADMISSION     ACTIVE
+   2            OPT-NSC     ADMISSION     ACTIVE
+   3            OPT-SC     ADMISSION     ACTIVE
+   4            A/C     ADMISSION     ACTIVE
+   5            TRANSFER IN     ADMISSION     ACTIVE
+   6            NON-VETERAN     ADMISSION     ACTIVE
+   7            WAITING LIST     ADMISSION     ACTIVE
+   8            PBC     ADMISSION     ACTIVE</pre>
+<p>This list is customizable from menu option &quot;Edit Bed Control Movement Types&quot; in &quot;ADT System Definition Menu&quot;. It is stored in File 405.1.</p>
+<pre>SOURCE OF ADMISSION: <strong>??</strong> 
+   This field contains the source of admission of the veteran, or
+   where he was admitted to the hospital from, i.e. community, other
+   facility, etc.
+
+
+   Choose from:
+   1D        VA NURSING HOME CARE UNIT     HOSPITAL
+   1E        VA DOMICILLARY     HOSPITAL
+   1G        CONTRACT CNH (UNDER VA AUSPICES)     HOSPITAL
+   1H        COMMUNITY NURSING HOME NOT UNDER VA AUSPICES     HOSPITAL</pre>
+<p>This list is not customizable either without some programming. It's stored in File 45.1.</p>
+<p>People who adopt VistA outside of the VA either customize these lists by editing the files directly; or they make front ends that hide the complexity from the users.</p>
+<p>Lastly, before we end this topic, let's display some reports after we admitted the patients.</p>
+<p>If you go back one level up and go to the <code>ADT Manager Menu</code>, then navigate to <code>ADT Output Reports</code>, you will see a large amount of reports. I ran the Gains and Losses report again after a day has elapsed to show you what the new Gains and Losses report looks like:</p>
+<figure>
+<img src="images/AdmitPatients/gnl01.png" class="align-center" />
+</figure>
+<figure>
+<img src="images/AdmitPatients/gnl02.png" class="align-center" />
+</figure>
+<figure>
+<img src="images/AdmitPatients/gnl03.png" class="align-center" />
+</figure>
+<figure>
+<img src="images/AdmitPatients/gnl04.png" class="align-center" />
+</figure>
+<p>If you go to the <code>Inpatient/Lodger Report Menu...</code>, you can run the <code>Inpatient Listing</code> and <code>Inpatient Roster</code> reports. The reports are similar; the Roster is more compact though.</p>
+<p>First, the Inpatient Listing:</p>
+<figure>
+<img src="images/AdmitPatients/iplisting1.png" class="align-center" />
+</figure>
+<figure>
+<img src="images/AdmitPatients/iplisting2.png" class="align-center" />
+</figure>
+<p>Inpatient Roster:</p>
+<figure>
+<img src="images/AdmitPatients/iproster1.png" class="align-center" />
+</figure>
+<figure>
+<img src="images/AdmitPatients/iproster2.png" class="align-center" />
+</figure>
+<p>This is the end of how to configure a hospital. Go back to <a href="../PROJECTSmain.html">Projects</a> to choose another topic.</p>
 </body>
 </html>

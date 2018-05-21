@@ -19,7 +19,8 @@ task we scheduled runs overnight.
 
 We can register patients at the same time as admitting them; so that simplifies
 things somewhat. From the same ADT Manager Menu we visited before, we go to the
-``Bed Control Menu``. From there, we pick ``Admit a Patient``.
+``Bed Control Menu``. From there, we pick ``Admit a Patient``. We will explain
+a few of the prompts later.
 
 .. raw:: html
 
@@ -522,4 +523,120 @@ Now, if we open CPRS, we can now see the wards:
    :alt: Admit Patients
 
 
+Let's discuss some the prompts:
+
+.. raw:: html
+
+  <pre>ADMITTING REGULATION: <strong>??</strong> 
+     When admitting a patient, you must choose an active ADMITTING REGULATION
+     which best describes the category under which this patient is being
+     admitted.
+
+
+     Choose from:
+     1            ACTIVE PSYCHOSIS                  17.33
+     4            OBSERVATION & EXAMINATION         17.45
+     5            ACTIVE SERVICE                    17.46(b)
+     8            EMERGENCY FOR PUBLIC              17.46(c)(1)
+     ...</pre>
+
+That brings up a large amount of items to choose from; these are found in file
+43.4. This list is not customizable without some programming.
+
+.. raw:: html
+
+  <pre>TYPE OF ADMISSION: <strong>?</strong> 
+       Enter the type of movement for this patient on the date/time entered.
+       Transaction types must match and only allowable types can be chosen.
+   Answer with FACILITY MOVEMENT TYPE NUMBER, or NAME, or PRINT NAME
+   Do you want the entire FACILITY MOVEMENT TYPE List? Y  (Yes)
+     Choose from:
+     1            DIRECT     ADMISSION     ACTIVE
+     2            OPT-NSC     ADMISSION     ACTIVE
+     3            OPT-SC     ADMISSION     ACTIVE
+     4            A/C     ADMISSION     ACTIVE
+     5            TRANSFER IN     ADMISSION     ACTIVE
+     6            NON-VETERAN     ADMISSION     ACTIVE
+     7            WAITING LIST     ADMISSION     ACTIVE
+     8            PBC     ADMISSION     ACTIVE</pre>
+
+This list is customizable from menu option "Edit Bed Control Movement Types" in "ADT System Definition Menu".
+It is stored in File 405.1.
+
+.. raw::html
+
+  <pre>SOURCE OF ADMISSION: <strong>??</strong> 
+     This field contains the source of admission of the veteran, or
+     where he was admitted to the hospital from, i.e. community, other
+     facility, etc.
+
+
+     Choose from:
+     1D        VA NURSING HOME CARE UNIT     HOSPITAL
+     1E        VA DOMICILLARY     HOSPITAL
+     1G        CONTRACT CNH (UNDER VA AUSPICES)     HOSPITAL
+     1H        COMMUNITY NURSING HOME NOT UNDER VA AUSPICES     HOSPITAL</pre>
+
+This list is not customizable either without some programming. It's stored in File 45.1.
+
+People who adopt VistA outside of the VA either customize these lists by
+editing the files directly; or they make front ends that hide the complexity
+from the users.
+
+Lastly, before we end this topic, let's display some reports after we admitted the patients.
+
+If you go back one level up and go to the ``ADT Manager Menu``, then navigate to ``ADT Output Reports``,
+you will see a large amount of reports. I ran the Gains and Losses report again after a day has
+elapsed to show you what the new Gains and Losses report looks like:
+
+.. figure::
+   images/AdmitPatients/gnl01.png
+   :align: center
+   :alt: Gains and Losses Page 1
+
+.. figure::
+   images/AdmitPatients/gnl02.png
+   :align: center
+   :alt: Gains and Losses Page 2
+
+.. figure::
+   images/AdmitPatients/gnl03.png
+   :align: center
+   :alt: Gains and Losses Page 3
+
+.. figure::
+   images/AdmitPatients/gnl04.png
+   :align: center
+   :alt: Gains and Losses Page 4
+
+If you go to the ``Inpatient/Lodger Report Menu...``, you can run the
+``Inpatient Listing`` and ``Inpatient Roster`` reports. The reports are similar;
+the Roster is more compact though.
+
+First, the Inpatient Listing:
+
+.. figure::
+   images/AdmitPatients/iplisting1.png
+   :align: center
+   :alt: Inpatient Listing 1
+
+.. figure::
+   images/AdmitPatients/iplisting2.png
+   :align: center
+   :alt: Inpatient Listing 2
+
+Inpatient Roster:
+
+.. figure::
+   images/AdmitPatients/iproster1.png
+   :align: center
+   :alt: Inpatient Roster 1
+
+.. figure::
+   images/AdmitPatients/iproster2.png
+   :align: center
+   :alt: Inpatient Roster 2
+
+This is the end of how to configure a hospital. Go back to `Projects <../PROJECTSmain.html>`_
+to choose another topic.
 
