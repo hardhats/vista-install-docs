@@ -56,6 +56,7 @@
 <p>A VistA system, like a new car, is old by the time you drive it. One of the big challenges for new users for VistA is understanding the large amount of on-going updates. Almost always, without exception, new users of VistA tend to fall behind on patching when first implementing the system. There is no automated system to apply updates (see the last section for discussion); so it takes some discipline to keep up on the VistA updates. I do acknowledge that the situation needs to be improved. The system that is used to update VistA is the Kernel Installation Distribution System (KIDS). KIDS consists of files or mail messages (rare for people outside of the VA) that you load into a VistA system.</p>
 <p>There are many concepts that reference each other; and while I try to go in an order that makes sense, it may help to read this twice.</p>
 <p>Most of the document discusses how to install a KIDS build. The end of the document discusses how to acquire all the KIDS builds to bring your VistA up to date; you can jump there now if you wish: <a href="#patching-up-an-old-vista-system">Patching up an old VistA System</a>.</p>
+<p>There is an <a href="/kernel/KRNkids.html">older link</a> on this website about KIDS: It provides a good introduction if you are a VistA developer.</p>
 <h2 id="quick-tldr">Quick TL;DR</h2>
 <p>TL;DR = Internet Slang for Too Long; Didn't Read</p>
 <p>If you just want to know how to install a KIDS build, here are the steps:</p>
@@ -76,7 +77,7 @@
 <li>Install Package(s) (installs the KIDS build). Supply default answers.</li>
 </ol>
 <p>An even shorter way to install a KIDS build is to run <code>D ^XPDIL,^XPDI</code> from direct mode (aka programmer mode). This runs steps 5 and 6.</p>
-<p>Here's an example starting from after logging in as the system manager with <code>EVE</code> as the main menu. Responses are in bold. Excuse the Korean translations; I took this from a system to which I am applying Korean translations.</p>
+<p>Here's an example starting from after logging in as the system manager with <code>EVE</code> as the main menu. Responses are in bold.</p>
 <div class="code"><code>
         Core Applications ...
         Device Management ...
@@ -132,7 +133,7 @@ This Distribution contains Transport Globals for the following Package(s):
    GMRV*5.0*37
 Distribution OK!
 
-Want to Continue with Load? 예// <strong>y</strong>  예
+Want to Continue with Load? Yes// <strong>y</strong>  es
 Loading Distribution...
 
    GMRV*5.0*37
@@ -164,8 +165,8 @@ Install Questions for GMRV*5.0*37
 
 
 
-Want KIDS to INHIBIT LOGONs during the install? 아니오// <strong>&lt;enter&gt;</strong>
-Want to DISABLE Scheduled Options, Menu Options, and Protocols? 아니오//<strong>&lt;enter&gt;</strong>
+Want KIDS to INHIBIT LOGONs during the install? No// <strong>&lt;enter&gt;</strong>
+Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//<strong>&lt;enter&gt;</strong>
 
 Enter the Device you want to print the Install messages.
 You can queue the install by enter a 'Q' at the device prompt.
@@ -266,7 +267,7 @@ This patch will resolve the following issues in the Vitals Lite DLL</code></pre>
 <p>The steps are helpfully marked from 1-6 in the order you need to follow them in.</p>
 <h3 id="load-a-distribution-step-1">Load a Distribution (Step 1)</h3>
 <p>This option loads the KIDS build from the file system. If the KIDS build is a Global Build, then this option also installs the globals.</p>
-<p>Before you invoke this option, you should download the KIDS build you want to install, and <code>dos2unix</code> it. You should typically <code>dos2unix</code> the KIDS build file first to prevent problems on GTM/YottaDB systems which don't have a way to automatically remove the Carriage Return. After you do that, you should get copy the path to the file.On Linux &amp; Cygwin, you can get the path using <code>readlink -f {filename}</code>; on Windows, typing Win+R to open the run box and dragging the file there will do the trick. KIDS comes by default with a limit of 75 characters for the path--if you have a long path, you may need to copy the file into another place on the file system to get a short path. (Or you can manually modify XPDIL in order to allow a bigger path length.)</p>
+<p>Before you invoke this option, you should download the KIDS build you want to install, and <code>dos2unix</code> it. You should typically <code>dos2unix</code> the KIDS build file first to prevent problems on GTM/YottaDB systems which don't have a way to automatically remove the Carriage Return. After you do that, you should get copy the path to the file.On Linux &amp; Cygwin, you can get the path using <code>readlink -f {filename}</code>; on Windows, typing Win+R to open the run box and dragging the file there will do the trick. KIDS comes by default with a limit of 75 characters for the path--if you have a long path, you may need to copy the file into another place on the file system to get a short path. (Or you can manually modify XPDIL in order to allow a bigger path length -- the line to change is described <a href="/kernel/KRNkids.html">here</a>).</p>
 <p>What you see next depends on the kind of KIDS build you are loading, whether there is an environment check, and whether there are dependency checks. An environment check is a programmatic check placed by the developer who created the KIDS build to check if it should be allowed on your system. Dependencies are KIDS builds that need to be installed first. All types of KIDS builds allow environment checks; all non-global builds allow dependency checks. If you are loading multi-builds (type 2 or type 3 - see <a href="#kinds-of-kids-files">Kinds of KIDS files</a>), you will get environment checks for each one.</p>
 <p>I would like to note that a lot of people use spacebar, enter to select the build in subsequent options--but that doesn't work for multi-builds (type 2 or type 3).</p>
 <div class="code"><code>Select Installation Option: <strong>1</strong>  Load a Distribution

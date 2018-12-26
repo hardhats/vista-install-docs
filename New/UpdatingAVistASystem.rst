@@ -36,6 +36,9 @@ Most of the document discusses how to install a KIDS build. The end of the
 document discusses how to acquire all the KIDS builds to bring your VistA up
 to date; you can jump there now if you wish: `Patching up an old VistA System`_.
 
+There is an `older link</kernel/KRNkids.html>`_ on this website about KIDS: It
+provides a good introduction if you are a VistA developer.
+
 Quick TL;DR
 ^^^^^^^^^^^
 TL;DR = Internet Slang for Too Long; Didn't Read
@@ -123,7 +126,7 @@ Here's an example starting from after logging in as the system manager with
      GMRV*5.0*37
   Distribution OK!
 
-  Want to Continue with Load? 예// <strong>y</strong>  예
+  Want to Continue with Load? Yes// <strong>y</strong>  es
   Loading Distribution...
 
      GMRV*5.0*37
@@ -155,8 +158,8 @@ Here's an example starting from after logging in as the system manager with
 
 
 
-  Want KIDS to INHIBIT LOGONs during the install? 아니오// <strong>&lt;enter&gt;</strong>
-  Want to DISABLE Scheduled Options, Menu Options, and Protocols? 아니오//<strong>&lt;enter&gt;</strong>
+  Want KIDS to INHIBIT LOGONs during the install? No// <strong>&lt;enter&gt;</strong>
+  Want to DISABLE Scheduled Options, Menu Options, and Protocols? No//<strong>&lt;enter&gt;</strong>
 
   Enter the Device you want to print the Install messages.
   You can queue the install by enter a 'Q' at the device prompt.
@@ -370,7 +373,8 @@ get copy the path to the file.On Linux & Cygwin, you can get the path using
 dragging the file there will do the trick.  KIDS comes by default with a limit
 of 75 characters for the path--if you have a long path, you may need to copy
 the file into another place on the file system to get a short path. (Or you can
-manually modify XPDIL in order to allow a bigger path length.)
+manually modify XPDIL in order to allow a bigger path length -- the line to
+change is described `here</kernel/KRNkids.html>`_).
 
 What you see next depends on the kind of KIDS build you are loading, whether
 there is an environment check, and whether there are dependency checks. An
