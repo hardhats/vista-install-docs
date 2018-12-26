@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Updating A VistA System</title>
+  <link href="stylesheets/normalize.css" rel="stylesheet">
+  <link href="stylesheets/main.css" rel="stylesheet">
+</head>
+<body>
+<header>
+<h1 class="title">Updating A VistA System</h1>
+</header>
+<nav id="TOC">
+<ul>
+<li><a href="#introduction-to-kids">Introduction to KIDS</a><ul>
+<li><a href="#quick-tldr">Quick TL;DR</a></li>
+<li><a href="#long-story">Long Story</a></li>
+<li><a href="#how-to-identify-kids-files">How to Identify KIDS files</a></li>
+<li><a href="#kinds-of-kids-files">Kinds of KIDS files</a></li>
+<li><a href="#a-really-brief-detour-on-the-patch-module-pm">A really brief detour on the Patch Module (PM)</a></li>
+<li><a href="#a-look-at-the-vas-patch-stream">A look at the VA's &quot;Patch Stream&quot;</a></li>
+<li><a href="#how-to-install-a-kids-build-the-long-way">How to Install a KIDS build, the long way</a><ul>
+<li><a href="#load-a-distribution-step-1">Load a Distribution (Step 1)</a></li>
+<li><a href="#verify-checksums-in-transport-global-step-2">Verify Checksums in Transport Global (Step 2)</a></li>
+<li><a href="#print-transport-global-step-3">Print Transport Global (Step 3)</a></li>
+<li><a href="#compare-transport-global-to-current-system-step-4">Compare Transport Global to Current System (Step 4)</a></li>
+<li><a href="#backup-a-transport-global-step-5">Backup a Transport Global (Step 5)</a></li>
+<li><a href="#install-packages-step-6">Install Package(s) (Step 6)</a></li>
+</ul></li>
+<li><a href="#recovering-from-a-bad-install">Recovering from a Bad Install</a></li>
+</ul></li>
+<li><a href="#patching-up-an-old-vista-system">Patching up an old VistA System</a><ul>
+<li><a href="#figure-out-your-current-patch-level">Figure out your current patch level</a></li>
+<li><a href="#download-the-patch-releases-spreadsheet">Download the patch releases spreadsheet</a></li>
+<li><a href="#make-a-list-of-all-the-patches-you-need-to-install-in-order">Make a list of all the patches you need to install in order</a></li>
+<li><a href="#download-all-these-patches-dos2unix-them">Download all these patches; dos2unix them</a></li>
+<li><a href="#install-each-one-in-order">Install each one in order</a></li>
+<li><a href="#apply-an-optional-overlay">Apply an optional overlay</a></li>
+</ul></li>
+<li><a href="#the-situation-is-terrible.-are-there-any-good-alternatives">The Situation is Terrible. Are there any good alternatives?</a><ul>
+<li><a href="#osehra-autopatcher">OSEHRA Autopatcher</a></li>
+<li><a href="#kernel-patch-xu8345-vista-auto-patch-utility">Kernel Patch XU*8*345 VistA Auto Patch Utility</a></li>
+<li><a href="#specifications-for-a-auto-patching-system">Specifications for a Auto Patching System</a></li>
+</ul></li>
+</ul>
+</nav>
+<p>Authors: Sam Habiel</p>
+<p>License: <a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="license" /></a></p>
+<p>Last updated in December 2018.</p>
+<blockquote>
+<p>While none of the previous sections are required for completing this section, you need to set-up the <code>OPEN PARAMETERS</code> of the HFS device entry as KIDS won't work without it. Look in <a href="./InitializeVistA.html#hfs-device">VistA Initialization</a> HFS Device section.</p>
+</blockquote>
+<h1 id="introduction-to-kids">Introduction to KIDS</h1>
+<p>A VistA system, like a new car, is old by the time you drive it. One of the big challenges for new users for VistA is understanding the large amount of on-going updates, and then falling behind the updates. There is no automated system to apply updates (there were many attempts; contact me if you are interested); so it takes some discipline to keep up on the VistA updates. I do acknowledge that the situation needs to be improved. The system that is used to update VistA is the Kernel Installation Distribution System (KIDS). KIDS consists of files or mail messages (rare for people outside of the VA) that you load into a VistA system.</p>
+<p>There are many concepts that reference each other; and while I try to go in an order that makes sense, it may help to read this twice.</p>
+<p>Most of the document discusses how to install a KIDS build. The end of the document discusses how to acquire all the KIDS builds to bring your VistA up to date: See <a href="#patching-up-an-old-vista-system">Patching up an old VistA System</a>.</p>
+<h2 id="quick-tldr">Quick TL;DR</h2>
+<p>TL;DR = Internet Slang for Too Long; Didn't Read</p>
+<p>If you just want to know how to install a KIDS build, here are the steps:</p>
+<p>Outside of VistA:</p>
+<ol type="1">
+<li>Download the KIDS build file.</li>
+<li>If running on GT.M/YottaDB, <code>dos2unix</code> the file.</li>
+<li>Note the path to the file. On Linux &amp; Cygwin, you can get the path using <code>readlink -f {filename}</code>; on Windows, typing Win+R to open the run box and dragging the file there will do the trick.</li>
+</ol>
+<p>Inside of VistA:</p>
+<p>Prerequisite: <code>XUPROG</code> security key.</p>
+<ol type="1">
+<li>Log in to EVE</li>
+<li>Programmer Options</li>
+<li>KIDS</li>
+<li>Installation</li>
+<li>Load a Distribution (loads the KIDS build). Supply the path.</li>
+<li>Install Package(s) (installs the KIDS build). Supply default answers.</li>
+</ol>
+<p>An even shorter way to install a KIDS build is to run <code>D ^XPDIL,^XPDI</code> from direct mode (aka programmer mode). This runs steps 5 and 6.</p>
+<p>Here's an example starting from after logging in as the system manager with <code>EVE</code> as the main menu. Responses are in bold. Excuse the Korean translations; I took this from a system to which I am applying Korean translations.</p>
+<div class="code"><code>
+        Core Applications ...
+        Device Management ...
+        Menu Management ...
+        Programmer Options ...
+        Operations Management ...
+        Spool Management ...
+        Information Security Officer Menu ...
+        Taskman Management ...
+        User Management ...
+        Application Utilities ...
+        Capacity Planning ...
+        HL7 Main Menu ...
+
+Systems Manager Menu 옵션 선택: <strong>Prog</strong>rammer Options
+
+
+ KIDS   Kernel Installation & Distribution System ...
+ PG     Programmer mode
+        Delete Unreferenced Options
+        Error Processing ...
+        Global Block Count
+        Routine Tools ...
+
+Programmer Options 옵션 선택: <strong>KIDS</strong>  Kernel Installation & Distribution System
+
+
+        Edits and Distribution ...
+        Utilities ...
+        Installation ...
+        Patch Monitor Main Menu ...
+
+Kernel Installation & Distribution System 옵션 선택: <strong>I</strong>nstallation
+
+
+ 1      Load a Distribution
+ 2      Verify Checksums in Transport Global
+ 3      Print Transport Global
+ 4      Compare Transport Global to Current System
+ 5      Backup a Transport Global
+ 6      Install Package(s)
+        Restart Install of Package(s)
+        Unload a Distribution
+
+Installation 옵션 선택: <strong>1</strong> Load a Distribution
+
+Enter a Host File: <strong>/tmp/GMRV-5_SEQ-29_PAT-37.kids</strong>
+
+Released GMRV*5*37 SEQ #29
+Comment: Extracted from mail message
+
+This Distribution contains Transport Globals for the following Package(s):
+   GMRV*5.0*37
+Distribution OK!
+
+Want to Continue with Load? 예// <strong>y</strong>  예
+Loading Distribution...
+
+   GMRV*5.0*37
+Use INSTALL NAME: GMRV*5.0*37 to install this Distribution.
+
+
+
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+
+Installation 옵션 선택: <strong>6</strong>  Install Package(s)
+Select INSTALL NAME: <strong>GMRV*5.0*37</strong>       Loaded from Distribution    2018-12-22@12
+:02:02
+     => Extracted from mail message  ;Created on
+
+This Distribution was loaded on 2018-12-22@12:02:02 with header of
+   Extracted from mail message  ;Created on
+   It consisted of the following Install(s):
+    GMRV*5.0*37
+Checking Install for Package GMRV*5.0*37
+
+Install Questions for GMRV*5.0*37
+
+
+
+Want KIDS to INHIBIT LOGONs during the install? 아니오// <strong>&lt;enter&gt;</strong>
+Want to DISABLE Scheduled Options, Menu Options, and Protocols? 아니오//<strong>&lt;enter&gt;</strong>
+
+Enter the Device you want to print the Install messages.
+You can queue the install by enter a 'Q' at the device prompt.
+Enter a '^' to abort the install.
+
+DEVICE: HOME// <strong>;p-other;</strong>  CONSOLE
+
+
+ Install Started for GMRV*5.0*37 :
+               2018-12-22@12:02:36
+
+Build Distribution Date: 2018-01-10
+
+ Installing Routines:..
+               2018-12-22@12:02:36
+
+ Running Post-Install Routine: EN^GMV37PST.
+
+Updating system parameters.
+
+ Updating Routine file......
+
+ Updating KIDS files.......
+
+ GMRV*5.0*37 Installed.
+               2018-12-22@12:02:36
+
+ Not a VA primary domain
+
+ NO Install Message sent
+
+
+   1      Load a Distribution
+   2      Verify Checksums in Transport Global
+   3      Print Transport Global
+   4      Compare Transport Global to Current System
+   5      Backup a Transport Global
+   6      Install Package(s)
+          Restart Install of Package(s)
+          Unload a Distribution
+
+ Installation 옵션 선택:</code></div>
+<h2 id="long-story">Long Story</h2>
+<p>KIDS was invented by Ron DiMecili for CHCS (a VistA derivative for the DoD) while working for SAIC. Before KIDS existed, VistA (known in these days as the Decentralized Hospital Computer Program [DHCP]) used a technology called DIFROM to transport routines/data between two systems. DIFROM, as it name indicates, is part of Fileman (DI in the name is the namespace for Fileman). DIFROM transported data as routines, as routines were one of the few early standardized ways to share data between different M systems. By the time KIDS came around in the mid 90s, VistA systems were all networked to each other via Mailman (i.e. SMTP); and M systems were by now running on an operating system rather than being the only thing that ran on a machine--so the concept of files on a file system was developed by then. The data format that KIDS uses looks like the global output format that is a lowest common denominator standard between M implementations. Incidentally, the header and footer for the formats for the mail messages is not identical--there are some minor variations; the mail message format is called &quot;Packman&quot; for reasons unkown to me.</p>
+<h2 id="how-to-identify-kids-files">How to Identify KIDS files</h2>
+<p>KIDS files are easy to identify. The extension is a .kid[s] and the first few lines look like this:</p>
+<pre><code>Released GMRV*5*37 SEQ #29
+Extracted from mail message
+**KIDS**:GMRV*5.0*37^
+
+**INSTALL NAME**
+GMRV*5.0*37
+&quot;BLD&quot;,10542,0)
+GMRV*5.0*37^GEN. MED. REC. - VITALS^0^3180110^y
+&quot;BLD&quot;,10542,1,0)
+^^2^2^3180108^
+&quot;BLD&quot;,10542,1,1,0)
+This patch will resolve the following issues in the Vitals Lite DLL</code></pre>
+<p>The &quot;patch name&quot; <code>GMRV*5.0*37</code> consists of three pieces: <code>GMRV</code> is the package namespace (a package namespace is the place where the package code lives); <code>5.0</code> is the package version; and <code>37</code> is the patch number. We need to note that patches in VistA are not real patches in the Unix sense: They are whole replacements of parts of a program; not line additions and deletions. Thus the name &quot;patch&quot; for KIDS files is misleading. Originally, there was a difference between a whole version release of a package (where the KIDS file would be known as a package) and a release of a patch to a package (where the KIDS file would be known as a patch). Since most KIDS files are patches; they now tend to be called KIDS patches, even in the rare case when the KIDS file actually trasports a package not a patch.</p>
+<p>Let's talk about the so-called &quot;Sequence Numbers&quot;. The first line contains this information: <code>GMRV*5*37 SEQ #29</code>. SEQ #29 means that this patch should be applied as the 29th in order. This is because it's possible to release patch 35 before patch 27, but you need to know that you need to install patch 35 before 27. You can see this example over <a href="https://foia-vista.osehra.org/Patches_By_Application/GMRV-VITALS/">here</a>.</p>
+<p>Astute observers will note that the 5 contains a <code>.0</code> in some places and not in others. Different systems allow the <code>.0</code> when there isn't a decimal.</p>
+<p>Due to the fact that sequence numbers are what tells people what order to install patches in, when patches are stored in files, file names put the sequence number first so that any computer program can sort the patches in the order that they need to be applied. The file name for patch <code>GMRV*5.0*37</code> is <code>GMRV-5_SEQ-29_PAT-37.kids</code>.</p>
+<p>Each KIDS patch comes with a text file containing information on what the patch fixes and how to install it. The one for the patch we are looking is named <code>GMRV-5_SEQ-29_PAT-37.txt</code>; and you can find it <a href="https://foia-vista.osehra.org/Patches_By_Application/GMRV-VITALS/GMRV-5_SEQ-29_PAT-37.txt">here</a>.</p>
+<h2 id="kinds-of-kids-files">Kinds of KIDS files</h2>
+<p>There are 4 kinds of files. The first three are varitions on each other; the 4th is different.</p>
+<ol type="1">
+<li>Single Build (most common)</li>
+<li>Combined Build - Mutiple Single builds combined into one file</li>
+<li>Multibuild - An &quot;envelop&quot; build with a combined build</li>
+<li>Global Extract Build (least common)</li>
+</ol>
+<p>The first three are variations on KIDS builds; the last lets you dump a global from one system and load it onto another system.</p>
+<h2 id="a-really-brief-detour-on-the-patch-module-pm">A really brief detour on the Patch Module (PM)</h2>
+<p>All VistA software developed in the VA goes through the Patch Module. The patch module is responsible for allocating patch numbers and for storing each version of the KIDS build while it is in development. The Patch Module also distributes &quot;verified&quot; KIDS builds to the end sites via email messages to the VistA sites inside of the VA. The email message contains both the software and the text that accompanies the patch that we saw in section <a href="#how-to-identify-kids-files">How to Identify KIDS files</a>. The whole message is called a Packman message.</p>
+<p>KIDS has been enhanced to be able to send out combined and multibuilds; but the Patch Module has not. So when a combined build or multibuild is produced inside the VA; it is distributed outside the Patch Module.</p>
+<h2 id="a-look-at-the-vas-patch-stream">A look at the VA's &quot;Patch Stream&quot;</h2>
+<p>The current location of the FOIA copy of the VA's patch stream is <a href="https://foia-vista.osehra.org/">here</a>.</p>
+<p>To learn a bit about how VistA is updated, we need to take a look at the so-called &quot;Patch Stream&quot;. There are two ways to view it:</p>
+<ul>
+<li><a href="https://foia-vista.osehra.org/Patches%20by%20Year%20and%20Month%20Released/">Chronologically</a>.</li>
+<li><a href="https://foia-vista.osehra.org/Patches_By_Application/">By Package</a>.</li>
+</ul>
+<p>In the section <a href="#how-to-identify-kids-files">How to Identify KIDS files</a>, we looked at the patches for the <a href="https://foia-vista.osehra.org/Patches_By_Application/GMRV-VITALS/">Vitals Package</a>.</p>
+<p>You might want to spend a few minutes exploring it before returning here.</p>
+<p>Note the pair-wise correlation between .TXT files and .KID files. The reason for the patch module detour is that .TXT file and .KID file are the two parts of the packman message - the description, as well as the KIDS data itself. Of note, I am told that a trailing lowercase s on the .KID means that the file got redacted. I don't know if that's true as I see a lot of files with .KIDs that don't seem to have been redacted.</p>
+<h2 id="how-to-install-a-kids-build-the-long-way">How to Install a KIDS build, the long way</h2>
+<p>The section in the TL;DR gave you a quick overview of how to install KIDS files. We will repeat the discussion in more detail.</p>
+<p>The installation menu resides here: System Manager (EVE) &gt; Programmer Options &gt; KIDS &gt; Installation. When you reach that menu, you get the following menu options:</p>
+<pre><code>1      Load a Distribution
+2      Verify Checksums in Transport Global
+3      Print Transport Global
+4      Compare Transport Global to Current System
+5      Backup a Transport Global
+6      Install Package(s)
+       Restart Install of Package(s)
+       Unload a Distribution</code></pre>
+<p>The steps are helpfully marked from 1-6 in the order you need to follow them in.</p>
+<h3 id="load-a-distribution-step-1">Load a Distribution (Step 1)</h3>
+<p>This option loads the KIDS build from the file system. If the KIDS build is a Global Build, then this option also installs the globals.</p>
+<p>Before you invoke this option, you should download the KIDS build you want to install, and <code>dos2unix</code> it. You should typically <code>dos2unix</code> the KIDS build file first to prevent problems on GTM/YottaDB systems which don't have a way to automatically remove the Carriage Return. After you do that, you should get copy the path to the file.On Linux &amp; Cygwin, you can get the path using <code>readlink -f {filename}</code>; on Windows, typing Win+R to open the run box and dragging the file there will do the trick. KIDS comes by default with a limit of 75 characters for the path--if you have a long path, you may need to copy the file into another place on the Filesystem to get a short path. (Or you can manually modify XPDIL in order to allow a bigger path length.)</p>
+<p>What you see next depends on the kind of KIDS build you are loading, whether there is an environment check, and whether there are dependecy checks. An environment check is a programmatic check placed by the developer who created the KIDS build to check if it should be allowed on your system. Dependencies are KIDS builds that need to be installed first. All types of types allow environment checks; all non-global builds allow dependency checks. If you are loading multi-builds (type 2 or type 3 - see <a href="#kinds-of-kids-files">Kinds of KIDS files</a>), you will get environment checks for each one.</p>
+<p>I would like to note that a lot of people use space bar select the build in subsequent options--but that doesn't work for multi-builds (type 2 or type 3).</p>
+<div class="code"><code>Select Installation Option: <strong>1</strong>  Load a Distribution
+Enter a Host File: <strong>/tmp/PSJ-5_SEQ-304_PAT-356.kids</strong>
+
+Released PSJ*5*356 SEQ #304
+Comment: Extracted from mail message
+
+This Distribution contains Transport Globals for the following Package(s):
+   PSJ*5.0*356
+Distribution OK!
+
+Want to Continue with Load? YES//<strong>&lt;enter&gt;</strong>
+Loading Distribution...
+
+   PSJ*5.0*356
+Use INSTALL NAME: PSJ*5.0*356 to install this Distribution.</code></div>
+<p>Steps 2-5 are optional steps. However, if you are a test system for new KIDS patches; or are developing software, you should follow steps 2-5. Production sites are advised to back up the current copy of their routines using <code>Backup a Transport Global</code>.</p>
+<h3 id="verify-checksums-in-transport-global-step-2">Verify Checksums in Transport Global (Step 2)</h3>
+<p>This checks that the routines in the KIDS build have not been altered. Note that non-routine elements (of which there are many) are not checksummed. If they were modified in transit, there is no way to detect that. E.g.</p>
+<div class="code"><code>Select Installation Option: <strong>2</strong>  Verify Checksums in Transport Global
+Select INSTALL NAME: <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>  PSJ*5.0*356     Loaded from Distribution    12/25/18@14:01:15
+     => Extracted from mail message  ;Created on
+
+This Distribution was loaded on Dec 25, 2018@14:01:15 with header of
+   Extracted from mail message  ;Created on
+   It consisted of the following Install(s):
+    PSJ*5.0*356
+
+Want each Routine Listed with Checksums: Yes//  <strong>&lt;enter&gt;</strong> YES
+DEVICE: HOME// <strong>;;999 </strong> CONSOLE
+
+PACKAGE: PSJ*5.0*356     Dec 25, 2018 2:26 pm                         PAGE 1
+-------------------------------------------------------------------------------
+
+
+PSJPAD70  Calculated  196235756
+PSJPAD7I  Calculated   94307166
+PSJPADIT  Calculated  210594395
+PSJPADIU  Calculated    4945715
+
+   4 Routines checked, 0 failed.</code></div>
+<h3 id="print-transport-global-step-3">Print Transport Global (Step 3)</h3>
+<p>This allows you to inspect the contents of the build you just loaded. Here's an example:</p>
+<div class="code"><code>Select Installation Option: <strong>3 </strong> Print Transport Global
+Select INSTALL NAME:  <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>  PSJ*5.0*356     Loaded from Distribution    12/25/18@14:
+01:15
+     => Extracted from mail message  ;Created on
+
+This Distribution was loaded on Dec 25, 2018@14:01:15 with header of
+   Extracted from mail message  ;Created on
+   It consisted of the following Install(s):
+    PSJ*5.0*356
+
+     Select one of the following:
+
+          1         Print Summary
+          2         Print Summary and Routines
+          3         Print Routines
+
+What to Print: <strong>1</strong>  Print Summary
+DEVICE: HOME// <strong>;;999</strong>  CONSOLE
+PACKAGE: PSJ*5.0*356     Dec 25, 2018 2:39 pm                       PAGE 1
+-------------------------------------------------------------------------------
+TYPE: SINGLE PACKAGE                               TRACK NATIONALLY: YES
+NATIONAL PACKAGE: INPATIENT MEDICATIONS          ALPHA/BETA TESTING: NO
+
+DESCRIPTION:
+This patch will resolve the following issue.
+
+I17870223FY18 - FRAMESTACK error
+
+ENVIRONMENT CHECK:                               DELETE ENV ROUTINE:
+ PRE-INIT ROUTINE:                          DELETE PRE-INIT ROUTINE:
+POST-INIT ROUTINE:                         DELETE POST-INIT ROUTINE:
+PRE-TRANSPORT RTN:
+
+ROUTINE:                                       ACTION:
+   PSJPAD70                                       SEND TO SITE
+   PSJPAD7I                                       SEND TO SITE
+   PSJPADIT                                       SEND TO SITE
+   PSJPADIU                                       SEND TO SITE
+
+INSTALL QUESTIONS:
+
+ Default INHIBIT LOGONs during the install: NO
+ Default DISABLE Scheduled Options, Menu Options, and Protocols: NO
+
+REQUIRED BUILDS:                               ACTION:
+   PSJ*5.0*317                                    Don't install, leave global</code></div>
+<h3 id="compare-transport-global-to-current-system-step-4">Compare Transport Global to Current System (Step 4)</h3>
+<p>This option compares the components in the KIDS build to your current system. It does not just do it for routines; it also does it for other components a KIDS build sends out. This is an important step for developers exchanging KIDS builds --as it lets them see what changes this build is going to make to the system. Here's an example; discussion follows.</p>
+<div class="code"><code>Select Installation Option: <strong>4</strong>  Compare Transport Global to Curren
+t System
+Select INSTALL NAME: <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>   PSJ*5.0*356     Loaded from Distribution    12/25/18@14:
+01:15
+     => Extracted from mail message  ;Created on
+
+This Distribution was loaded on Dec 25, 2018@14:01:15 with header of
+   Extracted from mail message  ;Created on
+   It consisted of the following Install(s):
+    PSJ*5.0*356
+
+     Select one of the following:
+
+          1         Full Comparison
+          2         Second line of Routines only
+          3         Routines only
+          4         Old style Routine compare
+
+Type of Compare: <strong>1</strong>  Full Comparison
+DEVICE: HOME// <strong>;;9999</strong>  CONSOLE
+
+Compare KIDS package PSJ*5.0*356 to current site (Disk)
+Site: DEMO.OSEHRA.ORG  UCI: VAH,ROU       Dec 25, 2018@14:54:28
+   KIDS                                    Disk
+-------------------------------------------------------------------------------
+
+                                Routine: PSJPAD70
+  2{ ;;5.0;INPATIENT MEDICATIONS ;**31}   2{ ;;5.0;INPATIENT MEDICATIONS ;**31}
+   {7,356**;16 DEC 97;Build 7}             {7**;16 DEC 97;Build 130}
+     ^                                       ^
+ 22{ S PSJPSYS=$$FIND1^DIC(58.601,"","}  22{ S PSJPSYS=$$FIND1^DIC(58.601,"","}
+   {",PSJPSYS) K DIERR Q:'PSJPSYS ""  }    {",PSJPSYS) Q:'PSJPSYS ""}
+               ^                                       ^
+   {;*356}
+ 25{ K DIERR S CABIEN=$$FIND1^DIC(58.6}  25{ S CABIEN=$$FIND1^DIC(58.63,"","",}
+     ^                                       ^
+   {3,"","",CABNAME) K DIERR Q:'CABIEN}    {CABNAME) Q:'CABIEN ""}
+   { ""  ;*356}
+ 27{ K DIERR D GETS^DIQ(58.63,CABIEN_"}  27{ D GETS^DIQ(58.63,CABIEN_",",3,"I"}
+     ^                                       ^
+   {,",3,"I","RESULT","ERROR") K DIERR}    {,"RESULT","ERROR")}
+   {  ;*356}
+ 64{ K DIERR S PSJPSYS=$$FIND1^DIC(58.}  64{ S PSJPSYS=$$FIND1^DIC(58.601,"","}
+     ^                                       ^
+   {601,"","",PSJPSYS) K DIERR Q:'PSJP}    {",PSJPSYS) Q:'PSJPSYS 0}
+   {SYS 0  ;*356}
+ 67{ K DIERR S PSJCAB=+$$FIND1^DIC(58.}  67{ S PSJCAB=+$$FIND1^DIC(58.63,,,PSJ}
+     ^                                       ^
+   {63,,,PSJOMS("CABID")),PSJCAB("FICH}    {OMS("CABID")),PSJCAB("FICHK",PSJCA}
+   {K",PSJCAB)=PSJOMS("CABID") K DIERR}    {B)=PSJOMS("CABID")}
+   {  ;*356}
+ 68{ K DIERR D GETS^DIQ(58.63,PSJCAB,2}  68{ D GETS^DIQ(58.63,PSJCAB,2,"IE","P}
+     ^                                       ^
+   {,"IE","PSJDIV") K DIERR  ;*356}        {SJDIV")}
+275{ K DIERR,ERR S TMPADATA("SYS IEN")} 275{ S TMPADATA("SYS IEN")=$$FIND1^DIC}
+     ^                                       ^
+   {=$$FIND1^DIC(58.601,"","MX",$G(TMP}    {(58.601,"","MX",$G(TMPADATA(1)),,,}
+   {ADATA(1)),,,"ERR") K DIERR  ;*356}     {"ERR")}
+282{ K ERR,DIERR S TMPADATA("DEVICE IE} 282{ S TMPADATA("DEVICE IEN")=$$FIND1^}
+     ^                                       ^
+   {N")=$$FIND1^DIC(58.63,,"BX",TMPADA}    {DIC(58.63,,"MX",TMPADATA(2),,PSJSC}
+   {TA(2),,PSJSCR,"ERR") K DIERR ;*356}    {R,"ERR")}
+302{ S TMPADATA("DRUG DEV IEN")=$$FIND} 302{ S TMPADATA("DRUG DEV IEN")=$$FIND}
+   {1^DIC(58.60111,","_DEVIEN_","_SYSI}    {1^DIC(58.60111,","_DEVIEN_","_SYSI}
+   {EN_",","MXQ",DRUG,,,"ERR") K DIERR}    {EN_",","MXQ",DRUG,,,"ERR")}
+   { ;*356}
+307{ K ERR,DIERR S TMPADATA("POCK/SUB } 307{ S TMPADATA("POCK/SUB IEN")=$$FIND}
+     ^                                       ^
+   {IEN")=$$FIND1^DIC(58.601122,","_TM}    {1^DIC(58.601122,","_TMPADATA("DRAW}
+   {PADATA("DRAWER IEN")_","_TMPADATA(}    {ER IEN")_","_TMPADATA("DEVICE IEN"}
+   {"DEVICE IEN")_","_TMPADATA("SYS IE}    {)_","_TMPADATA("SYS IEN")_",","MX"}
+   {N")_",","MX",POCKSUB,,,"ERR") K DI}    {,POCKSUB,,,"ERR")}
+   {ERR  ;*356}
+
+                                Routine: PSJPAD7I
+  2{ ;;5.0;INPATIENT MEDICATIONS ;**31}   2{ ;;5.0;INPATIENT MEDICATIONS ;**31}
+   {7,356**;16 DEC 97;Build 7}             {7**;16 DEC 97;Build 130}
+     ^                                       ^
+160{ K PSJDIERR,DIERR D UPDATE^DIE(,"F} 160{ K PSJDIERR D UPDATE^DIE(,"FDA",""}
+               ^                                       ^
+   {DA","","PSJDIERR") K DIERR ;*356}      {,"PSJDIERR")}
+193{ K DIERR,PSJERR2 S PSJPSYS=$$FIND1} 193{ S PSJPSYS=$$FIND1^DIC(58.601,,"BX}
+     ^                                       ^
+   {^DIC(58.601,,"BX",$G(PSJOMS("DISPS}    {",$G(PSJOMS("DISPSYS")),,,"PSJERR2}
+   {YS")),,,"PSJERR2") K DIERR  ;*356}     {")}
+194{ I '$G(PSJERR2("DIERR")) K DIERR,P} 194{ I '$G(PSJERR2("DIERR")) S PADEVIE}
+                             ^                                       ^
+   {SJERR2 S PADEVIEN=$$FIND1^DIC(58.6}    {N=$$FIND1^DIC(58.63,,"BX",$G(PSJOM}
+   {3,,"BX",$G(PSJOMS("CABID")),,,"PSJ}    {S("CABID")),,,"PSJERR2")}
+   {ERR2") K DIERR  ;*356}
+202{ K DIERR S PSJPSYS=$$FIND1^DIC(58.} 202{ S PSJPSYS=$$FIND1^DIC(58.601,"","}
+     ^                                       ^
+   {601,"","",PSJPSYS) K DIERR Q:'PSJP}    {",PSJPSYS) Q:'PSJPSYS ""}
+   {SYS ""  ;*356}
+203{ K DIERR S CABIEN=$$FIND1^DIC(58.6} 203{ S CABIEN=$$FIND1^DIC(58.63,,,CABN}
+     ^                                       ^
+   {3,,,CABNAME,,,"RESULT") K DIERR Q:}    {AME,,,"RESULT") Q:'CABIEN ""}
+   {'CABIEN ""  ;*356}
+205{ K DIERR D GETS^DIQ(58.63,CABIEN,2} 205{ D GETS^DIQ(58.63,CABIEN,2,"I","RE}
+     ^                                       ^
+   {,"I","RESULT") K DIERR ;*356}          {SULT")}
+
+                                Routine: PSJPADIT
+  2{ ;;5.0;INPATIENT MEDICATIONS ;**31}   2{ ;;5.0;INPATIENT MEDICATIONS ;**31}
+   {7,356**;16 DEC 97;Build 7}             {7**;16 DEC 97;Build 130}
+     ^                                       ^
+  3{ ;Per VHA Directive 2004-038, this}
+   { routine should not be modified.}
+ 47{ ;S PADATA(4)=$P($G(^PS(58.6,+$G(P}
+   {S586IEN),0)),"^",3) ;UNCOMMENT THI}
+   {S LINE IN TEST SYSTEM ONLY TO MOCK}
+   { TEST CREATING AN INVENTORY UPDATE}
+   { IN FILEMAN}
+ 59{ I '$$FILDEV^PSJPADIU(.PADATA,.ERR}  57{ I '$$FILDEV(.PADATA,.ERR) S ERR="}
+                ^                                       ^
+   {) S ERR="PADE DEVICE NOT UPDATED "}    {PADE DEVICE NOT UPDATED "_ERR D LO}
+   {_ERR D LOGERR(.ERR) Q}                 {GERR(.ERR) Q}
+110{ K DIERR,ERR S PADATA("SYS IEN")=$} 108{ S PADATA("SYS IEN")=$$FIND1^DIC(5}
+     ^                                       ^
+   {$FIND1^DIC(58.601,"","MXQ",$G(PADA}    {8.601,"","MXQ",$G(PADATA(1)),,,"ER}
+   {TA(1)),,,"ERR") K DIERR  ;*356}        {R")}
+119{ D FILDEV^PSJPADIU(.PADATA)}        117{ D FILDEV(.PADATA)}
+             ^                                       ^
+121{ ;}
+122{FILDRWR(PADATA,ERRMSG) ; Add PADE } 119{FILDEV(PADATA,ERRMSG) ; File PADE }
+        ^                                       ^
+   {Drawer to PADE System's DISPENSING}    {DEVICE to PADE INVENTORY file}
+   { DEVICE in PADE INVENTORY file}
+                                        120{ N FDA,PSJPSYS,PSJSCR,PSJSCR}
+                                        121{ I '($G(PADATA(2))]"") S ERRMSG="M}
+                                           {ISSING PADE DEVICE" Q 0}
+                                        122{ I $G(PSJPSYS),$G(^PS(58.601,+PSJP}
+                                           {SYS,0))]"" S PADATA("SYS IEN")=PSJ}
+                                           {PSYS}
+                                        123{ S PSJPSYS=PADATA("SYS IEN"),PSJSC}
+                                           {R="I $S('$G(PSJPSYS):1,1:PSJPSYS=$}
+                                           {P(^(0),U,2))"}
+                                        124{ I ($G(PADATA(1))=""&$G(PSJPSYS)) }
+                                           {S PADATA(1)=$P(^PS(58.601,PSJPSYS,}
+                                           {0),"^")}
+                                        125{ S PADATA("DEVICE IEN")=$$FIND1^DI}
+                                           {C(58.63,,"MX",PADATA(2),,PSJSCR,"E}
+                                           {RR")}
+                                        126{ I '$G(PADATA("DEVICE IEN")) D}
+                                        127{ .N FDA S FDA(58.63,"?+1,",.01)=PA}
+                                           {DATA(2)}
+                                        128{ .S FDA(58.63,"?+1,",1)=PADATA(1)}
+                                        129{ .S FDA(58.63,"?+1,",12)=$$UPPER^P}
+                                           {SJPDRUT(PADATA(2))}
+                                        130{ .D UPDATE^DIE("E","FDA","","ERR")}
+                                        131{ .S PADATA("DEVICE IEN")=$$FIND1^D}
+                                           {IC(58.63,,"MX",PADATA(2),,PSJSCR,"}
+                                           {ERR")}
+123{ I $G(PADATA(3))="" S PADATA(3)="z} 132{ I $G(PADATA("DEVICE IEN")) D}
+                 ^                                       ^
+   {z"}
+                                        133{ .N FDA S FDA(58.6011,"?+1,"_PADAT}
+                                           {A("SYS IEN")_",",.01)=PADATA(2) D }
+                                           {UPDATE^DIE("E","FDA","","ERR")}
+124{ K ERR,DIERR S PADATA("DRAWER IEN"} 134{ .S PADATA("DEVICE IEN")=$$FIND1^D}
+     ^                                       ^
+   {)=$$FIND1^DIC(58.60112,","_PADATA(}    {IC(58.6011,","_PADATA("SYS IEN")_"}
+   {"DEVICE IEN")_","_PADATA("SYS IEN"}    {,","MX",PADATA(2),,,"ERR")}
+   {)_",","MX",PADATA(3),,,"ERR") K DI}
+   {ERR  ;*356}
+125{ I '$G(PADATA("DRAWER IEN")) D}     135{ I '$G(PADATA("DEVICE IEN")) S ERR}
+                    ^                                       ^
+                                           {MSG="Unable to file PADE Device "_}
+                                           {PADATA(2) Q 0}
+                                        136{ Q 1}
+                                        137{ ;}
+                                        138{FILDRWR(PADATA,ERRMSG) ; Add PADE }
+                                           {Drawer to PADE System's DISPENSING}
+                                           { DEVICE in PADE INVENTORY file}
+                                        139{ I $G(PADATA(3))="" S PADATA(3)="z}
+                                           {z"}
+                                        140{ S PADATA("DRAWER IEN")=$$FIND1^DI}
+                                           {C(58.60112,","_PADATA("DEVICE IEN"}
+                                           {)_","_PADATA("SYS IEN")_",","MX",P}
+                                           {ADATA(3),,,"ERR")}
+                                        141{ I '$G(PADATA("DRAWER IEN")) D}
+126{ .K FDA,ERR,DIERR S FDA(58.60112,"} 142{ .K FDA,ERR S FDA(58.60112,"?+1,"_}
+               ^                                       ^
+   {?+1,"_+PADATA("DEVICE IEN")_","_+P}    {+PADATA("DEVICE IEN")_","_+PADATA(}
+   {ADATA("SYS IEN")_",",.01)=PADATA(3}    {"SYS IEN")_",",.01)=PADATA(3) D UP}
+   {) D UPDATE^DIE("E","FDA","","ERR")}    {DATE^DIE("E","FDA","","ERR")}
+   { K DIERR  ;*356}
+127{ .K ERR,DIERR S PADATA("DRAWER IEN} 143{ .S PADATA("DRAWER IEN")=$$FIND1^D}
+      ^                                       ^
+   {")=$$FIND1^DIC(58.60112,","_PADATA}    {IC(58.60112,","_PADATA("DEVICE IEN}
+   {("DEVICE IEN")_","_PADATA("SYS IEN}    {")_","_PADATA("SYS IEN")_",","MX",}
+   {")_",","MX",PADATA(3),,,"ERR") K D}    {PADATA(3),,,"ERR")}
+   {IERR ;*356}
+149{ K ERR,DIERR S PADATA("DRUG DEV IE} 165{ S PADATA("DRUG DEV IEN")=$$FIND1^}
+     ^                                       ^
+   {N")=$$FIND1^DIC(58.60111,","_DEVIE}    {DIC(58.60111,","_DEVIEN_","_SYSIEN}
+   {N_","_SYSIEN_",","MXQ",DRUG,,,"ERR}    {_",","MXQ",DRUG,,,"ERR")}
+   {") K DIERR  ;*356}
+151{ .K ERR,DIERR S FDA(58.60111,"?+1,} 167{ .S FDA(58.60111,"?+1,"_+DEVIEN_",}
+      ^                                       ^
+   {"_+DEVIEN_","_+SYSIEN_",",.01)=DRU}    {"_+SYSIEN_",",.01)=DRUG D UPDATE^D}
+   {G D UPDATE^DIE("E","FDA","ERR") K }    {IE("E","FDA","ERR")}
+   {DIERR  ;*356}
+152{ .K ERR,DIERR S PADATA("DRUG DEV I} 168{ .S PADATA("DRUG DEV IEN")=$$FIND1}
+      ^                                       ^
+   {EN")=$$FIND1^DIC(58.60111,","_DEVI}    {^DIC(58.60111,","_DEVIEN_","_SYSIE}
+   {EN_","_SYSIEN_",","MXQ",DRUG,,,"ER}    {N_",","MXQ",DRUG,,,"ERR")}
+   {R") K DIERR  ;*356}
+153{ K ERR,DIERR S PADATA("DRUG DEV IE} 169{ S PADATA("DRUG DEV IEN")=$$FIND1^}
+     ^                                       ^
+   {N")=$$FIND1^DIC(58.60111,","_DEVIE}    {DIC(58.60111,","_DEVIEN_","_SYSIEN}
+   {N_","_SYSIEN_",","MXQ",DRUG,,,"ERR}    {_",","MXQ",DRUG,,,"ERR")}
+   {") K DIERR  ;*356}
+159{ K ERR,DIERR S PADATA("DRUG IEN")=} 175{ S PADATA("DRUG IEN")=$$FIND1^DIC(}
+     ^                                       ^
+   {$$FIND1^DIC(58.601121,","_PADATA("}    {58.601121,","_PADATA("DRAWER IEN")}
+   {DRAWER IEN")_","_PADATA("DEVICE IE}    {_","_PADATA("DEVICE IEN")_","_PADA}
+   {N")_","_PADATA("SYS IEN")_",","MXQ}    {TA("SYS IEN")_",","MXQ",PADATA(4),}
+   {",PADATA(4),,,"ERR") K DIERR  ;*35}    {,,"ERR")}
+   {6}
+161{ .S FDA(58.601121,"?+1,"_PADATA("D} 177{ .S FDA(58.601121,"?+1,"_PADATA("D}
+   {RAWER IEN")_","_PADATA("DEVICE IEN}    {RAWER IEN")_","_PADATA("DEVICE IEN}
+   {")_","_PADATA("SYS IEN")_",",.01)=}    {")_","_PADATA("SYS IEN")_",",.01)=}
+   {PADATA(4) K ERR,DIERR D UPDATE^DIE}    {PADATA(4) D UPDATE^DIE("","FDA",""}
+              ^                                       ^
+   {("","FDA","","ERR") K DIERR  ;*356}    {,"ERR")}
+162{ .K DIERR,ERR S PADATA("DRUG IEN")} 178{ .S PADATA("DRUG IEN")=$$FIND1^DIC}
+      ^                                       ^
+   {=$$FIND1^DIC(58.601121,","_PADATA(}    {(58.601121,","_PADATA("DRAWER IEN"}
+   {"DRAWER IEN")_","_PADATA("DEVICE I}    {)_","_PADATA("DEVICE IEN")_","_PAD}
+   {EN")_","_PADATA("SYS IEN")_",","MX}    {ATA("SYS IEN")_",","MXQ",PADATA(4)}
+   {Q",PADATA(4),,,"ERR") K DIERR ;*35}    {,,,"ERR")}
+   {6}
+168{ .K DIERR,ERR D FILE^DIE("","FDA",} 184{ .D FILE^DIE("","FDA","ERR")}
+      ^                                       ^
+   {"ERR") K DIERR ;*356}
+188{ N TRERR,FDA K DIERR S FDA(58.6011} 204{ N TRERR,FDA S FDA(58.60111,DBALIE}
+                 ^                                       ^
+   {1,DBALIENS,2)=BALANCE D FILE^DIE("}    {NS,2)=BALANCE D FILE^DIE("","FDA",}
+   {","FDA","TRERR") K DIERR  ;*356}       {"TRERR")}
+196{ K DIERR,TRERR D FILE^DIE("","FDA"} 212{ D FILE^DIE("","FDA","TRERR")}
+     ^                                       ^
+   {,"TRERR") K DIERR ;*356}
+211{ K DIERR,ERR D FILE^DIE("","FDA","} 227{ D FILE^DIE("","FDA","ERR")}
+     ^                                       ^
+   {ERR") K DIERR ;*356}
+229{ K ERR,DIERR S PADATA("POCK/SUB IE} 245{ S PADATA("POCK/SUB IEN")=$$FIND1^}
+     ^                                       ^
+   {N")=$$FIND1^DIC(58.601122,","_PADA}    {DIC(58.601122,","_PADATA("DRAWER I}
+   {TA("DRAWER IEN")_","_PADATA("DEVIC}    {EN")_","_PADATA("DEVICE IEN")_","_}
+   {E IEN")_","_PADATA("SYS IEN")_",",}    {PADATA("SYS IEN")_",","MX",POCKSUB}
+   {"MX",POCKSUB,,,"ERR") K DIERR ;*35}    {,,,"ERR")}
+   {6}
+239{ .S FDA(58.601122,"?+1,"_PADATA("D} 255{ .S FDA(58.601122,"?+1,"_PADATA("D}
+   {RAWER IEN")_","_PADATA("DEVICE IEN}    {RAWER IEN")_","_PADATA("DEVICE IEN}
+   {")_","_PADATA("SYS IEN")_",",.01)=}    {")_","_PADATA("SYS IEN")_",",.01)=}
+   {POCKSUB K DIERR,ERR D UPDATE^DIE("}    {POCKSUB D UPDATE^DIE("","FDA","","}
+            ^                                       ^
+   {","FDA","","ERR") K DIERR ;*356}       {ERR")}
+240{ .K ERR,DIERR S PADATA("POCK/SUB I} 256{ .S PADATA("POCK/SUB IEN")=$$FIND1}
+      ^                                       ^
+   {EN")=$$FIND1^DIC(58.601122,","_PAD}    {^DIC(58.601122,","_PADATA("DRAWER }
+   {ATA("DRAWER IEN")_","_PADATA("DEVI}    {IEN")_","_PADATA("DEVICE IEN")_","}
+   {CE IEN")_","_PADATA("SYS IEN")_","}    {_PADATA("SYS IEN")_",","MX",POCKSU}
+   {,"MX",POCKSUB,,,"ERR") K DIERR ;*3}    {B,,,"ERR")}
+   {56}
+248{ .K ERR,DIERR D FILE^DIE("","FDA",} 264{ .D FILE^DIE("","FDA","ERR")}
+      ^                                       ^
+   {"ERR") K DIERR ;*356}
+252{ ..K DIERR,ERR D UPDATE^DIE("","FD} 268{ ..D UPDATE^DIE("","FDA","","ERR")}
+       ^                                       ^
+   {A","","ERR") K DIERR ;*356}
+253{ .K DIERR,ERR S PSPRVDIE=$$FIND1^D} 269{ .S PSPRVDIE=$$FIND1^DIC(58.601123}
+      ^                                       ^
+   {IC(58.601123,","_PADATA("DRAWER IE}    {,","_PADATA("DRAWER IEN")_","_PADA}
+   {N")_","_PADATA("DEVICE IEN")_","_P}    {TA("DEVICE IEN")_","_PADATA("SYS I}
+   {ADATA("SYS IEN")_",","MX",POCKSUB,}    {EN")_",","MX",POCKSUB,,,"ERR")}
+   {,,"ERR") K DIERR ;*356}
+257{ ..K DIERR,ERR D FILE^DIE("","FDA"} 273{ ..D FILE^DIE("","FDA","ERR")}
+       ^                                       ^
+   {,"ERR") K DIERR ;*356}
+285{ K DIERR,ERR D FILE^DIE("","FDA","} 301{ D FILE^DIE("","FDA","ERR")}
+     ^                                       ^
+   {ERR") K DIERR ;*356}
+294{ K DIERR,ERROR D GETS^DIQ(58.6,PS5} 310{ D GETS^DIQ(58.6,PS586IEN_",","4;1}
+     ^                                       ^
+   {86IEN_",","4;15","","RESULT","ERRO}    {5","","RESULT","ERROR")}
+   {R") K DIERR ;*356}
+
+
+*ADD* Routine: PSJPADIU</code></div>
+<p>It should be obvious upon quick inspection that the ^ shows where a difference between lines starts. Also, if you see *ADD* or *DELETE*, it means something is new or is being deleted.</p>
+<h3 id="backup-a-transport-global-step-5">Backup a Transport Global (Step 5)</h3>
+<p>This is a collossally misnamed option: This option does not--as it name suggests --back up the KIDS build you are currently installing; rather it backs up the current state of the system--but only the routines--in order for you to be able to recover your old code in case the code the KIDS build brings in is bad. Note that all the other changes that a KIDS build performs are not reversed. It's also worth noting that a KIDS build can peform data conversion. There is no way to undo that except by restoring from a back-up. While I have seen in before, most developers don't write an &quot;undo&quot; data conversion.</p>
+<p>Here's an example:</p>
+<div class="code"><code>Select Installation Option: <strong>5</strong>  Backup a Transport Global
+Select INSTALL NAME: <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>   PSJ*5.0*356     Loaded from Distribution    12/25/18@14:
+01:15
+     => Extracted from mail message  ;Created on
+
+This Distribution was loaded on Dec 25, 2018@14:01:15 with header of
+   Extracted from mail message  ;Created on
+   It consisted of the following Install(s):
+    PSJ*5.0*356
+Subject: Backup of PSJ*5.0*356 install on Dec 25, 2018
+  Replace
+Loading Routines for PSJ*5.0*356...
+Routine PSJPADIU is not on the disk..
+Send mail to: 사용자,하나// <strong>`1 </strong> 사용자,하나
+Select basket to send to: IN//<strong>&lt;enter&gt;</strong>
+And Send to:<strong>&lt;enter&gt;</strong></code></div>
+<h3 id="install-packages-step-6">Install Package(s) (Step 6)</h3>
+<p>This is the option that finally installs the loaded KIDS build into the system. You are typically asked a few questions, most of which you can accept the defaults to. The questions you typically see are as follows:</p>
+<ul>
+<li>Want KIDS to Rebuild Menu Trees Upon Completion of Install?</li>
+<li>Want KIDS to INHIBIT LOGONS during the install?</li>
+<li>Want to DISABLE Scheduled Options, Menu Options, and Protocols?</li>
+</ul>
+<p>You should normally say &quot;No&quot;, which is the default, for these questions. There are reasons to say yes, but they are rare. Also, the developer will change the default from No to Yes if the question needs to be answered as a yes.</p>
+<ul>
+<li>Menu Rebuild: Most of the time should be a no, as you should have a daily menu rebuild task scheduled in Taskman, which should take care of this for the rare instances that it matters. These are: RPC Options On the Primary Menu Tree; options that need to have jumps to them; and options whose access will be programmatically checked using <code>$$ACCESS^XQCHK</code>.</li>
+<li>Inhibit Logons: Historically, M systems could not run routines and have the routines modified while they are being run. This is not a problem on Cache or GT.M/YottaDB in at least the last 6 years. So the only reason to apply this option is if you are changing the Kernel or Fileman that need to be done with users off the system.</li>
+<li>Disabling Options/Protocols: The KIDS developer will mark the question as yes if options needs to be disabled. This may need to be done if a big data conversion is taking place.</li>
+</ul>
+<p>Another question that you may see is an entry of a Mail Group Coordinator for new mail groups. If you are not doing this install at a production site, or don't know your package coordinator, you should put <code>POSTMASTER</code>.</p>
+<p>Developers are free to add their own questions, and you may see them; but these are rare.</p>
+<p>Before the install starts, you will be prompted for <code>DEVICE: HOME//</code>. Regretably, KIDS tries to be helpful when you accept the default of &quot;HOME&quot; and paints a user friendly screen showing you an progress indicator. The problem is that this hides any compilation errors or possibly any other errors. Therefore, unless you are just the receipient of a KIDS build that will &quot;just work&quot;, you should enter <code>;P-OTHER;</code> into that prompt in order to get regular roll &amp; scroll output.</p>
+<p>Here's an example install, using the same build we have been using so far in this section:</p>
+<div class="code"><code>Select Installation Option: <strong>6</strong>  Install Package(s)
+Select INSTALL NAME: <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>  PSJ*5.0*356     Loaded from Distribution    12/25/18@14:
+01:15
+     => Extracted from mail message  ;Created on
+
+This Distribution was loaded on Dec 25, 2018@14:01:15 with header of
+   Extracted from mail message  ;Created on
+   It consisted of the following Install(s):
+    PSJ*5.0*356
+Checking Install for Package PSJ*5.0*356
+
+Install Questions for PSJ*5.0*356
+
+
+
+Want KIDS to INHIBIT LOGONs during the install? NO//<strong>&lt;enter&gt;</strong>
+Want to DISABLE Scheduled Options, Menu Options, and Protocols? NO//<strong>&lt;enter&gt;</strong>
+
+Enter the Device you want to print the Install messages.
+You can queue the install by enter a 'Q' at the device prompt.
+Enter a '^' to abort the install.
+
+DEVICE: HOME// <strong>;p-other;</strong>  CONSOLE
+
+
+ Install Started for PSJ*5.0*356 :
+               Dec 25, 2018@15:29:50
+
+Build Distribution Date: Mar 22, 2018
+
+ Installing Routines:.....
+               Dec 25, 2018@15:29:50
+
+ Updating Routine file......
+
+ Updating KIDS files.......
+
+ PSJ*5.0*356 Installed.
+               Dec 25, 2018@15:29:50
+
+ Not a VA primary domain
+
+ NO Install Message sent</code></div>
+<p>And that's it for installation a patch. By the way, in the VA, an email message will be sent to a central system called &quot;FORUM&quot; to indicate that the patch was installed.</p>
+<h2 id="recovering-from-a-bad-install">Recovering from a Bad Install</h2>
+<p>Here are some quick tips for dealing with KIDS builds that don't load or didn't fully go in:</p>
+<ul>
+<li>KIDS build won't load
+<ul>
+<li>Check that you dos2unix'ed the file</li>
+<li>If you didn't modify XPDIL to take long path names, move the build into a place with a shorter path name</li>
+</ul></li>
+<li>KIDS build doesn't pass environment check
+<ul>
+<li>If it won't load because of an environment check, edit the environment check inside the KIDS file itself (that's tricky, can can be done); obviously make sure that you can meet the requirement of the environment check some other way: e.g. if the build checks to see that you are on Cache, and you are not, then you probably going to need to add support for your M platform.</li>
+<li>If it won't load because of dependencies, and after investigation it turns out that these dependencies are not important, then you can remove the dependencies from inside the KIDS file.</li>
+</ul></li>
+<li>KIDS build didn't finish installing - This most often happens when it crashes: you typically have four options:
+<ul>
+<li>If the crash happened at the end, and you don't care about the last operation it was supposed to perform, you can mark the install as complete in <code>Utilities &gt; Edit Install Status</code>.</li>
+<li>If the crash happened at a specific point in the install; and the problem is not with your source code, but with something in your system, you can fix your system and then restart the install using the option <code>Restart  Install of Package(s)</code></li>
+<li>If the crash happened as a result of bad code in the KIDS build (e.g. Invalid M code), you can edit the routine directly in <code>^XTMP(&quot;XPDI&quot;,{install #})</code>.</li>
+<li>If you just want to back out completely, you can use the option <code>Unload  a Distribution</code>.</li>
+</ul></li>
+</ul>
+<h1 id="patching-up-an-old-vista-system">Patching up an old VistA System</h1>
+<p>As soon as you install a new VistA system, it starts to become out of date, as new features are always being continously released. Most of the patches come out of the VA; and so we will focus here on patching up using the VA patch stream. If there are community patches, you need to check with their authors if they may collide with VA patches. Frequently, vendors or vendor like orgaizations will provide you with an &quot;overlay&quot; patch that undoes all the overwritten changes that were due to installing the VA patch stream. Here are the steps for patching up an old system.</p>
+<ol type="1">
+<li>Figure out your current patch level</li>
+<li>Download the patch releases spreadsheet</li>
+<li>Make a list of all the patches you need to install in order</li>
+<li>Download all these patches; dos2unix them</li>
+<li>Install each one in order</li>
+<li>Apply an optional overlay</li>
+</ol>
+<h2 id="figure-out-your-current-patch-level">Figure out your current patch level</h2>
+<p>The best way I have found of doing this is printing a listing of KIDS installs from Fileman in reverse chronological order, and figuring which which VA patches got installed. Here's a sample of how I can do that. Note that I am using <code>INSTALL START TIME</code> as the field to reverse sort (- means reverse sort) in one print but the <code>DISTRIBUTION DATE</code> in the next print. The field <code>DISTRIBUTION DATE</code> is far more accurate as it gives you the date the KIDS build was produced in the VA; not the date it was installed on your system.</p>
+<div class="code"><code>FOIA201805&gt;<strong>S DUZ=1</strong>
+FOIA201805&gt;<strong>D P^DI</strong>
+
+
+MSC FileMan 22.1060
+
+
+Select OPTION: <strong>PRINT</strong> FILE ENTRIES
+
+Output from what File: INSTALL// <strong>INSTALL</strong>    (10451 entries)
+Sort by: NAME// -<strong>INSTALL START TIME</strong>
+Start with INSTALL START TIME: FIRST//<strong>&lt;enter&gt;</strong>
+  Within INSTALL START TIME, Sort by:<strong>&lt;enter&gt;</strong>
+First Print FIELD: <strong>NAME</strong>
+Then Print FIELD: <strong>INSTALL START TIME</strong>
+Then Print FIELD:<strong>&lt;enter&gt;</strong>
+Heading (S/C): INSTALL List//<strong>&lt;enter&gt;</strong>
+DEVICE: HOME//<strong>&lt;enter&gt;</strong></code></div>
+<p>Here's the output by <code>INSTALL START TIME</code>, which normally isn't useful.</p>
+<pre><code>INSTALL List                                          DEC 25,2018@17:52   PAGE 1
+NAME                                                INSTALL START TIME
+--------------------------------------------------------------------------------
+
+PSJ*5.0*356                                         DEC 25,2018@15:29:50
+GMRV*5.0*37                                         DEC 22,2018@12:02:36
+XPD*8.0*11310                                       NOV 7,2018@15:54:10
+XOBW*1.0*10001                                      SEP 25,2018@09:53:32
+XT*7.3*101                                          SEP 10,2018@14:13:42
+KMP*4.0*0                                           JUN 16,2018@10:46:19
+XU*8.0*670                                          JUN 16,2018@10:46:18
+VFD*15.0*103                                        MAY 29,2018@09:26:52
+MASH*1.5*0                                          MAY 14,2018@11:29:19
+LBR*2.5*15                                          APR 3,2018@17:45:36
+EC*2.0*141                                          APR 3,2018@17:44:55
+PSO*7.0*513                                         APR 3,2018@17:43:42
+PSX PSO BUNDLE 1.0                                  APR 3,2018@17:43:41
+PSX*2.0*83                                          APR 3,2018@17:43:41
+PSO*7.0*504                                         APR 3,2018@17:40:02
+SD*5.3*680                                          APR 3,2018@17:39:08</code></pre>
+<p>And here's the output by <code>DISTRIBUTION DATE</code>:</p>
+<pre><code>INSTALL List                                          DEC 25,2018@17:53   PAGE 1
+                                                    DISTRIBUTION
+NAME                                                DATE
+--------------------------------------------------------------------------------
+
+XOBW*1.0*10001                                      APR 4,2018
+PSJ*5.0*356                                         MAR 22,2018
+XU*8.0*670                                          MAR 21,2018
+KMP*4.0*0                                           MAR 21,2018
+SD*5.3*677                                          MAR 5,2018
+EC*2.0*140                                          MAR 5,2018
+PSO*7.0*504                                         FEB 26,2018
+GMRC*3.0*92                                         FEB 15,2018
+MAG*3.0*196                                         FEB 12,2018
+IB*2.0*597                                          FEB 9,2018
+PSJ*5.0*355                                         FEB 8,2018
+LA*5.2*96                                           FEB 7,2018
+LR*5.2*502                                          FEB 1,2018
+IB*2.0*601                                          FEB 1,2018
+PSO*7.0*515                                         JAN 31,2018</code></pre>
+<p>From the listing in distribution dates, I am probably patched up to April 2018 (patches distributed in March are probably going to be released in April). That gives me an idea of where to start looking.</p>
+<h2 id="download-the-patch-releases-spreadsheet">Download the patch releases spreadsheet</h2>
+<p>There are several ways to figure out what patches you need to install. One of the easier ways is that there are spreadsheets of what patches are released in which order, which you can currently find <a href="https://foia-vista.osehra.org/DBA_VistA_FOIA_System_Files/All_Listing_of_Released_VistA_Patches/">here</a>. Since I am missing patches from 2018, I would look at the spreadsheet for 2018.</p>
+<p>Comparing the patches using the <code>INSTALL START DATE</code> listing, and comparing it to the Excel Sheet, I can detect that the last patch I installed was <code>LBR*2.5*15</code>.</p>
+<figure>
+<img src="images/UpdatingAVistASystem/2018_excel_sheet.jpg" class="align-center" />
+</figure>
+<p>That means that there are 484-157 = 327 patches to install. Now you can understand why we need an automated installer--we have to install 327 patches to keep VistA up to date; and that's for less than one year. In reality, the number is slightly smaller, as not all patches are installable, and many patches are either &quot;entered in error&quot; or not releaseable.</p>
+<h2 id="make-a-list-of-all-the-patches-you-need-to-install-in-order">Make a list of all the patches you need to install in order</h2>
+<p>You can now use the same spreadsheet to figure out which patches you need to install.</p>
+<h2 id="download-all-these-patches-dos2unix-them">Download all these patches; dos2unix them</h2>
+<p>The best way to download patches for a specific month is to go to the <a href="https://foia-vista.osehra.org/Patches%20by%20Year%20and%20Month%20Released/2018/">Releases by Year and Month page</a>. Once you are there, you can download all the patches by a specific month, dos2unix them.</p>
+<h2 id="install-each-one-in-order">Install each one in order</h2>
+<p>Most of this document discussed how to install KIDS patches. No need to do it again. You should probably install a month at a time.</p>
+<h2 id="apply-an-optional-overlay">Apply an optional overlay</h2>
+<p>If you are a client of a vendor/organization, you will be given an overlay to apply. If you are doing this on your own, you will need to create the overlay yourself. The overlay will usually contain the following items:</p>
+<ul>
+<li>If you made enhancements, you need to keep them; and so you need to re-add all your enhancements to the code base if they got overwritten.</li>
+<li>There are some Cacheisms in VA code--code that only works on Cache. These may need to be remedied.</li>
+</ul>
+<h1 id="the-situation-is-terrible.-are-there-any-good-alternatives">The Situation is Terrible. Are there any good alternatives?</h1>
+<p>One of the biggest challenges (if not the biggest) for people using VistA is keeping it up to date. With 400-500 KIDS patches per year, it's hard to keep VistA up to date. If you are an organizational client of a VistA distribution (like WorldVistA or vxVistA), you may get Multibuilds of all the patches. This reduces the number of installs you have to do from 400 to about 20 per year. But these organizations that produce the Multibuilds have to go through this process in order to make the Multibuilds.</p>
+<p>Besides that, there are two other projects, one of which is in active use; but the other one is not.</p>
+<h2 id="osehra-autopatcher">OSEHRA Autopatcher</h2>
+<p>OSEHRA created an autopatcher, which is a set of python expect scripts that automate all of what we discussed above. It is not designed for production environments. You can find instuctions on using it <a href="https://github.com/OSEHRA/VistA/blob/master/Scripts/PatchSequenceApply.rst">here</a>. OSEHRA has had good results using it, but you need to be aware of the limitations:</p>
+<ul>
+<li>The system is entirely automated. That means that there is no chance to look at any messages KIDS displays. We can argue that this is no different than getting a brand new VistA instance, but I at least need to mention this.</li>
+<li>The system does not handle &quot;overlays&quot;. It cannot detect if you made a change to an existing routine/data dictionary.</li>
+</ul>
+<h2 id="kernel-patch-xu8345-vista-auto-patch-utility">Kernel Patch XU*8*345 VistA Auto Patch Utility</h2>
+<p>You can find this <a href="https://code.osehra.org/journal/journal/view/45">here</a>. It's a promising project, and I think the right direction for VistA, but it was never fully pursued.</p>
+<h2 id="specifications-for-a-auto-patching-system">Specifications for a Auto Patching System</h2>
+<p>Based on what we discussed above, and based on our experience with systems like <code>apt</code>, <code>dnf</code>, and <code>pacman</code>, we want the following features:</p>
+<ul>
+<li>Automated patch installation using https to obtain the patches</li>
+<li>Patch installs cannot &quot;talk&quot;, as there will be nobody there to type anything</li>
+<li>Ability to point at multiple patch repositories</li>
+<li>Ability to detect modification of a KIDS element outside of the patching process</li>
+</ul>
+</body>
+</html>

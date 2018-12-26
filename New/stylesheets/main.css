@@ -10,7 +10,7 @@ body {
   padding: 16px;
   background: #e0e0e0;
   white-space: pre;
-  overflow-x: scroll;
+  overflow-x: auto;
 }
 
 code {
