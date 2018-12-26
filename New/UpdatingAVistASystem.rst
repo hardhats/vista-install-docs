@@ -17,10 +17,11 @@ Last updated in December 2018.
 Introduction to KIDS
 --------------------
 A VistA system, like a new car, is old by the time you drive it. One of the big
-challenges for new users for VistA is understanding the large amount of on-going
-updates, and then falling behind the updates. There is no automated system to
-apply updates (there were many attempts; contact me if you are interested); so
-it takes some discipline to keep up on the VistA updates. I do acknowledge that
+challenges for new users for VistA is understanding the large amount of
+on-going updates. Almost always, without exception, new users of VistA tend to
+fall behind on patching when first implementing the system. There is no
+automated system to apply updates (see the last section for discussion); so it
+takes some discipline to keep up on the VistA updates. I do acknowledge that
 the situation needs to be improved. The system that is used to update VistA is
 the Kernel Installation Distribution System (KIDS). KIDS consists of files or
 mail messages (rare for people outside of the VA) that you load into a VistA
@@ -31,7 +32,7 @@ order that makes sense, it may help to read this twice.
 
 Most of the document discusses how to install a KIDS build. The end of the
 document discusses how to acquire all the KIDS builds to bring your VistA up
-to date: See `Patching up an old VistA System`_.
+to date; you can jump there now if you wish: `Patching up an old VistA System`_.
 
 Quick TL;DR
 ^^^^^^^^^^^
@@ -201,20 +202,24 @@ I took this from a system to which I am applying Korean translations.
 Long Story
 ^^^^^^^^^^
 KIDS was invented by Ron DiMecili for CHCS (a VistA derivative for the DoD)
-while working for SAIC. Before KIDS existed, VistA (known in these days as the
+while working for SAIC. Before KIDS existed, VistA (known in those days as the
 Decentralized Hospital Computer Program [DHCP]) used a technology called DIFROM
 to transport routines/data between two systems. DIFROM, as it name indicates,
 is part of Fileman (DI in the name is the namespace for Fileman). DIFROM
-transported data as routines, as routines were one of the few early standardized
-ways to share data between different M systems. By the time KIDS came around in
-the mid 90s, VistA systems were all networked to each other via Mailman (i.e.
-SMTP); and M systems were by now running on an operating system rather than
-being the only thing that ran on a machine--so the concept of files on a file
-system was developed by then.  The data format that KIDS uses looks like the
-global output format that is a lowest common denominator standard between M
-implementations. Incidentally, the header and footer for the formats for the
-mail messages is not identical--there are some minor variations; the mail message
-format is called "Packman" for reasons unkown to me.
+transported data as routines, as routines were one of the few early
+standardized ways to share data between different M systems. By the time KIDS
+came around in the mid 90s, VistA systems were all networked to each other via
+Mailman (i.e.  SMTP); and M systems were by now running on an operating system
+rather than being the only thing that ran on a machine--so the concept of files
+on a file system was well-developed by then.  The data format that KIDS uses
+looks like the global output format that is a lowest common denominator
+standard between M implementations. 
+
+As state earlier, in the VA single builds are transported as mail messages;
+whereas outside of the VA, most builds are transported as files.  Incidentally,
+the header and footer for the formats for the mail messages is not
+identical--there are some minor differences compared with the KIDS file. The
+mail message format is called "Packman" for reasons unknown to me.
 
 How to Identify KIDS files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -236,31 +241,43 @@ lines look like this:
   "BLD",10542,1,1,0)
   This patch will resolve the following issues in the Vitals Lite DLL
 
-The "patch name" ``GMRV*5.0*37`` consists of three pieces: ``GMRV`` is the package
-namespace (a package namespace is the place where the package code lives);
-``5.0`` is the package version; and ``37`` is the patch number. We need to note
-that patches in VistA are not real patches in the Unix sense: They are whole
-replacements of parts of a program; not line additions and deletions. Thus the
-name "patch" for KIDS files is misleading. Originally, there was a difference
-between a whole version release of a package (where the KIDS file would be known
-as a package) and a release of a patch to a package (where the KIDS file would
-be known as a patch). Since most KIDS files are patches; they now tend to be
-called KIDS patches, even in the rare case when the KIDS file actually trasports
-a package not a patch.
+The "patch name" ``GMRV*5.0*37`` consists of three pieces: ``GMRV`` is the
+package namespace (a package namespace is the place where the package code
+lives); ``5.0`` is the package version; and ``37`` is the patch number. We need
+to note that patches in VistA are not real patches in the Unix sense: They are
+whole replacements of parts of a program; not line additions and deletions.
+Thus the name "patch" for KIDS files is misleading. Originally, there was a
+difference between a whole version release of a package (where the KIDS file
+would be known as a package) and a release of a patch to a package (where the
+KIDS file would be known as a patch). Since most KIDS files are patches; they
+now tend to be called KIDS patches, even in the rare case when the KIDS file
+actually transports a package not a patch.
 
 Let's talk about the so-called "Sequence Numbers". The first line contains this
 information: ``GMRV*5*37 SEQ #29``. SEQ #29 means that this patch should be
-applied as the 29th in order. This is because it's possible to release patch
-35 before patch 27, but you need to know that you need to install patch 35
-before 27. You can see this example over `here<https://foia-vista.osehra.org/Patches_By_Application/GMRV-VITALS/>`_.
+applied as the 29th in order for the vitals package. This is because it's
+possible to release patches where the patch number does not correspond to the
+order in which the patches should be installed, as patch numbers are assigned
+when development starts, not when it completes. In other words, patch numbers
+are assigned when you start working on something; but if you are working on a
+new feature, it can take much longer to release than a simple bug fix. For
+examples, if you head over
+`here<https://foia-vista.osehra.org/Patches_By_Application/GMRV-VITALS/>`_, you
+will notice that patch 35 has sequence number 24, whereas patch 27 has sequence
+number 25. That means, in spite of patch 35 seeming to be later than patch 27,
+what you really need to do is apply patch 35 first, then patch 27, since it has
+the earlier sequence number.
+
 
 Astute observers will note that the 5 contains a ``.0`` in some places and not
-in others. Different systems allow the ``.0`` when there isn't a decimal.
+in others. Different systems may allow or not allow the ``.0`` when there isn't
+a decimal.
 
-Due to the fact that sequence numbers are what tells people what order to install
-patches in, when patches are stored in files, file names put the sequence number
-first so that any computer program can sort the patches in the order that they
-need to be applied. The file name for patch ``GMRV*5.0*37`` is ``GMRV-5_SEQ-29_PAT-37.kids``.
+Due to the fact that sequence numbers are what tells people what order to
+install patches in, when patches are stored in files, file names put the
+sequence number first so that any computer program can sort the patches in the
+order that they need to be applied. The file name for patch ``GMRV*5.0*37`` is
+``GMRV-5_SEQ-29_PAT-37.kids``.
 
 Each KIDS patch comes with a text file containing information on what the patch
 fixes and how to install it. The one for the patch we are looking is named
@@ -268,16 +285,16 @@ fixes and how to install it. The one for the patch we are looking is named
 
 Kinds of KIDS files
 ^^^^^^^^^^^^^^^^^^^
-There are 4 kinds of files. The first three are varitions on each other; the 4th
-is different.
+There are 4 kinds of files. The first three are variations on each other; the
+4th is different.
 
 1. Single Build (most common)
-2. Combined Build - Mutiple Single builds combined into one file
+2. Combined Build - Multiple Single builds combined into one file
 3. Multibuild     - An "envelop" build with a combined build
 4. Global Extract Build (least common)
 
-The first three are variations on KIDS builds; the last lets you dump a global
-from one system and load it onto another system.
+The last lets you dump a global from one system and load it onto another
+system.
 
 A really brief detour on the Patch Module (PM)
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -289,9 +306,9 @@ inside of the VA. The email message contains both the software and the text
 that accompanies the patch that we saw in section `How to Identify KIDS files`_.
 The whole message is called a Packman message.
 
-KIDS has been enhanced to be able to send out combined and multibuilds; but the
-Patch Module has not. So when a combined build or multibuild is produced inside
-the VA; it is distributed outside the Patch Module.
+KIDS has been enhanced to be able to send out combined builds and multibuilds;
+but the Patch Module has not. So when a combined build or multibuild is
+produced inside the VA; it is distributed outside the Patch Module.
 
 A look at the VA's "Patch Stream"
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -300,25 +317,26 @@ The current location of the FOIA copy of the VA's patch stream is `here<https://
 To learn a bit about how VistA is updated, we need to take a look at the so-
 called "Patch Stream". There are two ways to view it:
 
-* `Chronologically<https://foia-vista.osehra.org/Patches%20by%20Year%20and%20Month%20Released/>`_.
-* `By Package<https://foia-vista.osehra.org/Patches_By_Application/>`_.
+* `Chronologically<https://foia-vista.osehra.org/Patches%20by%20Year%20and%20Month%20Released/>`_
+* `By Package<https://foia-vista.osehra.org/Patches_By_Application/>`_
 
 In the section `How to Identify KIDS files`_, we looked at the patches for the
 `Vitals Package<https://foia-vista.osehra.org/Patches_By_Application/GMRV-VITALS/>`_. 
 
-You might want to spend a few minutes exploring it before returning here.
+You might want to spend a few minutes exploring the few links above before
+returning here.
 
-Note the pair-wise correlation between .TXT files and .KID files. The reason for
-the patch module detour is that .TXT file and .KID file are the two parts of the
-packman message - the description, as well as the KIDS data itself. Of note,
-I am told that a trailing lowercase s on the .KID means that the file got redacted.
-I don't know if that's true as I see a lot of files with .KIDs that don't seem
-to have been redacted.
+Note the pair-wise correlation between .TXT files and .KID files. The reason
+for the patch module detour is that .TXT file and .KID file are the two parts
+of the packman message - the description, as well as the KIDS data itself. Of
+note, I am told that a trailing lowercase s on the .KID means that the file got
+redacted.  I don't know if that's true as I see a lot of files with .KIDs that
+don't seem to have been redacted.
 
 How to Install a KIDS build, the long way
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The section in the TL;DR gave you a quick overview of how to install KIDS files.
-We will repeat the discussion in more detail.
+We will repeat the discussion here in more detail.
 
 The installation menu resides here: System Manager (EVE) > Programmer Options >
 KIDS > Installation. When you reach that menu, you get the following menu
@@ -350,20 +368,21 @@ get copy the path to the file.On Linux & Cygwin, you can get the path using
 ``readlink -f {filename}``; on Windows, typing Win+R to open the run box and
 dragging the file there will do the trick.  KIDS comes by default with a limit
 of 75 characters for the path--if you have a long path, you may need to copy
-the file into another place on the Filesystem to get a short path. (Or you can
+the file into another place on the file system to get a short path. (Or you can
 manually modify XPDIL in order to allow a bigger path length.)
 
 What you see next depends on the kind of KIDS build you are loading, whether
-there is an environment check, and whether there are dependecy checks. An
+there is an environment check, and whether there are dependency checks. An
 environment check is a programmatic check placed by the developer who created
 the KIDS build to check if it should be allowed on your system. Dependencies
-are KIDS builds that need to be installed first. All types of types allow
+are KIDS builds that need to be installed first. All types of KIDS builds allow
 environment checks; all non-global builds allow dependency checks. If you are
 loading multi-builds (type 2 or type 3 - see `Kinds of KIDS files`_), you will
 get environment checks for each one.
 
-I would like to note that a lot of people use space bar select the build in
-subsequent options--but that doesn't work for multi-builds (type 2 or type 3).
+I would like to note that a lot of people use spacebar, enter to select the
+build in subsequent options--but that doesn't work for multi-builds (type 2 or
+type 3).
 
 .. raw:: html
 
@@ -392,7 +411,7 @@ Verify Checksums in Transport Global (Step 2)
 """""""""""""""""""""""""""""""""""""""""""""
 This checks that the routines in the KIDS build have not been altered. Note
 that non-routine elements (of which there are many) are not checksummed. If
-they were modified in transit, there is no way to detect that. E.g.
+they were modified in transit, there is no way to detect that.
 
 .. raw:: html
 
@@ -478,7 +497,7 @@ Compare Transport Global to Current System (Step 4)
 This option compares the components in the KIDS build to your current system.
 It does not just do it for routines; it also does it for other components a
 KIDS build sends out. This is an important step for developers exchanging KIDS
-builds --as it lets them see what changes this build is going to make to the
+builds -- as it lets them see what changes this build is going to make to the
 system.  Here's an example; discussion follows.
 
 .. raw:: html
@@ -781,14 +800,14 @@ is new or is being deleted.
 
 Backup a Transport Global (Step 5)
 """"""""""""""""""""""""""""""""""
-This is a collossally misnamed option: This option does not--as it name suggests
---back up the KIDS build you are currently installing; rather it backs up the
-current state of the system--but only the routines--in order for you to be able
-to recover your old code in case the code the KIDS build brings in is bad. Note
-that all the other changes that a KIDS build performs are not reversed. It's
-also worth noting that a KIDS build can peform data conversion. There is no way
-to undo that except by restoring from a back-up. While I have seen in before,
-most developers don't write an "undo" data conversion.
+This is a colossally misnamed option: This option does not -- as it name
+suggests -- back up the KIDS build you are currently installing; rather it
+backs up the current state of the system -- but only the routines -- in order
+for you to be able to recover your old code in case the code the KIDS build
+brings in is bad. Note that all the other changes that a KIDS build performs
+are not reversed, including any data conversion. Some developers write an 
+"undo" utility for big patches that perform data conversion; but that's more of
+the exception rather than the rule.
 
 Here's an example:
 
@@ -831,28 +850,28 @@ default from No to Yes if the question needs to be answered as a yes.
   Menu Tree; options that need to have jumps to them; and options whose access
   will be programmatically checked using ``$$ACCESS^XQCHK``.
 * Inhibit Logons: Historically, M systems could not run routines and have the
-  routines modified while they are being run. This is not a problem on Cache
-  or GT.M/YottaDB in at least the last 6 years. So the only reason to apply
-  this option is if you are changing the Kernel or Fileman that need to be done
-  with users off the system.
+  the same routines modified while they are being run. This is not a problem on
+  Cache or GT.M/YottaDB in at least the last 6 years. So the only reason to
+  apply this option is if you are applying major upgrades to the Kernel or
+  Fileman. In that case, you definitely need users off the system.
 * Disabling Options/Protocols: The KIDS developer will mark the question as yes
   if options needs to be disabled. This may need to be done if a big data
   conversion is taking place.
 
 Another question that you may see is an entry of a Mail Group Coordinator for
-new mail groups. If you are not doing this install at a production site, or don't
-know your package coordinator, you should put ``POSTMASTER``.
+new mail groups. If you are not doing this install at a production site, or
+don't know your package coordinator, you should put ``POSTMASTER``.
 
 Developers are free to add their own questions, and you may see them; but these
-are rare.
+are comparatively rare.
 
 Before the install starts, you will be prompted for ``DEVICE: HOME//``.
-Regretably, KIDS tries to be helpful when you accept the default of "HOME" and
+Regrettably, KIDS tries to be helpful when you accept the default of "HOME" and
 paints a user friendly screen showing you an progress indicator. The problem is
 that this hides any compilation errors or possibly any other errors. Therefore,
-unless you are just the receipient of a KIDS build that will "just work", you
-should enter ``;P-OTHER;`` into that prompt in order to get regular roll & scroll
-output.
+unless you are just the recipient of a KIDS build that will "just work", you
+should enter ``;P-OTHER;`` into that prompt in order to get regular roll &
+scroll output.
 
 Here's an example install, using the same build we have been using so far in
 this section:
@@ -910,7 +929,8 @@ installed.
 Recovering from a Bad Install
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Here are some quick tips for dealing with KIDS builds that don't load or didn't
-fully go in:
+fully go in. If a crash happens, you probably need to know some M code in order
+to be able to diagnose what is happening.
 
 * KIDS build won't load
   - Check that you dos2unix'ed the file
@@ -927,26 +947,27 @@ fully go in:
     dependencies from inside the KIDS file.
 * KIDS build didn't finish installing - This most often happens when it crashes:
   you typically have four options:
-  - If the crash happened at the end, and you don't care about the last operation
-    it was supposed to perform, you can mark the install as complete in 
-    ``Utilities > Edit Install Status``.
   - If the crash happened at a specific point in the install; and the problem
     is not with your source code, but with something in your system, you can
     fix your system and then restart the install using the option ``Restart 
-    Install of Package(s)``
+    Install of Package(s)``.
   - If the crash happened as a result of bad code in the KIDS build (e.g.
-    Invalid M code), you can edit the routine directly in ``^XTMP("XPDI",{install #})``.
+    Invalid M code), you can edit the routine directly in
+    ``^XTMP("XPDI",{install #})``.
   - If you just want to back out completely, you can use the option ``Unload 
     a Distribution``.
+  - If the crash happened at the end, and you don't care about the last
+    operation it was supposed to perform, you can mark the install as complete
+    in ``Utilities > Edit Install Status``.
 
 Patching up an old VistA System
 -------------------------------
 As soon as you install a new VistA system, it starts to become out of date, as
-new features are always being continously released. Most of the patches come
+new features are always being continuously released. Most of the patches come
 out of the VA; and so we will focus here on patching up using the VA patch
 stream. If there are community patches, you need to check with their authors if
 they may collide with VA patches. Frequently, vendors or vendor like
-orgaizations will provide you with an "overlay" patch that undoes all the
+organizations will provide you with an "overlay" patch that undoes all the
 overwritten changes that were due to installing the VA patch stream. Here are
 the steps for patching up an old system.
 
@@ -961,8 +982,9 @@ Figure out your current patch level
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 The best way I have found of doing this is printing a listing of KIDS installs
 from Fileman in reverse chronological order, and figuring which which VA
-patches got installed. Here's a sample of how I can do that. Note that I am
-using ``INSTALL START TIME`` as the field to reverse sort (- means reverse
+patches got installed. The file where that data resides is (appropriately
+enough) called ``INSTALL``. Here's a sample of how I can do that. Note that I
+am using ``INSTALL START TIME`` as the field to reverse sort (- means reverse
 sort) in one print but the ``DISTRIBUTION DATE`` in the next print. The field
 ``DISTRIBUTION DATE`` is far more accurate as it gives you the date the KIDS
 build was produced in the VA; not the date it was installed on your system.
@@ -970,6 +992,7 @@ build was produced in the VA; not the date it was installed on your system.
 .. raw:: html
 
   <div class="code"><code>FOIA201805&gt;<strong>S DUZ=1</strong>
+
   FOIA201805&gt;<strong>D P^DI</strong>
 
 
@@ -1046,8 +1069,10 @@ Download the patch releases spreadsheet
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 There are several ways to figure out what patches you need to install. One of
 the easier ways is that there are spreadsheets of what patches are released in
-which order, which you can currently find `here<https://foia-vista.osehra.org/DBA_VistA_FOIA_System_Files/All_Listing_of_Released_VistA_Patches/>`_. Since I am missing patches from 2018, I would look at the
-spreadsheet for 2018.
+which order, which you can currently find
+`here<https://foia-vista.osehra.org/DBA_VistA_FOIA_System_Files/All_Listing_of_Released_VistA_Patches/>`_.
+Since I am missing patches since April 2018, and I am writing this in December
+2018, I would look at the spreadsheet for 2018.
 
 Comparing the patches using the ``INSTALL START DATE`` listing, and comparing it
 to the Excel Sheet, I can detect that the last patch I installed was ``LBR*2.5*15``.
@@ -1061,7 +1086,7 @@ That means that there are 484-157 = 327 patches to install. Now you can
 understand why we need an automated installer--we have to install
 327 patches to keep VistA up to date; and that's for less than one year. In
 reality, the number is slightly smaller, as not all patches are installable,
-and many patches are either "entered in error" or not releaseable.
+and many patches are either "entered in error" or not releasable to the public.
 
 Make a list of all the patches you need to install in order
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1078,8 +1103,7 @@ dos2unix them.
 
 Install each one in order
 ^^^^^^^^^^^^^^^^^^^^^^^^^
-Most of this document discussed how to install KIDS patches. No need to do it
-again. You should probably install a month at a time.
+You should probably install a month at a time.
 
 Apply an optional overlay
 ^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -1089,27 +1113,26 @@ yourself. The overlay will usually contain the following items:
 
 * If you made enhancements, you need to keep them; and so you need to 
   re-add all your enhancements to the code base if they got overwritten.
-* There are some Cacheisms in VA code--code that only works on Cache. These may
+* There are some Cache-isms in VA code--code that only works on Cache. These may
   need to be remedied.
 
 The Situation is Terrible. Are there any good alternatives?
 -----------------------------------------------------------
 One of the biggest challenges (if not the biggest) for people using VistA is
-keeping it up to date. With 400-500 KIDS patches per year, it's hard to keep
+keeping it up to date. With 300-500 KIDS patches per year, it's hard to keep
 VistA up to date. If you are an organizational client of a VistA distribution
 (like WorldVistA or vxVistA), you may get Multibuilds of all the patches. This
-reduces the number of installs you have to do from 400 to about 20 per year.
+reduces the number of installs you have to do from 400 to about 30 per year.
 But these organizations that produce the Multibuilds have to go through this
 process in order to make the Multibuilds.
 
-Besides that, there are two other projects, one of which is in active use; but
-the other one is not.
+Besides that, there are two other projects, one of which is in active use.
 
 OSEHRA Autopatcher
 ^^^^^^^^^^^^^^^^^^
 OSEHRA created an autopatcher, which is a set of python expect scripts that
 automate all of what we discussed above. It is not designed for production
-environments. You can find instuctions on using it `here<https://github.com/OSEHRA/VistA/blob/master/Scripts/PatchSequenceApply.rst>`_. OSEHRA has had good results using it, but you need to be aware of the limitations:
+environments. You can find instructions on using it `here<https://github.com/OSEHRA/VistA/blob/master/Scripts/PatchSequenceApply.rst>`_. OSEHRA has had good results using it, but you need to be aware of the limitations:
 
 * The system is entirely automated. That means that there is no chance to
   look at any messages KIDS displays. We can argue that this is no different
@@ -1128,7 +1151,8 @@ Specifications for a Auto Patching System
 Based on what we discussed above, and based on our experience with systems like
 ``apt``, ``dnf``, and ``pacman``, we want the following features:
 
+* Integrity checks to verify that KIDS builds have not been modified
 * Automated patch installation using https to obtain the patches
 * Patch installs cannot "talk", as there will be nobody there to type anything
-* Ability to point at multiple patch repositories
+* Ability to point at different patch repositories
 * Ability to detect modification of a KIDS element outside of the patching process
