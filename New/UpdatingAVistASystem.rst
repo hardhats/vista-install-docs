@@ -12,7 +12,9 @@ Last updated in December 2018.
   While none of the previous sections are required for completing this section,
   you need to set-up the ``OPEN PARAMETERS`` of the HFS device entry as KIDS
   won't work without it. Look in `VistA Initialization
-  <./InitializeVistA.html#hfs-device>`_ HFS Device section.
+  <./InitializeVistA.html#hfs-device>`_ HFS Device section. Also, you need to
+  know how to get to the ``EVE`` menu. For the purposes of this section,
+  setting your DUZ and running ``D ^XUP`` works fine.
 
 Introduction to KIDS
 --------------------
@@ -62,8 +64,7 @@ An even shorter way to install a KIDS build is to run ``D ^XPDIL,^XPDI`` from
 direct mode (aka programmer mode). This runs steps 5 and 6.
 
 Here's an example starting from after logging in as the system manager with
-``EVE`` as the main menu. Responses are in bold. Excuse the Korean translations;
-I took this from a system to which I am applying Korean translations.
+``EVE`` as the main menu. Responses are in bold.
 
 .. raw:: html
 
@@ -81,7 +82,7 @@ I took this from a system to which I am applying Korean translations.
           Capacity Planning ...
           HL7 Main Menu ...
 
-  Systems Manager Menu 옵션 선택: <strong>Prog</strong>rammer Options
+  Systems Manager Menu: <strong>Prog</strong>rammer Options
 
 
    KIDS   Kernel Installation & Distribution System ...
@@ -91,7 +92,7 @@ I took this from a system to which I am applying Korean translations.
           Global Block Count
           Routine Tools ...
 
-  Programmer Options 옵션 선택: <strong>KIDS</strong>  Kernel Installation & Distribution System
+  Programmer Options: <strong>KIDS</strong>  Kernel Installation & Distribution System
 
 
           Edits and Distribution ...
@@ -99,7 +100,7 @@ I took this from a system to which I am applying Korean translations.
           Installation ...
           Patch Monitor Main Menu ...
 
-  Kernel Installation & Distribution System 옵션 선택: <strong>I</strong>nstallation
+  Kernel Installation & Distribution System: <strong>I</strong>nstallation
 
 
    1      Load a Distribution
@@ -111,7 +112,7 @@ I took this from a system to which I am applying Korean translations.
           Restart Install of Package(s)
           Unload a Distribution
 
-  Installation 옵션 선택: <strong>1</strong> Load a Distribution
+  Installation: <strong>1</strong> Load a Distribution
 
   Enter a Host File: <strong>/tmp/GMRV-5_SEQ-29_PAT-37.kids</strong>
 
@@ -139,7 +140,7 @@ I took this from a system to which I am applying Korean translations.
             Restart Install of Package(s)
             Unload a Distribution
 
-  Installation 옵션 선택: <strong>6</strong>  Install Package(s)
+  Installation: <strong>6</strong>  Install Package(s)
   Select INSTALL NAME: <strong>GMRV*5.0*37</strong>       Loaded from Distribution    2018-12-22@12
   :02:02
        => Extracted from mail message  ;Created on
@@ -197,7 +198,7 @@ I took this from a system to which I am applying Korean translations.
             Restart Install of Package(s)
             Unload a Distribution
 
-   Installation 옵션 선택:</code></div>
+   Installation:</code></div>
 
 Long Story
 ^^^^^^^^^^

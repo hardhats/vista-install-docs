@@ -50,7 +50,7 @@
 <p>License: <a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="license" /></a></p>
 <p>Last updated in December 2018.</p>
 <blockquote>
-<p>While none of the previous sections are required for completing this section, you need to set-up the <code>OPEN PARAMETERS</code> of the HFS device entry as KIDS won't work without it. Look in <a href="./InitializeVistA.html#hfs-device">VistA Initialization</a> HFS Device section.</p>
+<p>While none of the previous sections are required for completing this section, you need to set-up the <code>OPEN PARAMETERS</code> of the HFS device entry as KIDS won't work without it. Look in <a href="./InitializeVistA.html#hfs-device">VistA Initialization</a> HFS Device section. Also, you need to know how to get to the <code>EVE</code> menu. For the purposes of this section, setting your DUZ and running <code>D ^XUP</code> works fine.</p>
 </blockquote>
 <h1 id="introduction-to-kids">Introduction to KIDS</h1>
 <p>A VistA system, like a new car, is old by the time you drive it. One of the big challenges for new users for VistA is understanding the large amount of on-going updates. Almost always, without exception, new users of VistA tend to fall behind on patching when first implementing the system. There is no automated system to apply updates (see the last section for discussion); so it takes some discipline to keep up on the VistA updates. I do acknowledge that the situation needs to be improved. The system that is used to update VistA is the Kernel Installation Distribution System (KIDS). KIDS consists of files or mail messages (rare for people outside of the VA) that you load into a VistA system.</p>
@@ -91,7 +91,7 @@
         Capacity Planning ...
         HL7 Main Menu ...
 
-Systems Manager Menu 옵션 선택: <strong>Prog</strong>rammer Options
+Systems Manager Menu: <strong>Prog</strong>rammer Options
 
 
  KIDS   Kernel Installation & Distribution System ...
@@ -101,7 +101,7 @@ Systems Manager Menu 옵션 선택: <strong>Prog</strong>rammer Options
         Global Block Count
         Routine Tools ...
 
-Programmer Options 옵션 선택: <strong>KIDS</strong>  Kernel Installation & Distribution System
+Programmer Options: <strong>KIDS</strong>  Kernel Installation & Distribution System
 
 
         Edits and Distribution ...
@@ -109,7 +109,7 @@ Programmer Options 옵션 선택: <strong>KIDS</strong>  Kernel Installation & D
         Installation ...
         Patch Monitor Main Menu ...
 
-Kernel Installation & Distribution System 옵션 선택: <strong>I</strong>nstallation
+Kernel Installation & Distribution System: <strong>I</strong>nstallation
 
 
  1      Load a Distribution
@@ -121,7 +121,7 @@ Kernel Installation & Distribution System 옵션 선택: <strong>I</strong>nstal
         Restart Install of Package(s)
         Unload a Distribution
 
-Installation 옵션 선택: <strong>1</strong> Load a Distribution
+Installation: <strong>1</strong> Load a Distribution
 
 Enter a Host File: <strong>/tmp/GMRV-5_SEQ-29_PAT-37.kids</strong>
 
@@ -149,7 +149,7 @@ Use INSTALL NAME: GMRV*5.0*37 to install this Distribution.
           Restart Install of Package(s)
           Unload a Distribution
 
-Installation 옵션 선택: <strong>6</strong>  Install Package(s)
+Installation: <strong>6</strong>  Install Package(s)
 Select INSTALL NAME: <strong>GMRV*5.0*37</strong>       Loaded from Distribution    2018-12-22@12
 :02:02
      => Extracted from mail message  ;Created on
@@ -207,7 +207,7 @@ Updating system parameters.
           Restart Install of Package(s)
           Unload a Distribution
 
- Installation 옵션 선택:</code></div>
+ Installation:</code></div>
 <h2 id="long-story">Long Story</h2>
 <p>KIDS was invented by Ron DiMecili for CHCS (a VistA derivative for the DoD) while working for SAIC. Before KIDS existed, VistA (known in those days as the Decentralized Hospital Computer Program [DHCP]) used a technology called DIFROM to transport routines/data between two systems. DIFROM, as it name indicates, is part of Fileman (DI in the name is the namespace for Fileman). DIFROM transported data as routines, as routines were one of the few early standardized ways to share data between different M systems. By the time KIDS came around in the mid 90s, VistA systems were all networked to each other via Mailman (i.e. SMTP); and M systems were by now running on an operating system rather than being the only thing that ran on a machine--so the concept of files on a file system was well-developed by then. The data format that KIDS uses looks like the global output format that is a lowest common denominator standard between M implementations.</p>
 <p>As state earlier, in the VA single builds are transported as mail messages; whereas outside of the VA, most builds are transported as files. Incidentally, the header and footer for the formats for the mail messages is not identical--there are some minor differences compared with the KIDS file. The mail message format is called &quot;Packman&quot; for reasons unknown to me.</p>
