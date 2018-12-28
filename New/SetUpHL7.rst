@@ -472,10 +472,270 @@ to edit the event driver and add a subscriber to the multiple on the second
 page. Go to HL7 Main Menu > Interface Developer Options > Protocol Edit [EP],
 and then select ``VAFC ADT-A04 SERVER``.
 
-Remember to put the Logical Link
+::
+  
+  |                        HL7 INTERFACE SETUP                         PAGE 1 OF 2
+  --------------------------------------------------------------------------------
+  
+              NAME: VAFC ADT-A04 SERVER
+  
+  DESCRIPTION (wp): + [This server protocol fires when a patient is re]
+  
+  
+  ENTRY ACTION:
+  
+   EXIT ACTION:
+  
+  
+          TYPE: event driver
+  
+  
+  
+  _______________________________________________________________________________
+  
+  Exit    Save    Refresh    Quit
+
+Cursor down to "TYPE" field and press enter to reach the second page of the
+form. 
+
+::
+  
+  |                           HL7 EVENT DRIVER                         PAGE 2 OF 2
+                           VAFC ADT-A04 SERVER
+  --------------------------------------------------------------------------------
+        SENDING APPLICATION: VAFC PIMS
+   TRANSACTION MESSAGE TYPE: ADT                        EVENT TYPE: A04
+          MESSAGE STRUCTURE:
+              PROCESSING ID: P                          VERSION ID: 2.3
+            ACCEPT ACK CODE: NE               APPLICATION ACK TYPE: NE
+  
+   RESPONSE PROCESSING RTN:
+                             SUBSCRIBERS
+    VBECS ADT-A04 CLIENT
+    HMP ADT-A04 CLIENT
+  
+  
+  
+  
+  _______________________________________________________________________________
+  
+  Exit    Save    Previous Page    Refresh    Quit
+
+On the second page of the form, move your cursor down to the end of the
+list of the subscribers (there are normally 3 in FOIA, so you should be at the
+4th position, whish should be empty). Start typing a namespaced name of your
+client (a namespace is a place where you put your code; if you don't have one
+use ZZ) -- which will be "ZZ ADT-A04 CLIENT". You will be asked:
+
+* Are you adding "ZZ ADT-A04 CLIENT" as a new PROTOCOL? Answer Yes.
+* PROTOCOL ITEM TEXT: Enter "ADT A04 TEST CLIENT"
+* PROTOCOL IDENTIFIER: Leave blank
+
+Once you do that, you will see this:
+
+::
+
+  |                         HL7 EVENT DRIVER                         PAGE 2 OF 2
+     ┌──────────────────────────HL7 SUBSCRIBER────────────────────────────────┐
+  ---│                       ZZ ADT-A04 CLIENT                                │---
+     │------------------------------------------------------------------------│
+   TR│     RECEIVING APPLICATION:                                             │
+     │                                                                        │
+     │     RESPONSE MESSAGE TYPE:                             EVENT TYPE:     │
+     │                                                                        │
+     │SENDING FACILITY REQUIRED?:           RECEIVING FACILITY REQUIRED?:     │
+   RE│                                                                        │
+     │        SECURITY REQUIRED?:                                             │
+    V│                                                                        │
+    H│              LOGICAL LINK:                                             │
+    Z│                                                                        │
+     │ PROCESSING RTN:                                                        │
+     │  ROUTING LOGIC:                                                        │
+     └────────────────────────────────────────────────────────────────────────┘
+  _______________________________________________________________________________
+
+  c        CLOSE
+  r        REFRESH
+
+Fill in the RECEIVING APPLICATION, RESPONSE MESSAGE TYPE, EVENT TYPE, and 
+LOGICAL LINK.
+
+* RECEIVING APPLICATION: Create a new one called NETCAT. Make sure it's marked
+  as ACTIVE.
+* RESPONSE MESSAGE TYPE: ACK
+* EVENT TYPE: A04
+* LOGICAL LINK: MEMPHIS (or whatever you called it).
+
+This is what you will see for the new RECEIVING APPLICATION:
+
+::
+
+  --┌────────────────────Receiving Application Edit───────────────────────────┐---
+    │                                                                         │
+   T│         NAME: NETCAT                          ACTIVE/INACTIVE: ACTIVE   │
+    │                                                                         │
+    │FACILITY NAME:                                    COUNTRY CODE:          │
+    │                                                                         │
+    │   MAIL GROUP:                                                           │
+   R└─────────────────────────────────────────────────────────────────────────┘
+
+
+This is the final display.
+
+::
+
+  |                         HL7 EVENT DRIVER                         PAGE 2 OF 2
+     ┌──────────────────────────HL7 SUBSCRIBER────────────────────────────────┐
+  ---│                       ZZ ADT-A04 CLIENT                                │---
+     │------------------------------------------------------------------------│
+   TR│     RECEIVING APPLICATION: NETCAT                                      │
+     │                                                                        │
+     │     RESPONSE MESSAGE TYPE: ACK                         EVENT TYPE: A04 │
+     │                                                                        │
+     │SENDING FACILITY REQUIRED?:           RECEIVING FACILITY REQUIRED?:     │
+   RE│                                                                        │
+     │        SECURITY REQUIRED?:                                             │
+    V│                                                                        │
+    H│              LOGICAL LINK: MEMPHIS                                     │
+    Z│                                                                        │
+     │ PROCESSING RTN:                                                        │
+     │  ROUTING LOGIC:                                                        │
+     └────────────────────────────────────────────────────────────────────────┘
+  _______________________________________________________________________________
+
+Go to the command area, type "C" for close, and then "E" for exit.
+
+At this point, we should be theoretically ready to send an HL7 message to the
+MEMPHIS channel.
+
+Check the Link Manager
+""""""""""""""""""""""
+Now, we should check that the Link Manager to make sure there are no messages
+on the MEMPHIS Logical Link. Check it by going to HL7 Main Menu > Systems Link 
+Monitor. This is what you will see, and it is what we expect.
+
+::
+
+  |                SYSTEM LINK MONITOR for PLATINUM (P System)                  
+                MESSAGES  MESSAGES   MESSAGES  MESSAGES  DEVICE
+     NODE       RECEIVED  PROCESSED  TO SEND   SENT      TYPE     STATE
+
+    LISTENER    236       235        903       903        MS     2 server
+    MCAR OUT                         10                          Shutdown
+    ROR SEND    1         1          5         1          NC     Shutdown
+    XUMF ACK    1738      1738       1035      1035       NC     Enabled
+    XUMF FORUM                       3         3                 Enabled
+    XUMF TEST                        4         4                 Enabled
+
+
+
+
+
+     Incoming filers running => 1            TaskMan running
+     Outgoing filers running => 1            Link Manager running
+                                             Monitor current [next job 1.0 hr]
+     Select a Command:
+  (N)EXT  (B)ACKUP  (A)LL LINKS  (S)CREENED  (V)IEWS  (Q)UIT  (?) HELP:
+
+Quit (Q) out of this, and exit the menu system and go back to the direct mode
+in VistA. We need to run a simple test with a patient we registered `earlier
+<./InitializeVistA.html#registering-your-first-patient>`_.
+
+Creating a Test Message
+"""""""""""""""""""""""
+  
+  NB: There is a recently introduced bug in HLCSTCP3 (patched up to 157 on the
+  second line), line 69, which says:
+
+  ``Q:(HLOS'["VMS")&(HLOS'["UNIX")  X "U IO:(::""-M"")"``
+
+  This line is incorrect in many regards: it assumes all Cache systems run on
+  VMS or UNIX; and it assumes that all UNIX systems will be Cache. Neither of 
+  these assumptions are correct.
+
+  It's safe to comment this line out. A more proper fix which takes into account
+  other M systems can be found `here<https://raw.githubusercontent.com/shabiel/foia-vista-fixes/master/Routines/HLCSTCP3.m>`_.
+  You need to comment the line out or get the new copy of the routine before
+  proceeding any further.
+
+::
+
+  $ mumps -dir
+
+  FOIA201805>S DUZ=1
+
+  FOIA201805>D ^XUP
+
+  Setting up programmer environment
+  This is a TEST account.
+
+  Terminal Type set to: C-VT220
+
+  Select OPTION NAME:
+
+  FOIA201805>N % S %=$$EN^VAFCA04(1,$$NOW^XLFDT)
+
+If you crash, read this note:
+
+  If you crash with this error: OBX+10^RGADTP, Undefined local variable:
+  HL(SFN), it means that you did not change the station number that came with
+  FOIA (050) and some downstream code is expecting 3 digit station numbers.
+  This error comes from the subscriber ``RG ADT-A04 TRIGGER``, which you may
+  have seen when editing the subscribers for EVENT DRIVER ``VAFC ADT-A04
+  SERVER``. Without having to do the station numbers as described in
+  `Initailize VistA<./InitializeVistA.html#setup-your-institution>`_, you can
+  just go to the subscribers again, move the cursor to ``RG ADT-A04 TRIGGER``,
+  and then type "@" to remove it.
+
+If we go back to the System Link Monitor (DO ^XUP, type EVE, choose 1, then
+navigate to HL7 Main Menu > Systems Link Monitor), we will see that MEMPHIS now
+shows up as open. It will switch between Open and Openfail as we haven't opened
+a server socket yet.
+
+::
+
+  |                SYSTEM LINK MONITOR for PLATINUM (P System)                  
+                MESSAGES  MESSAGES   MESSAGES  MESSAGES  DEVICE
+     NODE       RECEIVED  PROCESSED  TO SEND   SENT      TYPE     STATE
+
+    LISTENER    236       235        903       903        MS     2 server
+    MCAR OUT                         10                          Shutdown
+    MEMPHIS                          1                    NC     Open
+    ROR SEND    1         1          5         1          NC     Shutdown
+    VBECSPTU    0         0          1         0          NC     Shutdown
+    XUMF ACK    1738      1738       1035      1035       NC     Enabled
+    XUMF FORUM                       3         3                 Enabled
+    XUMF TEST                        4         4                 Enabled
+
+
+
+     Incoming filers running => 1            TaskMan running
+     Outgoing filers running => 1            Link Manager running
+                                             Monitor current [next job 0.8 hr]
+     Select a Command:
+  (N)EXT  (B)ACKUP  (A)LL LINKS  (S)CREENED  (V)IEWS  (Q)UIT  (?) HELP:
 
 Setup Netcat for Message Receipt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+In another window, type the following
+
+::
+
+  nc -l 6661 >> hl7_msg.txt
+ 
+Go back to the Link Monitor. You will see that MEMPHIS switches from being Open
+to Retention to Inactive; and the column for MESSAGES SENT becomes 1.
+
+Back to the netcat window, type CTRL-C, and then dump the file using the cat
+command on Linux or type command on Windows. What you will see would be similar
+to this:
+
+::
+
+  $ cat -v hl7_msg.txt
+  ^KMSH^~|\&^VAFC PIMS^50^NETCAT^^20181228121041-0400^^ADT~A04^505356^P^2.3^^^NE^NE^USA^MEVN^A04^20181228121041-0400^^^1~M-lM-^BM-,M-lM-^ZM-)M-lM-^^M-^P~M-mM-^UM-^XM-kM-^BM-^X^MPID^1^500000001V075322^1~8~M10^1155P^M-kM-'M-^HM-lM-^ZM-0M-lM-^JM-$~M-kM-/M-8M-mM-^BM-$^""^19551111^M^^""~~0005~""~~CDC^ M-fM-^]M-1M-dM-:M-,M-dM-8M--M-eM-$M-.M-iM-^CM-5M-dM->M-?M-eM-1M-^@~ M-fM-^]M-1M-dM-:M-,M-iM-^CM-=M-dM-8M--M-eM-$M-.M-eM-^LM-:M-eM-^EM-+M-iM-^GM-^MM-fM-4M-2M-dM-8M-^@M-dM-8M-^AM-gM-^[M-.5M-gM-^UM-*3M-eM-^OM-7 ~M-fM-^]M-1M-dM-:M-,M-dM-8M--M-eM-$M-.M-iM-^CM-5M-dM->M-?M-eM-1M-^@~M-fM-^]M-1~100-8994~JAPAN~P~""~""|""~""~""~""~""~~VACAE~""~""~~~""&""|""~""~""~""~""~~VACAA~""~""~~~""&""|""~""~""~""~""~~VACAC~""~""~~~""&""|""~""~""~""~""~~VACAM~""~""~~~""&""|""~""~""~""~""~~VACAO~""~""~~~""&""^^""^""^^""^29^^505111155P^^^""~~0189~""~~CDC^ ^MPD1^^^PLATINUM~~050^""^MPV1^1^O^""^^^^^^^^^^^^^^^NON-VETERAN (OTHER)^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^104^MOBX^1^MZPD^1^""^""^""^""^""^""^""^""^""^0^""^""^""^""^0^""^0^""^""^""^MZSP^1^0^""^""^""^""^""^""^^""^""^MZEL^1^""^""^""^""^""^""^0^NON-VETERAN (OTHER)^""^""^""^""^""^""^""^""^""^""^""^""^""^^^^MZCT^1^1^""^""^""^""^""^""^""^MZEM^1^1^""^""^""^""^""^""^^MZFF^2^^MZIR^^MZEN^1^M^\^M
+
+
 Setup Mirth for Message Receipt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 Turn on HL7 messages in MAS Parameters
