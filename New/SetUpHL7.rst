@@ -131,12 +131,11 @@ The second piece of the MSA segement is either:
 * AR – Application Reject
 
 There is one more thing that's important to mention: The messages above are
-actually the full content of the message. The actual message transmitted over
-TCP contains several control characters to delimit the start and the end of the
-message. (TCP is a stream protocol; so you must provide either message lengths
-or delimiters to deliniate the beginning and end of a message). This is called
-the HL7 Minimal Lower Layer Protocol (MLLP). So a full HL7 message over TCP
-looks like this:
+just the contents. The actual message transmitted over TCP contains several
+control characters to delimit the start and the end of the message. (TCP is a
+stream protocol; so you must provide either message lengths or delimiters to
+deliniate the beginning and end of a message). This is called the HL7 Minimal
+Lower Layer Protocol (MLLP). So a full HL7 message over TCP looks like this:
 
 ::
   
@@ -157,8 +156,90 @@ To schedule these tasks, go to `this section<./InitializeVistA.html#back-to-task
 of the Intialize VistA document. Remember, two of the tasks are to be marked
 as Startup Persistent, and one is recurring every night.
 
-If taskman is already running, run ``D ^XUP`` and run ``HL AUTOSTART LINK MANAGER``
-and ``HL TASK RESTART`` in turn.
+Here's a screen capture in Fileman 
+
+.. raw:: html
+
+  <pre>FOIA201805&gt;D P^DI
+
+
+  MSC FileMan 22.1060
+
+
+  Select OPTION: <strong>ENTER</strong> OR EDIT FILE ENTRIES
+
+
+
+  Input to what File: OPTION SCHEDULING// <strong>&lt;enter&gt;</strong>  (18 entries)
+  EDIT WHICH FIELD: ALL//<strong>&lt;enter&gt;</strong>  
+
+  Select OPTION SCHEDULING NAME: <strong>HL AUTOSTART LINK </strong>MANA  GER       Autostart Link Manager
+    Are you adding 'HL AUTOSTART LINK MANAGER' as
+      a new OPTION SCHEDULING (the 16TH)? No// <strong>Y</strong>  (Yes)
+  QUEUED TO RUN AT WHAT TIME:<strong>&lt;enter&gt;</strong>
+  DEVICE FOR QUEUED JOB OUTPUT:<strong>&lt;enter&gt;</strong>
+  OTHER DEVICE PARAMETERS:<strong>&lt;enter&gt;</strong>
+  QUEUED TO RUN ON VOLUME SET:<strong>&lt;enter&gt;</strong>
+  RESCHEDULING FREQUENCY:<strong>&lt;enter&gt;</strong>
+  SPECIAL QUEUEING: <strong>SP</strong>  Startup Persistent
+  Select VARIABLE NAME:<strong>&lt;enter&gt;</strong>
+  USER TO RUN TASK: <strong>^</strong>
+
+
+  Select OPTION SCHEDULING NAME: <strong>HL TASK RESTART</strong>       Restart/Start All Links and Filers
+    Are you adding 'HL TASK RESTART' as
+      a new OPTION SCHEDULING (the 17TH)? No// <strong>Y</strong>  (Yes)
+  QUEUED TO RUN AT WHAT TIME: <strong>^SPECIAL QUEUEING</strong>
+  SPECIAL QUEUEING: <strong>SP</strong>  Startup Persistent
+  Select VARIABLE NAME: <strong>^</strong>
+
+
+  Select OPTION SCHEDULING NAME: <strong>HL,PUR</strong>
+       1   HL PURGE JOB REVIEW       Purge jobs monitoring
+       2   HL PURGE QUEUE (TCP)       Purge Outgoing Queue (TCP Only)
+       3   HL PURGE TRANSMISSIONS       Purge Messages
+  CHOOSE 1-3: <strong>3</strong>  HL PURGE TRANSMISSIONS     Purge Messages
+    Are you adding 'HL PURGE TRANSMISSIONS' as
+      a new OPTION SCHEDULING (the 18TH)? No// <strong>Y</strong>  (Yes)
+  QUEUED TO RUN AT WHAT TIME: <strong>T+1@0100</strong>  (DEC 28, 2018@01:00)
+  DEVICE FOR QUEUED JOB OUTPUT:
+  OTHER DEVICE PARAMETERS:
+  QUEUED TO RUN ON VOLUME SET:
+  RESCHEDULING FREQUENCY: <strong>1D</strong>
+  SPECIAL QUEUEING: <strong>^</strong></pre>
+
+If Taskman is running, it should "catch" the new persistent tasks and start
+them. If you run the system status from direct mode, you should see a bunch
+of HL7 tasks now running (italicized).
+
+.. raw:: html
+
+  <pre>FOIA201805&gt;<strong>X ^%ZOSF("SS")</strong>
+
+  GT.M System Status users on 27-DEC-18 21:30:16
+  <strong>PID   PName   Device       Routine            Name                CPU Time</strong>
+  1136  mumps   BG-0         STARTOUT+17^HLCSOUTPOSTMASTER          18:44:51
+  1816  mumps   BG-0         GETTASK+3^%ZTMS1   Sub 1816            21:00:32
+  <i>4776  mumps   BG-0         LOOP+2^HLCSMM1     POSTMASTER          18:44:51</i>
+  <i>5960  mumps   BG-0         LOOP+2^HLCSMM1     POSTMASTER          18:44:52</i>
+  6512  mumps   BG-0         GETTASK+3^%ZTMS1   Sub 6512            18:44:51
+  8756  mumps   BG-0         GO+12^XMTDT        POSTMASTER          18:44:52
+  <i>8800  mumps   BG-0         LOOP+7^HLCSLM      POSTMASTER          18:44:50</i>
+  <i>9456  mumps   BG-0         LOOP+2^HLCSMM1     POSTMASTER          18:44:51</i>
+  9580  mumps   BG-0         GETTASK+3^%ZTMS1   Sub 9580            18:44:52
+  10020 mumps   BG-0         GETTASK+3^%ZTMS1   Sub 10020           20:44:58
+  <i>10132 mumps   BG-0         STARTIN+28^HLCSIN  POSTMASTER          18:44:51</i>
+  10220 mumps   BG-0         IDLE+3^%ZTM        Taskman ROU 1       18:44:49
+  10764 mumps   BG-0         GO+26^XMKPLQ       POSTMASTER          18:44:52
+  12096 mumps   BG-0         GETTASK+3^%ZTMS1   Sub 12096           18:45:08
+  12388 mumps   BG-0         GETTASK+3^%ZTMS1   Sub 12388           21:00:33
+  12476 mumps   /dev/pty0    INTRPTALL+8^ZSY    사용자,하나         17:56:44
+  12616 mumps   BG-0         GETTASK+3^%ZTMS1                       20:00:31
+  12876 mumps   BG-0         GETTASK+3^%ZTMS1   Sub 12876           20:44:56
+  12968 mumps   BG-S9000     LGTM+25^%ZISTCPS   POSTMASTER          18:44:50
+  13308 mumps   BG-0         GETTASK+3^%ZTMS1                       18:44:51</pre>
+
+
 
 HL7 Send Setup
 --------------
@@ -292,16 +373,105 @@ Here are the steps for setting up to send a message from VistA to the outside:
 * (Application Specific) Enable Sending HL7 messages
 * Test
 
-In this example, what I will do is receive the message using the netcat program,
-which is a generic socket listener; and then we will download Mirth and use it
-to receive a message.
+In this example, what I will do is receive the message using the
+`netcat<http://netcat.sourceforge.net/>`_ program, which is a generic socket
+listener; and then we will download
+`Mirth<https://www.nextgen.com/products-and-services/NextGen-Connect-Integration-Engine-Downloads>`_
+and use it to receive a message. Mirth is an HL7 (and other formats) integration
+engine -- and it's a realistic target to receive HL7 messages.
 
+Outgoing Message Setup
+^^^^^^^^^^^^^^^^^^^^^^
 Create Logical Link
-^^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""
+In real life, you will have a destination machine with an ip/domain name and
+port number you need to communicate to. For the purposes of this demostration,
+I will initially set-up a netcat listener on my local machine on port 6661.
+That means that my new logical link will call 127.0.0.1 port 6661. I will call
+my link MEMPHIS. Logical links are not typically namespaced. To create a new
+logical link, goto EVE > HL7 Main Menu > Interface Developer Options > Link
+Edit [EL]
+
+.. raw:: html
+
+  <pre>Select HL LOGICAL LINK NODE: <strong>MEMPHIS</strong>
+    Are you adding 'MEMPHIS' as a new HL LOGICAL LINK (the 77TH)? No// <strong>Y</strong>
+                            HL7 LOGICAL LINK
+  --------------------------------------------------------------------------------
+
+
+                  NODE: MEMPHIS                        DESCRIPTION:
+
+           INSTITUTION:
+
+        MAILMAN DOMAIN:
+
+             AUTOSTART:
+
+            QUEUE SIZE: 10
+
+              LLP TYPE:
+
+            DNS DOMAIN:
+  _______________________________________________________________________________
+
+  Exit    Save    Refresh    Quit</pre>
+
+On the Screenman form, scroll to "LLP TYPE" and type "TCP". Fill in the fields
+as shown in bold below:
+
+.. raw:: html
+
+  <pre>                      HL7 LOGICAL LINK
+  --------------------------------------------------------------------------------
+    ┌──────────────────────TCP LOWER LEVEL PARAMETERS─────────────────────────┐
+    │                      MEMPHIS                                            │
+    │                                                                         │
+    │  TCP/IP SERVICE TYPE: <strong>CLIENT (SENDER)</strong>                                   │
+    │       TCP/IP ADDRESS: <strong>127.0.0.1</strong>                                         │
+    │          TCP/IP PORT: <strong>6661</strong>                                              │
+    │          TCP/IP PORT (OPTIMIZED):                                       │
+    │                                                                         │
+    │   ACK TIMEOUT: <strong>1</strong>                     RE-TRANSMISION ATTEMPTS:           │
+    │  READ TIMEOUT: <strong>1</strong>                   EXCEED RE-TRANSMIT ACTION:           │
+    │    BLOCK SIZE:                                      SAY HELO:           │
+    │                                      TCP/IP OPENFAIL TIMEOUT:           │
+    │STARTUP NODE:                                      PERSISTENT:           │
+    │   RETENTION:                            UNI-DIRECTIONAL WAIT:           │
+    └─────────────────────────────────────────────────────────────────────────┘
+  _______________________________________________________________________________
+
+  Close    Refresh</pre>
+
+Type C for Close when you are at the command window; and then type S to Save,
+then E to exit. You will be given the message: "If you shut down this link to
+edit, please remember to restart if appropriate." That's what we are going to
+do next.
+
 Enable Logical Link
-^^^^^^^^^^^^^^^^^^
+"""""""""""""""""""
+To enable the link we just created, we go to HL7 Main Menu > 
+Filer and Link Management Options > Start/Stop Links [SL].
+
+.. raw:: html
+
+  <pre>Select Filer and Link Management Options Option: <strong>SL</strong>  Start/Stop Links
+
+  This option is used to launch the lower level protocol for the
+  appropriate device.  Please select the node with which you want
+  to communicate
+
+  Select HL LOGICAL LINK NODE: <strong>MEMPHIS</strong>
+  This LLP has been enabled!</pre>
+
+
 Create Subscriber Client & Receiving Application
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+""""""""""""""""""""""""""""""""""""""""""""""""
+The easiest way to add a client to the EVENT DRIVER ``VAFC ADT-A04 SERVER`` is
+to edit the event driver and add a subscriber to the multiple on the second
+page. Go to HL7 Main Menu > Interface Developer Options > Protocol Edit [EP],
+and then select ``VAFC ADT-A04 SERVER``.
+
 Remember to put the Logical Link
 
 Setup Netcat for Message Receipt
