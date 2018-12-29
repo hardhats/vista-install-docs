@@ -746,14 +746,131 @@ frequently used with VistA in production implementations. It can be downloaded
 from `here<https://www.nextgen.com/products-and-services/NextGen-Connect-Integration-Engine-Downloads>`_.
 
 Install Mirth
+"""""""""""""
+I won't cover how to install Mirth. You are on your own for that. It's not as
+simple as it used to be due to changes on how Java applications can be launched.
+The main install should also install the program "Mirth Connect Administrator Launcher",
+which is what you need to launch in order to launch Mirth Connect.
+
+Once you turn on the "Administrator Launcher", this is what you should see:
+
+.. figure::
+   images/SetupHL7/mirth_connect_administrator_launcher.png
+   :align: center
+   :alt: Mirth Connect Administrator Launcher
+
+After that, you see the login for Mirth Connect:
+
+.. figure::
+   images/SetupHL7/mirth_connect_login.png
+   :align: center
+   :alt: Mirth Connect Login
+
+Login with the default username/password (unless you have changed them) of
+admin/admin. Mirth Connect Administrator will be launched, and you will be
+greeted with a welcome screen. Fill that in appropriately and click Finish.
+
+.. figure::
+   images/SetupHL7/mirth_welcome_screen.png
+   :align: center
+   :alt: Mirth Connect Welcome
+
+At last, you will get the main screen for Mirth Connect Administrator:
+
+.. figure::
+   images/SetupHL7/mirth_connect_administrator_main_screen.png
+   :align: center
+   :alt: Mirth Administrator Main Screen
+
+Note that all the "hot buttons" are on the left hand side. To edit Channels,
+we need to click on "Channels".
 
 Set-up a Channel
+""""""""""""""""
+Click on "Channels". The left hand side will get a new drop down called
+"Channel Tasks". Click on "New Channel". This is what you will see:
 
-Deploy Channel
+.. figure::
+   images/SetupHL7/mirth_new_channel_summary.png
+   :align: center
+   :alt: Mirth New Channel Summary
 
-Run the test again
+We are currently on the summary tab. All we have to do here is put a name, like
+"VistA HL7 Receiver". The data type on the channel is by default HL7 2.x, so we
+don't need to modify that. Now click on the "Source Tab". You will initially
+see this:
+
+.. figure::
+   images/SetupHL7/mirth_new_channel_source1.png
+   :align: center
+   :alt: Mirth New Channel Source Summary
+
+Change the connector type (first drop down) to "TCP Listener", and review the
+setting you see here. 
+
+.. figure::
+   images/SetupHL7/mirth_new_channel_source2.png
+   :align: center
+   :alt: Mirth New Channel Source Source
+
+The only thing you may want to change is the Local Port, in order for it to
+match VistA. I already chose 6661 for VistA, so we should be good to go. If you
+are running VistA in UTF-8 mode, or another mode, you need to double check the
+encoding matches the data you will be sending from VistA.
+
+On the right hand side, click on Channel Tasks > Save Changes. Then click on
+Channel Tasks > Deploy Channel, and confirm that you really want to deploy it.
+
+Now you will see the Dashboard with the enabled channel:
+
+.. figure::
+   images/SetupHL7/mirth_dashboard_after_deploy.png
+   :align: center
+   :alt: Mirth Dashboard after Deploy
+
+Send Test HL7 Message to Mirth
+""""""""""""""""""""""""""""""
+Run the test again that we ran before::
+
+  $ mumps -dir
+
+  FOIA201805>S DUZ=1
+
+  FOIA201805>D ^XUP
+
+  Setting up programmer environment
+  This is a TEST account.
+
+  Terminal Type set to: C-VT220
+
+  Select OPTION NAME:
+
+  FOIA201805>N % S %=$$EN^VAFCA04(1,$$NOW^XLFDT)
 
 View message in Mirth
+"""""""""""""""""""""
+In a few moments, the Mirth Dashboard will now show that you have a new message:
+
+.. figure::
+   images/SetupHL7/mirth_dashboard_after_test_message.png
+   :align: center
+   :alt: Mirth Dashboard after Test Message
+
+To view the message, double click on the VistA HL7 Receiver row, and you will
+be taken to the Channel Messages view
+
+.. figure::
+   images/SetupHL7/mirth_channel_messages_view.png
+   :align: center
+   :alt: Mirth Channel Messages
+
+Click on the top row (the one saying "TRANSFORMED). Once you do that, you will
+see the full contents of the message that VistA sent.
+
+.. figure::
+   images/SetupHL7/mirth_channel_messages_view_message.png
+   :align: center
+   :alt: Mirth Channel Single Message
 
 Turn on HL7 messages in MAS Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -791,16 +908,471 @@ think it comes set that way by default in FOIA VistA.
   SEND PIMS HL7 V2.3 MESSAGES: SEND// <strong>1</strong>  SEND
 
 
-  Select MAS PARAMETERS ONE:<strong>&lt;enter&gt;</strong>
+  Select MAS PARAMETERS ONE:<strong>&lt;enter&gt;</strong></pre>
 
 Register a Patient
 ^^^^^^^^^^^^^^^^^^
-Now it's time to register a patient, and see the HL7 come across. 
+Now it's time to register a patient, and see the HL7 come across. This time
+log-in into the front door using ^ZU. On GT.M/YottaDB, that's ``$gtm_dist/mumps -r ZU``;
+on Cache, that's ``csession <instance> -U <namespace> ZU``. Use the access and
+verify codes you set-up in `Initialize VistA<./InitializeVistA.html>`_.
+
+I should note that if you do not finish all the registration steps, an A04
+message won't get generated. Instead, an A08 message (patient update) is
+generated if you exit early. That doesn't make any good sense to me, but that's
+the way the code is written.
+
+Note the ``^Register a Patient``. A ^ in front of a menu means search all the
+menu system for that option and run it.
+
+.. raw:: html
+
+  <pre>Volume set: ROU:memphis  UCI: VAH  Device: /dev/pty0
+
+  ACCESS CODE: <strong>******</strong>
+  VERIFY CODE: <strong>********</strong>
+
+  Good afternoon 사용자,하나
+       You last signed on today at 16:27
+
+  Checking POSTMASTER mailbox.
+  POSTMASTER has 681 new messages. (681 in the 'IN' basket)
+
+
+            Core Applications ...
+            Device Management ...
+            Menu Management ...
+            Programmer Options ...
+            Operations Management ...
+            Spool Management ...
+            Information Security Officer Menu ...
+            Taskman Management ...
+            User Management ...
+            Application Utilities ...
+            Capacity Planning ...
+            HL7 Main Menu ...
+
+  <TEST ACCOUNT> Select Systems Manager Menu Option: <strong>^Register a Patient</strong>
+
+
+  CPT (CPT is a registered trademark of the American Medical Association) codes,
+  descriptions and other data are copyright 1966, 1970, 1973, 1977, 1981,
+  1983-2017 American Medical Association.
+
+  CPT is commercial technical data developed exclusively at private expense by
+  Contractor/Manufacturer American Medical Association, AMA Plaza, 330 N. Wabash
+  Ave., Suite 39300, Chicago, IL 60611-5885.  The provisions of this Agreement
+  between AMA and VA prevail, including prohibiting creating derivative works and
+  providing CPT to any third parties outside of the Facilities.
+
+  Press any key to continue <strong>&lt;enter&gt;</strong>
+
+
+  Select PATIENT NAME: <strong>HLSEVEN,TEST</strong>
+     ARE YOU ADDING 'HLSEVEN,TEST' AS A NEW PATIENT (THE 20TH)? No// <strong>Y</strong>  (Yes)
+     PATIENT SEX: <strong>M</strong> MALE
+     PATIENT DATE OF BIRTH: <strong>11/11/20</strong>  (NOV 11, 1920)
+     PATIENT SOCIAL SECURITY NUMBER: <strong>P</strong>  703111120P
+     PATIENT PSEUDO SSN REASON: <strong>N</strong> NO SSN ASSIGNED
+     PATIENT TYPE: <strong>NON-VETERAN</strong> (OTHER)
+     PATIENT VETERAN (Y/N)?: <strong>N</strong> NO
+     PATIENT SERVICE CONNECTED?: <strong>N</strong> NO
+     PATIENT MULTIPLE BIRTH INDICATOR:<strong>&lt;enter&gt;</strong>
+
+     ...searching for potential duplicates
+
+     No potential duplicates have been identified.
+
+     ...adding new patient...new patient added
+
+  Patient name components--
+  FAMILY (LAST) NAME: HLSEVEN//<strong>&lt;enter&gt;</strong>
+  GIVEN (FIRST) NAME: TEST//<strong>&lt;enter&gt;</strong>
+  MIDDLE NAME:<strong>&lt;enter&gt;</strong>
+  PREFIX:<strong>&lt;enter&gt;</strong>
+  SUFFIX:<strong>&lt;enter&gt;</strong>
+  DEGREE:<strong>&lt;enter&gt;</strong>
+  Press ENTER to continue<strong>&lt;enter&gt;</strong>
+
+  Please verify or update the following information:
+
+  MOTHER'S MAIDEN NAME:<strong>&lt;enter&gt;</strong>
+  PLACE OF BIRTH [CITY]:<strong>&lt;enter&gt;</strong>
+  PLACE OF BIRTH [STATE]:<strong>&lt;enter&gt;</strong>
+  Select ALIAS:<strong>&lt;enter&gt;</strong>
+
+  Attempting to connect to the Master Patient Index in Austin...
+  If no SSN or inexact DOB or common name, this request
+  may take some time, please be patient...
+
+
+  Could not connect to MPI or Timed Out, assigning local ICN (if not already assig
+  ned)...
+
+
+  Insurance data retrieval has been initiated.
+
+  HLSEVEN,TEST;    703-11-1120P                                    NOV 11,1920
+  =============================================================================
+   Permanent Mailing Address:             Temporary Mailing Address:
+           STREET ADDRESS UNKNOWN                 NO TEMPORARY MAILING
+           UNK. CITY/STATE
+
+    County: UNSPECIFIED                     From/To: NOT APPLICABLE
+     Phone: UNSPECIFIED                       Phone: NOT APPLICABLE
+    Office: UNSPECIFIED
+      Cell: UNSPECIFIED
+    E-mail: UNSPECIFIED
+  Bad Addr:
+
+   Confidential Address:                      Confidential Address Categories:
+           NO CONFIDENTIAL ADDRESS
+   From/To: NOT APPLICABLE
+
+      POS: UNSPECIFIED                      Claim #: UNSPECIFIED
+    Relig: UNSPECIFIED                          Birth Sex: MALE
+     Race: UNANSWERED                     Ethnicity: UNANSWERED
+  Type &lt;Enter&gt; to continue or '^' to exit:<strong>&lt;enter&gt;</strong>
+
+  HLSEVEN,TEST;    703-11-1120P                                    NOV 11,1920
+  =============================================================================
+
+
+  Language Date/Time: UNANSWERED
+   Preferred Language: UNANSWERED
+
+    Combat Vet Status: NOT ELIGIBLE
+  Primary Eligibility: UNSPECIFIED
+  Other Eligibilities:
+        Unemployable: NO
+        Permanent & Total Disabled: NO
+
+  Status      : PATIENT HAS NO INPATIENT OR LODGER ACTIVITY IN THE COMPUTER
+  Type &lt;Enter&gt; to continue or '^' to exit:<strong>&lt;enter&gt;</strong>
+
+  HLSEVEN,TEST;    703-11-1120P                                    NOV 11,1920
+  =============================================================================
+
+
+  Future Appointments: NONE
+
+  Remarks:
+
+  Date of Death Information
+       Date of Death:
+       Source of Notification:
+       Updated Date/Time:
+       Last Edited By:
+
+
+  Health Benefit Plans Currently Assigned to Veteran:
+     None
+  Do you want to enter Patient Data? Yes// <strong>&lt;enter&gt;</strong>  (Yes)
+                  PATIENT DEMOGRAPHIC DATA, SCREEN &gt;1&lt;
+  HLSEVEN,TEST;    703-11-1120P                               NON-VETERAN (OTHER)
+  ===============================================================================
+
+  [1]    Name: HLSEVEN,TEST                   SS: 703-11-1120P
+          DOB: NOV 11,1920           PSSN Reason: No SSN Assigned
+       Family: HLSEVEN                 Birth Sex: MALE    MBI: UNANSWERED
+        Given: TEST                    [2] Alias: &lt; No alias entries on file &gt;
+       Middle:
+       Prefix:
+       Suffix:
+       Degree:
+       Self-Identified Gender Identity: UNANSWERED
+  [3] Remarks: NO REMARKS ENTERED FOR THIS PATIENT
+  [4] Permanent Mailing Address:                  [5] Temporary Mailing Address:
+           STREET ADDRESS UNKNOWN                 NO TEMPORARY ADDRESS
+           UNK. CITY/STATE
+
+     County: UNANSWERED                      County: NOT APPLICABLE
+      Phone: UNANSWERED                       Phone: NOT APPLICABLE
+     Office: UNANSWERED                     From/To: NOT APPLICABLE
+   Bad Addr:
+  &lt;RET&gt; to CONTINUE, 1-5 or ALL to EDIT, ^N for screen N or '^' to QUIT:<strong>&lt;enter&gt;</strong>
+            ADDITIONAL PATIENT DEMOGRAPHIC DATA, SCREEN &lt;1.1&gt;
+  HLSEVEN,TEST;    703-11-1120P                               NON-VETERAN (OTHER)
+  ===============================================================================
+  [1]Confidential Address
+       NO CONFIDENTIAL ADDRESS
+
+                                            From/To:  NOT APPLICABLE
+  [2]    Cell Phone: UNANSWERED
+            Pager #: UNANSWERED
+      Email Address: UNANSWERED
+
+
+  [3] Language Date/Time: UNANSWERED
+       Preferred Language: UNANSWERED
+
+
+
+
+
+
+
+  &lt;RET&gt; to CONTINUE, 1-3 or ALL to EDIT, ^N for screen N or '^' to QUIT:<strong>&lt;enter&gt;</strong>
+                        PATIENT DATA, SCREEN &lt;2&gt;
+  HLSEVEN,TEST;    703-11-1120P                               NON-VETERAN (OTHER)
+  ===============================================================================
+  [1]  Marital: UNANSWERED                    POB: UNANSWERED
+      Religion: UNANSWERED                 Father: UNANSWERED
+           SCI: UNANSWERED                 Mother: UNANSWERED
+                                     Mom's Maiden: UNANSWERED
+
+  [2] Previous Care Date      Location of Previous Care
+      ------------------      -------------------------
+      NONE INDICATED          NONE INDICATED
+
+  [3] Ethnicity: UNANSWERED
+           Race: UNANSWERED
+
+  &lt;4&gt; Date of Death Information
+       Date of Death:                      Source of Notification:
+       Updated Date/Time:                  Last Edited By:
+
+  [5] Emergency Response:
+
+  &lt;RET&gt; to CONTINUE, 1,2,3,5 or ALL to EDIT, ^N for screen N or '^' to QUIT:<strong>&lt;enter&gt;</strong>
+                   EMERGENCY CONTACT DATA, SCREEN &lt;3&gt;
+  HLSEVEN,TEST;    703-11-1120P                               NON-VETERAN (OTHER)
+  ===============================================================================
+  [1]      NOK: UNANSWERED                  [2] NOK-2: UNANSWERED
+      Relation: UNANSWERED                   Relation: UNANSWERED
+         Phone: UNANSWERED                      Phone: UNANSWERED
+    Work Phone: UNANSWERED                 Work Phone: UNANSWERED
+  [3]  E-Cont.: UNANSWERED               [4] E2-Cont.: UNANSWERED
+      Relation: UNANSWERED                   Relation: UNANSWERED
+         Phone: UNANSWERED                      Phone: UNANSWERED
+    Work Phone: UNANSWERED                 Work Phone: UNANSWERED
+  [5] Designee: UNANSWERED                          Relation: UNANSWERED
+         Phone: UNANSWERED                 Work Phone: UNANSWERED
+
+
+
+
+
+
+
+
+  &lt;RET&gt; to CONTINUE, 1-5 or ALL to EDIT, ^N for screen N or '^' to QUIT:<strong>&lt;enter&gt;</strong>
+              APPLICANT/SPOUSE EMPLOYMENT DATA, SCREEN &lt;4&gt;
+  HLSEVEN,TEST;    703-11-1120P                               NON-VETERAN (OTHER)
+  ===============================================================================
+  [1] Employer: UNANSWERED                &lt;2&gt; Spouse's: NOT APPLICABLE
+
+    Occupation: UNANSWERED
+        Status: UNANSWERED
+   Retired Dt.: NOT APPLICABLE
+
+
+
+
+
+
+
+
+
+
+
+
+
+  &lt;RET&gt; to CONTINUE, 1 or ALL to EDIT, ^N for screen N or '^' to QUIT:<strong>&lt;enter&gt;</strong>
+                       INSURANCE DATA, SCREEN &lt;5&gt;
+  HLSEVEN,TEST;    703-11-1120P                               NON-VETERAN (OTHER)
+  ===============================================================================
+  [1] Covered by Health Insurance: NOT ANSWERED
+
+     Insurance   COB Subscriber ID     Group       Holder  Effective  Expires
+     ===========================================================================
+      No Insurance Information
+
+
+  [2] Eligible for MEDICAID: UNANSWERED
+
+  [3] Medicaid Number:
+
+
+
+
+
+
+
+
+  &lt;RET&gt; to CONTINUE, 1-3 or ALL to EDIT, ^N for screen N or '^' to QUIT:<strong>&lt;enter&gt;</strong>
+                   ELIGIBILITY STATUS DATA, SCREEN &lt;7&gt;
+  HLSEVEN,TEST;    703-11-1120P                               NON-VETERAN (OTHER)
+  ===============================================================================
+  [1]       Patient Type: NON-VETERAN (OTHER)               Veteran: NO
+           Svc Connected: N/A                            SC Percent: N/A
+           Rated Incomp.: UNANSWERED
+            Claim Number: UNANSWERED
+             Folder Loc.: UNANSWERED
+  [2]   Aid & Attendance: UNANSWERED                     Housebound: UNANSWERED
+              VA Pension: UNANSWERED
+           VA Disability: UNANSWERED
+      Total Check Amount: NOT APPLICABLE
+            GI Insurance: UNANSWERED                         Amount: UNANSWERED
+  [3]  Primary Elig Code: UNANSWERED
+      Other Elig Code(s): NO ADDITIONAL ELIGIBILITIES IDENTIFIED
+       Period of Service: UNANSWERED
+
+  &lt;4&gt; Service Connected Conditions as stated by applicant
+      ---------------------------------------------------
+      NONE STATED
+
+  &lt;RET&gt; to CONTINUE, 1-3 or ALL to EDIT, ^N for screen N or '^' to QUIT:<strong>&lt;enter&gt;</strong>
+               ELIGIBILITY VERIFICATION DATA, SCREEN &lt;11&gt;
+  HLSEVEN,TEST;    703-11-1120P                               NON-VETERAN (OTHER)
+  ===============================================================================
+  [1] Eligibility Status: NOT VERIFIED                Status Date: NOT APPLICABLE
+       Status Entered By: NOT APPLICABLE
+        Interim Response: UNANSWERED (NOT REQUIRED)
+           Verif. Method: NOT APPLICABLE
+           Verif. Source: NOT AVAILABLE
+  [2]     Money Verified: NOT VERIFIED
+  [3]   Service Verified: NOT VERIFIED
+  [4] Rated Disabilities: NOT APPLICABLE - NOT A VETERAN
+
+  [5] Health Benefit Plan:  (None Specified)
+
+
+
+
+
+
+
+
+  &lt;RET&gt; to CONTINUE, 1-5 or ALL to EDIT, ^N for screen N or '^' to QUIT:<strong>&lt;enter&gt;</strong>
+                   ADMISSION INFORMATION, SCREEN &lt;12&gt;
+  HLSEVEN,TEST;    703-11-1120P                               NON-VETERAN (OTHER)
+  ===============================================================================
+
+  NO ADMISSION DATA ON FILE FOR THIS PATIENT!!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  &lt;RET&gt; to CONTINUE, ^N for screen N or '^' to QUIT:<strong>&lt;enter&gt;</strong>
+                  APPLICATION INFORMATION, SCREEN &lt;13&gt;
+  HLSEVEN,TEST;    703-11-1120P                               NON-VETERAN (OTHER)
+  ===============================================================================
+
+  NO APPLICATION DATA ON FILE FOR THIS PATIENT!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  &lt;RET&gt; to CONTINUE, ^N for screen N or '^' to QUIT:<strong>&lt;enter&gt;</strong>
+                  APPOINTMENT INFORMATION, SCREEN &lt;14&gt;
+  HLSEVEN,TEST;    703-11-1120P                               NON-VETERAN (OTHER)
+  ===============================================================================
+  &lt;1&gt; Enrollment Clinics: NOT ACTIVELY ENROLLED IN ANY CLINICS AT THIS TIME
+
+  &lt;2&gt;     Pending Appt's: NO PENDING APPOINTMENTS ON FILE
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  &lt;RET&gt; to CONTINUE, ^N for screen N or '^' to QUIT:<strong>&lt;enter&gt;</strong>
+              SPONSOR DEMOGRAPHIC INFORMATION, SCREEN &lt;15&gt;
+  HLSEVEN,TEST;    703-11-1120P                               NON-VETERAN (OTHER)
+  ===============================================================================
+  [1] Sponsor Information:
+
+  No Sponsor Information available.
+
+                              *** Team Information ***
+
+                     -- No team assignment information found --
+
+
+
+
+
+
+
+
+
+
+
+  &lt;RET&gt; to QUIT, 1 or ALL to EDIT, ^N for screen N or '^' to QUIT:<strong>&lt;enter&gt;</strong>
+
+  CONSISTENCY CHECKER TURNED OFF!!
+  Patient is exempt from Copay.
+
+  Is the patient currently being followed in a clinic for the same condition? <strong>N</strong>
+    (No)
+
+  Is the patient to be examined in the medical center today? Yes//  <strong>&lt;enter&gt;</strong> (Yes)
+
+
+  Registration login date/time: NOW//  <strong>&lt;enter&gt;</strong> (DEC 28,2018@16:40)
+  TYPE OF BENEFIT APPLIED FOR: <strong>1</strong>  HOSPITAL
+  TYPE OF CARE APPLIED FOR: <strong>1</strong>  DENTAL
+  REGISTRATION ELIGIBILITY CODE: <strong>HUMANITARIAN</strong> EMERGENCY
+           //                        6      6   NON-VETERAN
+
+  Updating eligibility status for this registration...
+
+
+    NEED RELATED TO AN ACCIDENT: <strong>N</strong>  NO
+    NEED RELATED TO OCCUPATION: <strong>N</strong>  NO
+  PRINT 10-10EZ? YES// <strong>NO</strong>
+  PRINT HEALTH SUMMARY? Yes// <strong>N</strong>  (No)
+  ROUTING SLIP? Yes// <strong>N</strong>  (No)
+  PRINT ENCOUNTER FORMS? Yes// <strong>N</strong>  (No)
+
+
+  Select PATIENT NAME:</pre>
+
+At the point you see ``Select PATIENT NAME``, it means that your A04 HL7 message
+just got sent. If you check the Link Manager, you will see an extra message
+that just got sent; and if you check Mirth or netcat, you will see that you just
+received an extra message.
 
 HL7 Receive Setup
 -----------------
 Xinetd Set-up
 ^^^^^^^^^^^^^
+All communication to HL7 should go through Xinetd, except if you are running on
+Windows. 
 Message Set-up
 ^^^^^^^^^^^^^^
 Sending Application
