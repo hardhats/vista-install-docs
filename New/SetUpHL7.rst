@@ -726,9 +726,9 @@ In another window, type the following
 Go back to the Link Monitor. You will see that MEMPHIS switches from being Open
 to Retention to Inactive; and the column for MESSAGES SENT becomes 1.
 
-Back to the netcat window, type CTRL-C, and then dump the file using the cat
-command on Linux or type command on Windows. What you will see would be similar
-to this:
+Back to the netcat window, type CTRL-C to stop the listener, and then dump the
+file using the cat command on Linux or type command on Windows. What you will
+see would be similar to this:
 
 ::
 
@@ -738,14 +738,64 @@ to this:
 
 Setup Mirth for Message Receipt
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Now we are going to set-up Mirth to receive a message.
+`Mirth<http://www.mirthcorp.com/>`_ is what is known as an integration engine.
+An integration engine is essentially a store/transform/and forward software
+for messages between different systems. Mirth is open source software and is
+frequently used with VistA in production implementations. It can be downloaded
+from `here<https://www.nextgen.com/products-and-services/NextGen-Connect-Integration-Engine-Downloads>`_.
+
+Install Mirth
+
+Set-up a Channel
+
+Deploy Channel
+
+Run the test again
+
+View message in Mirth
+
 Turn on HL7 messages in MAS Parameters
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Once we have confirmed that the system to send HL7 messages for patient
+registrations seems to work, let's turn it on. You need to change field
+``SEND PIMS HL7 V2.3 MESSAGES`` in file ``MAS PARAMETERS`` to ``SEND``. I
+think it comes set that way by default in FOIA VistA.
+
+.. raw:: html
+
+  <pre>FOIA201805&gt;<strong>D P^DI</strong>
+
+
+  MSC FileMan 22.1060
+
+
+  Select OPTION: <strong>ENTER</strong> OR EDIT FILE ENTRIES
+
+
+
+  Input to what File: PROTOCOL// <strong>MAS PARAMETERS</strong>    (0 entries)
+  EDIT WHICH FIELD: ALL// <strong>SEND</strong>
+       1   SEND PIMS HL7 V2.2 MESSAGES
+       2   SEND PIMS HL7 V2.3 MESSAGES
+  CHOOSE 1-2: <strong>2</strong>  SEND PIMS HL7 V2.3 MESSAGES
+  THEN EDIT FIELD: <strong>&lt;enter&gt;</strong>
+
+
+  Select MAS PARAMETERS ONE: <strong>`1</strong>
+  SEND PIMS HL7 V2.3 MESSAGES: SEND// <strong>?</strong>
+       Choose from:
+         1        SEND
+         0        STOP
+         2        SUSPEND
+  SEND PIMS HL7 V2.3 MESSAGES: SEND// <strong>1</strong>  SEND
+
+
+  Select MAS PARAMETERS ONE:<strong>&lt;enter&gt;</strong>
+
 Register a Patient
 ^^^^^^^^^^^^^^^^^^
-Note RGADP crash
-
-View Message
-^^^^^^^^^^^^
+Now it's time to register a patient, and see the HL7 come across. 
 
 HL7 Receive Setup
 -----------------
