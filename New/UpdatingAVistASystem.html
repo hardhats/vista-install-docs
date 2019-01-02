@@ -78,7 +78,7 @@
 </ol>
 <p>An even shorter way to install a KIDS build is to run <code>D ^XPDIL,^XPDI</code> from direct mode (aka programmer mode). This runs steps 5 and 6.</p>
 <p>Here's an example starting from after logging in as the system manager with <code>EVE</code> as the main menu. Responses are in bold.</p>
-<div class="code"><code>
+<pre>
         Core Applications ...
         Device Management ...
         Menu Management ...
@@ -208,10 +208,12 @@ Updating system parameters.
           Restart Install of Package(s)
           Unload a Distribution
 
- Installation:</code></div>
+ Installation:</pre>
 <h2 id="long-story">Long Story</h2>
-<p>KIDS was invented by Ron DiMecili for CHCS (a VistA derivative for the DoD) while working for SAIC. Before KIDS existed, VistA (known in those days as the Decentralized Hospital Computer Program [DHCP]) used a technology called DIFROM to transport routines/data between two systems. DIFROM, as it name indicates, is part of Fileman (DI in the name is the namespace for Fileman). DIFROM transported data as routines, as routines were one of the few early standardized ways to share data between different M systems. By the time KIDS came around in the mid 90s, VistA systems were all networked to each other via Mailman (i.e. SMTP); and M systems were by now running on an operating system rather than being the only thing that ran on a machine--so the concept of files on a file system was well-developed by then. The data format that KIDS uses looks like the global output format that is a lowest common denominator standard between M implementations.</p>
-<p>As state earlier, in the VA single builds are transported as mail messages; whereas outside of the VA, most builds are transported as files. Incidentally, the header and footer for the formats for the mail messages is not identical--there are some minor differences compared with the KIDS file. The mail message format is called &quot;Packman&quot; for reasons unknown to me.</p>
+<p>KIDS was written by Ron DiMecili at the VA in 1994. It was based on a white paper written by several senior developers, led by Cameron Schlehuber, the Database Administrator. Before KIDS existed, VistA (known in those days as the Decentralized Hospital Computer Program [DHCP]) used a technology called DIFROM to transport routines/data between two systems. DIFROM, as it name indicates, is part of Fileman (DI in the name is the namespace for Fileman). DIFROM transported data as routines, as routines were one of the few early standardized ways to share data between different M systems. The routines were were moved between systems using tapes or floppy disks which were mailed.</p>
+<p>By about 1987, VistA systems were all networked to each other via Mailman (i.e. SMTP). Mailman added a format called &quot;Packman&quot; which allowed the transport of DIFROM formatted routines via SMTP, rather than by &quot;snail mail&quot; on tapes or floppy disks.</p>
+<p>KIDS came around in the mid 90s; and M systems were by now running on an operating system rather than being the only thing that ran on a machine--so the concept of files on a file system was well-developed by then. The data format that KIDS uses looks like the global output format that is a lowest common denominator standard between M implementations. KIDS can send messages either through email or via files. As stated earlier, in the VA single builds are transported as mail messages; whereas outside of the VA, most builds are transported as files.</p>
+<p>Incidentally, the header and footer for the formats for the mail messages vs KIDS file on the file system are slightly different. The mail messages use the same format that Packman used.</p>
 <h2 id="how-to-identify-kids-files">How to Identify KIDS files</h2>
 <p>KIDS files are easy to identify. The extension is a .kid[s] and the first few lines look like this:</p>
 <pre><code>Released GMRV*5*37 SEQ #29
@@ -270,7 +272,7 @@ This patch will resolve the following issues in the Vitals Lite DLL</code></pre>
 <p>Before you invoke this option, you should download the KIDS build you want to install, and <code>dos2unix</code> it. You should typically <code>dos2unix</code> the KIDS build file first to prevent problems on GTM/YottaDB systems which don't have a way to automatically remove the Carriage Return. After you do that, you should get copy the path to the file.On Linux &amp; Cygwin, you can get the path using <code>readlink -f {filename}</code>; on Windows, typing Win+R to open the run box and dragging the file there will do the trick. KIDS comes by default with a limit of 75 characters for the path--if you have a long path, you may need to copy the file into another place on the file system to get a short path. (Or you can manually modify XPDIL in order to allow a bigger path length -- the line to change is described <a href="/kernel/KRNkids.html">here</a>).</p>
 <p>What you see next depends on the kind of KIDS build you are loading, whether there is an environment check, and whether there are dependency checks. An environment check is a programmatic check placed by the developer who created the KIDS build to check if it should be allowed on your system. Dependencies are KIDS builds that need to be installed first. All types of KIDS builds allow environment checks; all non-global builds allow dependency checks. If you are loading multi-builds (type 2 or type 3 - see <a href="#kinds-of-kids-files">Kinds of KIDS files</a>), you will get environment checks for each one.</p>
 <p>I would like to note that a lot of people use spacebar, enter to select the build in subsequent options--but that doesn't work for multi-builds (type 2 or type 3).</p>
-<div class="code"><code>Select Installation Option: <strong>1</strong>  Load a Distribution
+<pre>Select Installation Option: <strong>1</strong>  Load a Distribution
 Enter a Host File: <strong>/tmp/PSJ-5_SEQ-304_PAT-356.kids</strong>
 
 Released PSJ*5*356 SEQ #304
@@ -284,11 +286,11 @@ Want to Continue with Load? YES//<strong>&lt;enter&gt;</strong>
 Loading Distribution...
 
    PSJ*5.0*356
-Use INSTALL NAME: PSJ*5.0*356 to install this Distribution.</code></div>
+Use INSTALL NAME: PSJ*5.0*356 to install this Distribution.</pre>
 <p>Steps 2-5 are optional steps. However, if you are a test system for new KIDS patches; or are developing software, you should follow steps 2-5. Production sites are advised to back up the current copy of their routines using <code>Backup a Transport Global</code>.</p>
 <h3 id="verify-checksums-in-transport-global-step-2">Verify Checksums in Transport Global (Step 2)</h3>
 <p>This checks that the routines in the KIDS build have not been altered. Note that non-routine elements (of which there are many) are not checksummed. If they were modified in transit, there is no way to detect that.</p>
-<div class="code"><code>Select Installation Option: <strong>2</strong>  Verify Checksums in Transport Global
+<pre>Select Installation Option: <strong>2</strong>  Verify Checksums in Transport Global
 Select INSTALL NAME: <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>  PSJ*5.0*356     Loaded from Distribution    12/25/18@14:01:15
      => Extracted from mail message  ;Created on
 
@@ -309,10 +311,10 @@ PSJPAD7I  Calculated   94307166
 PSJPADIT  Calculated  210594395
 PSJPADIU  Calculated    4945715
 
-   4 Routines checked, 0 failed.</code></div>
+   4 Routines checked, 0 failed.</pre>
 <h3 id="print-transport-global-step-3">Print Transport Global (Step 3)</h3>
 <p>This allows you to inspect the contents of the build you just loaded. Here's an example:</p>
-<div class="code"><code>Select Installation Option: <strong>3 </strong> Print Transport Global
+<pre>Select Installation Option: <strong>3 </strong> Print Transport Global
 Select INSTALL NAME:  <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>  PSJ*5.0*356     Loaded from Distribution    12/25/18@14:
 01:15
      => Extracted from mail message  ;Created on
@@ -357,10 +359,10 @@ INSTALL QUESTIONS:
  Default DISABLE Scheduled Options, Menu Options, and Protocols: NO
 
 REQUIRED BUILDS:                               ACTION:
-   PSJ*5.0*317                                    Don't install, leave global</code></div>
+   PSJ*5.0*317                                    Don't install, leave global</pre>
 <h3 id="compare-transport-global-to-current-system-step-4">Compare Transport Global to Current System (Step 4)</h3>
 <p>This option compares the components in the KIDS build to your current system. It does not just do it for routines; it also does it for other components a KIDS build sends out. This is an important step for developers exchanging KIDS builds -- as it lets them see what changes this build is going to make to the system. Here's an example; discussion follows.</p>
-<div class="code"><code>Select Installation Option: <strong>4</strong>  Compare Transport Global to Curren
+<pre>Select Installation Option: <strong>4</strong>  Compare Transport Global to Curren
 t System
 Select INSTALL NAME: <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>   PSJ*5.0*356     Loaded from Distribution    12/25/18@14:
 01:15
@@ -650,12 +652,12 @@ Site: DEMO.OSEHRA.ORG  UCI: VAH,ROU       Dec 25, 2018@14:54:28
    {R") K DIERR ;*356}
 
 
-*ADD* Routine: PSJPADIU</code></div>
+*ADD* Routine: PSJPADIU</pre>
 <p>It should be obvious upon quick inspection that the ^ shows where a difference between lines starts. Also, if you see *ADD* or *DELETE*, it means something is new or is being deleted.</p>
 <h3 id="backup-a-transport-global-step-5">Backup a Transport Global (Step 5)</h3>
 <p>This is a colossally misnamed option: This option does not -- as it name suggests -- back up the KIDS build you are currently installing; rather it backs up the current state of the system -- but only the routines -- in order for you to be able to recover your old code in case the code the KIDS build brings in is bad. Note that all the other changes that a KIDS build performs are not reversed, including any data conversion. Some developers write an &quot;undo&quot; utility for big patches that perform data conversion; but that's more of the exception rather than the rule.</p>
 <p>Here's an example:</p>
-<div class="code"><code>Select Installation Option: <strong>5</strong>  Backup a Transport Global
+<pre>Select Installation Option: <strong>5</strong>  Backup a Transport Global
 Select INSTALL NAME: <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>   PSJ*5.0*356     Loaded from Distribution    12/25/18@14:
 01:15
      => Extracted from mail message  ;Created on
@@ -670,7 +672,7 @@ Loading Routines for PSJ*5.0*356...
 Routine PSJPADIU is not on the disk..
 Send mail to: 사용자,하나// <strong>`1 </strong> 사용자,하나
 Select basket to send to: IN//<strong>&lt;enter&gt;</strong>
-And Send to:<strong>&lt;enter&gt;</strong></code></div>
+And Send to:<strong>&lt;enter&gt;</strong></pre>
 <h3 id="install-packages-step-6">Install Package(s) (Step 6)</h3>
 <p>This is the option that finally installs the loaded KIDS build into the system. You are typically asked a few questions, most of which you can accept the defaults to. The questions you typically see are as follows:</p>
 <ul>
@@ -688,7 +690,7 @@ And Send to:<strong>&lt;enter&gt;</strong></code></div>
 <p>Developers are free to add their own questions, and you may see them; but these are comparatively rare.</p>
 <p>Before the install starts, you will be prompted for <code>DEVICE: HOME//</code>. Regrettably, KIDS tries to be helpful when you accept the default of &quot;HOME&quot; and paints a user friendly screen showing you an progress indicator. The problem is that this hides any compilation errors or possibly any other errors. Therefore, unless you are just the recipient of a KIDS build that will &quot;just work&quot;, you should enter <code>;P-OTHER;</code> into that prompt in order to get regular roll &amp; scroll output.</p>
 <p>Here's an example install, using the same build we have been using so far in this section:</p>
-<div class="code"><code>Select Installation Option: <strong>6</strong>  Install Package(s)
+<pre>Select Installation Option: <strong>6</strong>  Install Package(s)
 Select INSTALL NAME: <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>  PSJ*5.0*356     Loaded from Distribution    12/25/18@14:
 01:15
      => Extracted from mail message  ;Created on
@@ -730,7 +732,7 @@ Build Distribution Date: Mar 22, 2018
 
  Not a VA primary domain
 
- NO Install Message sent</code></div>
+ NO Install Message sent</pre>
 <p>And that's it for installation a patch. By the way, in the VA, an email message will be sent to a central system called &quot;FORUM&quot; to indicate that the patch was installed.</p>
 <h2 id="recovering-from-a-bad-install">Recovering from a Bad Install</h2>
 <p>Here are some quick tips for dealing with KIDS builds that don't load or didn't fully go in. If a crash happens, you probably need to know some M code in order to be able to diagnose what is happening.</p>
@@ -765,7 +767,7 @@ Build Distribution Date: Mar 22, 2018
 </ol>
 <h2 id="figure-out-your-current-patch-level">Figure out your current patch level</h2>
 <p>The best way I have found of doing this is printing a listing of KIDS installs from Fileman in reverse chronological order, and figuring which which VA patches got installed. The file where that data resides is (appropriately enough) called <code>INSTALL</code>. Here's a sample of how I can do that. Note that I am using <code>INSTALL START TIME</code> as the field to reverse sort (- means reverse sort) in one print but the <code>DISTRIBUTION DATE</code> in the next print. The field <code>DISTRIBUTION DATE</code> is far more accurate as it gives you the date the KIDS build was produced in the VA; not the date it was installed on your system.</p>
-<div class="code"><code>FOIA201805&gt;<strong>S DUZ=1</strong>
+<pre>FOIA201805&gt;<strong>S DUZ=1</strong>
 
 FOIA201805&gt;<strong>D P^DI</strong>
 
@@ -783,7 +785,7 @@ First Print FIELD: <strong>NAME</strong>
 Then Print FIELD: <strong>INSTALL START TIME</strong>
 Then Print FIELD:<strong>&lt;enter&gt;</strong>
 Heading (S/C): INSTALL List//<strong>&lt;enter&gt;</strong>
-DEVICE: HOME//<strong>&lt;enter&gt;</strong></code></div>
+DEVICE: HOME//<strong>&lt;enter&gt;</strong></pre>
 <p>Here's the output by <code>INSTALL START TIME</code>, which normally isn't useful.</p>
 <pre><code>INSTALL List                                          DEC 25,2018@17:52   PAGE 1
 NAME                                                INSTALL START TIME

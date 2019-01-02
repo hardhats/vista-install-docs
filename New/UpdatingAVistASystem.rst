@@ -71,7 +71,7 @@ Here's an example starting from after logging in as the system manager with
 
 .. raw:: html
 
-  <div class="code"><code>
+  <pre>
           Core Applications ...
           Device Management ...
           Menu Management ...
@@ -201,29 +201,37 @@ Here's an example starting from after logging in as the system manager with
             Restart Install of Package(s)
             Unload a Distribution
 
-   Installation:</code></div>
+   Installation:</pre>
 
 Long Story
 ^^^^^^^^^^
-KIDS was invented by Ron DiMecili for CHCS (a VistA derivative for the DoD)
-while working for SAIC. Before KIDS existed, VistA (known in those days as the
+KIDS was written by Ron DiMecili at the VA in 1994. It was based on a white
+paper written by several senior developers, led by Cameron Schlehuber, the
+Database Administrator. Before KIDS existed, VistA (known in those days as the
 Decentralized Hospital Computer Program [DHCP]) used a technology called DIFROM
 to transport routines/data between two systems. DIFROM, as it name indicates,
 is part of Fileman (DI in the name is the namespace for Fileman). DIFROM
 transported data as routines, as routines were one of the few early
-standardized ways to share data between different M systems. By the time KIDS
-came around in the mid 90s, VistA systems were all networked to each other via
-Mailman (i.e.  SMTP); and M systems were by now running on an operating system
-rather than being the only thing that ran on a machine--so the concept of files
-on a file system was well-developed by then.  The data format that KIDS uses
-looks like the global output format that is a lowest common denominator
-standard between M implementations. 
+standardized ways to share data between different M systems. The routines were
+were moved between systems using tapes or floppy disks which were mailed.
 
-As state earlier, in the VA single builds are transported as mail messages;
-whereas outside of the VA, most builds are transported as files.  Incidentally,
-the header and footer for the formats for the mail messages is not
-identical--there are some minor differences compared with the KIDS file. The
-mail message format is called "Packman" for reasons unknown to me.
+By about 1987, VistA systems were all networked to each other via Mailman (i.e.
+SMTP). Mailman added a format called "Packman" which allowed the transport of
+DIFROM formatted routines via SMTP, rather than by "snail mail" on tapes or
+floppy disks.
+
+KIDS came around in the mid 90s; and M systems were by now running on an
+operating system rather than being the only thing that ran on a machine--so the
+concept of files on a file system was well-developed by then.  The data format
+that KIDS uses looks like the global output format that is a lowest common
+denominator standard between M implementations. KIDS can send messages either
+through email or via files. As stated earlier, in the VA single builds are
+transported as mail messages; whereas outside of the VA, most builds are
+transported as files. 
+
+Incidentally, the header and footer for the formats for the mail messages vs
+KIDS file on the file system are slightly different. The mail messages use the
+same format that Packman used.
 
 How to Identify KIDS files
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -391,7 +399,7 @@ type 3).
 
 .. raw:: html
 
-  <div class="code"><code>Select Installation Option: <strong>1</strong>  Load a Distribution
+  <pre>Select Installation Option: <strong>1</strong>  Load a Distribution
   Enter a Host File: <strong>/tmp/PSJ-5_SEQ-304_PAT-356.kids</strong>
 
   Released PSJ*5*356 SEQ #304
@@ -405,7 +413,7 @@ type 3).
   Loading Distribution...
 
      PSJ*5.0*356
-  Use INSTALL NAME: PSJ*5.0*356 to install this Distribution.</code></div>
+  Use INSTALL NAME: PSJ*5.0*356 to install this Distribution.</pre>
 
 Steps 2-5 are optional steps. However, if you are a test system for new KIDS
 patches; or are developing software, you should follow steps 2-5. Production
@@ -420,7 +428,7 @@ they were modified in transit, there is no way to detect that.
 
 .. raw:: html
 
-  <div class="code"><code>Select Installation Option: <strong>2</strong>  Verify Checksums in Transport Global
+  <pre>Select Installation Option: <strong>2</strong>  Verify Checksums in Transport Global
   Select INSTALL NAME: <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>  PSJ*5.0*356     Loaded from Distribution    12/25/18@14:01:15
        => Extracted from mail message  ;Created on
 
@@ -441,7 +449,7 @@ they were modified in transit, there is no way to detect that.
   PSJPADIT  Calculated  210594395
   PSJPADIU  Calculated    4945715
 
-     4 Routines checked, 0 failed.</code></div>
+     4 Routines checked, 0 failed.</pre>
 
 Print Transport Global (Step 3)
 """""""""""""""""""""""""""""""
@@ -450,7 +458,7 @@ example:
 
 .. raw:: html
 
-  <div class="code"><code>Select Installation Option: <strong>3 </strong> Print Transport Global
+  <pre>Select Installation Option: <strong>3 </strong> Print Transport Global
   Select INSTALL NAME:  <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>  PSJ*5.0*356     Loaded from Distribution    12/25/18@14:
   01:15
        => Extracted from mail message  ;Created on
@@ -495,7 +503,7 @@ example:
    Default DISABLE Scheduled Options, Menu Options, and Protocols: NO
 
   REQUIRED BUILDS:                               ACTION:
-     PSJ*5.0*317                                    Don't install, leave global</code></div>
+     PSJ*5.0*317                                    Don't install, leave global</pre>
 
 Compare Transport Global to Current System (Step 4)
 """""""""""""""""""""""""""""""""""""""""""""""""""
@@ -507,7 +515,7 @@ system.  Here's an example; discussion follows.
 
 .. raw:: html
 
-  <div class="code"><code>Select Installation Option: <strong>4</strong>  Compare Transport Global to Curren
+  <pre>Select Installation Option: <strong>4</strong>  Compare Transport Global to Curren
   t System
   Select INSTALL NAME: <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>   PSJ*5.0*356     Loaded from Distribution    12/25/18@14:
   01:15
@@ -797,7 +805,7 @@ system.  Here's an example; discussion follows.
      {R") K DIERR ;*356}
 
 
-  *ADD* Routine: PSJPADIU</code></div>
+  *ADD* Routine: PSJPADIU</pre>
 
 It should be obvious upon quick inspection that the ^ shows where a difference
 between lines starts. Also, if you see \*ADD\* or \*DELETE\*, it means something
@@ -818,7 +826,7 @@ Here's an example:
 
 .. raw:: html
 
-  <div class="code"><code>Select Installation Option: <strong>5</strong>  Backup a Transport Global
+  <pre>Select Installation Option: <strong>5</strong>  Backup a Transport Global
   Select INSTALL NAME: <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>   PSJ*5.0*356     Loaded from Distribution    12/25/18@14:
   01:15
        => Extracted from mail message  ;Created on
@@ -833,7 +841,7 @@ Here's an example:
   Routine PSJPADIU is not on the disk..
   Send mail to: 사용자,하나// <strong>`1 </strong> 사용자,하나
   Select basket to send to: IN//<strong>&lt;enter&gt;</strong>
-  And Send to:<strong>&lt;enter&gt;</strong></code></div>
+  And Send to:<strong>&lt;enter&gt;</strong></pre>
 
 Install Package(s) (Step 6)
 """""""""""""""""""""""""""
@@ -883,7 +891,7 @@ this section:
 
 .. raw:: html
 
-  <div class="code"><code>Select Installation Option: <strong>6</strong>  Install Package(s)
+  <pre>Select Installation Option: <strong>6</strong>  Install Package(s)
   Select INSTALL NAME: <strong>&lt;spacebar&gt;&lt;enter&gt;</strong>  PSJ*5.0*356     Loaded from Distribution    12/25/18@14:
   01:15
        => Extracted from mail message  ;Created on
@@ -925,7 +933,7 @@ this section:
 
    Not a VA primary domain
 
-   NO Install Message sent</code></div>
+   NO Install Message sent</pre>
 
 And that's it for installation a patch. By the way, in the VA, an email message
 will be sent to a central system called "FORUM" to indicate that the patch was
@@ -996,7 +1004,7 @@ build was produced in the VA; not the date it was installed on your system.
 
 .. raw:: html
 
-  <div class="code"><code>FOIA201805&gt;<strong>S DUZ=1</strong>
+  <pre>FOIA201805&gt;<strong>S DUZ=1</strong>
 
   FOIA201805&gt;<strong>D P^DI</strong>
 
@@ -1014,7 +1022,7 @@ build was produced in the VA; not the date it was installed on your system.
   Then Print FIELD: <strong>INSTALL START TIME</strong>
   Then Print FIELD:<strong>&lt;enter&gt;</strong>
   Heading (S/C): INSTALL List//<strong>&lt;enter&gt;</strong>
-  DEVICE: HOME//<strong>&lt;enter&gt;</strong></code></div>
+  DEVICE: HOME//<strong>&lt;enter&gt;</strong></pre>
 
 Here's the output by ``INSTALL START TIME``, which normally isn't useful.
 
@@ -1137,7 +1145,10 @@ OSEHRA Autopatcher
 ^^^^^^^^^^^^^^^^^^
 OSEHRA created an autopatcher, which is a set of python expect scripts that
 automate all of what we discussed above. It is not designed for production
-environments. You can find instructions on using it `here<https://github.com/OSEHRA/VistA/blob/master/Scripts/PatchSequenceApply.rst>`_. OSEHRA has had good results using it, but you need to be aware of the limitations:
+environments. You can find instructions on using it
+`here<https://github.com/OSEHRA/VistA/blob/master/Scripts/PatchSequenceApply.rst>`_.
+OSEHRA has had good results using it, but you need to be aware of the
+limitations:
 
 * The system is entirely automated. That means that there is no chance to
   look at any messages KIDS displays. We can argue that this is no different
@@ -1160,4 +1171,5 @@ Based on what we discussed above, and based on our experience with systems like
 * Automated patch installation using https to obtain the patches
 * Patch installs cannot "talk", as there will be nobody there to type anything
 * Ability to point at different patch repositories
-* Ability to detect modification of a KIDS element outside of the patching process
+* Ability to detect modification of a KIDS element outside of the patching
+  process
