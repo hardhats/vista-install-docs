@@ -1,0 +1,29 @@
+OSEHL7 ; OSE/SMH - Sample HL7 Message Processing;Nov 29, 2018@14:51
+ ;;0.0;SAMPLES;
+ ;
+ADTA04 ; Process an external ADT-A04 message
+ ; ZEXCEPT: HLNEXT,HLNODE,HL
+ N I,J,X,PID
+ F I=1:1 X HLNEXT Q:HLQUIT'>0  D
+ . I $P(HLNODE,HL("FS"))="PID" D
+ .. S PID=$P(HLNODE,HL("FS"),2,9999)
+ .. F J=0:0 S J=$O(HLNODE(J)) Q:'J  S PID=PID_HLNODE(J)
+ .. N DFN S DFN=$$PROCESS(PID)
+ .. N HLA
+ .. S HLA("HLA",1)="MSA"_HL("FS")_"AA"_HL("FS")_HL("MID")_HL("FS")_"DFN: "_DFN
+ .. D GENACK^HLMA1(HL("EID"),HLMTIENS,HL("EIDS"),"LM",1)
+ QUIT
+ ;
+PROCESS(PID) ; Add a patient to VistA
+ N ARR
+ S ARR("PRFCLTY")=$P($$SITE^VASITE(),U,3)
+ S ARR("NAME")=$TR($P(PID,HL("FS"),5),"~",",")
+ S ARR("GENDER")=$P(PID,HL("FS"),8)
+ S ARR("DOB")=$$HL7TFM^XLFDT($P(PID,HL("FS"),7))
+ S ARR("SSN")=""
+ S ARR("SRVCNCTD")="N"
+ S ARR("TYPE")="NON-VETERAN (OTHER)"
+ S ARR("VET")="N"
+ S ARR("FULLICN")=$$EN2^MPIFAPI() ; Create a new ICN
+ D ADD^VAFCPTAD(.ZZZ,.ARR)
+ QUIT $P(ZZZ(1),U,2)
