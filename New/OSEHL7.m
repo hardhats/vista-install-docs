@@ -1,4 +1,4 @@
-OSEHL7 ; OSE/SMH - Sample HL7 Message Processing;Nov 29, 2018@14:51
+OSEHL7 ; OSE/SMH - Sample HL7 Message Processing;Jan 04, 2019@11:35
  ;;0.0;SAMPLES;
  ;
 ADTA04 ; Process an external ADT-A04 message
@@ -16,8 +16,9 @@ ADTA04 ; Process an external ADT-A04 message
  ;
 PROCESS(PID) ; Add a patient to VistA
  N ARR
+ N CS S CS=$E(HL("ECH"),1)
  S ARR("PRFCLTY")=$P($$SITE^VASITE(),U,3)
- S ARR("NAME")=$TR($P(PID,HL("FS"),5),"~",",")
+ S ARR("NAME")=$TR($P(PID,HL("FS"),5),CS,",")
  S ARR("GENDER")=$P(PID,HL("FS"),8)
  S ARR("DOB")=$$HL7TFM^XLFDT($P(PID,HL("FS"),7))
  S ARR("SSN")=""
@@ -25,5 +26,7 @@ PROCESS(PID) ; Add a patient to VistA
  S ARR("TYPE")="NON-VETERAN (OTHER)"
  S ARR("VET")="N"
  S ARR("FULLICN")=$$EN2^MPIFAPI() ; Create a new ICN
+ N DGADDF S DGADDF=1
+ N EASAPP S EASAPP=1
  D ADD^VAFCPTAD(.ZZZ,.ARR)
  QUIT $P(ZZZ(1),U,2)

@@ -24,6 +24,7 @@
 <li><a href="#create-logical-link">Create Logical Link</a></li>
 <li><a href="#enable-logical-link">Enable Logical Link</a></li>
 <li><a href="#create-subscriber-client-receiving-application">Create Subscriber Client &amp; Receiving Application</a></li>
+<li><a href="#fix-vafc-pims-application-facility-number">Fix VAFC PIMS Application Facility Number</a></li>
 <li><a href="#check-the-link-manager">Check the Link Manager</a></li>
 <li><a href="#creating-a-test-message">Creating a Test Message</a></li>
 </ul></li>
@@ -77,12 +78,12 @@
 </nav>
 <p>Authors: Sam Habiel. Thanks to David Whitten for help with VistA; to Loyd Bittle for teaching me how to use Mirth.</p>
 <p>License: <a href="http://creativecommons.org/licenses/by/4.0/"><img src="https://i.creativecommons.org/l/by/4.0/80x15.png" alt="license" /></a></p>
-<p>Last updated in December 2018.</p>
+<p>Last updated in Januray 2019.</p>
 <blockquote>
-<p>Before proceeding with this section, you should have completed <a href="./InitializeVistA.html">Initializing VistA</a>.</p>
+<p>Before proceeding with this section, you should have completed <a href="./InitializeVistA.html">Initializing VistA</a>; and <a href="./SetMasParameters.html#mas-parameter-entryedit">MAS Parameter Entry/Edit</a> (you only need to do section 1, starting with <code>MEDICAL CENTER NAME</code> and ending with <code>ABBREVIATED PATIENT INQUIRY</code></p>
 </blockquote>
 <h1 id="purpose-of-this-tutorial">Purpose of this Tutorial</h1>
-<p>This tutorial will help you set-up both outgoing and incoming connections to HL7 in VistA via <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol">TCP</a> only. The tutorial will be very thin on theoretical content on HL7 itself. For a fuller treatment of the subject matter, consult the manuals in the <a href="https://www.va.gov/vdl/application.asp?appid=8">VistA Documentation Library</a>, in particular, <a href="https://www.va.gov/vdl/documents/Infrastructure/Health_Level_7_(HL7)/hl71_6p56_p66.pdf">this manual</a>. There is a newer HL7 messaging system in VistA called &quot;HL7 Optimized (HLO)&quot; --we wont be discussing that here as HLO is not widely used.</p>
+<p>This tutorial will help you set-up both outgoing and incoming connections to HL7 in VistA via <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol">TCP</a> only. The tutorial will be very thin on theoretical content on HL7 itself. For a fuller treatment of the subject matter, consult the manuals in the <a href="https://www.va.gov/vdl/application.asp?appid=8">VistA Documentation Library</a>, in particular, <a href="https://www.va.gov/vdl/documents/Infrastructure/Health_Level_7_(HL7)/hl71_6p56_p66.pdf">this manual</a>. There is a newer HL7 messaging system in VistA called &quot;HL7 Optimized (HLO)&quot; --we won't be discussing that here as HLO is not widely used.</p>
 <h1 id="what-is-hl7">What is HL7?</h1>
 <p>HL7 means Health Level 7, the number 7 corresponding to the Application Layer in the <a href="https://en.wikipedia.org/wiki/OSI_model">OSI Model</a>. In brief, it is a messaging format used in Medicine. It's important because when deploying VistA in a healthcare setting, you almost always have to talk to other machines, such a lab instruments, ECG/EKG instruments, X-ray machines, and the list goes on forever. The way to talk to all of these instruments is using HL7.</p>
 <p>When we speak of HL7 in this document, we specifically mean HL7 versions 2.1, 2.2, 2.3, and 2.4, which are all similar to each other. We will not talk about HL7 v.3 and later, which include CDA documents and the like as these are not used for interfacing with Medical Devices.</p>
@@ -111,7 +112,7 @@ OBX|ST|VP^PULSE^L||75|/MIN </code></pre>
 <ul>
 <li>The first line of the message is the message header (MSH) segment
 <ul>
-<li>The field separator is ‘|’, the component separator is ‘^’, the repetition separator is ‘~’, the escape character is ‘’ and the subcomponent separator is ‘&amp;’. This is the recommended set.</li>
+<li>The field separator is ‘|’, the component separator is ‘^’, the repetition separator is ‘~’, the escape character is ‘\’ and the subcomponent separator is ‘&amp;’. This is the recommended set.</li>
 <li>The sending application is INFOLIO TEST and the receiving application is IBTEST.</li>
 <li>The sending facility is BOSTON VAMC and the receiving facility is 500.</li>
 <li>The message type is Observation Result/Unsolicited (ORU) and the event type is an unsolicited transmission of an observation message (R01).</li>
@@ -135,13 +136,12 @@ MSA|AA|MSGID12349876</code></pre>
 <li>CR - Commit Reject</li>
 </ul>
 <p>There is one more thing that's important to mention: The messages above are just the contents. The actual message transmitted over TCP contains several control characters to delimit the start and the end of the message. (TCP is a stream protocol; so you must provide either message lengths or delimiters to delineate the beginning and end of a message). This is called the HL7 Minimal Lower Layer Protocol (MLLP). So a full HL7 message over TCP looks like this:</p>
-<pre><code>I VERTICAL TAB - $C(11)/0X0B&gt;
+<pre><code>&lt;ASCII VERTICAL TAB - $C(11)/0X0B&gt;
 HL7 MESSAGE
 &lt;ASCII FILE SEPARATOR - $C(28)/0X1C&gt;
 &lt;ASCII CARRIAGE RETURN - $C(13)/0X0D&gt;</code></pre>
 <h1 id="hl7-system-startup">HL7 System Startup</h1>
 <p>There are some persistent Taskman tasks that need to be created in order for the HL7 system to initialize itself. The tasks are <code>HL AUTOSTART LINK MANAGER</code> and <code>HL TASK RESTART</code>, which need to be set to start-up persistent. On a production system, you must schedule <code>HL PURGE TRANSMISSIONS</code> nightly to ensure that you don't run out of disk space.</p>
-<p>To schedule these tasks, go to <a href="./InitializeVistA.html#back-to-taskman">this section</a> of the Initialize VistA document. Remember, two of the tasks are to be marked as Startup Persistent, and one is recurring every night.</p>
 <p>Here's a screen capture in Fileman</p>
 <pre>FOIA201805&gt;D P^DI
 
@@ -190,7 +190,7 @@ OTHER DEVICE PARAMETERS:
 QUEUED TO RUN ON VOLUME SET:
 RESCHEDULING FREQUENCY: <strong>1D</strong>
 SPECIAL QUEUEING: <strong>^</strong></pre>
-<p>If Taskman is running, it should &quot;catch&quot; the new persistent tasks and start them. If you run the system status from direct mode, you should see a bunch of HL7 tasks now running (italicized).</p>
+<p>Taskman does not &quot;catch&quot; the new tasks unless it's started from scratch (which involves stopping Taskman and then starting with <code>DO ^ZTMB</code>. We can tell it about them using <code>DO STRTUP^%ZTM0</code> on direct mode. If you run the system status from direct mode, you should see a bunch of HL7 tasks now running (italicized).</p>
 <pre>FOIA201805&gt;<strong>X ^%ZOSF("SS")</strong>
 
 GT.M System Status users on 27-DEC-18 21:30:16
@@ -216,9 +216,10 @@ GT.M System Status users on 27-DEC-18 21:30:16
 12968 mumps   BG-S9000     LGTM+25^%ZISTCPS   POSTMASTER          18:44:50
 13308 mumps   BG-0         GETTASK+3^%ZTMS1                       18:44:51</pre>
 <h1 id="hl7-send-setup">HL7 Send Setup</h1>
-<p>What I will show here is a typical scenario of sending messages out to other systems. VistA sends messages at specific events (the messages sent and the event at which a message is sent is typically documented in the technical manual for a package on the <a href="https://www.va.gov/vdl">VDL</a>). The event is something that happens inside of VistA, such as the registration of a patient, the availability of lab results, or the scheduling of an appointment. The example we will use is patient registration, upon which VistA can send an HL7 ADT/A04 message, which is a patient registration message.</p>
+<p>What I will show here is a typical scenario of sending messages out to other systems. VistA sends messages at specific events. The messages sent and the event at which a message is sent is typically documented in the technical manual for a package on the <a href="https://www.va.gov/vdl">VDL</a>; however, for older packages, there is no good documentation and the only way to discover the interfaces is by inspecting the code base. The event is something that happens inside of VistA, such as the registration of a patient, the availability of lab results, or the scheduling of an appointment. The example we will use is patient registration, upon which VistA can send an HL7 ADT/A04 message, which is a patient registration message.</p>
 <h2 id="introduction-to-outgoing-message-routing-in-vista">Introduction to Outgoing Message Routing in VistA</h2>
 <p>This part is confusing, mainly because the way an outgoing message is processed is almost identical to how an incoming message is processed. So we will discuss this again in the context of incoming messages.</p>
+<p>This section is for illustration; you don't need to configure anything here.</p>
 <p>To send an outgoing message from VistA, you need to create an EVENT DRIVER protocol (it actually lives in a file called PROTOCOL in Fileman). The EVENT DRIVER is also known as a SERVER (which I personally find confusing, but oh well). Here's the one we will use: (NB: to reach this form, you need to navigate to EVE &gt; HL7 Main Menu &gt; Interface Developer Options &gt; Protocol Edit and select <code>VAFC ADT-A04 SERVER</code>.)</p>
 <pre><code>|                        HL7 INTERFACE SETUP                         PAGE 1 OF 2
 --------------------------------------------------------------------------------
@@ -283,24 +284,23 @@ Exit    Save    Previous Page    Refresh    Quit</code></pre>
 _______________________________________________________________________________</code></pre>
 <p>The important fields we need to look at are <code>LOGICAL LINK</code>, <code>PROCESSING RTN</code>, and <code>ROUTING LOGIC</code>. The way they are used is confusing. They actually override each other, in this order:</p>
 <ol type="1">
-<li>If the programmer creates an <code>HLL(&quot;LINKS&quot;)</code> array, that overrides everything, and none of the following steps take place. HLL(&quot;LINKS&quot;) basically tells VistA to ignore all the subscribers and use the subscribers in the HLL(&quot;LINKS&quot;) array. That means that steps 2-4 are evaluated for the subscribers in the HLL(&quot;LINKS&quot;) array.</li>
 <li>If <code>ROUTING LOGIC</code> is specified, that is executed; and nothing else is.</li>
-<li>If <code>LOGICAL LINK</code> is specified, the message is delivered to the IP address/ domain name on the logical link and then we stop.</li>
+<li>If <code>LOGICAL LINK</code> is specified, the message is delivered to the IP address/domain name on the logical link and then we stop.</li>
 <li>If neither <code>LOGICAL LINK</code> nor <code>ROUTING LOGIC</code> is specified, then the message is assumed to be an internal VistA to itself message, and the code for <code>PROCESSING RTN</code> is used. If <code>PROCESSING RTN</code> is not filled out, that's an error condition.</li>
 </ol>
-<p>For most users, using a <code>LOGICAL LINK</code> to send a message out to an external system is the correct thing to do.</p>
+<p>For most users, using a <code>LOGICAL LINK</code> to send a message out to an external system is the correct thing to do; but some advanced VistA code uses <code>ROUTING LOGIC</code> to route messages.</p>
 <p>Here are the steps for setting up to send a message from VistA to the outside:</p>
 <ul>
 <li>Create Logical Link</li>
 <li>Enable Logical Link</li>
 <li>Create Subscriber Client &amp; Receiving Application</li>
-<li>(Application Specific) Enable Sending HL7 messages</li>
+<li>(Package Specific) Enable Sending HL7 messages</li>
 <li>Test</li>
 </ul>
 <p>In this example, what I will do is receive the message using the <a href="http://netcat.sourceforge.net/">netcat</a> program, which is a generic socket listener; and then we will download <a href="https://www.nextgen.com/products-and-services/NextGen-Connect-Integration-Engine-Downloads">Mirth</a> and use it to receive a message. Mirth is an HL7 (and other formats) integration engine -- and it's a realistic target to receive HL7 messages.</p>
 <h2 id="outgoing-message-setup">Outgoing Message Setup</h2>
 <h3 id="create-logical-link">Create Logical Link</h3>
-<p>In real life, you will have a destination machine with an IP/domain name and port number you need to communicate to. For the purposes of this demonstration, I will initially set-up a <code>netcat</code> listener on my local machine on port 6661. That means that my new logical link will call 127.0.0.1 port 6661. I will call my link MEMPHIS. Logical links are not typically namespaced. To create a new logical link, go to EVE &gt; HL7 Main Menu &gt; Interface Developer Options &gt; Link Edit [EL]</p>
+<p>In real life, you will have a destination machine with an IP/domain name and port number you need to communicate to. For the purposes of this demonstration, I will initially set-up a <code>netcat</code> listener on my local machine on port 6661. That means that my new logical link will call 127.0.0.1 port 6661. I will call my link <code>MEMPHIS</code>. Logical links are not typically namespaced. A namespace is a place to place your code in M; and a numberspace is where you need to put your files and your new fields. To create a new logical link, go to EVE &gt; HL7 Main Menu &gt; Interface Developer Options &gt; Link Edit [EL]</p>
 <pre>Select HL LOGICAL LINK NODE: <strong>MEMPHIS</strong>
   Are you adding 'MEMPHIS' as a new HL LOGICAL LINK (the 77TH)? No// <strong>Y</strong>
                           HL7 LOGICAL LINK
@@ -389,6 +389,7 @@ Exit    Save    Refresh    Quit</code></pre>
 
  RESPONSE PROCESSING RTN:
                            SUBSCRIBERS
+  RG ADT-A04 TRIGGER
   VBECS ADT-A04 CLIENT
   HMP ADT-A04 CLIENT
 
@@ -463,6 +464,35 @@ r        REFRESH</code></pre>
 _______________________________________________________________________________</code></pre>
 <p>Go to the command area, type &quot;C&quot; for close, and then &quot;E&quot; for exit.</p>
 <p>At this point, we should be theoretically ready to send an HL7 message to the MEMPHIS channel.</p>
+<h3 id="fix-vafc-pims-application-facility-number">Fix VAFC PIMS Application Facility Number</h3>
+<p>One last thing before moving on. If you completed <a href="./InitializeVistA.html">Initializing VistA</a>, you would have assigned yourself a 3 digit station number; in the guide we used 999. To prevent a crash during patient registration, we need to edit the station number on the VAFC PIMS Application in the field &quot;FACILITY NAME&quot; to be match our exact station number.</p>
+<p>If you go to direct mode, we can get our station number using $$SITE^VASITE:</p>
+<pre><code>FOIA201812&gt;D DT^DICRW W $$SITE^VASITE
+
+4304^PALM DESERT HOSPITAL^999</code></pre>
+<p>The station number is the third piece: 999. Go to EVE &gt; HL7 Main Menu &gt; Interface Developer Options &gt; Application Edit [EA], and select <code>VAFC PIMS</code>, and change the facility name field to be your station number:</p>
+<pre><code>|                          HL7 APPLICATION EDIT
+--------------------------------------------------------------------------------
+
+               NAME: VAFC PIMS                     ACTIVE/INACTIVE: ACTIVE
+
+
+      FACILITY NAME: 999                              COUNTRY CODE: USA
+
+
+HL7 FIELD SEPARATOR:                       HL7 ENCODING CHARACTERS:
+
+
+         MAIL GROUP: VAFH ADT/HL7
+
+
+
+
+_______________________________________________________________________________
+
+Exit    Save    Refresh    Quit
+
+Enter a COMMAND, or &quot;^&quot; followed by the CAPTION of a FIELD to jump to.</code></pre>
 <h3 id="check-the-link-manager">Check the Link Manager</h3>
 <p>Now, we should check that the Link Manager to make sure there are no messages on the MEMPHIS Logical Link. Check it by going to HL7 Main Menu &gt; Systems Link Monitor. This is what you will see, and it is what we expect.</p>
 <pre><code>|                SYSTEM LINK MONITOR for PLATINUM (P System)                  
@@ -509,7 +539,7 @@ Select OPTION NAME:
 FOIA201805&gt;N % S %=$$EN^VAFCA04(1,$$NOW^XLFDT)</code></pre>
 <p>If you crash, read this note:</p>
 <blockquote>
-<p>If you crash with this error: OBX+10^RGADTP, Undefined local variable: HL(SFN), it means that you did not change the station number that came with FOIA (050) and some downstream code is expecting 3 digit station numbers. This error comes from the subscriber <code>RG ADT-A04 TRIGGER</code>, which you may have seen when editing the subscribers for EVENT DRIVER <code>VAFC ADT-A04 SERVER</code>. Without having to do the station numbers as described in <a href="./InitializeVistA.html#setup-your-institution">Initailize VistA</a>, you can just go to the subscribers again, move the cursor to <code>RG ADT-A04 TRIGGER</code>, and then type &quot;@&quot; to remove it.</p>
+<p>If you crash with this error: OBX+10^RGADTP, Undefined local variable: HL(SFN), you need to go to EVE &gt; HL7 Main Menu &gt; Interface Developer Options &gt; Application Edit [EA], choose <code>VAFC PIMS</code>, and change the <code>FACILITY NAME</code> from 050 to your station number (which is the third piece of the output of <code>WRITE $$SITE^VASITE</code>. This error comes from the subscriber <code>RG ADT-A04 TRIGGER</code>, which you may have seen when editing the subscribers for EVENT DRIVER <code>VAFC ADT-A04 SERVER</code>. Or, you can just go to the subscribers again, move the cursor to <code>RG ADT-A04 TRIGGER</code>, and then type &quot;@&quot; to remove it.</p>
 </blockquote>
 <p>If we go back to the System Link Monitor (DO ^XUP, type EVE, choose 1, then navigate to HL7 Main Menu &gt; Systems Link Monitor), we will see that MEMPHIS now shows up as open. It will switch between Open and Openfail as we haven't opened a server socket yet.</p>
 <pre><code>|                SYSTEM LINK MONITOR for PLATINUM (P System)                  
@@ -536,18 +566,18 @@ FOIA201805&gt;N % S %=$$EN^VAFCA04(1,$$NOW^XLFDT)</code></pre>
 <p>In another window, type the following</p>
 <pre><code>nc -l 6661 &gt;&gt; hl7_msg.txt</code></pre>
 <p>Go back to the Link Monitor. You will see that MEMPHIS switches from being Open to Retention to Inactive; and the column for MESSAGES SENT becomes 1.</p>
-<p>Back to the netcat window, type CTRL-C to stop the listener, and then dump the file using the cat command on Linux or type command on Windows. What you will see would be similar to this:</p>
+<p>Back to the netcat window, type CTRL-C to stop the listener, and then dump the file using the <code>cat</code> command on Linux or <code>type</code> command on Windows. What you will see would be similar to this:</p>
 <pre><code>$ cat -v hl7_msg.txt
 ^KMSH^~|\&amp;^VAFC PIMS^50^NETCAT^^20181228121041-0400^^ADT~A04^505356^P^2.3^^^NE^NE^USA^MEVN^A04^20181228121041-0400^^^1~M-lM-^BM-,M-lM-^ZM-)M-lM-^^M-^P~M-mM-^UM-^XM-kM-^BM-^X^MPID^1^500000001V075322^1~8~M10^1155P^M-kM-&#39;M-^HM-lM-^ZM-0M-lM-^JM-$~M-kM-/M-8M-mM-^BM-$^&quot;&quot;^19551111^M^^&quot;&quot;~~0005~&quot;&quot;~~CDC^ M-fM-^]M-1M-dM-:M-,M-dM-8M--M-eM-$M-.M-iM-^CM-5M-dM-&gt;M-?M-eM-1M-^@~ M-fM-^]M-1M-dM-:M-,M-iM-^CM-=M-dM-8M--M-eM-$M-.M-eM-^LM-:M-eM-^EM-+M-iM-^GM-^MM-fM-4M-2M-dM-8M-^@M-dM-8M-^AM-gM-^[M-.5M-gM-^UM-*3M-eM-^OM-7 ~M-fM-^]M-1M-dM-:M-,M-dM-8M--M-eM-$M-.M-iM-^CM-5M-dM-&gt;M-?M-eM-1M-^@~M-fM-^]M-1~100-8994~JAPAN~P~&quot;&quot;~&quot;&quot;|&quot;&quot;~&quot;&quot;~&quot;&quot;~&quot;&quot;~&quot;&quot;~~VACAE~&quot;&quot;~&quot;&quot;~~~&quot;&quot;&amp;&quot;&quot;|&quot;&quot;~&quot;&quot;~&quot;&quot;~&quot;&quot;~&quot;&quot;~~VACAA~&quot;&quot;~&quot;&quot;~~~&quot;&quot;&amp;&quot;&quot;|&quot;&quot;~&quot;&quot;~&quot;&quot;~&quot;&quot;~&quot;&quot;~~VACAC~&quot;&quot;~&quot;&quot;~~~&quot;&quot;&amp;&quot;&quot;|&quot;&quot;~&quot;&quot;~&quot;&quot;~&quot;&quot;~&quot;&quot;~~VACAM~&quot;&quot;~&quot;&quot;~~~&quot;&quot;&amp;&quot;&quot;|&quot;&quot;~&quot;&quot;~&quot;&quot;~&quot;&quot;~&quot;&quot;~~VACAO~&quot;&quot;~&quot;&quot;~~~&quot;&quot;&amp;&quot;&quot;^^&quot;&quot;^&quot;&quot;^^&quot;&quot;^29^^505111155P^^^&quot;&quot;~~0189~&quot;&quot;~~CDC^ ^MPD1^^^PLATINUM~~050^&quot;&quot;^MPV1^1^O^&quot;&quot;^^^^^^^^^^^^^^^NON-VETERAN (OTHER)^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^104^MOBX^1^MZPD^1^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^0^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^0^&quot;&quot;^0^&quot;&quot;^&quot;&quot;^&quot;&quot;^MZSP^1^0^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^^&quot;&quot;^&quot;&quot;^MZEL^1^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^0^NON-VETERAN (OTHER)^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^^^^MZCT^1^1^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^MZEM^1^1^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^&quot;&quot;^^MZFF^2^^MZIR^^MZEN^1^M^\^M</code></pre>
 <h2 id="setup-mirth-for-message-receipt">Setup Mirth for Message Receipt</h2>
-<p>Now we are going to set-up Mirth to receive a message. <a href="http://www.mirthcorp.com/">Mirth</a> is what is known as an integration engine. An integration engine is essentially a store/transform/and forward software for messages between different systems. Mirth is open source software and is frequently used with VistA in production implementations. It can be downloaded from <a href="https://www.nextgen.com/products-and-services/NextGen-Connect-Integration-Engine-Downloads">here</a>.</p>
+<p>Now we are going to set-up Mirth to receive a message. <a href="http://www.mirthcorp.com/">Mirth</a> is what is known as an integration engine. An integration engine is essentially a store, transform and forward software for messages between different systems. Mirth is open source software and is frequently used with VistA in production implementations. It can be downloaded from <a href="https://www.nextgen.com/products-and-services/NextGen-Connect-Integration-Engine-Downloads">here</a>.</p>
 <h3 id="install-mirth">Install Mirth</h3>
 <p>I won't cover how to install Mirth. You are on your own for that. It's not as simple as it used to be due to changes on how Java applications can be launched. The main install should also install the program &quot;Mirth Connect Administrator Launcher&quot;, which is what you need to launch in order to launch Mirth Connect.</p>
 <p>Once you turn on the &quot;Administrator Launcher&quot;, this is what you should see:</p>
 <figure>
 <img src="images/SetupHL7/mirth_connect_administrator_launcher.png" alt="Mirth Connect Administrator Launcher" class="align-center" /><figcaption>Mirth Connect Administrator Launcher</figcaption>
 </figure>
-<p>After that, you see the login for Mirth Connect:</p>
+<p>Click on &quot;Launch&quot;. After that, you see the login for Mirth Connect:</p>
 <figure>
 <img src="images/SetupHL7/mirth_connect_login.png" alt="Mirth Connect Login" class="align-center" /><figcaption>Mirth Connect Login</figcaption>
 </figure>
@@ -573,7 +603,7 @@ FOIA201805&gt;N % S %=$$EN^VAFCA04(1,$$NOW^XLFDT)</code></pre>
 <figure>
 <img src="images/SetupHL7/mirth_new_channel_source2.png" alt="Mirth New Channel Source Source" class="align-center" /><figcaption>Mirth New Channel Source Source</figcaption>
 </figure>
-<p>The only thing you may want to change is the Local Port, in order for it to match VistA. I already chose 6661 for VistA, so we should be good to go. If you are running VistA in UTF-8 mode, or another mode, you need to double check the encoding matches the data you will be sending from VistA.</p>
+<p>The only thing you may want to change is the Local Port, in order for it to match VistA. I already chose 6661 for VistA, so we should be good to go. If you are running VistA in UTF-8 encoding, or another custom encoding, you need to double check the encoding matches the data you will be sending from VistA.</p>
 <p>On the right hand side, click on Channel Tasks &gt; Save Changes. Then click on Channel Tasks &gt; Deploy Channel, and confirm that you really want to deploy it.</p>
 <p>Now you will see the Dashboard with the enabled channel:</p>
 <figure>
@@ -1171,7 +1201,7 @@ echo &quot;$$ Job ended `date`&quot;</code></pre>
 <pre><code>$ nc -v localhost 5030
 Connection to localhost 5030 port [tcp/*] succeeded!</code></pre>
 <h3 id="single-listener-setup">Single listener Setup</h3>
-<p>Go to EVE &gt; HL7 Main Menu &gt; Filer and Link Management Options &gt; Link Edit. Create an entry called SLISTENER on the first page, and mark the LLP type as TCP:</p>
+<p>Go to EVE &gt; HL7 Main Menu &gt; Filer and Link Management Options &gt; Link Edit. Create an entry called <code>SLISTENER</code> on the first page, and mark the LLP type as <code>TCP</code>:</p>
 <pre><code>|                         HL7 LOGICAL LINK
 --------------------------------------------------------------------------------
 
@@ -1192,7 +1222,7 @@ Connection to localhost 5030 port [tcp/*] succeeded!</code></pre>
 _______________________________________________________________________________
 
 Exit    Save    Refresh    Quit</code></pre>
-<p>Once you hit enter after typing TCP, you will see the second page. Set the TCP/IP SERVICE TYPE to SINGLE LISTENER, and the port to a reasonable number (but not 5000, 5001, 5030, 5031, as these are reserved for the multi-listeners on production/test for HL7/HLO.</p>
+<p>Once you hit enter after typing TCP, you will see the second page. Set the <code>TCP/IP SERVICE TYPE</code> to <code>SINGLE LISTENER</code>, and the port to a reasonable number (but not 5000, 5001, 5030, 5031, as these are reserved for the multi-listeners on production/test for HL7/HLO.</p>
 <pre><code>|                         HL7 LOGICAL LINK
 --------------------------------------------------------------------------------
   ┌──────────────────────TCP LOWER LEVEL PARAMETERS─────────────────────────┐
@@ -1226,7 +1256,7 @@ to communicate
 
 Select HL LOGICAL LINK NODE:    SLISTENER
 Job was queued as 8139.</code></pre>
-<p>To test that the connection works, use netcat or a similar tool to to connect to the port. Make sure the connection stays open. If it opens and then closes, then you have an problem. You should check the error trap with <code>D ^XTER</code> if that happens (netcat gives a weird output below with native listeners, that's okay):</p>
+<p>To test that the connection works, use netcat or a similar tool to to connect to the port. Make sure the connection stays open. If it opens and then closes, then you have an problem. You should check the error trap with <code>D ^XTER</code> if that happens (netcat gives a weird output below with native listeners, saying connection refused then succeeded -- I think that's because it tries IPv6 first and then IPv4 (i.e. ::1 and then 127.0.0.1)):</p>
 <pre><code>$ nc -v localhost 5032
 nc: connect to localhost port 5032 (tcp) failed: Connection refused
 Connection to localhost 5032 port [tcp/*] succeeded!</code></pre>
@@ -1235,19 +1265,18 @@ Connection to localhost 5032 port [tcp/*] succeeded!</code></pre>
 <h3 id="introduction-to-incoming-message-routing-in-vista">Introduction to Incoming Message Routing in VistA</h3>
 <p>Do you remember this confusing section when we talked about sending messages out? It's confusing here too.</p>
 <p>The trick is realizing that since all messages go through the same pipe, the only way VistA will know how to route a message is based on its contents.</p>
-<p>Like sending a message, we need an EVENT DRIVER (aka SERVER) protocol. The second page of the EVENT DRIVER protocol contains the fields that VistA uses to match a message with the proper EVENT DRIVER. Here's a screen scrape for discussion::</p>
+<p>Like sending a message, we need an EVENT DRIVER (aka SERVER) protocol. The second page of the EVENT DRIVER protocol contains the fields that VistA uses to match a message with the proper EVENT DRIVER. Here's a screen scrape for discussion:</p>
 <pre><code>|                         HL7 EVENT DRIVER                         PAGE 2 OF 2
-                         OSE ADT-A04 SERVER
+                         ZZ ADT-A04 SERVER
 --------------------------------------------------------------------------------
-      SENDING APPLICATION: MIRTH
- TRANSACTION MESSAGE TYPE: ADT                        EVENT TYPE: A04
+      SENDING APPLICATION: MIRTH TRANSACTION MESSAGE TYPE: ADT                        EVENT TYPE: A04
         MESSAGE STRUCTURE:
             PROCESSING ID:                            VERSION ID: 2.4
           ACCEPT ACK CODE: AL               APPLICATION ACK TYPE: SU
 
  RESPONSE PROCESSING RTN:
                            SUBSCRIBERS
-  OSE ADT-A04 CLIENT
+  ZZ ADT-A04 CLIENT2
 
 
 
@@ -1263,10 +1292,10 @@ Exit    Save    Previous Page    Refresh    Quit</code></pre>
 <li>EVENT TYPE</li>
 <li>VERSION</li>
 </ul>
-<p>Once it does that, it needs to match with the SUBSCRIBERs. It does that using the receiving application field::</p>
+<p>Once it does that, it needs to match with the SUBSCRIBERs. It does that using the RECEIVING APPLICATION field:</p>
 <pre><code>|                         HL7 EVENT DRIVER                         PAGE 2 OF 2
    ┌──────────────────────────HL7 SUBSCRIBER────────────────────────────────┐
----│                       OSE ADT-A04 CLIENT                               │---
+---│                       ZZ ADT-A04 CLIENT                               │---
    │------------------------------------------------------------------------│
  TR│     RECEIVING APPLICATION: MIRTH-VISTA                                 │
    │                                                                        │
@@ -1286,10 +1315,10 @@ _______________________________________________________________________________
 Close    Refresh</code></pre>
 <p>Remember we talked about how the fields <code>ROUTING LOGIC</code>, <code>LOGICAL LINK</code>, and <code>PROCESSING RTN</code> interact with each other for outgoing messages? With an incoming message, it's much simpler: only the <code>PROCESSING RTN</code> is looked at and executed.</p>
 <h3 id="code-for-registering-a-patient">Code for Registering a Patient</h3>
-<p>I wrote this <a href="./OSEHL7.m">tiny routine</a>. to register a patient once an appropriate HL7 message has been received. It's a .m file. If you cannot import .m files, you can copy and paste it into an appropriate editor.</p>
+<p>I wrote this <a href="./OSEHL7.m">tiny routine</a>. to register a patient once an appropriate HL7 message has been received. It's a .m file. If you cannot import .m files, you can copy and paste it into an appropriate editor and save the routine.</p>
 <h3 id="sending-receiving-application">Sending &amp; Receiving Application</h3>
 <p>The first order of business is to create the sending and receiving applications. As previously described, the SENDING APPLICATION is used to match the event driver; and the RECEIVING APPLICATION is used to match the subscriber.</p>
-<p>Go to EVE &gt; HL7 Main Menu &gt; Interface Developer Options &gt; Application Edit [EA]. Create two applications, one called <code>MIRTH</code> for the sending side, and one called <code>MIRTH-VISTA</code> so that they look as follows::</p>
+<p>Go to EVE &gt; HL7 Main Menu &gt; Interface Developer Options &gt; Application Edit [EA]. Create two applications, one called <code>MIRTH</code> for the sending side, and one called <code>MIRTH-VISTA</code> so that they look as follows:</p>
 <pre><code>|                          HL7 APPLICATION EDIT
 --------------------------------------------------------------------------------
 
@@ -1310,7 +1339,7 @@ HL7 FIELD SEPARATOR:                       HL7 ENCODING CHARACTERS:
 _______________________________________________________________________________
 
 Exit    Save    Refresh    Quit</code></pre>
-<p>...and::</p>
+<p>...and:</p>
 <pre><code>|                          HL7 APPLICATION EDIT
 --------------------------------------------------------------------------------
 
@@ -1334,24 +1363,23 @@ Exit    Save    Refresh    Quit</code></pre>
 <h3 id="server-protocol">Server Protocol</h3>
 <p>Go to EVE &gt; HL7 Main Menu &gt; Interface Developer Options &gt; Protocol Edit [EP]. Create a new protocol as follows:</p>
 <ul>
-<li>NAME: OSE ADT-A04 SERVER</li>
+<li>NAME: ZZ ADT-A04 SERVER</li>
 <li>PROTOCOL ITEM TEXT: ADT-A04 Receiver</li>
 <li>PROTOCOL IDENTIFIER: Leave blank</li>
 </ul>
 <p>You will get to the first page. Cursor down to &quot;TYPE&quot; an type <code>event driver</code>.</p>
-<p>Once you hit enter after typing <code>event driver</code>, you will get to the second page. Fill in everything here as shown (don't fill in SUBSCRIBERS yet--that's the next step)::</p>
+<p>Once you hit enter after typing <code>event driver</code>, you will get to the second page. Fill in everything here as shown (don't fill in SUBSCRIBERS yet--that's the next step):</p>
 <pre><code>|                         HL7 EVENT DRIVER                         PAGE 2 OF 2
-                         OSE ADT-A04 SERVER
+                         ZZ ADT-A04 SERVER
 --------------------------------------------------------------------------------
       SENDING APPLICATION: MIRTH
  TRANSACTION MESSAGE TYPE: ADT                        EVENT TYPE: A04
         MESSAGE STRUCTURE:
             PROCESSING ID:                            VERSION ID: 2.4
-          ACCEPT ACK CODE: AL               APPLICATION ACK TYPE: SU
+          ACCEPT ACK CODE:                  APPLICATION ACK TYPE: 
 
  RESPONSE PROCESSING RTN:
                            SUBSCRIBERS
-  OSE ADT-A04 CLIENT
 
 
 
@@ -1360,18 +1388,18 @@ Exit    Save    Refresh    Quit</code></pre>
 _______________________________________________________________________________
 
 Exit    Save    Previous Page    Refresh    Quit</code></pre>
-<p>Everything was explained before except for ACCEPT ACK CODE and APPLICATION ACK TYPE. The ACCEPT ACK CODE says that we will be always sending an ACK, and that ACK will be an application ack when we have a success. If you are confused about the other possibilities, I am too. I found out the hard way that if you set both ACCEPT ACK CODE and APPLICATION ACK TYPE to &quot;NE&quot; (never) that VistA processed the message in the background, and Mirth seemed to want to wait for any response at all.</p>
+<p>By the way, we don't need to put the ACK types here; as the ACK behavior will be dictated by what the message has for ACK types.</p>
 <h3 id="client-protocol">Client Protocol</h3>
 <p>Fill in the subscriber as follows:</p>
 <ul>
-<li>NAME: OSE ADT-A04 CLIENT</li>
+<li>NAME: ZZ ADT-A04 CLIENT2 (to distinguish it from the earlier example when we sent a message; but in reality you can use the same client for sending and receiving due to the override rules outlined in <a href="#introduction-to-outgoing-message-routing-in-vista">Introduction to Outgoing Message Routing in VistA</a> -- I won't do that here, as it's confusing to beginners)</li>
 <li>PROTOCOL ITEM TEXT: ADT-A04 Add Patient Client</li>
 <li>PROTOCOL IDENTIFIER: Leave blank</li>
 </ul>
-<p>Then fill in the following page as follows::</p>
+<p>Then fill in the following page as follows:</p>
 <pre><code>|                         HL7 EVENT DRIVER                         PAGE 2 OF 2
    ┌──────────────────────────HL7 SUBSCRIBER────────────────────────────────┐
----│                       OSE ADT-A04 CLIENT                               │---
+---│                       ZZ ADT-A04 CLIENT2                               │---
    │------------------------------------------------------------------------│
  TR│     RECEIVING APPLICATION: MIRTH-VISTA                                 │
    │                                                                        │
@@ -1392,7 +1420,7 @@ Close    Refresh</code></pre>
 <p>There should be nothing here that is surprising given our discussions so far.</p>
 <h2 id="crafting-an-hl7-message-for-testing">Crafting an HL7 message for Testing</h2>
 <p>We need to create a sample message that VistA will process. Since all that we do in ADTA04^OSEHL7 is grab the name, gender, and date of birth, all we need in a sample message is the PID segment, pieces 5 (Name), 7 (DOB), and 8 (Gender).</p>
-<p>Accordingly, here's a sample message::</p>
+<p>Accordingly, here's a sample message:</p>
 <pre><code>MSH^~|\&amp;^MIRTH^^MIRTH-VISTA^^20181230192022-0400^^ADT~A04^10000^P^2.4^^^AL^SU
 PID^^^^^HLSEVEN~INCOMING^^19571111^M</code></pre>
 <p>A few important points, as the message header is SO important:</p>
@@ -1404,13 +1432,14 @@ PID^^^^^HLSEVEN~INCOMING^^19571111^M</code></pre>
 <li>Piece 10 is the Message Control ID.</li>
 <li>Piece 11 is the Processing ID, which is either P[roduction] or D[ebug]. Much match if present to EVENT DRIVER.</li>
 <li>Piece 12 is the HL7 version: 2.4. Must match EVENT DRIVER.</li>
-<li>Pieces 15 and 16 are Accept Acknowledgement Type and Application Acknowledgement Type. If these are not set correctly to match what you put in the server, you won't get back acknowledgements and both sides may complain that they did not finish processing the message.</li>
+<li>Pieces 15 and 16 are Accept Acknowledgement Type and Application Acknowledgement Type.</li>
 </ul>
 <p>There is a <a href="https://www.hl7inspector.com/">good website</a> where you can paste your HL7 message and get a breakdown of the pieces in it.</p>
+<p>Due to the fact the message retention in VistA is based on date, you should change the message date/time to be for today's date, so that your message won't be purged if it is too old. For example, today (as I am writing this) is 4 Jan 2019; so the date would be 20190104103022-0400 etc.</p>
 <h2 id="sending-a-message-from-mirth">Sending a Message from Mirth</h2>
 <p>To send a message to VistA, we need to do the following steps in Mirth:</p>
 <ol type="1">
-<li>Create a new channel VistA HL7 Sender, which will talk to the VistA TCP Multi-listener port</li>
+<li>Create a new channel VistA HL7 Sender, which will talk to the VistA TCP listener port</li>
 <li>Send HL7 message</li>
 <li>Wait for reply and view reply</li>
 </ol>
@@ -1432,12 +1461,12 @@ PID^^^^^HLSEVEN~INCOMING^^19571111^M</code></pre>
 <h3 id="send-hl7-message">Send HL7 message</h3>
 <p>Click on &quot;VistA HL7 Sender&quot;, and then on the left hand side, under &quot;Dashboard Tasks&quot;, click on &quot;Send Message&quot;. Paste the message we just create, and then click on Process Message.</p>
 <figure>
-<img src="images/SetupHL7/mirth_dashboard_send.png" alt="Mirth Send Message" class="align-center" /><figcaption>Mirth Send Message</figcaption>
+<img src="images/SetupHL7/mirth_send_message.png" alt="Mirth Send Message" class="align-center" /><figcaption>Mirth Send Message</figcaption>
 </figure>
 <h3 id="wait-for-reply-and-view-reply">Wait for Reply and View Reply</h3>
 <p>If you wait a moment, you will see the &quot;Connection Log&quot; at the bottom update; and you will also see that Received and Sent Column on the Dashboard will show up as &quot;1&quot;:</p>
 <figure>
-<img src="images/SetupHL7/mirth_dashboard_send.png" alt="Mirth Dashboard Send Complete" class="align-center" /><figcaption>Mirth Dashboard Send Complete</figcaption>
+<img src="images/SetupHL7/mirth_dashboard_send_complete.png" alt="Mirth Dashboard Send Complete" class="align-center" /><figcaption>Mirth Dashboard Send Complete</figcaption>
 </figure>
 <p>On the right hand side, click on &quot;View Messages&quot; under &quot;Dashboard Tasks&quot;, then click on the row that says &quot;Destination 1&quot;. You will see your message in the bottom pane:</p>
 <figure>
@@ -1447,9 +1476,9 @@ PID^^^^^HLSEVEN~INCOMING^^19571111^M</code></pre>
 <figure>
 <img src="images/SetupHL7/mirth_channel_messages_sent_view2.png" alt="Mirth Dashboard View Messages Sent&#39;s Response with CA" class="align-center" /><figcaption>Mirth Dashboard View Messages Sent's Response with CA</figcaption>
 </figure>
-<p>This ACK message is the ACK sent by VistA (CA = Commit Accept). This says that VistA received the message. But let's say we want an application acknowledgement, i.e., that VistA PROCESSED, not just received, the message. We can ask for that by changing the &quot;ACCEPT ACKNOWLEDGEMENT&quot; to &quot;NE&quot;, and leaving &quot;APPLICATION ACKNOWLEDGEMENT&quot; to &quot;SU&quot;.</p>
+<p>This ACK message is the ACK sent by VistA (CA = Commit Accept). This says that VistA received the message. This is because we asked for ACCEPT ACK CODE in the message of AL. But let's say we want an application acknowledgement, i.e., that VistA PROCESSED, not just received, the message. We can ask for that by changing the message field &quot;Accept Acknowledgement Type&quot; to &quot;NE&quot;, and leaving &quot;Application Acknowledgement Type&quot; to &quot;SU&quot;. We do that in the next HL7 message we will send, where the last two pieces are NE^SU rather than AL^SU.</p>
 <h3 id="resend-hl7-message">Resend HL7 message</h3>
-<p>The new message looks like this (I adjusted the time and message counter so that this message isn't treated as a duplicate)::</p>
+<p>The new message looks like this (I adjusted the time and message counter so that this message isn't treated as a duplicate):</p>
 <pre><code>MSH^~|\&amp;^MIRTH^^MIRTH-VISTA^^20181230192023-0400^^ADT~A04^10001^P^2.4^^^NE^SU
 PID^^^^^HLSEVEN~INCOMING^^19571111^M</code></pre>
 <p>Send this using the same mechanism as before. The ACK will now be an application ack:</p>
@@ -1457,7 +1486,7 @@ PID^^^^^HLSEVEN~INCOMING^^19571111^M</code></pre>
 <img src="images/SetupHL7/mirth_channel_messages_sent_view3.png" alt="Mirth Dashboard View Messages Sent&#39;s Response with AA" class="align-center" /><figcaption>Mirth Dashboard View Messages Sent's Response with AA</figcaption>
 </figure>
 <h3 id="check-vista-for-the-new-data">Check VistA for the New Data</h3>
-<p>The AA says that the DFN is 23. Let's see if you we indeed have that patient registered with a DFN of 23::</p>
+<p>The AA says that the DFN is 23. Let's see if you we indeed have that patient registered with a DFN of 23:</p>
 <pre><code>FOIA201805&gt;D Q^DI
 
 
@@ -1489,7 +1518,7 @@ NAME: HLSEVEN,INCOMING,                 SEX: MALE
 <p>Okay. Things look good. That's it for sending.</p>
 <h1 id="troubleshooting-hl7-issues">Troubleshooting HL7 Issues</h1>
 <h2 id="looking-at-the-link-manager">Looking at the Link Manager</h2>
-<p>The first step in any debugging is to see if the Link Manager shows any messages being sent/received. There is an example in Creating a Test Message section.</p>
+<p>The first step in any debugging is to see if the Link Monitor shows any messages being sent/received. There is an example in <a href="#creating-a-test-message">Creating a Test Message</a> section.</p>
 <h2 id="viewing-the-messages-in-vista">Viewing the Messages in VistA</h2>
 <p>Messages can be viewed using EVE &gt; HL7 Main Menu &gt; Message Management Options &gt; View Transmission Log (TCP only) [LOG]. Note that the log has a cut-off that is 96 hours by default; I think if you send messages with date/times older than that in the message header, they get deleted after they get processed. So in the sample messages presented in this tutorial, you probably want to update the date/time in the MSH to be today and adjust the time accordingly.</p>
 <p>The Messages Viewer is tricky to navigate. Press Tab to move between messages (shift-tab does not work); and press enter to view a message; press Left-Arrow to exit a message and back into the messages view. Press F1-E to exit the messages viewer. Here's a screen scrape:</p>
@@ -1585,7 +1614,7 @@ OBX^1
 
 HYPER-TXT|Press <F1>H for help| Line>       22 of 38  Screen>        1 of 2</pre>
 <h2 id="reprocessing-a-message">Reprocessing a Message</h2>
-<p>You can use <code>$$REPROC^HLUTIL(message ien,&quot;processing routine&quot;)</code> to re-process an incoming HL7 message. This is useful when developing processing code. Here's an example of re-processing an incoming message. I got the message number by following the instructions in Viewing the Messages in VistA. The field containing the message IEN is &quot;Record #&quot;.</p>
+<p>You can use <code>$$REPROC^HLUTIL(message ien,&quot;processing routine&quot;)</code> to re-process an incoming HL7 message. This is useful when developing processing code. Here's an example of re-processing an incoming message. I got the message number by following the instructions in <a href="#viewing-the-messages-in-vista">Viewing the Messages in VistA</a>. The field containing the message IEN is &quot;Record #&quot;.</p>
 <pre><code>FOIA201805&gt;ZB ADTA04^OSEHL7
 
 FOIA201805&gt;ZWRITE ^HLMA(5380,*)
@@ -1628,7 +1657,7 @@ FOIA201805&gt;ZC
 <h2 id="debugging-code">Debugging Code</h2>
 <p>Before running any of this, you need to turn off all background messaging tasks, as these will process your messages before you have a chance to touch them. Do that using EVE &gt; HL7 Main Menu &gt; Filer and Link Management Options &gt; Stop All Messaging Background Processes [SA] and then TCP Link Manager Start/Stop [LM].</p>
 <p>If you are using xinetd, you need to stop the xinetd as well (or at least disable the HL7 listener).</p>
-<p>Most of these debug methods rely on you knowing the IEN of the Logical Link that will receive the messages. Inquire into file 'HL LOGICAL LINK' and ask for the record numbers. Here are my numbers::</p>
+<p>Most of these debug methods rely on you knowing the IEN of the Logical Link that will receive the messages. Inquire into file 'HL LOGICAL LINK' and ask for the record numbers. Here are my numbers:</p>
 <pre><code>FOIA201805&gt;D P^DI
 
 
@@ -1726,7 +1755,7 @@ FOIA201805&gt;D ^HLCSTCP ; Now, send the message from outside.
                 At M source location SERVER^HLCSTCP
 %GTM-W-NOTPRINCIO, Output currently directed to device SCK$95524</code></pre>
 <h3 id="debugging-messages-to-receive-via-multi-listener">Debugging Messages to Receive via Multi Listener</h3>
-<p>Not really; we will just fake out a new listener by writing some new code. This is a bit harder, but so maybe you may be better off using the Single Listener, which doesn't require any code changes. This example is for GT.M; the process is similar for Cache, but this exact code won't work. That's just a convenience and can be removed. Add this code in HLCSGTM::</p>
+<p>Not really; we will just fake out a new listener by writing some new code. This is a bit harder, but so maybe you may be better off using the Single Listener, which doesn't require any code changes. This example is for GT.M; the process is similar for Cache, but this exact code won't work. Add this code in HLCSGTM:</p>
 <pre><code>DEBUG ;Entry point for debug, Build a server to get the connect
  W !,&quot;IP Socket to Listen on: &quot; R SOCK:300,! Q:&#39;$T!(SOCK[&quot;^&quot;)
  ;Use %ZISTCP to do a single server
@@ -1746,7 +1775,7 @@ SERV ;
  S HLDP=$ORDER(^HLCS(870,&quot;E&quot;,&quot;M&quot;,0))
  D LISTEN^HLCSTCP
  QUIT</code></pre>
-<p>As before, you should probably put a breakpoint at <code>PROCESS^HLCSTCP1</code>. Then run <code>D DEBUG^HLCSGTM</code>, and put it any port number (as long as you configure Mirth to send to it)::</p>
+<p>As before, you should probably put a breakpoint at <code>PROCESS^HLCSTCP1</code>. Then run <code>D DEBUG^HLCSGTM</code>, and put it any port number (as long as you configure Mirth to send to it):</p>
 <pre><code>FOIA201805&gt;D DEBUG^HLCSGTM
 
 IP Socket to Listen on: 5035
