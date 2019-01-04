@@ -8,9 +8,19 @@ License:
 .. image:: https://i.creativecommons.org/l/by/4.0/80x15.png 
    :target: http://creativecommons.org/licenses/by/4.0/ 
 
-A Mumps database (like VistA) is a series of routines and globals (a global in Mumps really means a file on disk). To load VistA into GT.M/YottaDB, you need to obtain the these from the CACHE.DAT distributed by the VA. Efforts are underway to lobby the VA to distribute the FOIA instance as a set of globals and routines; rather than in a proprietary format.
+Last Updated: January 2019
 
-Since the establishment of OSEHRA, each update monthly update of FOIA is exported as routines and globals in zwrite format at `Github <https://github.com/OSEHRA/VistA-M>`_. In addition, DSS vxVistA can be obtained from `this repository <https://github.com/OSEHRA/vxVistA-M>`_ and WorldVistA can be obtained from `this repository <https://github.com/glilly/wvehr2-dewdrop>`_.
+A Mumps database (like VistA) is a series of routines and globals (a global in
+Mumps really means a file on disk). To load VistA into GT.M/YottaDB, you need
+to obtain the these from the CACHE.DAT distributed by the VA. Efforts are
+underway to lobby the VA to distribute the FOIA instance as a set of globals
+and routines; rather than in a proprietary format.
+
+Since the establishment of OSEHRA, each update monthly update of FOIA is
+exported as routines and globals in zwrite format at `Github
+<https://github.com/OSEHRA/VistA-M>`_. In addition, DSS vxVistA can be obtained
+from `this repository <https://github.com/OSEHRA/vxVistA-M>`_ and WorldVistA
+can be obtained from `here<http://opensourcevista.net/NancysVistAServer/BetaWVEHR-3.0-Ver2-16Without-CPT-20181004/>`_.
 
 In our example, for setting up a VistA Database, we will use FOIA VistA.
 
@@ -31,9 +41,9 @@ user name and your user group.
 
 .. raw:: html
     
-    <div class="code"><code>$ <strong>sudo mkdir -p /var/db/foia201608</strong>
+    <pre>$ <strong>sudo mkdir -p /var/db/foia201608</strong>
     $ <strong>sudo chown $USER:$USER /var/db/foia201608</strong>.
-    $ <strong>cd /var/db/foia201608</strong></code></div>
+    $ <strong>cd /var/db/foia201608</strong></pre>
 
 Then create folders to hold your routines, globals, journals, and objects. The
 convention in the VistA community is to call these folders r g j and o. While it's
@@ -42,7 +52,7 @@ convention.
 
 .. raw:: html
     
-    <div class="code"><code>$ <strong>mkdir r g j o</strong></code></div>
+    <pre>$ <strong>mkdir r g j o</strong></pre>
 
 Two parenthetical remarks:
 
@@ -66,7 +76,7 @@ Here's the file, which I called `env.vista<./env.vista>`_.
 
 .. raw:: html
     
-    <div class="code"><code> 
+    <pre> 
     # This is just a variable so I don't have to type the same thing
     # over and over again.
     export vista_home="|your directory name|"
@@ -124,14 +134,14 @@ Here's the file, which I called `env.vista<./env.vista>`_.
     export gtm_zstep='n oldio s oldio=$i u 0 w $t(@$zpos),! b  u oldio'
 
     # For QEWD if installed (See http://qewdjs.com/)
-    export GTMCI=""</code></div>
+    export GTMCI=""</pre>
     
 Once this is done, source the file using ``$ . env.vista``. Then test that
 what you did works by running ``$ mumps -dir``. You should see this:
 
 .. raw:: html
     
-    <div class="code"><code>YOUR INSTANCE NAME></code></div>
+    <pre>YOUR INSTANCE NAME></pre>
 
 Type Control-D or "HALT" to get out.
 
@@ -142,7 +152,7 @@ called `g/db.gde<./db.gde>`_.
 
 .. raw:: html
     
-    <div class="code"><code>! Change the default segment's file 
+    <pre>! Change the default segment's file 
     ! to be g/mumps.dat
     ! to have 4096 byte blocks
     ! to have an initial DB size of 1048576*4096=4GB
@@ -184,20 +194,20 @@ called `g/db.gde<./db.gde>`_.
     show -all
 
     ! save
-    exit</code></div>
+    exit</pre>
 
 Once you save the file, run it.
 
 .. raw:: html
     
-    <div class="code"><code>$ <strong>mumps -run ^GDE < g/db.gde |& tee g/db.gde.out</strong></code></div>
+    <pre>$ <strong>mumps -run ^GDE < g/db.gde |& tee g/db.gde.out</strong></pre>
 
 A successful invocation will show you this output on the screen and saved into
 g/db.gde.out as well.
 
 .. raw:: html
         
-    <div class="code"><code>
+    <pre>
 
     %GDE-I-GDUSEDEFS, Using defaults for Global Directory 
       /var/db/foia0616/g/mumps.gld
@@ -328,24 +338,24 @@ g/db.gde.out as well.
 
     %GDE-I-GDCREATE, Creating Global Directory file 
     /var/db/foia0616/g/mumps.gld
-    </code></div>
+    </pre>
 
 If you fail, you will see something similar to the following at the end of the
 output:
 
 .. raw:: html
     
-    <div class="code"><code>%GDE-I-VERIFY, Verification FAILED
+    <pre>%GDE-I-VERIFY, Verification FAILED
     
-    %GDE-E-VERIFY, Verification FAILED</code></div>
+    %GDE-E-VERIFY, Verification FAILED</pre>
 
 At this point, we are ready to create our databases. This is easy.
 
 .. raw:: html
     
-    <div class="code"><code>$ <strong>mupip create</strong>
+    <pre>$ <strong>mupip create</strong>
     Created file /var/db/foia201608/g/mumps.dat
-    Created file /var/db/foia201608/g/tempgbl.dat</code></div>
+    Created file /var/db/foia201608/g/tempgbl.dat</pre>
 
 To check that everything works fine, run ``mumps -dir`` and then ``DO ^%GD``
 and ``DO ^%RD``. The first will open all the database files for searching and
@@ -354,7 +364,7 @@ your ``$gtmroutines`` variable is correct.
 
 .. raw:: html
     
-    <div class="code"><code>$ <strong>mumps -dir</strong>
+    <pre>$ <strong>mumps -dir</strong>
     
     FOIA 2016-08><strong>D ^%GD</strong>
     
@@ -373,7 +383,7 @@ your ``$gtmroutines`` variable is correct.
     
     Total of 0 routines.
     
-    Routine: <strong>&lt;enter&gt;</strong></code></div>
+    Routine: <strong>&lt;enter&gt;</strong></pre>
 
 It's common with all Unix software relying on POSIX/SysV Shared Memory to
 report errors with ``shmget()``. If you see that when you are trying to run ^%GD, 
@@ -381,24 +391,24 @@ you need to increase your shared memory limits. I will leave you to google
 that on your own.
 
 Loading VistA Into the GT.M/YottaDB Database we just Created
-----------------------------------------------------
+------------------------------------------------------------
 I said we will use FOIA VistA. Make sure that wget is installed on your
 machine, and then get the code (takes 3-30 minutes depending on your internet
 connection). First switch to a working directory (such as /tmp/) and run this:
 
 .. raw:: html
    
-    <div class="code"><code>$ <strong>wget https://github.com/OSEHRA/VistA-M/archive/foia.zip</strong></code></div>
+    <pre>$ <strong>wget https://github.com/OSEHRA/VistA-M/archive/foia.zip</strong></pre>
 
 If you want WorldVistA or vxVistA instead, you can get them from
-https://github.com/glilly/wvehr2-dewdrop/archive/master.zip or
+http://opensourcevista.net/NancysVistAServer/BetaWVEHR-3.0-Ver2-16Without-CPT-20181004/FileForDockerBuildWVEHR3.0WithoutCPT.zip or
 https://github.com/OSEHRA/vxVistA-M/archive/master.zip respectively.
 
 Now unzip it:
 
 .. raw:: html
    
-    <div class="code"><code>$ <strong>unzip foia.zip</strong></code></div>
+    <pre>$ <strong>unzip foia.zip</strong></pre>
 
 Everything gets unzipped in the folder `VistA-M-foia/`, so you need to use that
 folder as the first argument of the find commands below.
@@ -408,7 +418,7 @@ quotes around the ``{}`` because the paths contain spaces.
 
 .. raw:: html
     
-    <div class="code"><code>$ <strong>find VistA-M-foia/ -name '*.m' -exec cp "{}" r/ \;</strong></code></div>
+    <pre>$ <strong>find VistA-M-foia/ -name '*.m' -exec cp "{}" r/ \;</strong></pre>
 
 Next we need to load the globals. We use the versatile ``mupip load`` command
 for that. Note that mupip load wants quotes sent down from the shell for any
@@ -418,13 +428,13 @@ loaded. This takes time; from 10 minutes up to 30 minutes.
 
 .. raw:: html
     
-    <div class="code"><code>$ <strong>find VistA-M-foia -name '*.zwr' -exec echo {} \; -exec mupip load \"{}\" \; |& tee g/foia201608-load.log</strong></code></div>
+    <pre>$ <strong>find VistA-M-foia -name '*.zwr' -exec echo {} \; -exec mupip load \"{}\" \; |& tee g/foia201608-load.log</strong></pre>
 
 Verify that none of the globals failed to import.
 
 .. raw:: html
     
-    <div class="code"><code>$ <strong>fgrep '%GTM' g/foia201608-load.log | wc -l</strong></code></div>
+    <pre>$ <strong>fgrep -- '-E-' g/foia201608-load.log | wc -l</strong></pre>
 
 If you get an output that isn't zero, you need to visually inspect what
 happened.
@@ -435,14 +445,14 @@ here 4)
 
 .. raw:: html
     
-    <div class="code"><code>$ <strong>find VistA-M-foia -name '*.zwr' -print0 | xargs -0 -I{} -n 1 -P 4 mupip load \"{}\" |& tee g/foia201608-load.log</strong></code></div>
+    <pre>$ <strong>find VistA-M-foia -name '*.zwr' -print0 | xargs -0 -I{} -n 1 -P 4 mupip load \"{}\" |& tee g/foia201608-load.log</strong></pre>
 
 
 After we are done with this, we will repeat our smoke test with %GD and %RD.
 
 .. raw:: html
     
-    <div class="code"><code>$ <strong>mumps -dir</strong>
+    <pre>$ <strong>mumps -dir</strong>
     
     FOIA 2016-08><strong>D ^%GD</strong>
     
@@ -459,7 +469,7 @@ After we are done with this, we will repeat our smoke test with %GD and %RD.
     Routine directory
     Routine: <strong>*</strong>
     ...
-    Total of 35547 routines.</code></div>
+    Total of 35547 routines.</pre>
 
 At this point we are done loading VistA. It's time to enable journaling on all
 the regions we want. Following script recovers the database if it was journaled
@@ -467,7 +477,7 @@ and then enables journaling. File here: `vista.journaling<./vista.journaling>`_
 
 .. raw:: html
     
-    <div class="code"><code># This is journaling.
+    <pre># This is journaling.
     if [ -f ${vista_home}/j/mumps.mjl ]; then
       if (( $(lsof -t ${vista_home}/g/mumps.dat | wc -l) == 0 )); then
         $gtm_dist/mupip journal -recover -backward ${vista_home}/j/mumps.mjl
@@ -481,20 +491,24 @@ and then enables journaling. File here: `vista.journaling<./vista.journaling>`_
 
     if (( $(lsof -t ${vista_home}/g/mumps.dat | wc -l) == 0 )); then
       $gtm_dist/mupip set -journal="enable,on,before,f=${vista_home}/j/mumps.mjl" -region DEFAULT
-    fi</code></div>
+    fi</pre>
 
 Source this file to enable journaling.
 
-If you would rather create an init script, here's an example to copy. This
-provides much more functionality than journaling--it's the kind of thing you
-would have on a production instance.
+Creating an Startup/Shutdown Init File for VistA
+------------------------------------------------
+You can create an init script instead of manually running the journaling script
+to recover. This will run upon startup and shutdown, to make sure your VistA
+instance is ready. Here's an example to copy. This provides much more
+functionality than journaling--it's the kind of thing you would have on a
+production instance.
 
 NB: You need to put a valid value for vista_instance and the user also needs
 to be valid (here vistauser). File here: `vista.initd<./vista.initd>`_
 
 .. raw:: html
 
-  <div class="code"><code>#!/usr/bin/env bash
+  <pre>#!/usr/bin/env bash
     #---------------------------------------------------------------------------
     # Copyright 2011-2017 The Open Source Electronic Health Record Agent
     #
@@ -596,7 +610,7 @@ to be valid (here vistauser). File here: `vista.initd<./vista.initd>`_
         *)
             echo "Usage: $0 {start|stop|restart}"
             ;;
-    esac</code></div>
+    esac</pre>
 
 You have to save this script in /etc/init.d/, and make it execuatble and owned
 by root, and add it the correct run levels for the Linux kernel. On Ubuntu,
@@ -605,12 +619,12 @@ steps:
 
 .. raw:: html
 
-    <div class="code"><code>$ <strong>cd /etc/init.d/</strong>
+    <pre>$ <strong>cd /etc/init.d/</strong>
     $ <strong>edit vista.initd</strong> # create the file here. Skip if done.
     $ <strong>chown root:root vista.initd</strong>
     $ <strong>chmod +x vista.initd</strong>
     $ <strong>update-rc.d vista.initd defaults</strong>
-    $ <strong>update-rc.d vista.initd enable</strong></code></div>
+    $ <strong>update-rc.d vista.initd enable</strong></pre>
 
 The next step is not necessary if you don't plan to have users log-in. You should
 pre-compile the routines on GT.M/YottaDB so they do not have to be compiled at runtime.
@@ -619,9 +633,9 @@ exercise to the reader).
 
 .. raw:: html
 
-    <div class="code"><code>$ cd o
+    <pre>$ cd o
     $ for r in ../r/*.m; do mumps $r; done 2>&1 | tee ../compile_all.log
-    </code></div>
+    </pre>
 
 At this point, you are ready to continue to `Initialize Vista
 <./InitializeVistA.html>`_.
