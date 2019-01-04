@@ -8,7 +8,7 @@ License:
 .. image:: https://i.creativecommons.org/l/by/4.0/80x15.png 
    :target: http://creativecommons.org/licenses/by/4.0/ 
 
-Attributions: Original instructions by Fil Beza and Nancy Anthracite; this set has been updated by Sam Habiel. Last updated in May 2018.
+Attributions: Original instructions by Fil Beza and Nancy Anthracite; this set has been updated by Sam Habiel. Last updated in January 2019.
 
 If you have reached this point, it means that you have finished `Install Cache <./InstallCache.html>`_; or `Install GT.M/YottaDB <./InstallGTM.html>`_ and `Install VistA on GT.M/YottaDB <./InstallVistAOnGTM.html>`_.
 
@@ -30,10 +30,14 @@ If you use PuTTY, change the function key bindings so that they behave like VT-1
 
 On a Mac, Terminal is a fully featured terminal emulator. You may wish to use System Preferences to configure the function keys to send Function commands, rather than dimming your screen or muting your volume. Otherwise, you have to use FN all the time to override the function keys (https://support.apple.com/en-us/HT204436).
 
-On Linux, you can use any Terminal Emulator program with the exception of rxvt. You can actually even use PuTTY on Linux, but F1 may be bound to do help. You need to unmap that in the Terminal application (http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal).
+On Linux, you can use any Terminal Emulator program with the exception of rxvt. You can actually even use PuTTY on Linux. In some emulators, F1 may be bound to do help. You need to unmap that in the Terminal application (http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal).
 
-If a VistA system was installed by you or somebody else in the "Cloud", you will almost certainly need to use Secure Shell (SSH) to log in.  If you use Telnet, there are some existential questions you have to ask yourself. SSH is a protocol written in the mid-90s to replace Telnet. It's the standard of connecting to other computers on the Cloud. Nobody can see the traffic inside of SSH, whereas Telnet is just plain text.  The ssh client comes installed by default in all Unices; on
-Windows, you can use PuTTY or TeraTerm.
+If a VistA system was installed by you or somebody else in the "Cloud", you
+will almost certainly need to use Secure Shell (SSH) to log in.  SSH is a
+protocol written in the mid-90s to replace Telnet. It's the standard of
+connecting to other computers on the Cloud. Nobody can see the traffic inside
+of SSH, whereas Telnet is just plain text.  The ssh client comes installed by
+default in all Unices; on Windows, you can use PuTTY or TeraTerm.
 
 After you open your terminal emulator, do the following:
 
@@ -47,38 +51,50 @@ You will see something like this:
 
 .. raw:: html
     
-    <div class="code"><code>GTM></code></div>
+    <pre>GTM></pre>
 
 or in Cache:
 
 .. raw:: html
 
-    <div class="code"><code>USER></code></div>
+    <pre>USER></pre>
 
 If you are in Cache, you need to switch namespaces. (If you don't remember, type ? to see your choices.)
 
 .. raw:: html
     
-    <div class="code"><code>><strong>D ^%CD</strong>
+    <pre>><strong>D ^%CD</strong>
     
-    NAMESPACE// <strong>VISTA</strong></code></div>
+    NAMESPACE// <strong>VISTA</strong></pre>
 
 Note to GT.M/YottaDB Users
 --------------------------
 Due to the fact that Cache does not enforce the M standard as strictly, many illegal instructions have been incorporated into VistA code. In addition, neither Cache nor GT.M/YottaDB is fully M95 standards compliant. As a result, ensuring that new code supports both systems is something of a game. For these reasons, the hardhats community maintains fixes for these routines and, when possible, sends the fixes back to the VA. In the future, the OSEHRA repositories will contain the fixes so that end users don't have to download the code and fix it themselves.
 
-The WorldVistA distribution of VistA is GT.M/YottaDB compatible; you don't need any fixes for it, but the following provides a lot more functionality.
+The WorldVistA distribution of VistA already includes the below fixes.
 
 If you downloaded vxVistA or FOIA VistA, you need to copy the routines from this repository to your routines directory: https://github.com/shabiel/Kernel-GTM. Here's how to do it:
 
 .. code-block:: bash
 
-    $ wget https://github.com/shabiel/Kernel-GTM/releases/download/XU-8.0-10002/virgin_install.zip
+    $ wget https://github.com/shabiel/Kernel-GTM/releases/download/XU-8.0-10004/virgin_install.zip
     $ unzip virgin_install.zip -d /path/to/database/r/
+
+This fixes the Kernel. There are some small fixes needed in random places in VistA, a total of about 5 routines. The fixes can be found in this repo: https://github.com/shabiel/foia-vista-fixes. You can get it like this
+
+.. code-block:: bash
+
+    $ wget https://github.com/shabiel/foia-vista-fixes/archive/master.zip -O foia-vista-fixes.zip
+    $ unzip -j foia-vista-fixes.zip *.m -d /path/to/database/r/
+
 
 Note to Cache Users
 -------------------
-The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA, but don't try to run the RPC broker. A "friend" wasted a lot of my time because he had an evaluation version and couldn't start the RPC broker. You may also need to restart Cache repeatedly, as it sometimes "forgets" that you logged off.
+The evaluation version of Cache won't let you run more than one foreground
+process and 20 background processes. You can certainly configure VistA, but
+don't try to run the RPC broker. A friend wasted a lot of my time because he
+had an evaluation version and couldn't start the RPC broker. You may also need
+to restart Cache repeatedly, as it sometimes "forgets" that you logged off.
 
 Commands and what they mean (a short M primer)
 ----------------------------------------------
@@ -135,7 +151,7 @@ The routine ZTMGRSET defines VistA global variables and saves system wide M rout
 
 .. raw:: html
     
-    <div class="code"><code>><strong>K ^%ZOSF</strong>
+    <pre>><strong>K ^%ZOSF</strong>
     
     ><strong>D ^ZTMGRSET</strong>
     
@@ -193,7 +209,7 @@ The routine ZTMGRSET defines VistA global variables and saves system wide M rout
     Now, I will check your % globals...........
      
     ALL DONE
-    ></code></div>
+    ></pre>
 
 On Caché
 ********
@@ -202,11 +218,11 @@ On Cache, you will see different prompts.
 
 .. raw:: html
     
-    <div class="code"><code>NAME OF MANAGER'S NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
+    <pre>NAME OF MANAGER'S NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
     
     PRODUCTION (SIGN-ON) NAMESPACE: VISTA// <strong>&lt;enter&gt;</strong>
     
-    NAME OF THIS CONFIGURATION: VISTA// <strong>&lt;enter&gt;</strong></code></div>
+    NAME OF THIS CONFIGURATION: VISTA// <strong>&lt;enter&gt;</strong></pre>
 
 Fileman
 -------
@@ -215,7 +231,7 @@ Initialize Fileman to set your domain name and number and Operating System (GT.M
 
 .. raw:: html
     
-    <div class="code"><code>><strong>D ^DINIT</strong>
+    <pre>><strong>D ^DINIT</strong>
     
     VA Fileman V.22.2
     
@@ -288,7 +304,7 @@ Initialize Fileman to set your domain name and number and Operating System (GT.M
        
        
     INITIALIZATION COMPLETED IN 4 SECONDS.
-    ></code></div>
+    ></pre>
 
 ZUSET
 -----
@@ -296,16 +312,16 @@ Also run D ^ZUSET to choose the correct version of ZU, the key login routine for
 
 .. raw:: html
     
-    <div class="code"><code><strong>D ^ZUSET</strong>
+    <pre><strong>D ^ZUSET</strong>
     
     This routine will rename the correct routine to ZU for you.
     
     Rename ZUGTM to ZU, OK? No// <strong>Y</strong>
-    Routine ZUGTM was renamed to ZU</code></div>
+    Routine ZUGTM was renamed to ZU</pre>
 
 Device Configuration
 --------------------
-Next is to set-up 4 devices: NULL, CONSOLE, VIRTUAL, and HFS (historically known as TELNET, due to usual access assignments). The NULL device corresponds to a place where we dump data we don't want; that's ``/dev/null`` on all Unices; ``//./nul`` on Windows. The NULL device is also known as the "BIT BUCKET", for obvious reasons.
+Next is to set-up 4 devices: NULL, CONSOLE, VIRTUAL (historically known as TELNET, due to usual access assignments), and HFS. The NULL device corresponds to a place where we dump data we don't want; that's ``/dev/null`` on all Unices; ``//./nul`` on Windows. The NULL device is also known as the "BIT BUCKET", for obvious reasons.
 
 CONSOLE stands for the device the terminal presents itself as if directly connected to a computer. These days, no computer has real console devices. Linux still has an emulated console device: ``/dev/tty``. Cache Terminal presents a console device called ``|TRM|``.
 
@@ -325,7 +341,7 @@ There should only be one device named "NULL". Unfortunately, there are three NUL
 
 .. raw:: html
     
-    <div class="code"><code>><strong>S DUZ=.5</strong>
+    <pre>><strong>S DUZ=.5</strong>
     <strong>D Q^DI</strong>
     
     VA Fileman 22.2
@@ -361,13 +377,13 @@ There should only be one device named "NULL". Unfortunately, there are three NUL
     Select MNEMONIC: <strong>&lt;enter&gt;</strong>
     LOCAL SYNONYM: <strong>^</strong>
     
-    Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
+    Select DEVICE NAME: <strong>&lt;enter&gt;</strong></pre>
 
 At this point, we need to make sure that $I (short for $IO) for the device is correct for the system. All Unices have ``/dev/null``; Windows is ``//./nul``.
 
 .. raw:: html
 
-    <div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES
+    <pre>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES
 
     Input to what File: DEVICE// <strong>&lt;enter&gt;</strong>             (54 entries)
     EDIT WHICH FIELD: ALL// $I  
@@ -375,7 +391,7 @@ At this point, we need to make sure that $I (short for $IO) for the device is co
     Select DEVICE NAME: <strong>NULL</strong>
     $I: /dev/null// <strong>//./nul</strong> (or leave it alone as it is correct for Unix).
     
-    Select DEVICE NAME: <strong>&lt;enter&gt;</strong></code></div>
+    Select DEVICE NAME: <strong>&lt;enter&gt;</strong></pre>
 
 CONSOLE Device
 **************
@@ -394,7 +410,7 @@ Here's an example:
 
 .. raw:: html
 
-    <div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES  
+    <pre>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES  
 
 
 
@@ -424,7 +440,7 @@ Here's an example:
     TYPE: VIRTUAL TERMINAL// <strong>&lt;enter&gt;</strong>
     SUBTYPE: C-VT100// <strong>C-VT220</strong>      Digital Equipment Corporation VT-220 terminal
     SIGN-ON/SYSTEM DEVICE: <strong>Y</strong>  YES
-    </code></div>
+    </pre>
 
 VIRTUAL Device
 **************
@@ -471,7 +487,7 @@ Next, a domain should be set up for the VistA instance.  A domain name is typica
 
 .. raw:: html
     
-    <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
+    <pre>><strong>S DUZ=.5 D Q^DI</strong>
     
     VA Fileman 22.0
     
@@ -553,13 +569,13 @@ Next, a domain should be set up for the VistA instance.  A domain name is typica
     Select DOMAIN NAME: <strong>&lt;enter&gt;</strong>
     
     Select OPTION: <strong>&lt;enter&gt;</strong>
-    ></code></div>
+    ></pre>
 
 The next step is to find the IEN of the instance domain. This can be done by inquiring about the entry using Fileman and printing the Record Number:
 
 .. raw:: html
     
-    <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
+    <pre>><strong>S DUZ=.5 D Q^DI</strong>
     
     VA Fileman 22.2
     
@@ -576,21 +592,21 @@ The next step is to find the IEN of the instance domain. This can be done by inq
     Select DOMAIN NAME: <strong>&lt;enter&gt;</strong>
     
     Select OPTION: <strong>&lt;enter&gt;</strong>
-    ></code></div>
+    ></pre>
 
 
 Then we propagate that entry to the ``Kernel System Parameters`` and ``RPC Broker Site Parameters`` files. The value that is being set should be the same as the ``NUMBER`` value from the above result.
 
 .. raw:: html
     
-    <div class="code"><code>><strong>S $P(^XWB(8994.1,1,0),"^")=76</strong>
-    ><strong>S $P(^XTV(8989.3,1,0),"^")=76</strong></code></div>
+    <pre>><strong>S $P(^XWB(8994.1,1,0),"^")=76</strong>
+    ><strong>S $P(^XTV(8989.3,1,0),"^")=76</strong></pre>
 
 Re-index the files after making this change.
 
 .. raw:: html
     
-    <div class="code"><code>><strong>F DIK="^XTV(8989.3,","^XWB(8994.1," S DA=1 D IXALL2^DIK,IXALL^DIK</strong></code></div>
+    <pre>><strong>F DIK="^XTV(8989.3,","^XWB(8994.1," S DA=1 D IXALL2^DIK,IXALL^DIK</strong></pre>
 
 Christening
 -----------
@@ -598,7 +614,7 @@ System is christened using menu option XMCHIRS with FORUM.OSEHRA.ORG as the pare
 
 .. raw:: html
     
-    <div class="code"><code>><strong>S DUZ=.5 D ^XUP</strong>
+    <pre>><strong>S DUZ=.5 D ^XUP</strong>
     
     Setting up programmer environment
     This is a TEST account.
@@ -635,7 +651,7 @@ System is christened using menu option XMCHIRS with FORUM.OSEHRA.ORG as the pare
     Use the 'Subroutine editor' option under network management menu to add your
     site passwords to the MINIENGINE script, and the 'Edit a script' option
     to edit any domain scripts that you choose to.
-    ></code></div>
+    ></pre>
 
 Set-up Taskman
 --------------
@@ -645,19 +661,19 @@ The first step is to find the box volume pair for the local machine.
 
 .. raw:: html
     
-    <div class="code"><code>><strong>D GETENV^%ZOSV W Y</strong></code></div>
+    <pre>><strong>D GETENV^%ZOSV W Y</strong></pre>
 
 which will print out a message with four parts separated by ``^`` that could look something like (Cache):
 
 .. raw:: html
     
-    <div class="code"><code>VISTA^VISTA^palaven^VISTA:CACHE</code></div>
+    <pre>VISTA^VISTA^palaven^VISTA:CACHE</pre>
 
 or (GT.M/YottaDB)
 
 .. raw:: html
 
-    <div class="code"><code>VAH^ROU^Macintosh^ROU:Macintosh</code></div>
+    <pre>VAH^ROU^Macintosh^ROU:Macintosh</pre>
 
 The four pieces of the string are:
 
@@ -673,7 +689,7 @@ For this demonstration instance, the Volume Set will be ``ROU``, as per the outp
 
 .. raw:: html
     
-    <div class="code"><code>&gt;<strong>D Q^DI</strong>
+    <pre>&gt;<strong>D Q^DI</strong>
     
     VA Fileman 22.2
     
@@ -697,13 +713,13 @@ For this demonstration instance, the Volume Set will be ``ROU``, as per the outp
     SIGNON/PRODUCTION VOLUME SET: Yes// <strong>&lt;enter&gt;</strong>
     RE-QUEUES BEFORE UN-SCHEDULE: 12// <strong>&lt;enter&gt;</strong>
     
-    Select VOLUME SET: <strong>&lt;enter&gt;</strong></code></div>
+    Select VOLUME SET: <strong>&lt;enter&gt;</strong></pre>
    
 The next step sets the Taskman parameters:
 
 .. raw:: html
     
-    <div class="code"><code>Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
+    <pre>Select OPTION: <strong>1</strong>  ENTER OR EDIT FILE ENTRIES
     
     Input to what File: UCI ASSOCIATION// 14.7  TASKMAN SITE PARAMETERS
                                               (1 entry)
@@ -733,7 +749,7 @@ The next step sets the Taskman parameters:
     Auto Delete Tasks: <strong>Y</strong>  Yes ; Delete Tasks automatically
     Manager Startup Delay: <strong>1</strong> ; Don't wait to start the Manager when first starting.
     
-    Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: <strong>&lt;enter&gt;</strong></code></div>
+    Select TASKMAN SITE PARAMETERS BOX-VOLUME PAIR: <strong>&lt;enter&gt;</strong></pre>
 
 Kernel Set-Up
 -------------
@@ -750,7 +766,7 @@ We are not done with setting Taskman up yet; but we need to fix the Volume multi
 
 .. raw:: html
     
-    <div class="code"><code>><strong>D Q^DI</strong>
+    <pre>><strong>D Q^DI</strong>
     
     VA Fileman 22.2
     
@@ -796,7 +812,7 @@ We are not done with setting Taskman up yet; but we need to fix the Volume multi
     PRIMARY HFS DIRECTORY: /tmp/// <strong>&lt;enter&gt;</strong>
 
 
-    Select KERNEL SYSTEM PARAMETERS DOMAIN NAME:</code></div>
+    Select KERNEL SYSTEM PARAMETERS DOMAIN NAME:</pre>
 
 Back to Taskman
 ---------------
@@ -804,7 +820,7 @@ At this point, we are ready to go back to getting Taskman to run. We will now ru
 
 .. raw:: html
     
-    <div class="code"><code>><strong>D ^ZTMCHK</strong>
+    <pre>><strong>D ^ZTMCHK</strong>
     Checking Task Manager's Environment.
 
     Checking Taskman's globals...
@@ -842,7 +858,7 @@ At this point, we are ready to go back to getting Taskman to run. We will now ru
          Max sign-ons: 30
          Current number of active jobs: 1
 
-    End of listing.  Press RETURN to continue:</code></div>
+    End of listing.  Press RETURN to continue:</pre>
 
 If ANY of the fields in the last screen are empty, except "Log Tasks?", you made a mistake. Double check your work.
 
@@ -872,14 +888,14 @@ FOIA VistA comes with a lot of junk, so I advise starting from a clean slate. Be
 
 .. raw:: html
     
-    <div class="code"><code>><strong>K ^%ZTSK,^%ZTSCH</strong> ; clean taskman Globals
-    ><strong>D DT^DICRW S DIK="^DIC(19.2," F DA=0:0 S DA=$O(^DIC(19.2,DA)) Q:'DA  D ^DIK</strong> ; Delete all tasks</code></div>
+    <pre>><strong>K ^%ZTSK,^%ZTSCH</strong> ; clean taskman Globals
+    ><strong>D DT^DICRW S DIK="^DIC(19.2," F DA=0:0 S DA=$O(^DIC(19.2,DA)) Q:'DA  D ^DIK</strong> ; Delete all tasks</pre>
 
 Next add the tasks outlined above to OPTION SCHEDULING (#19.2). The startup entries will only need the NAME and SPECIAL QUEUING fields; the nightly jobs will need NAME, QUEUED TO RUN AT WHAT TIME, and RESCHEDULING FREQUENCY fields.
 
 .. raw:: html
 
-    <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
+    <pre>><strong>S DUZ=.5 D Q^DI</strong>
     Select OPTION:    <strong>ENTER OR EDIT FILE ENTRIES</strong>
 
     Input to what File: KERNEL SYSTEM PARAMETERS// <strong>OPTION SCHEDULING</strong> (0 entries)
@@ -980,7 +996,7 @@ Next add the tasks outlined above to OPTION SCHEDULING (#19.2). The startup entr
       (Yes)
     QUEUED TO RUN AT WHAT TIME: <strong>T+1@0030</strong>  (DEC 01, 2016@00:30)
     RESCHEDULING FREQUENCY: <strong>1D</strong>
-    SPECIAL QUEUEING: <strong>&lt;enter&gt;</strong></code></div>
+    SPECIAL QUEUEING: <strong>&lt;enter&gt;</strong></pre>
 
 
 There are actually just two more steps:
@@ -992,7 +1008,7 @@ You should see this (press enter several times to update the screen, it should t
 
 .. raw:: html
 
-    <div class="code"><code>><strong>D ^ZTMB,^ZTMON</strong>
+    <pre>><strong>D ^ZTMB,^ZTMON</strong>
 
     Checking Taskman.   Current $H=64252,53277  (Nov 30, 2016@14:47:57)
                           RUN NODE=64252,53274  (Nov 30, 2016@14:47:54)
@@ -1014,7 +1030,7 @@ You should see this (press enter several times to update the screen, it should t
     Checking the Task List:
          There are no tasks currently running.
     Checking Sub-Managers:
-         On node ROU:Macintosh there is  1 free Sub-Manager(s). Status: Run</code></div>
+         On node ROU:Macintosh there is  1 free Sub-Manager(s). Status: Run</pre>
 
 On CACHE, you can run ``D THIS^%SS`` to find out what started; on GT.M/YottaDB, you should have a ZSY which does the same thing. If ZSY isn't present on your instance, you can do something similar to the following until you find a ZSY:
 
@@ -1022,7 +1038,7 @@ Cache:
 
 .. raw:: html
     
-    <div class="code"><code>><strong>D THIS^%SS</strong>
+    <pre>><strong>D THIS^%SS</strong>
 
                        Cache System Status:  3:16 pm 30 Nov 2016
      Process  Device      Namespace      Routine         CPU,Glob  Pr User/Location
@@ -1048,7 +1064,7 @@ Cache:
        85424  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser
        85430  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser
        85435  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser
-       85441  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser</code></div>
+       85441  /dev/null   FOIA1611       %ZTMS1         5063,187   0  UnknownUser</pre>
 
 
 GT.M/YottaDB:
@@ -1057,7 +1073,7 @@ GT.M/YottaDB:
 
 .. raw:: html
 
-    <div class="code"><code>
+    <pre>
     Proc. id Proc. name      PS  Device   Routine            MODE     CPU time
     -------- --------------- --- -------- --------           -------  
     8757     Sub 8757        hib          GETTASK+3^%ZTMS1   -direct  00:00:00
@@ -1076,13 +1092,13 @@ GT.M/YottaDB:
                                  0 OPEN RMS STREAM NOWRAP :
                                  0-out OPEN RMS STREAM NOWRAP :
 
-    Total 5 users.</code></div>
+    Total 5 users.</pre>
 
 If you don't have ^ZSY on GT.M/YottaDB, try this: it does what ZSY does:
 
 .. raw:: html
 
-    <div class="code"><code>><strong>K ^XUTL("XUSYS")</strong>
+    <pre>><strong>K ^XUTL("XUSYS")</strong>
     ><strong>zsy "kill -SIGUSR1 $(lsof -t ${vista_home}/g/mumps.dat)"</strong>
 
     ><strong>zwrite ^XUTL("XUSYS",:,"JE","INTERRUPT")</strong>
@@ -1091,7 +1107,7 @@ If you don't have ^ZSY on GT.M/YottaDB, try this: it does what ZSY does:
     ^XUTL("XUSYS",2667,"JE","INTERRUPT")="GO+12^XMTDT"
     ^XUTL("XUSYS",9259,"JE","INTERRUPT")="+1^GTM$DMOD"
     ^XUTL("XUSYS",18658,"JE","INTERRUPT")="GETTASK+3^%ZTMS1"
-    </code></div>
+    </pre>
 
 Setup your Institution
 ----------------------
@@ -1105,9 +1121,14 @@ The INSITUTION file is protected from editing by requiring the variable XUMF to 
 
 We enter Fileman after setting the XUMF variable. Note that in the US, we are supposed to fill the NPI variable, and Fileman won't let me go further without filling it; but I was able to jump forward to avoid answering it. Also, note that we have to fill the STATION NUMBER entry twice, once in the field named so, and another time in the coding system multiple.
 
+A quick note on FACILITY TYPE: This field is important to idenfity your
+institution as a Medical facility; if you don't do that, while things mostly
+work, there will be a few odd items that won't work, like the API to add a
+patient in ``ADD^VAFCPTAD``.
+
 .. raw:: html
 
-    <div class="code"><code>><strong>S DUZ=.5,XUMF=1 D Q^DI</strong>
+    <pre>><strong>S DUZ=.5,XUMF=1 D Q^DI</strong>
 
 
     VA Fileman 22.2
@@ -1133,6 +1154,7 @@ We enter Fileman after setting the XUMF variable. Note that in the US, we are su
     THEN EDIT FIELD: <strong>1.04</strong>  ZIP
     THEN EDIT FIELD: <strong>5</strong>  MULTI-DIVISION FACILITY
     THEN EDIT FIELD: <strong>11</strong>  STATUS
+    THEN EDIT FIELD: <strong>13</strong>  FACILITY TYPE
     THEN EDIT FIELD: <strong>41.99</strong>  NPI
     THEN EDIT FIELD: <strong>52</strong>  FACILITY DEA NUMBER
     THEN EDIT FIELD: <strong>52.1</strong>  FACILITY DEA EXPIRATION DATE
@@ -1141,6 +1163,8 @@ We enter Fileman after setting the XUMF variable. Note that in the US, we are su
     THEN EDIT FIELD: <strong>99</strong>  STATION NUMBER
     THEN EDIT FIELD: <strong>9999</strong>  IDENTIFIER  (multiple)
        EDIT WHICH IDENTIFIER SUB-FIELD: ALL// <strong>&lt;enter&gt;</strong>
+    THEN EDIT FIELD:<strong>&lt;enter&gt;</strong>
+    STORE THESE FIELDS IN TEMPLATE:<strong>&lt;enter&gt;</strong>
  
     Select INSTITUTION NAME: <strong>PALM DESERT HOSPITAL</strong>
       Are you adding 'PALM DESERT HOSPITAL' as a new INSTITUTION (the 2536TH)? No// <strong>Y</strong>
@@ -1159,6 +1183,57 @@ We enter Fileman after setting the XUMF variable. Note that in the US, we are su
     ZIP: <strong>92211</strong>
     MULTI-DIVISION FACILITY: <strong>N</strong>  NO
     STATUS: <strong>N</strong>  National
+    FACILITY TYPE: <strong>??</strong>
+     The type of facility. A replacement for the type field.
+     
+     
+     Choose from:
+     AIR FORCE        AIR FORCE
+     ARMY        ARMY
+     BVA/VBA-SO        BOARD OF VETERANS APPEALS/VBA SUPPORT OFFICE
+     CBOC        COMMUNITY BASED OUTPATIENT CLINIC
+     CEC        CONTINUING EDUCATION CENTER
+     CHEP        COOPERATIVE HEALTH EDUCATION PROGRAM
+     CIVH        CIVILIAN HOSPITAL
+     CLC        VA COMMUNITY LIVING CENTER
+     CMOP        CONSOLIDATED MAIL OUTPATIENT PHARMACY
+     CO        CENTRAL OFFICE
+     CZGH        CANAL ZONE GENERAL HOSPITAL
+     D        DOMICILIARY
+     DDC        DENVER DISTRIBUTION CENTER
+     DEC        DENTAL EDUCATION CENTER
+     DENT        DENTAL CLINIC
+     DOD        DEPARTMENT OF DEFENSE
+     DOM        DOMICILIARY
+     DPC        VA DATA PROCESSING CENTER
+     EES        EMPLOYEE EDUCATION SYSTEMS
+     ETC        ENGINEERING TRAINING CENTER
+     FC        FINANCE CENTER
+     GC        GENERAL COUNSEL
+     HCS        HEALTH CARE SYSTEM
+     IHS        INDIAN HEALTH SERVICE
+     ISC        INFORMATION SYSTEMS CENTER
+     M&ROC        MEDICAL AND REGIONAL OFFFICE CENTER
+     M&ROC(M&RO)        MEDICAL AND REGIONAL OFFFICE CENTER
+     MC(M&D)        MEDICAL CENTER (MEDICAL AND DOMICILIARY)
+     MC(M)        MEDICAL CENTER (MEDICAL LOCATION)
+     MD        MEDICAL DISTRICT
+     MKC        MARKETING CENTER
+     MORC        MOBILE OUTREACH CLINIC
+     MPI        MASTER PATIENT INDEX
+     MSN        MEMORIAL SERVICE NETWORK
+     NAVY        NAVY
+     NCAO        NATIONAL CEMETERY AREA OFFICE
+     NCSO        NATIONAL CEMETERY STATION OFFICE
+     NHC        NURSING HOME CARE
+     OC        OUTPATIENT CLINIC (INDEPENDENT)
+     OCMC        OUTPATIENT CLINIC (SUBORDINATE)
+     OCS        OUTPATIENT CLINIC SUBSTATION
+                                              ^
+          You may enter a new FACILITY TYPE, if you wish
+          Answer must be 1-11 characters in length.
+    
+    FACILITY TYPE: <strong>VAMC</strong> VA MEDICAL CENTER
     NPI: <strong>&lt;enter&gt;</strong>??
          Answer must be 10 characters in length and not being used.
     NPI: <strong>&lt;enter&gt;</strong>?
@@ -1184,13 +1259,13 @@ We enter Fileman after setting the XUMF variable. Note that in the US, we are su
       STATUS: <strong>1</strong>  ACTIVE
 
 
-    Select INSTITUTION NAME: <strong>&lt;enter&gt;</strong></code></div>
+    Select INSTITUTION NAME: <strong>&lt;enter&gt;</strong></pre>
 
 Next, we will tackle the STATION NUMBER file. We technically can create an new entry, but I would just rather reuse the existing entry, which I do by typing ```1``. 
 
 .. raw:: html
 
-    <div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES  
+    <pre>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES  
 
 
 
@@ -1223,13 +1298,13 @@ Next, we will tackle the STATION NUMBER file. We technically can create an new e
     OTHER INSTITUTION: <strong>&lt;enter&gt;</strong>
     INTEGRATION NAME: <strong>&lt;enter&gt;</strong>
 
-    Select STATION NUMBER (TIME SENSITIVE) REFERENCE NUMBER: <strong>&lt;enter&gt;</strong></code></div>
+    Select STATION NUMBER (TIME SENSITIVE) REFERENCE NUMBER: <strong>&lt;enter&gt;</strong></pre>
 
 Next, the KERNEL SYSTEM PARAMETERS file:
 
 .. raw:: html
 
-    <div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES  
+    <pre>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES  
 
 
 
@@ -1246,13 +1321,13 @@ Next, the KERNEL SYSTEM PARAMETERS file:
     CHOOSE 1-2: <strong>2</strong>  PALM DESERT HOSPITAL  CA      999  
 
 
-    Select KERNEL SYSTEM PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code></div>
+    Select KERNEL SYSTEM PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></pre>
 
 Next, the MEDICAL CENTER DIVISION file:
 
 .. raw:: html
 
-    <div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES  
+    <pre>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES  
 
     Input to what File: KERNEL SYSTEM PARAMETERS// <strong>MEDICAL CENTER DIVISION</strong>  
                                               (1 entry)
@@ -1269,13 +1344,13 @@ Next, the MEDICAL CENTER DIVISION file:
     FACILITY NUMBER: 050// <strong>999</strong>
 
 
-    Select MEDICAL CENTER DIVISION NAME:<strong>&lt;enter&gt;</strong></code></div>
+    Select MEDICAL CENTER DIVISION NAME:<strong>&lt;enter&gt;</strong></pre>
 
 Next, the MASTER PATIENT INDEX file:
 
 .. raw:: html
 
-  <div class="code"><code>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES
+  <pre>Select OPTION: <strong>EN</strong>TER OR EDIT FILE ENTRIES
 
   INPUT TO WHAT FILE: MASTER PATIENT INDEX (LOCAL NUMBERS)// <strong>MASTER PATIENT INDEX</strong>
 
@@ -1291,14 +1366,14 @@ Next, the MASTER PATIENT INDEX file:
   SURE YOU WANT TO DELETE? <strong>Y</strong>  (Yes)
 
 
-  Select MASTER PATIENT INDEX (LOCAL NUMBERS) SITE ID NUMBER:<strong>&lt;enter&gt;</strong></code></div>
+  Select MASTER PATIENT INDEX (LOCAL NUMBERS) SITE ID NUMBER:<strong>&lt;enter&gt;</strong></pre>
 
     
 At this point, we are ready to check our work. First, we need to know the internal entry number (IEN) of the institution we just created:
 
 .. raw:: html
 
-    <div class="code"><code>Select OPTION: <strong>INQ</strong>UIRE TO FILE ENTRIES
+    <pre>Select OPTION: <strong>INQ</strong>UIRE TO FILE ENTRIES
 
 
     Output from what File: MEDICAL CENTER DIVISION// <strong>4</strong>  INSTITUTION
@@ -1313,13 +1388,13 @@ At this point, we are ready to check our work. First, we need to know the intern
     NUMBER
     --------------------------------------------------------------------------------
 
-    2957</code></div>
+    2957</pre>
 
 Okay, let's kill our symbol table (the table that keeps our current variables), log-in, and then run ``$$SITE^VASITE``.
 
 .. raw:: html
 
-    <div class="code"><code>><strong>K  S DUZ=.5 D ^XUP</strong>
+    <pre>><strong>K  S DUZ=.5 D ^XUP</strong>
 
     Setting up programmer environment
     This is a TEST account.
@@ -1330,7 +1405,7 @@ Okay, let's kill our symbol table (the table that keeps our current variables), 
     ><strong>W DUZ(2)</strong>
     2957
     ><strong>W $$SITE^VASITE()</strong>
-    2957^PALM DESERT HOSPITAL^999</code></div>
+    2957^PALM DESERT HOSPITAL^999</pre>
 
 As you can see, our DUZ(2) matches our site number, and $$SITE^VASITE() gives us the correct site number and station number.
 
@@ -1341,7 +1416,7 @@ Next, we set-up a port for CPRS to connect. CPRS connects to the Remote Procedur
 
 .. raw:: html
     
-    <div class="code"><code>><strong>S DUZ=.5 D Q^DI</strong>
+    <pre>><strong>S DUZ=.5 D Q^DI</strong>
     
     VA Fileman 22.0
     
@@ -1365,13 +1440,13 @@ Next, we set-up a port for CPRS to connect. CPRS connects to the Remote Procedur
       CONTROLLED BY LISTENER STARTER: <strong>Y</strong>  YES
 
 
-    Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></code></div>
+    Select RPC BROKER SITE PARAMETERS DOMAIN NAME: <strong>&lt;enter&gt;</strong></pre>
 
 Now, start the listener:
 
 .. raw:: html
     
-    <div class="code"><code>><strong>D ^XUP</strong>
+    <pre>><strong>D ^XUP</strong>
 
     Setting up programmer environment
     This is a TEST account.
@@ -1385,7 +1460,7 @@ Now, start the listener:
     CHOOSE 1-3: <strong>2</strong>  XWB LISTENER STARTER     Start All RPC Broker Listeners
     Start All RPC Broker Listeners
               Task: RPC Broker Listener START on VAH-ROU:Macintosh, port 9000
-              has been queued as task 32372</code></div>
+              has been queued as task 32372</pre>
 
 Finally, we need to check that the broker started. While you may use ^%SS or ^ZSY to find that out, I prefer OS level tools that show me that the port is active.
 
@@ -1393,9 +1468,9 @@ On Mac or Linux, you can run ``lsof -iTCP -sTCP:LISTEN -P``; on Linux, ``netstat
 
 .. raw:: html
     
-    <div class="code"><code>$ lsof -iTCP -sTCP:LISTEN -P
+    <pre>$ lsof -iTCP -sTCP:LISTEN -P
     COMMAND   PID USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
-    mumps   85939  sam    6u  IPv6 0x5ee953ac0e7fceab      0t0  TCP \*:9000 (LISTEN)</code></div>
+    mumps   85939  sam    6u  IPv6 0x5ee953ac0e7fceab      0t0  TCP \*:9000 (LISTEN)</pre>
 
 If you shut down your system and then bring it back up, starting Taskman using ``^ZTMB`` will start your broker, as we set it up as one of the startup tasks.
 
@@ -1403,13 +1478,13 @@ Back to business: To check that the RPC Broker is REALLY working, run ``DO ^XWBT
 
 .. raw:: html
     
-    <div class="code"><code>><strong>D ^XWBTCPMT</strong>
+    <pre>><strong>D ^XWBTCPMT</strong>
 
     Interactive Broker Test
     IP ADDRESS: <strong>127.0.0.1</strong>
     PORT: <strong>9000</strong>
 
-    Success, response: accept</code></div>
+    Success, response: accept</pre>
 
 Our response was "Success".  If you don't succeed, you may get "Fail". If that happens, refer to this page on troubleshooting the Broker in Vistapedia: http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting.
 
@@ -1417,14 +1492,14 @@ To stop the broker, ``do ^XUP``, and then choose ``XWB LISTENER STOP ALL``:
 
 .. raw:: html
     
-    <div class="code"><code>><strong>D ^XUP</strong>
+    <pre>><strong>D ^XUP</strong>
     Setting up programmer environment
     This is a TEST account.
 
     Terminal Type set to: C-VT100
 
     Select OPTION NAME: <strong>XWB LISTENER STOP ALL</strong>       Stop All RPC Broker Listeners
-    Stop All RPC Broker Listeners</code></div>
+    Stop All RPC Broker Listeners</pre>
 
 If you run ``lsof -iTCP -sTCP:LISTEN -P`` again, you won't see any output.
 
@@ -1463,7 +1538,7 @@ I set it up as SM1234, but you can put whatever you like. Go back into Fileman u
 
 .. raw:: html
     
-    <div class="code"><code>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
+    <pre>Select OPTION: <strong>1</strong>   ENTER OR EDIT FILE ENTRIES
     
     INPUT TO WHAT FILE: RPC BROKER PARAMETERS// <strong>200</strong>   NEW PERSON
               (2 entries)
@@ -1480,7 +1555,7 @@ I set it up as SM1234, but you can put whatever you like. Go back into Fileman u
     The VERIFY CODE has been deleted as a security measure.
     The user will have to enter a new one the next time they sign-on.
     
-    Select NEW PERSON NAME: <strong>&lt;enter&gt;</strong></code></div>
+    Select NEW PERSON NAME: <strong>&lt;enter&gt;</strong></pre>
 
 Next give your user privileges appropriate for a system manager. This brings us to VistA's security system.
 
@@ -1510,7 +1585,7 @@ and assign and take away keys using a mechanism called delegation. I won't cover
 
 .. raw:: html
     
-    <div class="code"><code>><strong>S DUZ=1</strong>
+    <pre>><strong>S DUZ=1</strong>
     ><strong>S $P(^VA(200,DUZ,0),"^",4)="@"</strong>
     ><strong>D ^XUP</strong>
     
@@ -1567,7 +1642,7 @@ and assign and take away keys using a mechanism called delegation. I won't cover
     XUSPF200 being assigned to:
        MANAGER,SYSTEM
     
-    Select Key Management Option: <strong>&lt;enter&gt;</strong></code></div>
+    Select Key Management Option: <strong>&lt;enter&gt;</strong></pre>
 
 
 You are now ready to enter additional information for the system manager user
@@ -1576,7 +1651,7 @@ you won't be able to log in.
 
 .. raw:: html
     
-    <div class="code"><code>><strong>D ^XUP</strong>
+    <pre>><strong>D ^XUP</strong>
     
     Setting up programmer environment
     Terminal Type set to: C-VT320
@@ -1586,7 +1661,7 @@ you won't be able to log in.
         2   XUSEREDITSELF   Edit User Characteristics
     CHOOSE 1-2: <strong>1</strong> XUSEREDIT  Edit an Existing User
     Edit an Existing User
-    Select NEW PERSON NAME: <strong>MANAGER,SYSTEM</strong>    SM</code></div>
+    Select NEW PERSON NAME: <strong>MANAGER,SYSTEM</strong>    SM</pre>
 
 Before we go into details of the next screen, let's talk about the <PF1> key.
 Press <PF1> refers to notations for use of Vista on Terminals. For example, the
@@ -1644,7 +1719,7 @@ system." is what we put in a while ago in the Kernel Set-Up section.
 
 .. raw:: html
     
-    <div class="code"><code>><strong>D ^ZU</strong>
+    <pre>><strong>D ^ZU</strong>
     This is my test system.
 
 
@@ -1673,7 +1748,7 @@ system." is what we put in a while ago in the Kernel Set-Up section.
               Capacity Planning ...
               HL7 Main Menu ...
 
-    Select Systems Manager Menu <TEST ACCOUNT> Option:</code></div>
+    Select Systems Manager Menu <TEST ACCOUNT> Option:</pre>
 
 At Select Systems Manager Menu Option: Type ``OPER``, (short for operations
 management) and hit enter. You can see all of the choices available to you if
@@ -1758,7 +1833,7 @@ you signed out, go back through the front door using ``mumps -r ZU`` (GTM/YDB) o
 
 .. raw:: html
     
-    <div class="code"><code>
+    <pre>
 
             Core Applications ...
             Device Management ...
@@ -1804,7 +1879,7 @@ you signed out, go back through the front door using ``mumps -r ZU`` (GTM/YDB) o
     INITIAL: <strong>UC</strong>
     SSN: <strong>&lt;enter&gt;</strong>
     SEX: <strong>F</strong>  FEMALE
-    NPI: <strong>&lt;enter&gt;</strong></code></div>
+    NPI: <strong>&lt;enter&gt;</strong></pre>
 
 Once in the Screenman form, you will need to set the necessary
 information mentioned above. Four pieces of information are able to be set
@@ -1827,7 +1902,7 @@ Fill in as follows:
 
 .. raw:: html
     
-    <div class="code"><code>                            Edit an Existing User
+    <pre>                            Edit an Existing User
     NAME: CPRS,USER                                                     Page 1 of 5
     _______________________________________________________________________________
        NAME... CPRS,USER                                   INITIAL: UC
@@ -1850,7 +1925,7 @@ Fill in as follows:
     Enter a command or '^' followed by a caption to jump to a specific field.
     
     
-    COMMAND:                                     Press <PF1>H for help    Insert</code></div>
+    COMMAND:                                     Press <PF1>H for help    Insert</pre>
 
 To change to other pages, press the down arrow key or <TAB> until the cursor
 reaches the COMMAND box.  Then type ``N`` or ``Next Page`` and press <enter> to
@@ -1864,7 +1939,7 @@ you should see the entry; and the effective date should be today.
 
 .. raw:: html
     
-    <div class="code"><code>                            Edit an Existing User
+    <pre>                            Edit an Existing User
     NAME: CPRS,USER                                                     Page 3 of 5
     _______________________________________________________________________________
     PROHIBITED TIMES FOR SIGN-ON:                      
@@ -1886,7 +1961,7 @@ you should see the entry; and the effective date should be today.
     Exit    Save    Next Page    Previous Page    Refresh    Quit
      
     Enter a COMMAND, or "^" followed by the CAPTION of a FIELD to jump to.
-    COMMAND: e                                       Press <PF1>H for help  Insert</code></div>
+    COMMAND: e                                       Press <PF1>H for help  Insert</pre>
 
 
 On the fourth page, CPRS Tab Access is set. Navigate first to "RESTRICT PATIENT
@@ -1896,7 +1971,7 @@ and enter an effective date of yesterday, ``T-1`` is the notation to use.
 
 .. raw:: html
     
-    <div class="code"><code>                            Edit an Existing User
+    <pre>                            Edit an Existing User
     NAME: CPRS,USER                                                     Page 4 of 5
     _______________________________________________________________________________
     RESTRICT PATIENT SELECTION:->      OE/RR LIST:
@@ -1918,7 +1993,7 @@ and enter an effective date of yesterday, ``T-1`` is the notation to use.
     
     
     
-    COMMAND:                                       Press <PF1>H for help</code></div>
+    COMMAND:                                       Press <PF1>H for help</pre>
 
 Once that is done, save and exit the Screenman form via the COMMAND box and
 then answer the final questions regarding access letters, security keys
@@ -1926,7 +2001,7 @@ and mail groups. For security keys, there are two we need to add: ORES and PROVI
 
 .. raw:: html
     
-    <div class="code"><code>Exit     Save     Next Page     Refresh
+    <pre>Exit     Save     Next Page     Refresh
     
     Enter a command or '^' followed by a caption to jump to a specific field.
     
@@ -1968,7 +2043,7 @@ and mail groups. For security keys, there are two we need to add: ORES and PROVI
     ...
     
     Select User Management <TEST ACCOUNT> Option: <strong>^&lt;enter&gt;</strong>
-    ></code></div>
+    ></pre>
 
 At this point, CPRS can successfully connect to the local VistA instance and
 the ``CPRS,USER`` will be able to sign on and interact with the GUI.
@@ -1987,7 +2062,7 @@ out what the version of CPRS you need to use is:
 
 .. raw:: html
     
-    <div class="code"><code>><strong>S DUZ=1 D Q^DI</strong>
+    <pre>><strong>S DUZ=1 D Q^DI</strong>
 
 
     VA Fileman 22.2
@@ -1999,7 +2074,7 @@ out what the version of CPRS you need to use is:
 
     Output from what File: <strong>19</strong>  OPTION         (10351 entries)
     Select OPTION NAME: <strong>OR CPRS GUI CHART</strong>       CPRSChart version 1.0.30.75
-    Another one: <strong>^</strong></code></div>
+    Another one: <strong>^</strong></pre>
 
 Okay. So we need ``1.0.30.75``. So we navigate here: http://foia-vista.osehra.org/Patches_By_Application/CPRS%20GUI%20FILES/,
 and from there, try to guess which version we need. From my version string, it looks like we need version 30. There are three
@@ -2141,7 +2216,7 @@ Now we can register the patient.
 
 .. raw:: html
     
-  <div class="code"><pre>><strong>$ mumps -r ^ZU</strong>
+  <pre><strong>$ mumps -r ^ZU</strong>
   This is my test system.
 
   Volume set: ROU:Macintosh  UCI: VAH  Device: /dev/ttys001
@@ -2318,7 +2393,7 @@ Now we can register the patient.
 			POS: UNSPECIFIED                      Claim #: UNSPECIFIED
 		Relig: UNSPECIFIED                          Sex: FEMALE
 		 Race: UNANSWERED                     Ethnicity: UNANSWERED
-	Type &lt;Enter&gt; to continue or '^' to exit: <strong>^</strong></code></div>
+	Type &lt;Enter&gt; to continue or '^' to exit: <strong>^</strong></pre>
 
 Now, if you run CPRS again, you will see a patient, and you can select them:
 
