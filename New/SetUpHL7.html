@@ -85,7 +85,7 @@
 <h1 id="purpose-of-this-tutorial">Purpose of this Tutorial</h1>
 <p>This tutorial will help you set-up both outgoing and incoming connections to HL7 in VistA via <a href="https://en.wikipedia.org/wiki/Transmission_Control_Protocol">TCP</a> only. The tutorial will be very thin on theoretical content on HL7 itself. For a fuller treatment of the subject matter, consult the manuals in the <a href="https://www.va.gov/vdl/application.asp?appid=8">VistA Documentation Library</a>, in particular, <a href="https://www.va.gov/vdl/documents/Infrastructure/Health_Level_7_(HL7)/hl71_6p56_p66.pdf">this manual</a>. There is a newer HL7 messaging system in VistA called &quot;HL7 Optimized (HLO)&quot; --we won't be discussing that here as HLO is not widely used.</p>
 <h1 id="what-is-hl7">What is HL7?</h1>
-<p>HL7 means Health Level 7, the number 7 corresponding to the Application Layer in the <a href="https://en.wikipedia.org/wiki/OSI_model">OSI Model</a>. In brief, it is a messaging format used in Medicine. It's important because when deploying VistA in a healthcare setting, you almost always have to talk to other machines, such a lab instruments, ECG/EKG instruments, X-ray machines, and the list goes on forever. The way to talk to all of these instruments is using HL7.</p>
+<p>HL7 means Health Level 7, the number 7 corresponding to the Application Layer in the <a href="https://en.wikipedia.org/wiki/OSI_model">OSI Model</a>. In brief, it is a messaging format used in Medicine. It's important because when deploying VistA in a healthcare setting, you almost always have to talk to other machines, such as lab instruments, ECG/EKG instruments, X-ray machines, and the list goes on forever. The way to talk to all of these instruments is using HL7.</p>
 <p>When we speak of HL7 in this document, we specifically mean HL7 versions 2.1, 2.2, 2.3, and 2.4, which are all similar to each other. We will not talk about HL7 v.3 and later, which include CDA documents and the like as these are not used for interfacing with Medical Devices.</p>
 <h1 id="what-is-an-hl7-message">What is an HL7 message?</h1>
 <p>The following description is taken from <a href="https://www.va.gov/vdl/documents/Infrastructure/Health_Level_7_(HL7)/hl71_6p56_p66.pdf">this manual</a>.</p>
@@ -630,7 +630,7 @@ FOIA201805&gt;N % S %=$$EN^VAFCA04(1,$$NOW^XLFDT)</code></pre>
 <figure>
 <img src="images/SetupHL7/mirth_dashboard_after_test_message.png" alt="Mirth Dashboard after Test Message" class="align-center" /><figcaption>Mirth Dashboard after Test Message</figcaption>
 </figure>
-<p>To view the message, double click on the VistA HL7 Receiver row, and you will be taken to the Channel Messages view</p>
+<p>To view the message, double click on the VistA HL7 Receiver row, and you will be taken to the Channel Messages view.</p>
 <figure>
 <img src="images/SetupHL7/mirth_channel_messages_view.png" alt="Mirth Channel Messages" class="align-center" /><figcaption>Mirth Channel Messages</figcaption>
 </figure>
@@ -1119,7 +1119,7 @@ Select PATIENT NAME:</pre>
 </ul>
 <p>The recommended way to configure VistA is to use the Multi Listener via xinetd. Since that's hard to set-up (I have been consulted in more that one instance on setting this up on production systems), I will also show how to set-up the single-listener in VistA, which should be good for experimentation.</p>
 <h3 id="xinetd-set-up">Xinetd Set-up</h3>
-<p>First, you need to find out if there is an existing multi-threaded listener on FOIA. It turns out that there is one. You can find it its internal entry number in the LOGICAL LINK file by looking in the &quot;E&quot;,&quot;M&quot; index of the file:</p>
+<p>First, you need to find out if there is an existing multi-threaded listener on FOIA. It turns out that there is one. You can find its internal entry number in the LOGICAL LINK file by looking in the &quot;E&quot;,&quot;M&quot; index of the file:</p>
 <pre><code>FOIA201805&gt;WRITE $ORDER(^HLCS(870,&quot;E&quot;,&quot;M&quot;,0))
 4</code></pre>
 <p>If we inquire into entry #4 in file 870 in Fileman, this is the information that we get:</p>
@@ -1434,7 +1434,7 @@ PID^^^^^HLSEVEN~INCOMING^^19571111^M</code></pre>
 <li>Piece 12 is the HL7 version: 2.4. Must match EVENT DRIVER.</li>
 <li>Pieces 15 and 16 are Accept Acknowledgement Type and Application Acknowledgement Type.</li>
 </ul>
-<p>There is a <a href="https://www.hl7inspector.com/">good website</a> where you can paste your HL7 message and get a breakdown of the pieces in it.</p>
+<p>Here are two websites where you can paste your HL7 message and get a breakdown of the pieces in it - <a href="https://www.hl7inspector.com/">HL7 Inspector</a> and <a href="https://www.parsehog.com/">ParseHog</a>.</p>
 <p>Due to the fact the message retention in VistA is based on date, you should change the message date/time to be for today's date, so that your message won't be purged if it is too old. For example, today (as I am writing this) is 4 Jan 2019; so the date would be 20190104103022-0400 etc.</p>
 <h2 id="sending-a-message-from-mirth">Sending a Message from Mirth</h2>
 <p>To send a message to VistA, we need to do the following steps in Mirth:</p>
@@ -1755,7 +1755,7 @@ FOIA201805&gt;D ^HLCSTCP ; Now, send the message from outside.
                 At M source location SERVER^HLCSTCP
 %GTM-W-NOTPRINCIO, Output currently directed to device SCK$95524</code></pre>
 <h3 id="debugging-messages-to-receive-via-multi-listener">Debugging Messages to Receive via Multi Listener</h3>
-<p>Not really; we will just fake out a new listener by writing some new code. This is a bit harder, but so maybe you may be better off using the Single Listener, which doesn't require any code changes. This example is for GT.M; the process is similar for Cache, but this exact code won't work. Add this code in HLCSGTM:</p>
+<p>Not really; we will just fake out a new listener by writing some new code. This is a bit harder, so you may be better off using the Single Listener, which doesn't require any code changes. This example is for GT.M; the process is similar for Cache, but this exact code won't work. Add this code in HLCSGTM:</p>
 <pre><code>DEBUG ;Entry point for debug, Build a server to get the connect
  W !,&quot;IP Socket to Listen on: &quot; R SOCK:300,! Q:&#39;$T!(SOCK[&quot;^&quot;)
  ;Use %ZISTCP to do a single server
