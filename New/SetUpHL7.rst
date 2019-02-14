@@ -35,7 +35,7 @@ HL7 means Health Level 7, the number 7 corresponding to the Application Layer
 in the `OSI Model<https://en.wikipedia.org/wiki/OSI_model>`_. In brief, it is
 a messaging format used in Medicine. It's important because when deploying
 VistA in a healthcare setting, you almost always have to talk to other machines,
-such a lab instruments, ECG/EKG instruments, X-ray machines, and the list goes
+such as lab instruments, ECG/EKG instruments, X-ray machines, and the list goes
 on forever. The way to talk to all of these instruments is using HL7.
 
 When we speak of HL7 in this document, we specifically mean HL7 versions 2.1,
@@ -926,7 +926,7 @@ In a few moments, the Mirth Dashboard will now show that you have a new message:
    Mirth Dashboard after Test Message
 
 To view the message, double click on the VistA HL7 Receiver row, and you will
-be taken to the Channel Messages view
+be taken to the Channel Messages view.
 
 .. figure::
    images/SetupHL7/mirth_channel_messages_view.png
@@ -1464,7 +1464,7 @@ single-listener in VistA, which should be good for experimentation.
 Xinetd Set-up
 """""""""""""
 First, you need to find out if there is an existing multi-threaded listener on
-FOIA. It turns out that there is one. You can find it its internal entry number
+FOIA. It turns out that there is one. You can find its internal entry number
 in the LOGICAL LINK file by looking in the "E","M" index of the file::
 
   FOIA201805>WRITE $ORDER(^HLCS(870,"E","M",0))
@@ -1888,8 +1888,8 @@ A few important points, as the message header is SO important:
 * Pieces 15 and 16 are Accept Acknowledgement Type and Application
   Acknowledgement Type.
 
-There is a `good website<https://www.hl7inspector.com/>`_ where you can paste
-your HL7 message and get a breakdown of the pieces in it.
+Here are two websites where you can paste
+your HL7 message and get a breakdown of the pieces in it - `HL7 Inspector<https://www.hl7inspector.com/>`_ and `ParseHog<https://www.parsehog.com/>`_.
 
 Due to the fact the message retention in VistA is based on date, you should
 change the message date/time to be for today's date, so that your message won't
@@ -2358,7 +2358,7 @@ other end will time out.
 Debugging Messages to Receive via Multi Listener
 """"""""""""""""""""""""""""""""""""""""""""""""
 Not really; we will just fake out a new listener by writing some new code.
-This is a bit harder, but so maybe you may be better off using the Single
+This is a bit harder, so you may be better off using the Single
 Listener, which doesn't require any code changes. This example is for GT.M;
 the process is similar for Cache, but this exact code won't work. 
 Add this code in HLCSGTM::
