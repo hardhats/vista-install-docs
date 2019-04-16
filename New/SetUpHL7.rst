@@ -1,4 +1,6 @@
-Set-up HL7 Messages from and to VistA===================================== Authors: Sam Habiel. Thanks to David Whitten for help with VistA; to Loyd
+Set-up HL7 Messages from and to VistA
+=====================================
+Authors: Sam Habiel. Thanks to David Whitten for help with VistA; to Loyd
 Bittle for teaching me how to use Mirth.
 
 License: |license|
