@@ -1,6 +1,4 @@
-Set-up HL7 Messages from and to VistA
-=====================================
-Authors: Sam Habiel. Thanks to David Whitten for help with VistA; to Loyd
+Set-up HL7 Messages from and to VistA===================================== Authors: Sam Habiel. Thanks to David Whitten for help with VistA; to Loyd
 Bittle for teaching me how to use Mirth.
 
 License: |license|
@@ -2398,7 +2396,546 @@ Programmer's Guide to Creating and Parsing HL7 Messages
 -------------------------------------------------------
 Creating Outgoing HL7 Messages
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-To be written at a future date.
+Introduction
+""""""""""""
+Typically an HL7 message is sent due to an event happening in the VistA system.
+There are already a large amount of HL7 event protocols configured in the
+system; they are typically there for the operation of a specific package (e.g.
+lab sending and receiving data to lab instruments). They are typically
+documented in the Technical manuals for the specific package which you can find
+on the `VistA Documentation Library<https://www.va.gov/vdl/>`_. Just to be
+clear, in this case you do not have to create any HL7 messages. VistA already
+creates them for you; and you typically only have to fill out the correct IP
+address and port in the HL7 link and do some package configuration and then you
+will start receiving them.
+
+In order to demonstrate creating a new HL7 message, You can attach to existing
+events in VistA to watch for changes in the patient record and then send an HL7
+message based on that change. An event in VistA is actually an extended action
+type entry in the PROTOCOL file.  Here's a reasonably complete list of the
+important patient record events that happen in VistA, listed by the name of the
+PROTOCOL entry that lets its subscribers know that the event happened. This list
+is accurate as of February 2019.
+
+==============                                ==============
+PROTOCOL                                      Description
+==============                                ==============
+DG FIELD MONITOR                              DG Field Monitor
+DGPM MOVEMENT EVENTS                          MOVEMENT EVENTS v 5.0
+GMPL EVENT                                    Problem List Update Event
+GMRA ENTERED IN ERROR                         Reaction Data Entered in Error
+GMRA SIGN-OFF ON DATA                         Sign-off on Reaction Data
+GMRC EVSEND OR                                Consults event sent to OE/RR
+IBCN NEW INSURANCE EVENTS                     IB New Insurance Event Driver
+LR7O CH EVSEND OR                             LAB => OE/RR ORDER MESSAGE EVENT
+OR EVSEND FH                                  OE/RR => DIET MESSAGE EVENT
+OR EVSEND GMRC                                OE/RR => CONSULTS MESSAGE EVENT
+OR EVSEND LRCH                                OE/RR => LAB MESSAGE EVENT
+OR EVSEND ORG                                 OE/RR => GENERIC MESSAGE EVENT
+OR EVSEND PS                                  OE/RR => PHARMACY MESSAGE EVENT
+OR EVSEND RA                                  OE/RR => RAD/NM MESSAGE EVENT
+OR EVSEND VPR                                 OE/RR => VPR MESSAGE
+PS EVSEND OR                                  Send Pharmacy orders to CPRS.
+PXK VISIT DATA EVENT                          VISIT RELATED DATA
+RA EVSEND OR                                  Radiology event sent to OE/RR
+SCMC PATIENT TEAM CHANGES                     PCMM Patient Team Update Event Driver
+SCMC PATIENT TEAM POSITION CHANGES            PCMM Patient Team Position Update Event Driver
+SDAM APPOINTMENT EVENTS                       Appointment Event Driver
+==============                                ==============
+
+It actually turns out that CPRS sends HL7-like messages to various packages
+when orders are placed in CPRS. We will use these HL7 segments rather than
+construct our own for the following demo. This is the list of the protocols
+in which this happens:
+
+==============                                ==============
+PROTOCOL                                      Description
+==============                                ==============
+OR EVSEND FH                                  OE/RR => DIET MESSAGE EVENT
+OR EVSEND GMRC                                OE/RR => CONSULTS MESSAGE EVENT
+OR EVSEND LRCH                                OE/RR => LAB MESSAGE EVENT
+OR EVSEND PS                                  OE/RR => PHARMACY MESSAGE EVENT
+OR EVSEND RA                                  OE/RR => RAD/NM MESSAGE EVENT
+==============                                ==============
+
+The HL7 message CPRS sends looks like this (this is a pharmacy message)::
+
+  MSH|^~\&|ORDER ENTRY|1|PHARMACY|1|20190415120624-0400||ORM
+  PID|||3||COYOTE,WILEY
+  PV1||O|3|||||||||||||||||||||||||||||||||||||||||
+  ORC|NW|31;1^OR|||||325&MG&1&TABLET&325MG&2^QID PRN^^^^R^^325MG^~||201904151206-0400|1||1|||20190415120624-0400|E^ELECTRONICALLY ENTERED^99ORN^^^
+  RXO|^^^2^ACETAMINOPHEN TAB ^99PSP|||||||||1338.6642^^99NDF^2^^99PSD|12||0||||D3
+  NTE|7|P|FOR PAIN
+  RXR|^^^1^ORAL^99PSR
+  ZRX||E|N|W
+  ZSC||||||||
+
+So what we will do in this example is take all the lines except the MSH line
+(which VistA generates automatically) and send it over to Mirth, like we did
+in earlier examples.
+
+Steps to Create an HL7 message
+""""""""""""""""""""""""""""""
+This is a summary. More detail can be found in this `VDL
+manual<https://www.va.gov/vdl/documents/Infrastructure/Health_Level_7_(HL7)/hl71_6p56_p66.pdf>`_,
+Chapter 8 page 101ff.
+
+HL7 Application Entries
+
+1. Create the Sending HL7 Application Entry
+2. Create the Receiving HL7 Application Entry
+3. Create the Logical Link to the destination system
+4. Create the Event Driver. It will include all the information to create the
+   MSH segment.
+5. Create the Subscriber; the Logical Link will be inside the subscriber.
+
+Write the M code HL7 code that will use the Event Driver to send the message.
+
+1. To set up variables needed by your routine to build the HL7 message, call
+   ``INIT^HLFNC2`` with the name of your Event Driver.
+2. Check $G(HL). If this check is true, the call to INIT^HLFNC2 failed. The HL
+   variable contains the error message/reason for failure. Your driver routine
+   should quit.
+3. Build the message text (but not the message header). Set the HL7 segments
+   for the message body into local array HLA("HLS",I) for small messages, or
+   ^TMP("HLS",$J,I) for larger messages. In both cases, "I" is a sequential
+   whole number starting with one. 
+4. To send the message, invoke GENERATE^HLMA, passing the appropriate event
+   driver protocol as a parameter. 
+5. If the call to GENERATE^HLMA is successful, the Result parameter is returned
+   equal to the message id assigned to the message that was created. If the
+   call was unsuccessful, it is returned with the following three pieces of
+   data: message id (or 0 if no message id was assigned)^error code^error
+   message 
+
+The last step is to call the previous M code from another place in the system.
+Typically this is workflow specific; and a call will be inserted in a specific
+part of an application or at an event point in VistA. As mentioned above, in
+our sample we will attach to an event point that happens when you place certain
+kinds of orders from CPRS.
+
+Example with Sample Code
+""""""""""""""""""""""""
+This example is based on the excellent example that can by found in this `VDL
+manual<https://www.va.gov/vdl/documents/Infrastructure/Health_Level_7_(HL7)/hl71_6p56_p66.pdf>`_,
+Chapter 8, page 101ff. We will be following the manual for all the steps except
+for the code, which we will author ourselves.
+
+Remember that HL7 Applications, Logical Links, and Protocols can be edited from
+the menu EVE > HL7 Main Menu ... [HL MAIN MENU] > Interface Developer Options
+... [HL MENU INTERFACE TK]. We won't go over in detail how to enter items; take
+a look at the previous sections or at the referenced manual for that.
+
+1. Create the Sending HL7 Application Entry, VIST-AC, representing the sending
+   application entry.
+   
+::
+
+  |                             HL7 APPLICATION EDIT
+  --------------------------------------------------------------------------------
+
+                 NAME: VIST-AC                       ACTIVE/INACTIVE: ACTIVE
+
+
+        FACILITY NAME:                                  COUNTRY CODE: KOR
+
+
+  HL7 FIELD SEPARATOR:                       HL7 ENCODING CHARACTERS:
+
+
+           MAIL GROUP:
+
+
+
+
+  _______________________________________________________________________________
+
+  Exit    Save    Refresh    Quit
+
+2. Create the Receiving HL7 Application Entry, ACME, representing the receiving
+   application entry.
+   
+::
+   
+  |                             HL7 APPLICATION EDIT
+  --------------------------------------------------------------------------------
+
+                 NAME: ACME                          ACTIVE/INACTIVE: ACTIVE
+
+
+        FACILITY NAME:                                  COUNTRY CODE: KOR
+
+
+  HL7 FIELD SEPARATOR:                       HL7 ENCODING CHARACTERS:
+
+
+           MAIL GROUP:
+
+
+
+
+  _______________________________________________________________________________
+
+  Exit    Save    Refresh    Quit
+
+3. Create the Logical Link to the destination system, ACME TCP. For me, I will
+   be connecting to my Mirth instance on the same machine on same computer that
+   is running VistA at port 6661.
+
+::
+
+  (page 1)                  HL7 LOGICAL LINK
+  --------------------------------------------------------------------------------
+
+
+                  NODE: ACME TCP                       DESCRIPTION:
+
+           INSTITUTION:
+
+        MAILMAN DOMAIN:
+
+             AUTOSTART:
+
+            QUEUE SIZE: 10
+
+              LLP TYPE: TCP
+
+            DNS DOMAIN:
+  _______________________________________________________________________________
+
+  (page 2)                    HL7 LOGICAL LINK
+  --------------------------------------------------------------------------------
+    ┌──────────────────────TCP LOWER LEVEL PARAMETERS─────────────────────────┐
+    │                      ACME TCP                                           │
+    │                                                                         │
+    │  TCP/IP SERVICE TYPE: CLIENT (SENDER)                                   │
+    │       TCP/IP ADDRESS: 127.0.0.1                                         │
+    │          TCP/IP PORT: 6661                                              │
+    │          TCP/IP PORT (OPTIMIZED):                                       │
+    │                                                                         │
+    │   ACK TIMEOUT:                       RE-TRANSMISION ATTEMPTS:           │
+    │  READ TIMEOUT:                     EXCEED RE-TRANSMIT ACTION:           │
+    │    BLOCK SIZE:                                      SAY HELO:           │
+    │                                      TCP/IP OPENFAIL TIMEOUT:           │
+    │STARTUP NODE:                                      PERSISTENT:           │
+    │   RETENTION:                            UNI-DIRECTIONAL WAIT:           │
+    └─────────────────────────────────────────────────────────────────────────┘
+  _______________________________________________________________________________
+
+  Close    Refresh
+
+4. Create the Event Driver VSIT-AC ORM-O01 EVENT. Set the TRANSACTION MESSAGE
+   TYPE to be ORM; EVENT TYPE to be O01, PROCESSING ID to be debug, VERSION ID 
+   to be 2.3, ACCEPT ACK CODE to be AL, APPLICATION ACK TYPE to be NE.
+
+::
+
+  |                      HL7 INTERFACE SETUP                         PAGE 1 OF 2
+  --------------------------------------------------------------------------------
+
+              NAME: VSIT-AC ORM-O01 EVENT
+
+  DESCRIPTION (wp):   (empty)
+
+
+  ENTRY ACTION:
+
+   EXIT ACTION:
+
+
+          TYPE: event driver
+
+
+
+  _______________________________________________________________________________
+  Enter a code from the list.
+  Choose from:
+  E        event driver
+  S        subscriber
+
+                            HL7 EVENT DRIVER                         PAGE 2 OF 2
+                           VSIT-AC ORM-O01 EVENT
+  --------------------------------------------------------------------------------
+        SENDING APPLICATION: VIST-AC
+   TRANSACTION MESSAGE TYPE: ORM                        EVENT TYPE: O01
+          MESSAGE STRUCTURE:
+              PROCESSING ID: debug                      VERSION ID: 2.3
+            ACCEPT ACK CODE: AL               APPLICATION ACK TYPE: NE
+
+   RESPONSE PROCESSING RTN:
+                             SUBSCRIBERS
+   
+5. Add ACME ORM-O01 SUBS to SUBSCRIBERS in the previous screen. Set RECEIVING
+   APPLICATION to be ACME, RESPONSE MESSAGE TYPE to be ACK, EVENT TYPE to be
+   O01, SENDING FACILITY REQUIRED? & RECEIVING FACILITY REQUIRED? to NO; and
+   most importantly, LOGICAL LINK needs to be set to ACME TCP.
+
+::
+
+  |                           HL7 SUBSCRIBER                         PAGE 2 OF 2
+                             ACME ORM-O01 SUBS
+  --------------------------------------------------------------------------------
+
+        RECEIVING APPLICATION: ACME
+
+        RESPONSE MESSAGE TYPE: ACK                            EVENT TYPE: O01
+
+   SENDING FACILITY REQUIRED?: NO           RECEIVING FACILITY REQUIRED?: NO
+
+           SECURITY REQUIRED?:
+
+                 LOGICAL LINK: ACME TCP
+
+   PROCESSING RTN:
+
+    ROUTING LOGIC:
+  _______________________________________________________________________________
+
+6. Create the event interceptor routine, that will take the CPRS Order HL7 and
+   send it out. I called my routine VOHL7MSG
+
+::
+
+  VOHL7MSG ;OSEHRA/SMH - Orders HL7 Processing Example;Apr 16, 2019@16:07
+   ;;0.0;EXAMPLE;;
+   ;
+  EN(MSG) ; -- main entry point protocol VO OR HL7 MONITOR where MSG contains HL7
+  msg
+   ; This protocol is designed to be attached to the following event protocols
+   ; used by CPRS ordering that emit an HL7 message when an order is placed.
+   ; - OR EVSEND RA
+   ; - OR EVSEND LRCH
+   ; - OR EVSEND FH
+   ; - OR EVSEND PS
+   ; - OR EVSEND GMRC
+   ;
+   ; The action protocol should call it like this: D EN^VOHL7MSG(.XQORMSG)
+   ;
+   N VOMSG,MSH
+   ; ; Get message array name
+   S VOMSG=$S($L($G(MSG)):MSG,1:"MSG"),MSH=0       ;MSG="NAME" or MSG(#)
+   ;
+   ; Don't process messages that are not MSH type
+   N SEG S SEG=0
+   F  S SEG=$O(@VOMSG@(SEG)) Q:SEG'>0  Q:$E(@VOMSG@(SEG),1,3)="MSH"
+   Q:'SEG                                        ;no message/header
+   ;
+   ; Initialize Destination Server
+   N HL,HLA D INIT^HLFNC2("VSIT-AC ORM-O01 EVENT",.HL)
+   I $G(HL)'="" D APPERROR^%ZTER("VOHL7MSG - VAFC A04 SERVER NOT DEFINED PROPERLY") QUIT
+   ;
+   ; Now extract HL7 message
+   ; At this point SEG is at the MSH segment. We don't want that as VistA HL7
+   ; generates its own MSH segment based on the protocol configuration. So we
+   ; start looping to the first segment after MSH.
+   N CNT S CNT=1
+   F  S SEG=$O(@VOMSG@(SEG)) Q:SEG'>0  S HLA("HLS",CNT)=@VOMSG@(SEG),CNT=CNT+1
+   ;
+   ; Fix the CPRS Field Separator and Component Separator to match the message's
+   ; definition.
+   ; CPRS hardcodes | and ^ for these.
+   F CNT=0:0 S CNT=$O(HLA("HLS",CNT)) Q:'CNT  S HLA("HLS",CNT)=$TR(HLA("HLS",CNT),"|^",HL("FS")_$E(HL("ECH")))
+   ;
+   ; Send the HL7 message
+   N HLRST
+   D GENERATE^HLMA("VSIT-AC ORM-O01 EVENT","LM",1,.HLRST)
+   I $P(HLRST,U,2) D APPERROR^%ZTER("VOHL7MSG - HL7 MESSAGE SEND FAILED")
+   QUIT
+
+
+7. Create a new action type protocol using Fileman (File 101) that looks like
+   this. Its name should be namespaced. I chose VO (OSEHRA's namespace) for the
+   namespace, but you are free to name it as you see fit.
+
+::
+
+  NAME: VO OR HL7 MONITOR
+    ITEM TEXT: Sample Order HL7 Messages Receiver
+    TYPE: action
+   DESCRIPTION:   Sample code to show how to receive HL7 messages for events
+   related to ordering.
+    ENTRY ACTION: D EN^VOHL7MSG(.XQORMSG)
+
+8. Add the newly created protocol in #7 to to the ITEM multiple of these
+   protocols:
+
+   - OR EVSEND RA
+   - OR EVSEND LRCH
+   - OR EVSEND FH
+   - OR EVSEND PS
+   - OR EVSEND GMRC
+
+The following is the screenscrape of steps 7 and 8::
+
+  FOIA201805>S DUZ=1 D P^DI
+
+
+  MSC FileMan 22.1061
+
+
+  Select OPTION: ENTER OR EDIT FILE ENTRIES
+
+
+
+  Input to what File: PROTOCOL//            (4593 entries)
+  EDIT WHICH FIELD: ALL// NAME
+  THEN EDIT FIELD: ITEM TEXT
+  THEN EDIT FIELD: TYPE
+  THEN EDIT FIELD: DESCRIPTION    (word-processing)
+  THEN EDIT FIELD: ENTRY ACTION
+  THEN EDIT FIELD:
+  STORE THESE FIELDS IN TEMPLATE:
+
+
+  Select PROTOCOL NAME: VO OR HL7 MONITOR
+  Not a known package or a local namespace.
+    Are you adding 'VO OR HL7 MONITOR' as a new PROTOCOL (the 4594TH)? No// Y
+    (Yes)
+     PROTOCOL ITEM TEXT: Sample Order HL7 Messages Receiver
+     PROTOCOL IDENTIFIER:
+  ITEM TEXT: Sample Order HL7 Messages Receiver  Replace
+  TYPE: action  action
+  DESCRIPTION:
+    THERE ARE NO LINES!
+    Edit? NO// y  YES
+
+  ==[ WRAP ]==[INSERT ]==============< DESCRIPTION >====[Press <F1>H for help]====
+  Sample code to show how to receive HL7 messages for events related to
+  ordering.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <=======T=======T=======T===[Use control-E to exit]=====T=======T=======T>======
+
+
+
+
+  ENTRY ACTION: D EN^VOHL7MSG(.XQORMSG)
+
+
+  Select PROTOCOL NAME:
+
+
+
+
+  Select OPTION: entER OR EDIT FILE ENTRIES
+
+
+
+  Input to what File: PROTOCOL//            (4594 entries)
+  EDIT WHICH FIELD: ALL// ITEM
+       1   ITEM    (multiple)
+       2   ITEM TEXT
+  CHOOSE 1-2: 1  ITEM  (multiple)
+     EDIT WHICH ITEM SUB-FIELD: ALL//
+  THEN EDIT FIELD:
+
+
+  Select PROTOCOL NAME: OR EVSEND RA       OE/RR => RAD/NM MESSAGE EVENT
+  Select ITEM: HMP NA EVENTS// VO OR HL7 MONITOR       Sample Order HL7 Messages R
+  eceiver
+    MNEMONIC: ^
+  Select ITEM: ^
+
+
+  Select PROTOCOL NAME: OR EVSEND LRCH       OE/RR => LAB MESSAGE EVENT
+  Select ITEM: HMP NA EVENTS// VO OR HL7 MONITOR       Sample Order HL7 Messages R
+  eceiver
+    MNEMONIC: ^
+  Select ITEM: ^
+
+
+  Select PROTOCOL NAME: OR EVSEND FH       OE/RR => DIET MESSAGE EVENT
+  Select ITEM: HMP NA EVENTS// VO OR HL7 MONITOR       Sample Order HL7 Messages R
+  eceiver
+    MNEMONIC: ^
+  Select ITEM: ^
+
+
+  Select PROTOCOL NAME: OR EVSEND PS       OE/RR => PHARMACY MESSAGE EVENT
+  Select ITEM: PSIVARH PHARMACY// VO OR HL7 MONITOR       Sample Order HL7 Message
+  s Receiver
+    MNEMONIC: ^
+  Select ITEM: ^
+
+
+  Select PROTOCOL NAME: OR EVSEND GMRC       OE/RR => CONSULTS MESSAGE EVENT
+  Select ITEM: HMP NA EVENTS// VO OR HL7 MONITOR       Sample Order HL7 Messages R
+  eceiver
+    MNEMONIC: ^
+  Select ITEM: ^
+
+
+  Select PROTOCOL NAME:
+
+After all of this, now whenever you place Radiology, Lab Chemistry, Dietetics,
+any Pharmacy, and Consults in CPRS, you will get HL7 messages showing up in
+Mirth. This is nice as it happens almost instantly after placing an order in
+CPRS. Here are the HL7 messages I got.
+
+Lab Order::
+
+  MSH^~|\&^VIST-AC^^ACME^^20190416160925-0400^^ORM~O01^505447^D^2.3^^^AL^NE^KOR
+  PID^^^14^^田中,誠,
+  PV1^^O^3^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ORC^NW^37;1~OR^^^^^~~~20190416~^^201904161609-0400^1^^1^^^20190416160925-0400^E~ELECTRONICALLY ENTERED~99ORN~~~
+  OBR^^^^~~~229~AMITRIPTYLINE~99LRT^^^^^^^1^^^^0X500;SERUM;SNM;1;BLOOD  ;99LRS~~~72;SERUM;99LRX^^^^^^^^^^^^~~~~~R;9
+
+Medication Order::
+
+  MSH^~|\&^VIST-AC^^ACME^^20190416161236-0400^^ORM~O01^505449^D^2.3^^^AL^NE^KOR
+  PID^^^5^^간,서준
+  PV1^^O^3^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ORC^NW^38;1~OR^^^^^325&MG&1&TABLET&325MG&2~QID~~~~R~~325MG~~^^201904161612-0400^1^^1^^^20190416161236-0400^E~ELECTRONICALLY ENTERED~99ORN~~~
+  RXO^~~~2~ACETAMINOPHEN TAB ~99PSP^^^^^^^^^1338.6642~~99NDF~2~~99PSD^360^^0^^^^D90
+  NTE^7^P^FOR PAIN
+  RXR^~~~1~ORAL~99PSR
+  ZRX^^E^N^W
+  ZSC^^^^^^^^
+
+Consult::
+
+  MSH^~|\&^VIST-AC^^ACME^^20190416161418-0400^^ORM~O01^505451^D^2.3^^^AL^NE^KOR
+  PID^^^5^^간,서준
+  PV1^^O^3^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ORC^NW^39;1~OR^^^^^~~~20190417~~R^^201904161614-0400^1^^1^^^20190416161418-0400^E~ELECTRONICALLY ENTERED~99ORN~~~
+  OBR^^^^~~~46~DERMATOLOGY~99CON^^^^^^^^^^^^^^OC^63
+  ZSV^~~~46~DERMATOLOGY~99CON^
+  OBX^1^TX^2000.02~REASON FOR REQUEST~AS4^^test2
+  OBX^2^TX^~PROVISIONAL DIAGNOSIS~^^test
+
+Radiology Order::
+
+  MSH^~|\&^VIST-AC^^ACME^^20190416161529-0400^^ORM~O01^505453^D^2.3^^^AL^NE^KOR
+  PID^^^5^^간,서준
+  PV1^^O^3^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ORC^NW^40;1~OR^^^^^~~~20190417~~R^^201904161615-0400^1^^1^^^20190416161529-0400^E~ELECTRONICALLY ENTERED~99ORN~~~
+  OBR^^^^71020~~CPT4~58~CHEST 2 VIEWS PA&LAT~99RAP^^^^^^^^^^^^^^^^^^^^^^^^^^WALK^~test
+  OBX^1^TX^2000.02~CLINICAL HISTORY~AS4^1^test2
+  OBX^1^TX^2000.33~PREGNANT~AS4^^NO
+
+Diet::
+
+  MSH^~|\&^VIST-AC^^ACME^^20190416161759-0400^^ORM~O01^505457^D^2.3^^^AL^NE^KOR
+  PID^^^2^^RUNNER,ROAD
+  PV1^^I^4^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  ORC^NW^41;1~OR^^^^^~~~201904161617-0400~^^201904161617-0400^1^^1^^^20190416161759-0400^E~ELECTRONICALLY ENTERED~99ORN~~~
+  ODS^D^^~~~FH-5~NPO~99OTH^
+
 
 Processing Incoming HL7 Messages
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
