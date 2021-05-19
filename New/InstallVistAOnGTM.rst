@@ -534,9 +534,9 @@ File here: `vista.service <./vista.service>`_
     WantedBy=multi-user.target</pre>
 
 The vista.service file refers to two bash scripts that will need to be set up as
-well. Once obtained, edit these files so that |/path/to/vista/instance| is a
+well. Once obtained, edit these files so that /path/to/vista/instance is a
 valid path and vistauser is a valid user. Also, make sure you have env.vista,
-created earlier, saved to |/path/to/vista/instance| for the scripts to work.
+created earlier, saved to /path/to/vista/instance for the scripts to work.
 
 vistastart.sh file here: `vistastart.sh <./vistastart.sh>`_
 
@@ -633,9 +633,9 @@ vistastop.sh file here: `vistastop.sh <./vistastop.sh>`_
     echo "$(date) Server stop."</pre>
 
 After obtaining and correcting the start and stop bash script files, put them
-into |/path/to/vista/instance|/bin (this folder may need to be created). Then,
+into /path/to/vista/instance/bin (this folder may need to be created). Then,
 make the scripts executable with chmod. Also, create
-|/path/to/vista/instance|/tmp so the working directory exists.
+/path/to/vista/instance/tmp so the working directory exists.
 
 Finally, we will enable the systemd service. This command will prompt you for
 your root password even if not running directly as root.
