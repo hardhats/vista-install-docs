@@ -1,14 +1,14 @@
 Install VistA on GT.M or YottaDB
 ================================
 
-Authors: Sam Habiel
+Authors: Sam Habiel, Kevin Toppenberg, Matthew Toppenberg
 
 License:
 
 .. image:: https://i.creativecommons.org/l/by/4.0/80x15.png
    :target: http://creativecommons.org/licenses/by/4.0/
 
-Last Updated: January 2019
+Last Updated: May 2021
 
 A Mumps database (like VistA) is a series of routines and globals (a global in
 Mumps really means a file on disk). To load VistA into GT.M/YottaDB, you need
@@ -509,8 +509,8 @@ This guide will provide a tutorial for both systemd setup and SysVinit (legacy)
 setup. The exact process of starting up/shutting down VistA in each tutorial is
 different, as different maintainers worked on each tutorial.
 
-Systemd Init Setup
-------------------
+Systemd Init Setup Tutorial (Method 1)
+--------------------------------------
 As root, create the file /etc/systemd/system/vista.service. You need to put a
 valid value for /path/to/vista/instance and the user also needs to be valid
 (here vistauser) and in a valid group (here, also vistauser).
@@ -633,9 +633,9 @@ vistastop.sh file here: `vistastop.sh <./vistastop.sh>`_
     echo "$(date) Server stop."</pre>
 
 After obtaining and correcting the start and stop bash script files, put them
-into /path/to/vista/instance/bin (this folder may need to be created). Then,
+into /path/to/vista/instance/**bin** (this folder may need to be created). Then,
 make the scripts executable with chmod. Also, create
-/path/to/vista/instance/tmp so the working directory exists.
+/path/to/vista/instance/**tmp** so the working directory exists.
 
 Finally, we will enable the systemd service. This command will prompt you for
 your root password even if not running directly as root.
@@ -651,8 +651,8 @@ You have now set up systemd to start Vista on startup. No need to follow the
 instructions below for the older SysVinit setup, but you should still read the
 section below SysVinit setup labelled "Pre-Compile Routines".
 
-SysVinit (legacy) Init Setup
-----------------------------
+SysVinit (Legacy) Init Setup Tutorial (Method 2)
+------------------------------------------------
 The following is the init script you will create on your system. You need to put
 a valid value for vista_instance and the user also needs to be valid (here
 vistauser). File here: `vista.initd <./vista.initd>`_
