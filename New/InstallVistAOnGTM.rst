@@ -512,7 +512,7 @@ different, as different maintainers worked on each tutorial.
 Systemd Init Setup
 ------------------
 As root, create the file /etc/systemd/system/vista.service. You need to put a
-valid value for |/path/to/vista/instance| and the user also needs to be valid
+valid value for /path/to/vista/instance and the user also needs to be valid
 (here vistauser) and in a valid group (here, also vistauser).
 File here: `vista.service <./vista.service>`_
 
