@@ -1,0 +1,14 @@
+[Unit]
+Description=Control VistA EHR services
+
+[Service]
+User=vistauser
+Group=vistauser
+WorkingDirectory=|/path/to/vista/instance|/tmp
+Type=oneshot
+ExecStart=|/path/to/vista/instance|/bin/vistastart.sh
+ExecStop=|/path/to/vista/instance|/bin/vistastop.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target
