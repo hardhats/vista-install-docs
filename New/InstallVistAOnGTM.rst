@@ -8,7 +8,7 @@ License:
 .. image:: https://i.creativecommons.org/l/by/4.0/80x15.png
    :target: http://creativecommons.org/licenses/by/4.0/
 
-Last Updated: May 2021
+Last Updated: August 2021
 
 A Mumps database (like VistA) is a series of routines and globals (a global in
 Mumps really means a file on disk). To load VistA into GT.M/YottaDB, you need
@@ -582,9 +582,9 @@ vistastart.sh file here: `vistastart.sh <./vistastart.sh>`_
     $gtm_path/mumps -run ZTMB
 
     #remove old journal files
-    if (( $(find ${vista_home}/g -name '*_*' -mtime +3 -print | wc -l) > 0 )); then
+    if (( $(find ${vista_home}/j -name '*_*' -mtime +3 -print | wc -l) > 0 )); then
       echo "Deleting old journals..."
-      find ${vista_home}/g -name '*_*' -mtime +3 -print -delete
+      find ${vista_home}/j -name '*_*' -mtime +3 -print -delete
     fi
 
     echo "$(date) Server start."</pre>
