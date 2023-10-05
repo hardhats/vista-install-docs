@@ -16,22 +16,19 @@
 <ul>
 <li><a href="#quick-introduction">Quick Introduction</a></li>
 <li><a href="#using-the-installation-script-yottadb">Using the Installation Script (YottaDB)</a></li>
-<li><a href="#using-the-package-manager-gt.m">Using the Package Manager (GT.M)</a></li>
 <li><a href="#using-the-installation-script-gt.m">Using the Installation Script (GT.M)</a></li>
 <li><a href="#traditional-technique-gt.m">Traditional Technique (GT.M)</a></li>
 </ul>
 </nav>
 <p>Authors: KS Bhaskar, Sam Habiel</p>
-<p>License: GNU Free Documentation License, Version 1.3 or any later (<a href="http://www.gnu.org/licenses/fdl.txt" class="uri">http://www.gnu.org/licenses/fdl.txt</a>).</p>
+<p>License: GNU Free Documentation License, Version 1.3 or any later (<a href="http://www.gnu.org/licenses/fdl.txt">http://www.gnu.org/licenses/fdl.txt</a>).</p>
 <p>These instructions are a slightly modified version from the <a href="https://sourceforge.net/projects/fis-gtm/files/GT.M%20Acculturation%20Workshop/">GT.M Acculturation Workshop</a>.</p>
 <h1 id="quick-introduction">Quick Introduction</h1>
 <p>There are more ways to install GT.M than there are for YottaDB, since YottaDB is a fork of GT.M. Either one can be used for VistA implementation.</p>
 <h1 id="using-the-installation-script-yottadb">Using the Installation Script (YottaDB)</h1>
-<p>Follow the instructions at <a href="https://yottadb.com/product/get-started/" class="uri">https://yottadb.com/product/get-started/</a>. Note the location where YottaDB was installed, presented after the last step. As an example, mine said:</p>
+<p>Follow the instructions at <a href="https://yottadb.com/product/get-started/">https://yottadb.com/product/get-started/</a>. Note the location where YottaDB was installed, presented after the last step. As an example, mine said:</p>
 <pre><code>YottaDB version r1.10 installed successfully at /usr/local/lib/yottadb/r110</code></pre>
 <p>This location will be entered for the variable $gtm_dist in the next section.</p>
-<h1 id="using-the-package-manager-gt.m">Using the Package Manager (GT.M)</h1>
-<p>If you are using Ubuntu Linux 14.04 LTS or later; Debian Jessie, Testing, or Unstable; or other Linux distributions that may already have GT.M packages accessed using their normal package managers, you may be able to install GT.M using the package manager, e.g., as root/via sudo, <code>apt install fis-gtm</code>.</p>
 <h1 id="using-the-installation-script-gt.m">Using the Installation Script (GT.M)</h1>
 <p>Download the installation script, gtminstall, to install the current GT.M release. Download and execute the latest version of the GT.M installer (currently version 0.13) from <a href="http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer">http://sourceforge.net/projects/fis-gtm/files/GT.M%20Installer</a> into a temporary directory, using either a browser or a program such as wget.</p>
 <p>Note: depending on your network configuration, the wget command may need environment variables to be set to go through proxy servers, and the sudo command may require the -E option to pass your shell environment to the root process invoked by the sudo.</p>

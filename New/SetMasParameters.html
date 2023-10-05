@@ -29,7 +29,7 @@
 <p>If you have reached this point, it means that you have finished <a href="./InitializeVistA.html">VistA Initialization</a>.</p>
 <p>If you go to CPRS right now, you will see this on the patient selection screen if you click on <code>Wards</code> in the <code>Patient Selection</code> area. Our objective in this section and the next section is to set-up a hospital in our VistA system with a couple of wards.</p>
 <figure>
-<img src="images/SetMasParameters/patient_selection_dialog.png" class="align-center" />
+<img src="images/SetMasParameters/patient_selection_dialog.png" class="align-center" alt="" />
 </figure>
 <h1 id="introduction-to-the-steps">Introduction to the Steps</h1>
 <ul>
@@ -40,7 +40,7 @@
 <li>G&amp;L Parameter Edit</li>
 <li>Set-up Treating Specialities</li>
 </ul>
-<p>The first three steps take place in Fileman. The rest of the steps take place in various menus. If you want, you can set-up a real or PDF printer. This is covered extensively at Vistapedia: <a href="http://www.vistapedia.com/index.php/Setting_up_a_VISTA_Printer" class="uri">http://www.vistapedia.com/index.php/Setting_up_a_VISTA_Printer</a>. If you don't set one up, you can just set the printer to <code>NULL</code>.</p>
+<p>The first three steps take place in Fileman. The rest of the steps take place in various menus. If you want, you can set-up a real or PDF printer. This is covered extensively at Vistapedia: <a href="http://www.vistapedia.com/index.php/Setting_up_a_VISTA_Printer">http://www.vistapedia.com/index.php/Setting_up_a_VISTA_Printer</a>. If you don't set one up, you can just set the printer to <code>NULL</code>.</p>
 <h1 id="nursing-site-parameters">Nursing Site Parameters</h1>
 <p>FOIA comes with a broken file in 213.9. In order to be able to edit it, we have to set it up manually. From direct mode, we do some fixes; and then we go to Fileman to edit it.</p>
 <div class="code"><code>$ <strong>mumps -dir</strong>
@@ -583,7 +583,7 @@ RECALCULATE FROM: <strong>T-1</strong>   (MAY 15, 2018)
 COUNT VIETNAM VETS REMAINING: <strong>0</strong>   NO
 COUNT OVER 65'S REMAINING: <strong>0</strong>   NO
 DAYS TO MAINTAIN G&L CORR: <strong>365</strong></code></div>
-<p>Exit this option now by typing &quot;NO&quot; or &quot;^&quot;.</p>
+<p>Exit this option now by typing "NO" or "^".</p>
 <h1 id="set-up-treating-specialities">Set-up Treating Specialities</h1>
 <p>The next step is somewhat necessary but very tedious: You need to decide which specialities you will admit patients for; and deactivate all the other specialties. You can also add new ones. For this example, I will use Cardiology and Dermatology specialties and deactivate the rest (I will only show two deactivations). Please note that in real life you won't have such simple specializations: You may need Cardiology Observation, Cardiology Step-Down, Cardiology ICU, Cardiac Surgery, etc.</p>
 <div class="code"><code>Select ADT System Definition Menu <TEST ACCOUNT> Option: <strong>Treating</strong> Specialty Set-up

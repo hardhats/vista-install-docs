@@ -21,11 +21,6 @@ Follow the instructions at https://yottadb.com/product/get-started/. Note the lo
 
 This location will be entered for the variable $gtm_dist in the next section.
 
-Using the Package Manager (GT.M)
---------------------------------
-
-If you are using Ubuntu Linux 14.04 LTS or later; Debian Jessie, Testing, or Unstable; or other Linux distributions that may already have GT.M packages accessed using their normal package managers, you may be able to install GT.M using the package manager, e.g., as root/via sudo, ``apt install fis-gtm``.
-
 Using the Installation Script (GT.M)
 ------------------------------------
 

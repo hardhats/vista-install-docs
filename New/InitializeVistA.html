@@ -8,28 +8,27 @@
   <link href="stylesheets/normalize.css" rel="stylesheet">
   <link href="stylesheets/main.css" rel="stylesheet">
   <style type="text/css">
-a.sourceLine { display: inline-block; line-height: 1.25; }
-a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
-.sourceCode { overflow: visible; }
-code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
 div.sourceCode { margin: 1em 0; }
 pre.sourceCode { margin: 0; }
 @media screen {
 div.sourceCode { overflow: auto; }
 }
 @media print {
-code.sourceCode { white-space: pre-wrap; }
-a.sourceLine { text-indent: -1em; padding-left: 1em; }
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
 }
-pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
-pre.numberSource a.sourceLine::before
-  { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -38,9 +37,9 @@ pre.numberSource a.sourceLine::before
   }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
 div.sourceCode
-  {  }
+  {   }
 @media screen {
-a.sourceLine::before { text-decoration: underline; }
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 code span.al { color: #ff0000; font-weight: bold; } /* Alert */
 code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
@@ -76,7 +75,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <body>
 <nav id="TOC">
 <ul>
-<li><a href="#vista-initialization">VistA Initialization</a><ul>
+<li><a href="#vista-initialization">VistA Initialization</a>
+<ul>
 <li><a href="#gt.myottadb-note">GT.M/YottaDB Note</a></li>
 <li><a href="#getting-into-the-direct-mode-aka-programmer-mode">Getting into the Direct Mode (AKA Programmer Mode)</a></li>
 <li><a href="#note-to-gt.myottadb-users">Note to GT.M/YottaDB Users</a></li>
@@ -84,14 +84,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <li><a href="#commands-and-what-they-mean-a-short-m-primer">Commands and what they mean (a short M primer)</a></li>
 <li><a href="#vista-text-mode-conventions">VistA Text Mode Conventions</a></li>
 </ul></li>
-<li><a href="#begin-to-set-up-the-vista-system">Begin to Set Up the VistA System</a><ul>
+<li><a href="#begin-to-set-up-the-vista-system">Begin to Set Up the VistA System</a>
+<ul>
 <li><a href="#before-you-start">Before you Start</a></li>
-<li><a href="#ztmgrset">ZTMGRSET</a><ul>
+<li><a href="#ztmgrset">ZTMGRSET</a>
+<ul>
 <li><a href="#on-caché">On Caché</a></li>
 </ul></li>
 <li><a href="#fileman">Fileman</a></li>
 <li><a href="#zuset">ZUSET</a></li>
-<li><a href="#device-configuration">Device Configuration</a><ul>
+<li><a href="#device-configuration">Device Configuration</a>
+<ul>
 <li><a href="#null-device">NULL Device</a></li>
 <li><a href="#console-device">CONSOLE Device</a></li>
 <li><a href="#virtual-device">VIRTUAL Device</a></li>
@@ -126,11 +129,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>Before there were <a href="https://en.wikipedia.org/wiki/Read%E2%80%93eval%E2%80%93print_loop">REPLs</a>, Mumps always has had something called Direct Mode, also known as Programmer Mode, which is a simplified REPL. Normally, end users are not allowed to access Programmer Mode as it is essentially like running as root on a Unix System.</p>
 <p>To connect to VISTA and start configuring it, you need a terminal emulator that emulates VT-100, VT-220, VT-320 or VT-52. By default, most terminal emulators do that already, but you cannot use the rxvt terminal emulator.</p>
 <p>If you modified your $TERM, you need to make sure it's either <code>xterm</code> or <code>ansi</code>. Others generally will work, but I am sure of these two.</p>
-<p>To get into Direct Mode using Cache, on Windows you need to right click on the Cache Cube and choose Terminal. If you have a licensed version of Cache, you can also use Telnet to connect to the Terminal. Please note that Windows Telnet does not emulate VT-200 series terminals properly, so you may have some issues with it. If you want to use Telnet, I recommend downloading PuTTY (<a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/" class="uri">http://www.chiark.greenend.org.uk/~sgtatham/putty/</a>) or TeraTerm (<a href="https://ttssh2.osdn.jp/index.html.en" class="uri">https://ttssh2.osdn.jp/index.html.en</a>).</p>
-<p>If you use PuTTY, change the function key bindings so that they behave like VT-100+. See here: <a href="https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys" class="uri">https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys</a>.</p>
-<p>On a Mac, Terminal is a fully featured terminal emulator. You may wish to use System Preferences to configure the function keys to send Function commands, rather than dimming your screen or muting your volume. Otherwise, you have to use FN all the time to override the function keys (<a href="https://support.apple.com/en-us/HT204436" class="uri">https://support.apple.com/en-us/HT204436</a>).</p>
-<p>On Linux, you can use any Terminal Emulator program with the exception of rxvt. You can actually even use PuTTY on Linux. In some emulators, F1 may be bound to do help. You need to unmap that in the Terminal application (<a href="http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal" class="uri">http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal</a>).</p>
-<p>If a VistA system was installed by you or somebody else in the &quot;Cloud&quot;, you will almost certainly need to use Secure Shell (SSH) to log in. SSH is a protocol written in the mid-90s to replace Telnet. It's the standard of connecting to other computers on the Cloud. Nobody can see the traffic inside of SSH, whereas Telnet is just plain text. The ssh client comes installed by default in all Unices; on Windows, you can use PuTTY or TeraTerm.</p>
+<p>To get into Direct Mode using Cache, on Windows you need to right click on the Cache Cube and choose Terminal. If you have a licensed version of Cache, you can also use Telnet to connect to the Terminal. Please note that Windows Telnet does not emulate VT-200 series terminals properly, so you may have some issues with it. If you want to use Telnet, I recommend downloading PuTTY (<a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/">http://www.chiark.greenend.org.uk/~sgtatham/putty/</a>) or TeraTerm (<a href="https://ttssh2.osdn.jp/index.html.en">https://ttssh2.osdn.jp/index.html.en</a>).</p>
+<p>If you use PuTTY, change the function key bindings so that they behave like VT-100+. See here: <a href="https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys">https://the.earth.li/~sgtatham/putty/0.58/htmldoc/Chapter4.html#config-funkeys</a>.</p>
+<p>On a Mac, Terminal is a fully featured terminal emulator. You may wish to use System Preferences to configure the function keys to send Function commands, rather than dimming your screen or muting your volume. Otherwise, you have to use FN all the time to override the function keys (<a href="https://support.apple.com/en-us/HT204436">https://support.apple.com/en-us/HT204436</a>).</p>
+<p>On Linux, you can use any Terminal Emulator program with the exception of rxvt. You can actually even use PuTTY on Linux. In some emulators, F1 may be bound to do help. You need to unmap that in the Terminal application (<a href="http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal">http://askubuntu.com/questions/37313/how-do-i-deactivate-f1-and-f10-keybindings-in-gnome-terminal</a>).</p>
+<p>If a VistA system was installed by you or somebody else in the "Cloud", you will almost certainly need to use Secure Shell (SSH) to log in. SSH is a protocol written in the mid-90s to replace Telnet. It's the standard of connecting to other computers on the Cloud. Nobody can see the traffic inside of SSH, whereas Telnet is just plain text. The ssh client comes installed by default in all Unices; on Windows, you can use PuTTY or TeraTerm.</p>
 <p>After you open your terminal emulator, do the following:</p>
 <p>If your VistA is hosted on a remote server, connect to that first.</p>
 <p>On Cache on Linux or Mac, you need to run <code>ccontrol list</code> to find your instance name, and then run <code>csession &lt;instance name&gt;</code>.</p>
@@ -146,23 +149,23 @@ NAMESPACE// <strong>VISTA</strong></pre>
 <h2 id="note-to-gt.myottadb-users">Note to GT.M/YottaDB Users</h2>
 <p>Due to the fact that Cache does not enforce the M standard as strictly, many illegal instructions have been incorporated into VistA code. In addition, neither Cache nor GT.M/YottaDB is fully M95 standards compliant. As a result, ensuring that new code supports both systems is something of a game. For these reasons, the hardhats community maintains fixes for these routines and, when possible, sends the fixes back to the VA. In the future, the OSEHRA repositories will contain the fixes so that end users don't have to download the code and fix it themselves.</p>
 <p>The WorldVistA distribution of VistA already includes the below fixes.</p>
-<p>If you downloaded vxVistA or FOIA VistA, you need to copy the routines from this repository to your routines directory: <a href="https://github.com/shabiel/Kernel-GTM" class="uri">https://github.com/shabiel/Kernel-GTM</a>. Here's how to do it:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb1-1" data-line-number="1">$ <span class="fu">wget</span> https://github.com/shabiel/Kernel-GTM/releases/download/XU-8.0-10004/virgin_install.zip</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2">$ <span class="fu">unzip</span> virgin_install.zip -d /path/to/database/r/</a></code></pre></div>
-<p>This fixes the Kernel. There are some small fixes needed in random places in VistA, a total of about 5 routines. The fixes can be found in this repo: <a href="https://github.com/shabiel/foia-vista-fixes" class="uri">https://github.com/shabiel/foia-vista-fixes</a>. You can get it like this</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb2-1" data-line-number="1">$ <span class="fu">wget</span> https://github.com/shabiel/foia-vista-fixes/archive/master.zip -O foia-vista-fixes.zip</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">$ <span class="fu">unzip</span> -j foia-vista-fixes.zip *.m -d /path/to/database/r/</a></code></pre></div>
+<p>If you downloaded vxVistA or FOIA VistA, you need to copy the routines from this repository to your routines directory: <a href="https://github.com/shabiel/Kernel-GTM">https://github.com/shabiel/Kernel-GTM</a>. Here's how to do it:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>$ <span class="fu">wget</span> https://github.com/shabiel/Kernel-GTM/releases/download/XU-8.0-10004/virgin_install.zip</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>$ <span class="fu">unzip</span> virgin_install.zip -d /path/to/database/r/</span></code></pre></div>
+<p>This fixes the Kernel. There are some small fixes needed in random places in VistA, a total of about 5 routines. The fixes can be found in this repo: <a href="https://github.com/shabiel/foia-vista-fixes">https://github.com/shabiel/foia-vista-fixes</a>. You can get it like this</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>$ <span class="fu">wget</span> https://github.com/shabiel/foia-vista-fixes/archive/master.zip -O foia-vista-fixes.zip</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>$ <span class="fu">unzip</span> -j foia-vista-fixes.zip *.m -d /path/to/database/r/</span></code></pre></div>
 <h2 id="note-to-cache-users">Note to Cache Users</h2>
-<p>The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA, but don't try to run the RPC broker. A friend wasted a lot of my time because he had an evaluation version and couldn't start the RPC broker. You may also need to restart Cache repeatedly, as it sometimes &quot;forgets&quot; that you logged off.</p>
+<p>The evaluation version of Cache won't let you run more than one foreground process and 20 background processes. You can certainly configure VistA, but don't try to run the RPC broker. A friend wasted a lot of my time because he had an evaluation version and couldn't start the RPC broker. You may also need to restart Cache repeatedly, as it sometimes "forgets" that you logged off.</p>
 <h2 id="commands-and-what-they-mean-a-short-m-primer">Commands and what they mean (a short M primer)</h2>
 <p>In the excerpts below, you will enter Mumps (M) commands into direct mode. Here are a few interesting ones:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode M"><code class="sourceCode matlab"><a class="sourceLine" id="cb3-1" data-line-number="1">S DUZ=<span class="fl">.5</span> ; S is a shortcut for SET, DUZ means user number; <span class="fl">.5</span> is a user that is always present on VistA systems.</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">D ^XUP ; D is a shortcut for DO, ^XUP is the name of the routine. ^XUP is the programmer mode menu runner.</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4"></a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">; A semicolon, like in GAS assembly, is the comment character. M, like C, was written to replace assembly.</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6"></a>
-<a class="sourceLine" id="cb3-7" data-line-number="7">D Q^DI ; Do starting from Label Q in Routine DI. Q^DI is how to enter Fileman.</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode M"><code class="sourceCode matlab"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="va">S</span> <span class="va">DUZ</span><span class="op">=</span><span class="fl">.5</span> <span class="op">;</span> <span class="va">S</span> <span class="va">is</span> <span class="va">a</span> <span class="va">shortcut</span> <span class="kw">for</span> <span class="va">SET</span><span class="op">,</span> <span class="va">DUZ</span> <span class="va">means</span> <span class="va">user</span> <span class="va">number</span><span class="op">;</span> <span class="fl">.5</span> <span class="va">is</span> <span class="va">a</span> <span class="va">user</span> <span class="va">that</span> <span class="va">is</span> <span class="va">always</span> <span class="va">present</span> <span class="va">on</span> <span class="va">VistA</span> <span class="va">systems</span>.</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="va">D</span> <span class="op">^</span><span class="va">XUP</span> <span class="op">;</span> <span class="va">D</span> <span class="va">is</span> <span class="va">a</span> <span class="va">shortcut</span> <span class="kw">for</span> <span class="va">DO</span><span class="op">,</span> <span class="op">^</span><span class="va">XUP</span> <span class="va">is</span> <span class="va">the</span> <span class="va">name</span> <span class="va">of</span> <span class="va">the</span> <span class="va">routine</span>. <span class="op">^</span><span class="va">XUP</span> <span class="va">is</span> <span class="va">the</span> <span class="va">programmer</span> <span class="va">mode</span> <span class="va">menu</span> <span class="va">runner</span>.</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="op">;</span> <span class="va">A</span> <span class="va">semicolon</span><span class="op">,</span> <span class="va">like</span> <span class="va">in</span> <span class="va">GAS</span> <span class="va">assembly</span><span class="op">,</span> <span class="va">is</span> <span class="va">the</span> <span class="va">comment</span> <span class="va">character</span>. <span class="va">M</span><span class="op">,</span> <span class="va">like</span> <span class="va">C</span><span class="op">,</span> <span class="va">was</span> <span class="va">written</span> <span class="va">to</span> <span class="va">replace</span> <span class="va">assembly</span>.</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a><span class="va">D</span> <span class="va">Q</span><span class="op">^</span><span class="va">DI</span> <span class="op">;</span> <span class="va">Do</span> <span class="va">starting</span> <span class="va">from</span> <span class="va">Label</span> <span class="va">Q</span> <span class="va">in</span> <span class="va">Routine</span> <span class="va">DI</span>. <span class="va">Q</span><span class="op">^</span><span class="va">DI</span> <span class="va">is</span> <span class="va">how</span> <span class="va">to</span> <span class="va">enter</span> <span class="va">Fileman</span>.</span></code></pre></div>
 <h2 id="vista-text-mode-conventions">VistA Text Mode Conventions</h2>
 <p>There are a few confusing conventions that outsiders don't understand right away. Here they are:</p>
 <ul>
@@ -193,7 +196,7 @@ NAMESPACE// <strong>VISTA</strong></pre>
 <li>What's the maximum number of processes that you will allow at once on a VistA system? Today (2016), commodity hardware (a good laptop, for example), can handle up to 200 concurrent processes. I usually set my test instances with a maximum of 30 processes, which is the number I use below.</li>
 <li>What's your DNS Server? If you don't know, just use 8.8.8.8.</li>
 </ul>
-<p>Some of the configuration items below are taken from a system that may have had these entries previously created. If what you see on your screen doesn't exactly match what you see here, you can reply to Fileman with &quot;Y&quot; when adding a new entry; and skip past the fields that are indented by pressing <code>&lt;enter&gt;</code>. What matters in the end is that the final entry matches what is typed here.</p>
+<p>Some of the configuration items below are taken from a system that may have had these entries previously created. If what you see on your screen doesn't exactly match what you see here, you can reply to Fileman with "Y" when adding a new entry; and skip past the fields that are indented by pressing <code>&lt;enter&gt;</code>. What matters in the end is that the final entry matches what is typed here.</p>
 <h2 id="ztmgrset">ZTMGRSET</h2>
 <p>The routine ZTMGRSET defines VistA global variables and saves system wide M routines that are M and OS specific. We need to kill ^%ZOSF to make sure we don't have old answers here; and sometimes having ^%ZOSF when you have just switched M implementations causes a catch 22 problem. The text scrape below is for GT.M/YottaDB; the one for Cache follows it.</p>
 <pre>><strong>K ^%ZOSF</strong>
@@ -347,7 +350,7 @@ This routine will rename the correct routine to ZU for you.
 Rename ZUGTM to ZU, OK? No// <strong>Y</strong>
 Routine ZUGTM was renamed to ZU</pre>
 <h2 id="device-configuration">Device Configuration</h2>
-<p>Next is to set-up 4 devices: NULL, CONSOLE, VIRTUAL (historically known as TELNET, due to usual access assignments), and HFS. The NULL device corresponds to a place where we dump data we don't want; that's <code>/dev/null</code> on all Unices; <code>//./nul</code> on Windows. The NULL device is also known as the &quot;BIT BUCKET&quot;, for obvious reasons.</p>
+<p>Next is to set-up 4 devices: NULL, CONSOLE, VIRTUAL (historically known as TELNET, due to usual access assignments), and HFS. The NULL device corresponds to a place where we dump data we don't want; that's <code>/dev/null</code> on all Unices; <code>//./nul</code> on Windows. The NULL device is also known as the "BIT BUCKET", for obvious reasons.</p>
 <p>CONSOLE stands for the device the terminal presents itself as if directly connected to a computer. These days, no computer has real console devices. Linux still has an emulated console device: <code>/dev/tty</code>. Cache Terminal presents a console device called <code>|TRM|</code>.</p>
 <p>VIRTUAL stands for all connections from Virtual Emulators. Unfortunately every different operating system provides a different console device:</p>
 <ul>
@@ -358,7 +361,7 @@ Routine ZUGTM was renamed to ZU</pre>
 </ul>
 <p>The way set up devices is to edit the DEVICE file in Fileman, the Database Management System for VistA. Unlike most databases in the market, it provides a user interface as well, albeit a text-based one. To get into Fileman, you need to set your user (DUZ) to .5, and then go in.</p>
 <h3 id="null-device">NULL Device</h3>
-<p>There should only be one device named &quot;NULL&quot;. Unfortunately, there are three NULLs of various flavors in the FOIA; we need to make sure there is only one. The following procedure allows you to rename the nulls we don't want, and then delete a synonym.</p>
+<p>There should only be one device named "NULL". Unfortunately, there are three NULLs of various flavors in the FOIA; we need to make sure there is only one. The following procedure allows you to rename the nulls we don't want, and then delete a synonym.</p>
 <pre>><strong>S DUZ=.5</strong>
 <strong>D Q^DI</strong>
 
@@ -462,7 +465,7 @@ SIGN-ON/SYSTEM DEVICE: <strong>Y</strong>  YES
 </ul>
 <h3 id="hfs-device">HFS Device</h3>
 <p>The HFS device is necessary because KIDS (the installation system used by VISTA) uses it to open files on the operating system. (Technically, it only uses the Open Parameters field.) The one that comes in FOIA looks like this:</p>
-<pre class="sourceCode "><code>NAME: HFS                               $I: USER$:[TEMP]TMP.DAT
+<pre class=""><code>NAME: HFS                               $I: USER$:[TEMP]TMP.DAT
 ASK DEVICE: YES                       ASK PARAMETERS: YES
 LOCATION OF TERMINAL: Host File Server
 ASK HOST FILE: YES                    ASK HFS I/O OPERATION: YES
@@ -477,7 +480,7 @@ SUBTYPE: P-OTHER                      TYPE: HOST FILE SERVER</code></pre>
 <li>LOCATION OF TERMINAL = Host File Server</li>
 <li>ASK HOST FILE = YES</li>
 <li>ASK HFS I/O OPERATION = @ (Delete it)</li>
-<li>OPEN PARAMETERS: &quot;WNS&quot; for Cache, (newversion) for GT.M/YottaDB (note quotes on Cache and their absence on GT.M/YottaDB)</li>
+<li>OPEN PARAMETERS: "WNS" for Cache, (newversion) for GT.M/YottaDB (note quotes on Cache and their absence on GT.M/YottaDB)</li>
 <li>SUBYTPE: P-HFS/80/99999</li>
 <li>TYPE: HOST FILE SERVER</li>
 </ul>
@@ -640,7 +643,7 @@ to edit any domain scripts that you choose to.
 <pre>VAH^ROU^Macintosh^ROU:Macintosh</pre>
 <p>The four pieces of the string are:</p>
 <p><code>UCI^VOL^NODE^VOLUME:BOX</code></p>
-<p>The fourth piece, the VOLUME:BOX pair, is referred to as the &quot;BOX VOLUME pair&quot;. The first component of the Box Volume pair is the Volume Set, which is used to define the location of routines for the VistA system. The second component, Box, references the system where the instance is found. In a Caché system, it would be the name of the Caché instance; while on GT.M/YottaDB, it should reference the hostname of the machine.</p>
+<p>The fourth piece, the VOLUME:BOX pair, is referred to as the "BOX VOLUME pair". The first component of the Box Volume pair is the Volume Set, which is used to define the location of routines for the VistA system. The second component, Box, references the system where the instance is found. In a Caché system, it would be the name of the Caché instance; while on GT.M/YottaDB, it should reference the hostname of the machine.</p>
 <p>The Volume Set result needs to be altered in the <code>VOLUME SET</code> file, and we will reuse some setup by writing over the name of the first entry that is already in the VistA system. The first entry, the entry with an IEN of 1, can be selected by entering <code>`1</code>.</p>
 <p>Then we rename the first Box-Volume pair in the <code>Taskman Site Parameters</code> file to match what was found above.</p>
 <p>For this demonstration instance, the Volume Set will be <code>ROU</code>, as per the output above.</p>
@@ -801,8 +804,8 @@ Here is the information that Taskman is using:
      Current number of active jobs: 1
 
 End of listing.  Press RETURN to continue:</pre>
-<p>If ANY of the fields in the last screen are empty, except &quot;Log Tasks?&quot;, you made a mistake. Double check your work.</p>
-<p>Next we need to initialize the recurring and start-up tasks that VistA will run. The set of tasks you want your system to run with is very variable; you can see this page for guidance: <a href="http://www.vistapedia.com/index.php/Taskman_Recurring_Tasks" class="uri">http://www.vistapedia.com/index.php/Taskman_Recurring_Tasks</a>. We will set these base tasks, which every VistA system ought to have, up on your VistA system:</p>
+<p>If ANY of the fields in the last screen are empty, except "Log Tasks?", you made a mistake. Double check your work.</p>
+<p>Next we need to initialize the recurring and start-up tasks that VistA will run. The set of tasks you want your system to run with is very variable; you can see this page for guidance: <a href="http://www.vistapedia.com/index.php/Taskman_Recurring_Tasks">http://www.vistapedia.com/index.php/Taskman_Recurring_Tasks</a>. We will set these base tasks, which every VistA system ought to have, up on your VistA system:</p>
 <p>Start-up Jobs:</p>
 <ul>
 <li>XWB LISTENER STARTER (Starts RPC Broker)</li>
@@ -1324,7 +1327,7 @@ Start All RPC Broker Listeners
           Task: RPC Broker Listener START on VAH-ROU:Macintosh, port 9000
           has been queued as task 32372</pre>
 <p>Finally, we need to check that the broker started. While you may use ^%SS or ^ZSY to find that out, I prefer OS level tools that show me that the port is active.</p>
-<p>On Mac or Linux, you can run <code>lsof -iTCP -sTCP:LISTEN -P</code>; on Linux, <code>netstat -tnlp</code>; on Windows (including Cygwin), <code>netstat -aon | find /i &quot;listening&quot;</code>. Here's an example output on a Mac:</p>
+<p>On Mac or Linux, you can run <code>lsof -iTCP -sTCP:LISTEN -P</code>; on Linux, <code>netstat -tnlp</code>; on Windows (including Cygwin), <code>netstat -aon | find /i "listening"</code>. Here's an example output on a Mac:</p>
 <pre>$ lsof -iTCP -sTCP:LISTEN -P
 COMMAND   PID USER   FD   TYPE             DEVICE SIZE/OFF NODE NAME
 mumps   85939  sam    6u  IPv6 0x5ee953ac0e7fceab      0t0  TCP \*:9000 (LISTEN)</pre>
@@ -1337,7 +1340,7 @@ IP ADDRESS: <strong>127.0.0.1</strong>
 PORT: <strong>9000</strong>
 
 Success, response: accept</pre>
-<p>Our response was &quot;Success&quot;. If you don't succeed, you may get &quot;Fail&quot;. If that happens, refer to this page on troubleshooting the Broker in Vistapedia: <a href="http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting" class="uri">http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting</a>.</p>
+<p>Our response was "Success". If you don't succeed, you may get "Fail". If that happens, refer to this page on troubleshooting the Broker in Vistapedia: <a href="http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting">http://www.vistapedia.com/index.php/VISTA_XWB_Broker_Troubleshooting</a>.</p>
 <p>To stop the broker, <code>do ^XUP</code>, and then choose <code>XWB LISTENER STOP ALL</code>:</p>
 <pre>><strong>D ^XUP</strong>
 Setting up programmer environment
@@ -1352,11 +1355,11 @@ Stop All RPC Broker Listeners</pre>
 <p>To test the broker from the client side, you can download the Broker SDK from the FOIA site: <a href="http://foia-vista.osehra.org/Patches_By_Application/XWB-RPC%20BROKER/XWB_1_1_P60_scrubbed.zip">http://foia-vista.osehra.org/Patches_By_Application/XWB-RPC%20BROKER/XWB_1_1_P60_scrubbed.zip</a></p>
 <p>Once you unzip it, you will find this file: <code>./Samples/BrokerEx/BrokerExample.exe</code>. Run this, replace the server name and port with your ip address and port, and then click on connect.</p>
 <figure>
-<img src="images/InitializeVistA/pic38.png" class="align-center" />
+<img src="images/InitializeVistA/pic38.png" class="align-center" alt="" />
 </figure>
 <p>Once you click connect, you will see the sign-in dialog: That means that the broker is functional.</p>
 <figure>
-<img src="images/InitializeVistA/pic37.png" class="align-center" />
+<img src="images/InitializeVistA/pic37.png" class="align-center" alt="" />
 </figure>
 <p>Note: Because of the <a href="https://groups.google.com/forum/#!msg/hardhats/tmuguZ1GK7k/at_0i82n-zgJ">infamous XUSRB1.m problem</a>, you won't be able to log-on right now. But you should be able to using CPRS.</p>
 <h2 id="set-yourself-up-as-the-system-manager">Set Yourself Up as the System Manager</h2>
@@ -1380,10 +1383,10 @@ The user will have to enter a new one the next time they sign-on.
 
 Select NEW PERSON NAME: <strong>&lt;enter&gt;</strong></pre>
 <p>Next give your user privileges appropriate for a system manager. This brings us to VistA's security system.</p>
-<p>VistA menu tree is built just like the Windows Registry: Folders (known as menus) which contain other folders or actual items which you can run. Each menu is like a door: it has a &quot;key&quot; which locks it; or it could be one of those sliding doors which doesn't have keys. A key to a door (ahem, menu) protects all the subsequent doors beyond the first door. If you lock the first door, you can keep the doors below it open. When we ran <code>DO ^XUP</code>, what we really did was that we went into the menu system.</p>
-<p>Keys are also checked by runtime code in order to give privileges when performing certain operations. It's a very common practice in VistA for all users to have access to something, but only the holders of specific keys can perform certain actions. For example, all Lab users have &quot;LRLAB&quot;; but only those credentialed as Lab Technicians will have &quot;LRVERIFY&quot; to release the result.</p>
+<p>VistA menu tree is built just like the Windows Registry: Folders (known as menus) which contain other folders or actual items which you can run. Each menu is like a door: it has a "key" which locks it; or it could be one of those sliding doors which doesn't have keys. A key to a door (ahem, menu) protects all the subsequent doors beyond the first door. If you lock the first door, you can keep the doors below it open. When we ran <code>DO ^XUP</code>, what we really did was that we went into the menu system.</p>
+<p>Keys are also checked by runtime code in order to give privileges when performing certain operations. It's a very common practice in VistA for all users to have access to something, but only the holders of specific keys can perform certain actions. For example, all Lab users have "LRLAB"; but only those credentialed as Lab Technicians will have "LRVERIFY" to release the result.</p>
 <p>Let's enlarge our analogy a bit: Users of the VistA system can be assigned a specific door to enter into: This is known as their PRIMARY MENU. A prevalent practice is to give everybody the PRIMARY MENU of <code>XUCORE</code>, which is analogous to a City Portal. Once you say who you are (ACCESS CODE) and your password (VERIFY CODE), you enter the City (XUCORE) and you can only enter the building for which you have the key.</p>
-<p>What we do below is a couple of things: We give ourselves the Fileman Access Code (different from ACCESS CODE) of &quot;@&quot;, which gives you the equivalent of root privileges in Fileman. Next, we give ourselves the keys <code>XUMGR</code> (let's you add users and manipulate tasks); <code>XUPROG</code> (let's you edit users [don't ask me why--I have no clue why they put that key there], and install Software); <code>XUPROGMODE</code> (let's you enter programmer mode); <code>XMMGR</code> (let's you manage mailman), <code>XUSPF200</code> (let's you add users without requiring an SSN). By the way, privileged users can be given the ability to add new users and assign and take away keys using a mechanism called delegation. I won't cover that here.</p>
+<p>What we do below is a couple of things: We give ourselves the Fileman Access Code (different from ACCESS CODE) of "@", which gives you the equivalent of root privileges in Fileman. Next, we give ourselves the keys <code>XUMGR</code> (let's you add users and manipulate tasks); <code>XUPROG</code> (let's you edit users [don't ask me why--I have no clue why they put that key there], and install Software); <code>XUPROGMODE</code> (let's you enter programmer mode); <code>XMMGR</code> (let's you manage mailman), <code>XUSPF200</code> (let's you add users without requiring an SSN). By the way, privileged users can be given the ability to add new users and assign and take away keys using a mechanism called delegation. I won't cover that here.</p>
 <pre>><strong>S DUZ=1</strong>
 ><strong>S $P(^VA(200,DUZ,0),"^",4)="@"</strong>
 ><strong>D ^XUP</strong>
@@ -1454,17 +1457,17 @@ Select OPTION NAME: <strong>XUSERED</strong>
 CHOOSE 1-2: <strong>1</strong> XUSEREDIT  Edit an Existing User
 Edit an Existing User
 Select NEW PERSON NAME: <strong>MANAGER,SYSTEM</strong>    SM</pre>
-<p>Before we go into details of the next screen, let's talk about the &lt;PF1&gt; key. Press &lt;PF1&gt; refers to notations for use of Vista on Terminals. For example, the original VT-320 keyboard had additional character sets and keys which include Find, Select, Insert, Remove, Previous Screen, Next Screen, an arrow cluster and F1 to F20. With Terminal Emulators, the Keys are &quot;mapped&quot;, which means when you push a given key it acts as the key would in a terminal. For instance, F1, F2, F3 and F4 are equivalent to the PF1, PF2, PF3 and PF4 keys on the terminal keyboard and Page Up and Page Down on the computer keyboard correspond to Previous Screen and Next Screen. Also there is lots of information about terminals if you are interested at <a href="http://www.vt100.net" class="uri">http://www.vt100.net</a>. Also, the very beginning of this document tells you what are the recommended terminal emulators to use.</p>
-<p>Now you will be presented with a screen with multiple options. You can navigate the screen with the TAB key. For navigation help, use your keyboard arrows to move down to the command line and hold down either the Num Lock key (which is mapped as PF1 of a VT-320 terminal by Caché) or F1 for other terminal emulations and hit &quot;H&quot; and then Enter for help. You can exit by typing &quot;^&quot; on the command line and the change you made will be saved. At a minimum, assign EVE as the PRIMARY MENU and enter IRM (it's the only choice) as SERVICE/SECTION. If you plan to use CPRS, enter OR CPRS GUI CHART as a SECONDARY MENU OPTION. Enter other data as you deem appropriate. If DISUSER or Termination Reason is set, use the '@' to delete both of them. To avoid problems down the road with a division that you didn't set-up, delete the DIVISION (tab to it, then enter, then @) that you see in the screen (unlike the screenshot below). No division means that the user will default to the main division, PALM DESERT HOSPITAL, which we already previously set-up.</p>
+<p>Before we go into details of the next screen, let's talk about the &lt;PF1&gt; key. Press &lt;PF1&gt; refers to notations for use of Vista on Terminals. For example, the original VT-320 keyboard had additional character sets and keys which include Find, Select, Insert, Remove, Previous Screen, Next Screen, an arrow cluster and F1 to F20. With Terminal Emulators, the Keys are "mapped", which means when you push a given key it acts as the key would in a terminal. For instance, F1, F2, F3 and F4 are equivalent to the PF1, PF2, PF3 and PF4 keys on the terminal keyboard and Page Up and Page Down on the computer keyboard correspond to Previous Screen and Next Screen. Also there is lots of information about terminals if you are interested at <a href="http://www.vt100.net">http://www.vt100.net</a>. Also, the very beginning of this document tells you what are the recommended terminal emulators to use.</p>
+<p>Now you will be presented with a screen with multiple options. You can navigate the screen with the TAB key. For navigation help, use your keyboard arrows to move down to the command line and hold down either the Num Lock key (which is mapped as PF1 of a VT-320 terminal by Caché) or F1 for other terminal emulations and hit "H" and then Enter for help. You can exit by typing "^" on the command line and the change you made will be saved. At a minimum, assign EVE as the PRIMARY MENU and enter IRM (it's the only choice) as SERVICE/SECTION. If you plan to use CPRS, enter OR CPRS GUI CHART as a SECONDARY MENU OPTION. Enter other data as you deem appropriate. If DISUSER or Termination Reason is set, use the '@' to delete both of them. To avoid problems down the road with a division that you didn't set-up, delete the DIVISION (tab to it, then enter, then @) that you see in the screen (unlike the screenshot below). No division means that the user will default to the main division, PALM DESERT HOSPITAL, which we already previously set-up.</p>
 <figure>
-<img src="images/InitializeVistA/pic25.gif" class="align-center" />
+<img src="images/InitializeVistA/pic25.gif" class="align-center" alt="" />
 </figure>
-<p>Type &quot;N&quot;EXT PAGE at COMMAND: to go to page 2 to update the TIMED READ field and other fields you wish to update. For DEFAULT TIMED-READ (SECONDS): if you change it to 3600 you will be allow an hour before being automatically signed off. It makes it easier to work when you are learning and setting things up. And for God's sake, please make sure that your Preferred Editor is <code>SCREEN EDITOR - VA FILEMAN</code>, otherwise you can only edit a line of text at a time.</p>
+<p>Type "N"EXT PAGE at COMMAND: to go to page 2 to update the TIMED READ field and other fields you wish to update. For DEFAULT TIMED-READ (SECONDS): if you change it to 3600 you will be allow an hour before being automatically signed off. It makes it easier to work when you are learning and setting things up. And for God's sake, please make sure that your Preferred Editor is <code>SCREEN EDITOR - VA FILEMAN</code>, otherwise you can only edit a line of text at a time.</p>
 <figure>
-<img src="images/InitializeVistA/pic26.gif" class="align-center" />
+<img src="images/InitializeVistA/pic26.gif" class="align-center" alt="" />
 </figure>
 <p>At this point, you can go back to Direct Mode. We will now run <code>^ZU</code>, which is the VistA front door, or in the above analogy, the City Portal. At the VISTA prompt, Type <code>D ^ZU</code>.</p>
-<p>At ACCESS CODE, type in the code you chose when setting up MANAGER, SYSTEM as a NEW PERSON. At VERIFY CODE, enter the verify code you chose for yourself earlier, and then you will be asked to change it. The introduction message &quot;This is my test system.&quot; is what we put in a while ago in the Kernel Set-Up section.</p>
+<p>At ACCESS CODE, type in the code you chose when setting up MANAGER, SYSTEM as a NEW PERSON. At VERIFY CODE, enter the verify code you chose for yourself earlier, and then you will be asked to change it. The introduction message "This is my test system." is what we put in a while ago in the Kernel Set-Up section.</p>
 <pre>><strong>D ^ZU</strong>
 This is my test system.
 
@@ -1500,19 +1503,19 @@ Select Systems Manager Menu <TEST ACCOUNT> Option:</pre>
 <p>You will be presented with a similar screen as in editing the SYSTEM MANAGER characteristics. You can navigate the screen with the <code>TAB</code> key. For DEFAULT TIMED-READ (SECONDS): change it to <code>3600</code> to allow an hour before being automatically signed off, or whatever you choose.</p>
 <p>I <em>strongly</em> recommend setting <code>DEFAULT MULTIPLE SIGN-ON</code> to YES.</p>
 <figure>
-<img src="images/InitializeVistA/pic27.gif" class="align-center" />
+<img src="images/InitializeVistA/pic27.gif" class="align-center" alt="" />
 </figure>
 <p>Now you can exit this screen. Press &lt;PF1&gt;/&lt;F1&gt;-S and &lt;PF1&gt;/&lt;F1&gt;-E; and then press enter 4 times. You will be dumped back to your operating system. (Exit from the front door <code>^ZU</code> dumps you all the way out from VistA. Type <code>mumps -dir</code> on GT.M or <code>csession &lt;INSTANCE&gt; -U &lt;NAMESPACE&gt;</code> to get back into direct mode for the next step.</p>
 <h2 id="mail-a-message">Mail a Message</h2>
 <p>Now send a message using Postmaster to your DUZ number. From Direct Mode, type <code>S DUZ=.5 D ^XUP</code>. You will get the response SETTING UP PROGRAMMER ENVIRONMENT then TERMINAL TYPE SET TO: (your default) and Select OPTION NAME:. You will need to respond: <code>XMUSER</code>. At Select Mailman Menu Option: type <code>S</code> (for send). At Subject: enter your subject, such as Test, and then hit enter. You will then be prompted You may enter the text of the message and you will be offered the line number 1&gt; where you can type your message, such as the infamous Hello world. Next will be line 2&gt; and if you are done, just hit enter and at EDIT Option: you can do the same. At Send mail to: POSTMASTER// enter the initials you used for your DUZ which were probably DBA for System Manager. You will then be told when Mailman was last used, which is probably NEVER. Hit enter at And Send to: and you should receive the message Select Message option: Transmit now// at which you hit enter and will hopefully receive the message Sending [1] Sent. Type <code>^</code> to exit.</p>
-<p>Now see if you received it. Log on using <code>D ^ZU</code>. At the Systems Manager prompt, type <code>MAILMAN MENU</code>. If you don't see the NEW messages option, it means that you need to navigate to the submenu, and type &quot;MAILMAN&quot; again. Then at the Select Mailman Menu Option: type <code>NEW</code> Messages and Responses. Read the mail (figure out the steps on your own).</p>
+<p>Now see if you received it. Log on using <code>D ^ZU</code>. At the Systems Manager prompt, type <code>MAILMAN MENU</code>. If you don't see the NEW messages option, it means that you need to navigate to the submenu, and type "MAILMAN" again. Then at the Select Mailman Menu Option: type <code>NEW</code> Messages and Responses. Read the mail (figure out the steps on your own).</p>
 <figure>
-<img src="images/InitializeVistA/pic32.gif" class="align-center" />
+<img src="images/InitializeVistA/pic32.gif" class="align-center" alt="" />
 </figure>
 <h2 id="add-cprs-user">Add CPRS User</h2>
 <p>The next step is to create a user that can sign on to the CPRS GUI. The things to make sure that this new user has are</p>
 <ul>
-<li>A Secondary menu option of &quot;OR CPRS GUI CHART&quot;</li>
+<li>A Secondary menu option of "OR CPRS GUI CHART"</li>
 <li>CPRS Tab Access</li>
 <li>An ACCESS CODE</li>
 <li>A VERIFY CODE</li>
@@ -1604,7 +1607,7 @@ Enter a command or '^' followed by a caption to jump to a specific field.
 
 COMMAND:                                     Press <PF1>H for help    Insert</pre>
 <p>To change to other pages, press the down arrow key or &lt;TAB&gt; until the cursor reaches the COMMAND box. Then type <code>N</code> or <code>Next Page</code> and press &lt;enter&gt; to display the next page.</p>
-<p>There is nothing that needs to be set on the second page. On the third page, you MUST put in a provider person class (Physician, Nurse, etc; otherwise you won't be able to be a provider on encounters). Navigate to Person Class and then type &quot;PHYSICIAN&quot;, press enter twice, and then choose #1. Press enter once, say yes, and then enter. At this point, you should see the entry; and the effective date should be today.</p>
+<p>There is nothing that needs to be set on the second page. On the third page, you MUST put in a provider person class (Physician, Nurse, etc; otherwise you won't be able to be a provider on encounters). Navigate to Person Class and then type "PHYSICIAN", press enter twice, and then choose #1. Press enter once, say yes, and then enter. At this point, you should see the entry; and the effective date should be today.</p>
 <pre>                            Edit an Existing User
 NAME: CPRS,USER                                                     Page 3 of 5
 _______________________________________________________________________________
@@ -1628,7 +1631,7 @@ Exit    Save    Next Page    Previous Page    Refresh    Quit
 
 Enter a COMMAND, or "^" followed by the CAPTION of a FIELD to jump to.
 COMMAND: e                                       Press <PF1>H for help  Insert</pre>
-<p>On the fourth page, CPRS Tab Access is set. Navigate first to &quot;RESTRICT PATIENT SELECTION&quot;, set that to &quot;NO&quot;, and then navigate the cursor to the location under the <code>Name</code> header and enter <code>COR</code>, which stands <code>for Core Tab Access</code>, and enter an effective date of yesterday, <code>T-1</code> is the notation to use.</p>
+<p>On the fourth page, CPRS Tab Access is set. Navigate first to "RESTRICT PATIENT SELECTION", set that to "NO", and then navigate the cursor to the location under the <code>Name</code> header and enter <code>COR</code>, which stands <code>for Core Tab Access</code>, and enter an effective date of yesterday, <code>T-1</code> is the notation to use.</p>
 <pre>                            Edit an Existing User
 NAME: CPRS,USER                                                     Page 4 of 5
 _______________________________________________________________________________
@@ -1726,13 +1729,13 @@ Another one: <strong>^</strong></pre>
 <p>We can find that out by right clicking on the exe, choosing properties, and then choosing the 4th tab. Over there, you will see the version number. Make sure that that's the right version number compared with what you have.</p>
 <blockquote>
 <figure>
-<img src="images/InitializeVistA/right_click_on_cprs.png" class="align-center" />
+<img src="images/InitializeVistA/right_click_on_cprs.png" class="align-center" alt="" />
 </figure>
 <figure>
-<img src="images/InitializeVistA/CPRSPropertiestab0.png" class="align-center" />
+<img src="images/InitializeVistA/CPRSPropertiestab0.png" class="align-center" alt="" />
 </figure>
 <figure>
-<img src="images/InitializeVistA/CPRSPropertiestab3.png" class="align-center" />
+<img src="images/InitializeVistA/CPRSPropertiestab3.png" class="align-center" alt="" />
 </figure>
 </blockquote>
 <p>If you have the right version, we can try running it, but you will get an error right away saying that 'borlndmm.dll' is needed.</p>
@@ -1740,13 +1743,13 @@ Another one: <strong>^</strong></pre>
 <p>Now, try to run CPRS again. You will get this splash screen:</p>
 <blockquote>
 <figure>
-<img src="images/InitializeVistA/CPRS_Splash_Screen.png" class="align-center" />
+<img src="images/InitializeVistA/CPRS_Splash_Screen.png" class="align-center" alt="" />
 </figure>
 </blockquote>
 <p>But then, you may see this:</p>
 <blockquote>
 <figure>
-<img src="images/InitializeVistA/connection_timeout.png" class="align-center" />
+<img src="images/InitializeVistA/connection_timeout.png" class="align-center" alt="" />
 </figure>
 </blockquote>
 <p>What you have to do is to invoke CPRS with 3 parameters in order to tell it where and how to connect.</p>
@@ -1755,16 +1758,16 @@ Another one: <strong>^</strong></pre>
 <li>p=&lt;port&gt;</li>
 <li>ccow=disable</li>
 </ul>
-<p>The way to do that on Microsoft Windows for end users is to create a shortcut and modify the target. Therefore, here's what you need to do: right click on CPRS, and choose &quot;Create Shortcut&quot;. You will see a shortcut icon right in the same window. Something that looks like this:</p>
+<p>The way to do that on Microsoft Windows for end users is to create a shortcut and modify the target. Therefore, here's what you need to do: right click on CPRS, and choose "Create Shortcut". You will see a shortcut icon right in the same window. Something that looks like this:</p>
 <blockquote>
 <figure>
-<img src="images/InitializeVistA/shorcut_icon.png" class="align-center" />
+<img src="images/InitializeVistA/shorcut_icon.png" class="align-center" alt="" />
 </figure>
 </blockquote>
 <p>Right-click on that, and then click (i.e. left click) on properties. You will see the following:</p>
 <blockquote>
 <figure>
-<img src="images/InitializeVistA/shortcut_properties.png" class="align-center" />
+<img src="images/InitializeVistA/shortcut_properties.png" class="align-center" alt="" />
 </figure>
 </blockquote>
 <p>In the target field, append the s, p, and ccow as described above. Here is mine:</p>
@@ -1772,20 +1775,20 @@ Another one: <strong>^</strong></pre>
 <p>Click OK. You will see that CPRS connects, and display the access and verify screen:</p>
 <blockquote>
 <figure>
-<img src="images/InitializeVistA/VISTASign-on.png" class="align-center" />
+<img src="images/InitializeVistA/VISTASign-on.png" class="align-center" alt="" />
 </figure>
 </blockquote>
 <p>Now, put in the access and verify codes. If you followed along, this would be CPRS1234 and USR.1234.</p>
 <p>Once you sign-in, since you are signing in for the first time, you will be asked to change your verify code:</p>
 <blockquote>
 <figure>
-<img src="images/InitializeVistA/CVC.png" class="align-center" />
+<img src="images/InitializeVistA/CVC.png" class="align-center" alt="" />
 </figure>
 </blockquote>
 <p>Go ahead and change it (no screen shot shown) and then click OK. It will confirm that it changed, and then you will see the patient selection screen.</p>
 <blockquote>
 <figure>
-<img src="images/InitializeVistA/CPRSPatientSelection.png" class="align-center" />
+<img src="images/InitializeVistA/CPRSPatientSelection.png" class="align-center" alt="" />
 </figure>
 </blockquote>
 <p>You should be happy when you reach this point; except that a medical records system is useless without patients.</p>
@@ -1795,9 +1798,9 @@ Another one: <strong>^</strong></pre>
 <p>NB: On GT.M/YottaDB, patient registration will crash, as it tries to use Cache Specific Code. To fix that, we need to edit some routines. To edit a routine in GT.M/YDB, it's easiest to just edit it on the shell. You will recall that we installed VistA in /var/db/&lt;name&gt;. And we copied all routines into the r directory. edit the code, use an editor (a simple editor to use is nano) and edit the file. For example, to edit MPIFXMLP, enter <code>nano /var/db/&lt;name&gt;/r/MPIFXMLP.m</code>.</p>
 <p>If you want to register the patient on GT.M/YottaDB, edit routine MPIFXMLP, changing the label PATIENT to ZPATIENT</p>
 <p>In routine DGRPD, in line 34 remove the errant space:</p>
-<p><code>N DGSKIP S DGSKIP=$S(DGFORGN:&quot;!,?42,&quot;&quot;From/To: &quot;&quot;&quot;,1:&quot;?42, &quot;&quot;From/To: &quot;&quot;&quot;)</code></p>
+<p><code>N DGSKIP S DGSKIP=$S(DGFORGN:"!,?42,""From/To: """,1:"?42, ""From/To: """)</code></p>
 <p>to</p>
-<p><code>N DGSKIP S DGSKIP=$S(DGFORGN:&quot;!,?42,&quot;&quot;From/To: &quot;&quot;&quot;,1:&quot;?42,&quot;&quot;From/To: &quot;&quot;&quot;)</code></p>
+<p><code>N DGSKIP S DGSKIP=$S(DGFORGN:"!,?42,""From/To: """,1:"?42,""From/To: """)</code></p>
 </blockquote>
 <p>Now we can register the patient.</p>
 <pre><strong>$ mumps -r ^ZU</strong>
@@ -1981,17 +1984,17 @@ Select Registration Menu <TEST ACCOUNT> Option: <strong>Register a Patient</stro
 <p>Now, if you run CPRS again, you will see a patient, and you can select them:</p>
 <blockquote>
 <figure>
-<img src="images/InitializeVistA/CPRSPatientSelection2.png" class="align-center" />
+<img src="images/InitializeVistA/CPRSPatientSelection2.png" class="align-center" alt="" />
 </figure>
 </blockquote>
 <p>and then you will see the cover sheet:</p>
 <blockquote>
 <figure>
-<img src="images/InitializeVistA/CPRSCoverSheet.png" class="align-center" />
+<img src="images/InitializeVistA/CPRSCoverSheet.png" class="align-center" alt="" />
 </figure>
 </blockquote>
 <p>There is little you can do because most of VistA is not set-up. But you can now get an idea of what CPRS is like. The most important step is to at least create one clinic. You can do that in the SDBUILD menu. Doing this will unlock most of CPRS for you.</p>
-<p>You can learn more about using CPRS from here: <a href="https://www.vehu.va.gov/cprs_training.cfm" class="uri">https://www.vehu.va.gov/cprs_training.cfm</a>.</p>
+<p>You can learn more about using CPRS from here: <a href="https://www.vehu.va.gov/cprs_training.cfm">https://www.vehu.va.gov/cprs_training.cfm</a>.</p>
 <h2 id="next-steps">Next Steps</h2>
 <ul>
 <li><a href="./SetupClinics.html">Set-up Clinics</a></li>

@@ -38,7 +38,7 @@
 <li>G&amp;L ORDER must be filled; otherwise ADT will crash.</li>
 <li>HOSPITAL LOCATION FILE POINTER is silly in that you have to type the same exact entry again to add it to the hospital location file. Don't put a different entry name.</li>
 <li>RAI/MDS WARD must be left blank. Filling this will also cause a crash.</li>
-<li>The Totals field is saying &quot;count the number of patients here and put them in this category&quot;. You can repeat the category in another ward, and from that get a total number of admitted patients within a certain category. The example below shows a total of &quot;Hospital&quot; which will count the totals for the hospital (both wards together). There is a total of Cardiology and a total for Dermatology.</li>
+<li>The Totals field is saying "count the number of patients here and put them in this category". You can repeat the category in another ward, and from that get a total number of admitted patients within a certain category. The example below shows a total of "Hospital" which will count the totals for the hospital (both wards together). There is a total of Cardiology and a total for Dermatology.</li>
 </ul>
 <p>From the same <code>ADT System Definition</code> menu, we will pick <code>Ward Definition Entry/Edit</code>.</p>
 <div class="code"><code>Select ADT System Definition Menu <TEST ACCOUNT> Option: <strong>WARD</strong> Definition Entry/Edit
@@ -135,7 +135,7 @@ Select TOTALS:<strong>&lt;enter&gt;</strong>
 
 Select WARD LOCATION NAME:<strong>&lt;enter&gt;</strong></code></div>
 <h1 id="create-roombeds">Create Room/Beds</h1>
-<p>In VistA, Rooms and Beds are a single entity. In reality, they should just be called &quot;Beds&quot;. A room with 3 beds may be labeled as 101-A, 101-B, and 101-C. You may add other characters to help you designate the bed as Male/Female, Luxury vs Shared, etc.</p>
+<p>In VistA, Rooms and Beds are a single entity. In reality, they should just be called "Beds". A room with 3 beds may be labeled as 101-A, 101-B, and 101-C. You may add other characters to help you designate the bed as Male/Female, Luxury vs Shared, etc.</p>
 <p>Here we create 3 rooms in each ward. 2 of the rooms have 2 beds each; one has a single bed for a total of 10 beds.</p>
 <p>As explained in <a href="./InitializeVistA.html">VistA Initialization</a>.</p>
 <p>Same menu. Option: <code>Add/Edit Beds</code>:</p>
@@ -430,16 +430,16 @@ Choose 1-2> <strong>1</strong>  PNG LANDSCAPE  /tmp/
 Do you want your output QUEUED? No// <strong>&lt;enter&gt;</strong>  (No)</code></div>
 <p>The output looks as follows. I took the liberty of using GhostPCL to convert all the VistA output into PNG images to display on this webpage. The first page is the G&amp;L report, which is empty; 2nd and 3rd are the Bed Status Report, abbreviated as BSR. The 4th page is the Treating Specialty Report, or TSR.</p>
 <figure>
-<img src="images/WardSetup/gnl01.png" alt="G &amp; L Page 1" class="align-left" /><figcaption>G &amp; L Page 1</figcaption>
+<img src="images/WardSetup/gnl01.png" class="align-left" alt="" /><figcaption>G &amp; L Page 1</figcaption>
 </figure>
 <figure>
-<img src="images/WardSetup/gnl02.png" alt="G &amp; L Page 2" class="align-left" /><figcaption>G &amp; L Page 2</figcaption>
+<img src="images/WardSetup/gnl02.png" class="align-left" alt="" /><figcaption>G &amp; L Page 2</figcaption>
 </figure>
 <figure>
-<img src="images/WardSetup/gnl03.png" alt="G &amp; L Page 3" class="align-left" /><figcaption>G &amp; L Page 3</figcaption>
+<img src="images/WardSetup/gnl03.png" class="align-left" alt="" /><figcaption>G &amp; L Page 3</figcaption>
 </figure>
 <figure>
-<img src="images/WardSetup/gnl05.png" alt="G &amp; L Page 4" class="align-left" /><figcaption>G &amp; L Page 4</figcaption>
+<img src="images/WardSetup/gnl05.png" class="align-left" alt="" /><figcaption>G &amp; L Page 4</figcaption>
 </figure>
 <h1 id="extra-credit-set-up-bulletins">Extra Credit: Set-up Bulletins</h1>
 <p>Not covered here, but there is an optional step for you to work on: If you want VistA emails when an event happens, you can set-up mail groups, add yourself to the mail groups, and then attach the mail groups to the bulletins.</p>
@@ -489,7 +489,7 @@ Select OPTION to schedule or reschedule: <strong>DG G&L RECALCULATION AUTO</stro
 calculation of G&L Statistics
   Are you adding 'DG G&L RECALCULATION AUTO' as 
     a new OPTION SCHEDULING (the 13TH)? No// <strong>Y</strong></pre>
-<p>You will a Screenman screen, like the one we used when we added a new user. Fill in the field <code>QUEUED TO RUN AT WHAT TIME</code> to <code>T+1@0001</code> and <code>RESCHEDULING FREQUENCY</code>. The <code>TASK ID</code> number will be empty until you go to bottom and type &quot;S&quot; (or F1-S, or click on &quot;Save&quot;) to save the entry. You can then Exit (&quot;E&quot;, F1-E, or click on Exit) to exit back to the menu system.</p>
+<p>You will a Screenman screen, like the one we used when we added a new user. Fill in the field <code>QUEUED TO RUN AT WHAT TIME</code> to <code>T+1@0001</code> and <code>RESCHEDULING FREQUENCY</code>. The <code>TASK ID</code> number will be empty until you go to bottom and type "S" (or F1-S, or click on "Save") to save the entry. You can then Exit ("E", F1-E, or click on Exit) to exit back to the menu system.</p>
 <pre>                      Edit Option Schedule
      Option Name: DG G&L RECALCULATION AUTO
      Menu Text: Auto-recalculation of G&L Statis          TASK ID: 1115
